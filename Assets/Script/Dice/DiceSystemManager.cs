@@ -16,7 +16,6 @@ public class DiceSystemManager : MonoBehaviour
     public float rotatePowerRate = 0.5f;
     private int cnt_RollEnded = 0;
     private bool isReadyToThrow = true;
-    private int result = 0;
     public int resValue { get; set; }
 
     // Start is called before the first frame update
