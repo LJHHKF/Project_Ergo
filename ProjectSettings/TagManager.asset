@@ -6,6 +6,7 @@ TagManager:
   tags:
   - DiceBox
   - DiceChecker
+  - Line
   layers:
   - Default
   - TransparentFX
@@ -40,6 +41,15 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: BG
+    uniqueID: 3269054235
+    locked: 0
+  - name: Hand
+    uniqueID: 4163120029
+    locked: 0
+  - name: Card, LivingEntity
+    uniqueID: 1595593363
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0

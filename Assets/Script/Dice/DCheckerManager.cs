@@ -5,20 +5,21 @@ using UnityEngine;
 public class DCheckerManager : MonoBehaviour
 {
     public float bottomValue = -5f;
-    public float startYvalue = 2.5f;
+    public float startZValue = -10f;
+    public float moveSpeed = 30.0f;
     public DiceSystemManager m_DsysetmManager;
 
     private void OnEnable()
     {
-        gameObject.transform.position = new Vector3(gameObject.transform.position.x, startYvalue, gameObject.transform.position.z);
+        gameObject.transform.position = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, startZValue);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (gameObject.transform.position.y >= bottomValue)
+        if (gameObject.transform.position.z <= bottomValue)
         {
-            gameObject.transform.Translate(0, -10.0f * Time.deltaTime, 0);
+            gameObject.transform.Translate(0, moveSpeed * Time.deltaTime, 0);
         }
         else if (gameObject.activeSelf)
         {

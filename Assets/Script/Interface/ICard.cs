@@ -2,11 +2,13 @@
 
 public interface ICard
 {
-    ICard Selected();
+    //ICard Selected();
     void Holded();
-    void Dragged(Vector2 mousePos);
+    void Dragged(Vector2 mousePos, LineDrawer liner);
 
     void Use();
     void UnUse();
+
+    void SetTarget(GameObject input);
 
 }
