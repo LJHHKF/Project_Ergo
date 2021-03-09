@@ -39,10 +39,10 @@ public class DiceSystemManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0) && isReadyToThrow)
-        {
-            ActiveDice();
-        }
+        //if (Input.GetMouseButtonDown(0) && isReadyToThrow)
+        //{
+        //    ActiveDice();
+        //}
         
         if(cnt_RollEnded == 2)
         {
@@ -50,21 +50,29 @@ public class DiceSystemManager : MonoBehaviour
         }
     }
 
-    private void ActiveDice()
+    public void ActiveDice(out bool isSucess)
     {
-        cnt_RollEnded = 0;
-        resValue = 0;
-        isReadyToThrow = false;
-        for (int i = 0; i < normal_listPool.Count; i++)
+        if (isReadyToThrow)
         {
-            normal_listPool[i].SetActive(true);
-            normal_listPool[i].transform.position = new Vector3(-2 + (i * 4), 0, -8);
-            normal_listPool[i].transform.localEulerAngles = new Vector3(Random.Range(0f, 360f), Random.Range(0f, 360f), Random.Range(0f, 360f));
-            Rigidbody rb = normal_listPool[i].GetComponent<Rigidbody>();
-            rb.AddForce(transform.up * power);
-            rb.AddTorque(Random.Range(power * rotatePowerRate * 0.5f, power * rotatePowerRate)
-                , Random.Range(power * rotatePowerRate * 0.5f, power * rotatePowerRate)
-                , Random.Range(power * rotatePowerRate * 0.5f, power * rotatePowerRate));
+            cnt_RollEnded = 0;
+            resValue = 0;
+            isReadyToThrow = false;
+            for (int i = 0; i < normal_listPool.Count; i++)
+            {
+                normal_listPool[i].SetActive(true);
+                normal_listPool[i].transform.position = new Vector3(-2 + (i * 4), 0, -8);
+                normal_listPool[i].transform.localEulerAngles = new Vector3(Random.Range(0f, 360f), Random.Range(0f, 360f), Random.Range(0f, 360f));
+                Rigidbody rb = normal_listPool[i].GetComponent<Rigidbody>();
+                rb.AddForce(transform.up * power);
+                rb.AddTorque(Random.Range(power * rotatePowerRate * 0.5f, power * rotatePowerRate)
+                    , Random.Range(power * rotatePowerRate * 0.5f, power * rotatePowerRate)
+                    , Random.Range(power * rotatePowerRate * 0.5f, power * rotatePowerRate));
+            }
+            isSucess = true;
+        }
+        else
+        {
+            isSucess = false;
         }
     }
 

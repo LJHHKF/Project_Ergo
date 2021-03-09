@@ -18,27 +18,28 @@ public class Card_NonTarget : MonoBehaviour, ICard
 
 
 
-    void Start()
+    protected virtual void Start()
     {
 
     }
 
-    void Update()
+    protected virtual void Update()
     {
 
     }
 
-    public virtual ICard Selected()
-    {
-        return this;
-    }
+    //public virtual ICard Selected()
+    //{
+    //    return this;
+    //}
+
 
     public virtual void Holded()
     {
         //카드 정보 넘겨주기
     }
 
-    public virtual void Dragged(Vector2 mousePos)
+    public virtual void Dragged(Vector2 mousePos, LineDrawer liner)
     {
         //마우스 위치가 손패 위치서 벗어났느냐, 아니냐로 ReadyToUse 및 그 해제화 작업 필요.
     }
