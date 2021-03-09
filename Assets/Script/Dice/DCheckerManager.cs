@@ -6,6 +6,7 @@ public class DCheckerManager : MonoBehaviour
 {
     public float bottomValue = -5f;
     public float startYvalue = 2.5f;
+    public float moveSpeed = -15.0f;
     public DiceSystemManager m_DsysetmManager;
 
     private void OnEnable()
@@ -18,7 +19,7 @@ public class DCheckerManager : MonoBehaviour
     {
         if (gameObject.transform.position.y >= bottomValue)
         {
-            gameObject.transform.Translate(0, -10.0f * Time.deltaTime, 0);
+            gameObject.transform.Translate(0, moveSpeed * Time.deltaTime, 0);
         }
         else if (gameObject.activeSelf)
         {

@@ -13,7 +13,14 @@ public class DiceManager : MonoBehaviour
     public int resNum {
         get
         {
-            return result;
+            if (isGetRes)
+            {
+                return result;
+            }
+            else
+            {
+                return 0;
+            }
         }
         set
         {
@@ -28,6 +35,7 @@ public class DiceManager : MonoBehaviour
     private void OnEnable()
     {
         isRollEnd = false;
+        isGetRes = false;
         activeTime = Time.time;
     }
 
