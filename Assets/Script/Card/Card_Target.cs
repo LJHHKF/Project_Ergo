@@ -12,7 +12,7 @@ public class Card_Target : MonoBehaviour, ICard
     public string[] cardText;
     
     [HideInInspector]
-    public GameObject target;
+    private LivingEntity target;
     public int posNum = 0; // -1은 묘지, 0은 덱, 1 이상의 수들은 손패
     public Vector2 m_Position
     {
@@ -66,5 +66,14 @@ public class Card_Target : MonoBehaviour, ICard
     protected void DrawLine()
     {
         //화살표선 긋기용 함수
+    }
+
+    public virtual void SetTarget(GameObject input)
+    {
+        target = input.GetComponent<LivingEntity>(); // 임시 코드. LivingEntity를 상속하는 Enemy 를 받을 것.
+        if (target != null)
+        {
+
+        }
     }
 }

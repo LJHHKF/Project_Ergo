@@ -10,6 +10,7 @@ public class Card_NonTarget : MonoBehaviour, ICard
     public Sprite cardImage;
     [TextArea]
     public string[] cardText;
+    private GameObject target;
 
     [HideInInspector]
     public int posNum = 0; // -1은 묘지, 0은 덱, 1 이상의 수들은 손패
@@ -57,5 +58,10 @@ public class Card_NonTarget : MonoBehaviour, ICard
     {
         ready = true;
         //투명화 처리 필요
+    }
+
+    public virtual void SetTarget(GameObject input)
+    {
+        // 기본적으로 input과는 무관하게 돌릴것. non-Target, 기본 타겟이 있음.
     }
 }

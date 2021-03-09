@@ -9,4 +9,6 @@ public interface ICard
     void Use();
     void UnUse();
 
+    void SetTarget(GameObject input);
+
 }
