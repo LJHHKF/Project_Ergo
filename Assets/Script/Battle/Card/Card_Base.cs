@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Card_Target : MonoBehaviour, ICard
+public class Card_Base : MonoBehaviour, ICard
 {
     public int cost = 1;
     public int fixP = 1;
@@ -10,32 +10,34 @@ public class Card_Target : MonoBehaviour, ICard
     public Sprite cardImage;
     [TextArea]
     public string[] cardText;
-    private LivingEntity target;
-    private DiceSystemManager diceManager;
-    private bool isThrowed = false;
+    protected GameObject target;
+    protected DiceSystemManager diceManager;
+    protected BattleUIManager battleUIManager;
+    protected bool isThrowed = false;
+
 
     [HideInInspector]
     public int posNum = 0; // -1은 묘지, 0은 덱, 1 이상의 수들은 손패
     public Vector2 m_Position
     {
-        get{
+        get
+        {
             return m_Position;
         }
-        protected set{
+        protected set
+        {
             m_Position = gameObject.transform.position;
         }
     }
 
-
-
     protected virtual void Start()
     {
-        FindDiceManager();
+        FindBattleUIManger();
     }
 
     protected virtual void Update()
     {
-        
+
     }
 
     //public virtual ICard Selected()
@@ -55,21 +57,14 @@ public class Card_Target : MonoBehaviour, ICard
         liner.SetLine(gameObject.transform, mousePos);
     }
 
-    public virtual void Use()
+    public virtual void Use(int diceValue)
     {
-        if(diceManager == null)
+        if (battleUIManager == null)
         {
-            FindDiceManager();
+            FindBattleUIManger();
         }
 
-        if(diceManager != null)
-        {
-            diceManager.ActiveDice(out isThrowed);
-            if(!isThrowed)
-            {
-                //오류처리
-            }
-        }
+
         //다이스롤 효과를 앞서 받은 다음에 불려져야 함.
         //선택된 타겟에 효과 발동
     }
@@ -86,15 +81,13 @@ public class Card_Target : MonoBehaviour, ICard
 
     public virtual void SetTarget(GameObject input)
     {
-        target = input.GetComponent<LivingEntity>(); // 임시 코드. LivingEntity를 상속하는 Enemy 를 받을 것.
-        if (target != null)
-        {
-
-        }
+        target = input;
+        battleUIManager.OnDiceSysetm();
     }
 
-    private void FindDiceManager()
+
+    protected void FindBattleUIManger()
     {
-        diceManager = GameObject.FindGameObjectWithTag("DiceBox").GetComponent<DiceSystemManager>();
+        battleUIManager = GameObject.FindGameObjectWithTag("UIManager").GetComponent<BattleUIManager>();
     }
 }

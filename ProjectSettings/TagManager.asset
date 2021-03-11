@@ -7,6 +7,9 @@ TagManager:
   - DiceBox
   - DiceChecker
   - Line
+  - Enemy
+  - InputManager
+  - UIManager
   layers:
   - Default
   - TransparentFX

@@ -6,7 +6,7 @@ public interface ICard
     void Holded();
     void Dragged(Vector2 mousePos, LineDrawer liner);
 
-    void Use();
+    void Use(int diceValue);
     void UnUse();
 
     void SetTarget(GameObject input);
