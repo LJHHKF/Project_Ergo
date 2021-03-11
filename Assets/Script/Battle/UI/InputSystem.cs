@@ -44,9 +44,9 @@ public class InputSystem : MonoBehaviour
 
     public float holdingDistance = 5.0f;
 
-    public Canvas m_cardCanvas;
-    private GraphicRaycaster m_GRay;
-    private PointerEventData m_ped;
+    //public Canvas m_cardCanvas;
+    //private GraphicRaycaster m_GRay;
+    //private PointerEventData m_ped;
     
 
     private DiceSystemManager diceSManager;
@@ -68,8 +68,8 @@ public class InputSystem : MonoBehaviour
         m_line = line.GetComponent<LineDrawer>();
         diceSManager = GameObject.FindGameObjectWithTag("DiceBox").GetComponent<DiceSystemManager>();
 
-        m_GRay = m_cardCanvas.GetComponent<GraphicRaycaster>();
-        m_ped = new PointerEventData(null);
+        //m_GRay = m_cardCanvas.GetComponent<GraphicRaycaster>();
+        //m_ped = new PointerEventData(null);
     }
 
     // Update is called once per frame
@@ -81,20 +81,20 @@ public class InputSystem : MonoBehaviour
 
             if (diceSManager.GetIsReadyToThrow())
             {
-                //RaycastHit2D hit = Physics2D.Raycast(mousePosition, transform.forward, maxDistance);
-                //Debug.DrawRay(mousePosition, transform.forward * 10, Color.red, 0.3f);
+                RaycastHit2D hit = Physics2D.Raycast(mousePosition, transform.forward, maxDistance);
+                Debug.DrawRay(mousePosition, transform.forward * 10, Color.red, 0.3f);
 
-                List<RaycastResult> results = new List<RaycastResult>();
-                m_GRay.Raycast(m_ped, results);
-                
-                //if (hit)
-                if(results.Count != 0)
+                //List<RaycastResult> results = new List<RaycastResult>();
+                //m_GRay.Raycast(m_ped, results);
+
+                //if (results.Count != 0)
+                if (hit)
                 {
-                    //selectedCard = hit.transform.GetComponent<ICard>();
-                    if(results[0].gameObject.CompareTag("Card"))
-                    {
-                        selectedCard = results[0].gameObject.GetComponent<ICard>();
-                    }
+                    selectedCard = hit.transform.GetComponent<ICard>();
+                    //if(results[0].gameObject.CompareTag("Card"))
+                    //{
+                    //    selectedCard = results[0].gameObject.GetComponent<ICard>();
+                    //}
                     if (selectedCard != null)
                     {
                         isSelected = true;
@@ -172,7 +172,8 @@ public class InputSystem : MonoBehaviour
     {
         mousePosition = Input.mousePosition;
         mousePosition = myMainCam.ScreenToWorldPoint(mousePosition);
-        m_ped.position = Input.mousePosition;
+        
+        //m_ped.position = Input.mousePosition;
     }
 
     IEnumerator MouseHolding(Vector2 prevMousePosition)
