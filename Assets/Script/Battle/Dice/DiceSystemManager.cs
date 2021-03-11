@@ -10,6 +10,7 @@ public class DiceSystemManager : MonoBehaviour
     private List<GameObject> normal_listPool;
     //private List<GameObject> six_listPool;
     public GameObject diceChecker;
+    public BattleUIManager battleUIManager;
 
     [Header("던지기 설정")]
     public float power = 500f;
@@ -51,10 +52,16 @@ public class DiceSystemManager : MonoBehaviour
         }
     }
 
+    public bool GetIsReadyToThrow()
+    {
+        return isReadyToThrow;
+    }
+
     public void ActiveDice(out bool isSucess)
     {
         if (isReadyToThrow && activatedCard != null)
         {
+            battleUIManager.OffDiceSystem();
             cnt_RollEnded = 0;
             resValue = 0;
             isReadyToThrow = false;

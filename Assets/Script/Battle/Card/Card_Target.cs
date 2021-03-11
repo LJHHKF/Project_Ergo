@@ -6,6 +6,10 @@ public class Card_Target : Card_Base
 {
     protected LivingEntity livTarget;
 
+    public virtual void OnEnable()
+    {
+        livTarget = null;
+    }
 
     public override void SetTarget(GameObject input)
     {
@@ -13,6 +17,10 @@ public class Card_Target : Card_Base
         if (target != null)
         {
             livTarget = target.GetComponent<LivingEntity>();
+            if (livTarget != null)
+            {
+                battleUIManager.OnDiceSysetm();
+            }
         }
     }
 }

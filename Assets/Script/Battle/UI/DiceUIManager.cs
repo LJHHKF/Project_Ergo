@@ -96,9 +96,6 @@ public class DiceUIManager : MonoBehaviour
         if(!isThrowed)
         {
             Debug.LogError("주사위를 굴리지 못했습니다.");
-        }
-        else
-        {
             battleUIManager.OffDiceSystem();
         }
     }

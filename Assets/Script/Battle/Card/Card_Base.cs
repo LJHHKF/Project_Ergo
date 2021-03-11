@@ -15,6 +15,7 @@ public class Card_Base : MonoBehaviour, ICard
     protected BattleUIManager battleUIManager;
     protected bool isThrowed = false;
 
+
     [HideInInspector]
     public int posNum = 0; // -1은 묘지, 0은 덱, 1 이상의 수들은 손패
     public Vector2 m_Position
@@ -81,6 +82,7 @@ public class Card_Base : MonoBehaviour, ICard
     public virtual void SetTarget(GameObject input)
     {
         target = input;
+        battleUIManager.OnDiceSysetm();
     }
 
 

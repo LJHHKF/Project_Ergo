@@ -28,7 +28,7 @@ public class InputSystem : MonoBehaviour
                 mousePosition = Input.mousePosition;
             }
          Vector2 temp = mousePosition;
-            return temp;
+         return temp;
         }
     }
     private Vector3 mousePosition;
@@ -36,11 +36,13 @@ public class InputSystem : MonoBehaviour
     private float maxDistance = 15f;
     private ICard selectedCard;
     private bool isSelected = false;
+    private Vector2 targetedPos;
+    private bool isTempTargeted = false;
+    private Vector2 targetColSize;
 
     public float holdingDistance = 5.0f;
 
     private DiceSystemManager diceSManager;
-    private BattleUIManager battleUIManager;
 
     private void Awake()
     {
@@ -58,7 +60,6 @@ public class InputSystem : MonoBehaviour
         myMainCam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         m_line = line.GetComponent<LineDrawer>();
         diceSManager = GameObject.FindGameObjectWithTag("DiceBox").GetComponent<DiceSystemManager>();
-        battleUIManager = GameObject.FindGameObjectWithTag("UIManager").GetComponent<BattleUIManager>();
     }
 
     // Update is called once per frame
@@ -68,46 +69,82 @@ public class InputSystem : MonoBehaviour
         {
             SetMousePosition();
 
-            RaycastHit2D hit = Physics2D.Raycast(mousePosition, transform.forward, maxDistance);
-            Debug.DrawRay(mousePosition, transform.forward * 10, Color.red, 0.3f);
-            if(hit)
+            if (diceSManager.GetIsReadyToThrow())
             {
-                selectedCard = hit.transform.GetComponent<ICard>();
-                if(selectedCard != null)
+                RaycastHit2D hit = Physics2D.Raycast(mousePosition, transform.forward, maxDistance);
+                Debug.DrawRay(mousePosition, transform.forward * 10, Color.red, 0.3f);
+                if (hit)
                 {
-                    isSelected = true;
-                    StartCoroutine(MouseHolding(mousePosition));
-                    line.SetActive(true);
+                    selectedCard = hit.transform.GetComponent<ICard>();
+                    if (selectedCard != null)
+                    {
+                        isSelected = true;
+                        StartCoroutine(MouseHolding(mousePosition));
+                        line.SetActive(true);
+                    }
                 }
             }
         }
         if(Input.GetMouseButton(0))
         {
-            SetMousePosition();
-
-            if(isSelected)
+            if (isSelected)
             {
-                selectedCard.Dragged(mousePosition2D, m_line);
+                SetMousePosition();
+                RaycastHit2D hit = Physics2D.Raycast(mousePosition, transform.forward, maxDistance);
+                Debug.DrawRay(mousePosition, transform.forward * 10, Color.red, 0.3f);
+
+                if (hit)
+                {
+                    if (hit.transform.gameObject.tag == "Enemy")
+                    {
+                        targetedPos = hit.transform.position;
+                        targetColSize = hit.transform.GetComponent<Collider2D>().bounds.size;
+                        targetColSize = targetColSize / 2;
+                        isTempTargeted = true;
+                    }
+                }
+
+                if (mousePosition.x < targetedPos.x - targetColSize.x
+                    || mousePosition.x > targetedPos.x + targetColSize.x
+                    || mousePosition.y < targetedPos.y - targetColSize.y
+                    || mousePosition.y > targetedPos.y + targetColSize.y)
+                {
+                    isTempTargeted = false;
+                    targetedPos = Vector2.zero;
+                    targetColSize = Vector2.zero;
+                }
+
+                if (isTempTargeted)
+                {
+                    selectedCard.Dragged(targetedPos, m_line);
+
+                }
+                else
+                {
+                    selectedCard.Dragged(mousePosition2D, m_line);
+                }
             }
         }
         if(Input.GetMouseButtonUp(0))
         {
-            SetMousePosition();
-
-            RaycastHit2D hit = Physics2D.Raycast(mousePosition, transform.forward, maxDistance);
-            Debug.DrawRay(mousePosition, transform.forward * 10, Color.red, 0.3f);
-            if(hit)
-            {
-                selectedCard.SetTarget(hit.transform.gameObject);
-                diceSManager.activatedCard = selectedCard;
-                battleUIManager.OnDiceSysetm();
-            }
-
             if (isSelected)
             {
+                SetMousePosition();
+
+                RaycastHit2D hit = Physics2D.Raycast(mousePosition, transform.forward, maxDistance);
+                Debug.DrawRay(mousePosition, transform.forward * 10, Color.red, 0.3f);
+                if (hit)
+                {
+                    selectedCard.SetTarget(hit.transform.gameObject);
+                    diceSManager.activatedCard = selectedCard;
+                }
                 isSelected = false;
                 selectedCard = null;
                 line.SetActive(false);
+
+                isTempTargeted = false;
+                targetedPos = Vector2.zero;
+                targetColSize = Vector2.zero;
             }
         }
     }
