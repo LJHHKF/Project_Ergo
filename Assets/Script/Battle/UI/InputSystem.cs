@@ -99,12 +99,12 @@ public class InputSystem : MonoBehaviour
             if(hit)
             {
                 selectedCard.SetTarget(hit.transform.gameObject);
+                diceSManager.activatedCard = selectedCard;
+                battleUIManager.OnDiceSysetm();
             }
 
             if (isSelected)
             {
-                diceSManager.activatedCard = selectedCard;
-                battleUIManager.OnDiceSysetm();
                 isSelected = false;
                 selectedCard = null;
                 line.SetActive(false);
