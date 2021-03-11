@@ -14,7 +14,8 @@ public class Card_Base : MonoBehaviour, ICard
     protected DiceSystemManager diceManager;
     protected BattleUIManager battleUIManager;
     protected bool isThrowed = false;
-
+    protected SpriteRenderer m_sprR;
+    protected BoxCollider2D m_Collider;
 
     [HideInInspector]
     public int posNum = 0; // -1은 묘지, 0은 덱, 1 이상의 수들은 손패
@@ -30,9 +31,19 @@ public class Card_Base : MonoBehaviour, ICard
         }
     }
 
+    protected virtual void OnEnable()
+    {
+        if(m_Collider == null)
+        {
+            m_Collider = gameObject.GetComponent<BoxCollider2D>();
+        }
+        m_Collider.enabled = true;
+    }
+
     protected virtual void Start()
     {
         FindBattleUIManger();
+        m_sprR = gameObject.GetComponent<SpriteRenderer>();
     }
 
     protected virtual void Update()
@@ -54,15 +65,11 @@ public class Card_Base : MonoBehaviour, ICard
     {
         //선택된 카드 투명화, 카드 위치 -> 타겟 위치 선 연결 준비
         //타겟 위치는 업데이트에서 받아올 것.
-        liner.SetLine_Canvas(gameObject.transform, mousePos);
+        liner.SetLine_Worlds(gameObject.transform, mousePos);
     }
 
     public virtual void Use(int diceValue)
     {
-        if (battleUIManager == null)
-        {
-            FindBattleUIManger();
-        }
 
 
         //다이스롤 효과를 앞서 받은 다음에 불려져야 함.
@@ -82,7 +89,15 @@ public class Card_Base : MonoBehaviour, ICard
     public virtual void SetTarget(GameObject input)
     {
         target = input;
-        battleUIManager.OnDiceSysetm();
+
+        if (battleUIManager == null)
+        {
+            FindBattleUIManger();
+        }
+        battleUIManager.OnDiceSysetm(gameObject.transform.position);
+
+        m_sprR.color = new Color(m_sprR.color.r, m_sprR.color.g, m_sprR.color.b, 0);
+        gameObject.GetComponent<BoxCollider2D>().enabled = false;
     }
 
 

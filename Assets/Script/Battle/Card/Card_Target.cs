@@ -19,7 +19,13 @@ public class Card_Target : Card_Base
             livTarget = target.GetComponent<LivingEntity>();
             if (livTarget != null)
             {
-                battleUIManager.OnDiceSysetm();
+                if(battleUIManager == null)
+                {
+                    FindBattleUIManger();
+                }
+                battleUIManager.OnDiceSysetm(gameObject.transform.position);
+                m_sprR.color = new Color(m_sprR.color.r, m_sprR.color.g, m_sprR.color.b, 0);
+                gameObject.GetComponent<BoxCollider2D>().enabled = false;
             }
         }
     }
