@@ -12,6 +12,7 @@ public class Card_Base : MonoBehaviour, ICard
     public string[] cardText;
     protected GameObject target;
     protected DiceSystemManager diceManager;
+    protected BattleUIManager battleUIManager;
     protected bool isThrowed = false;
 
     [HideInInspector]
@@ -28,11 +29,9 @@ public class Card_Base : MonoBehaviour, ICard
         }
     }
 
-
-
     protected virtual void Start()
     {
-        FindDiceManager();
+        FindBattleUIManger();
     }
 
     protected virtual void Update()
@@ -57,21 +56,14 @@ public class Card_Base : MonoBehaviour, ICard
         liner.SetLine(gameObject.transform, mousePos);
     }
 
-    public virtual void Use()
+    public virtual void Use(int diceValue)
     {
-        if (diceManager == null)
+        if (battleUIManager == null)
         {
-            FindDiceManager();
+            FindBattleUIManger();
         }
 
-        if (diceManager != null)
-        {
-            diceManager.ActiveDice(out isThrowed);
-            if (!isThrowed)
-            {
-                //오류처리
-            }
-        }
+
         //다이스롤 효과를 앞서 받은 다음에 불려져야 함.
         //선택된 타겟에 효과 발동
     }
@@ -88,10 +80,12 @@ public class Card_Base : MonoBehaviour, ICard
 
     public virtual void SetTarget(GameObject input)
     {
+        target = input;
     }
 
-    protected void FindDiceManager()
+
+    protected void FindBattleUIManger()
     {
-        diceManager = GameObject.FindGameObjectWithTag("DiceBox").GetComponent<DiceSystemManager>();
+        battleUIManager = GameObject.FindGameObjectWithTag("UIManager").GetComponent<BattleUIManager>();
     }
 }

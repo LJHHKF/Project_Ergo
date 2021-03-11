@@ -39,6 +39,9 @@ public class InputSystem : MonoBehaviour
 
     public float holdingDistance = 5.0f;
 
+    private DiceSystemManager diceSManager;
+    private BattleUIManager battleUIManager;
+
     private void Awake()
     {
         if (instance != this)
@@ -54,6 +57,8 @@ public class InputSystem : MonoBehaviour
     {
         myMainCam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         m_line = line.GetComponent<LineDrawer>();
+        diceSManager = GameObject.FindGameObjectWithTag("DiceBox").GetComponent<DiceSystemManager>();
+        battleUIManager = GameObject.FindGameObjectWithTag("UIManager").GetComponent<BattleUIManager>();
     }
 
     // Update is called once per frame
@@ -70,7 +75,6 @@ public class InputSystem : MonoBehaviour
                 selectedCard = hit.transform.GetComponent<ICard>();
                 if(selectedCard != null)
                 {
-
                     isSelected = true;
                     StartCoroutine(MouseHolding(mousePosition));
                     line.SetActive(true);
@@ -99,8 +103,8 @@ public class InputSystem : MonoBehaviour
 
             if (isSelected)
             {
-                selectedCard.Use(); // 이 부분은 디버깅 단계서 돌려보는 것. 나중에 지워야 함.
-
+                diceSManager.activatedCard = selectedCard;
+                battleUIManager.OnDiceSysetm();
                 isSelected = false;
                 selectedCard = null;
                 line.SetActive(false);

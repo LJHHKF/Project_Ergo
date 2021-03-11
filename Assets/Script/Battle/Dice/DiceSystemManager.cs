@@ -17,6 +17,7 @@ public class DiceSystemManager : MonoBehaviour
     private int cnt_RollEnded = 0;
     private bool isReadyToThrow = true;
     public int resValue { get; set; }
+    public ICard activatedCard { get; set; }
 
     // Start is called before the first frame update
     void Start()
@@ -52,7 +53,7 @@ public class DiceSystemManager : MonoBehaviour
 
     public void ActiveDice(out bool isSucess)
     {
-        if (isReadyToThrow)
+        if (isReadyToThrow && activatedCard != null)
         {
             cnt_RollEnded = 0;
             resValue = 0;
@@ -109,6 +110,9 @@ public class DiceSystemManager : MonoBehaviour
         }
 
         Debug.Log("결과: " + resValue);
+
+        activatedCard.Use(resValue);
+        activatedCard = null;
 
         yield break;
     }
