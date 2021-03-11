@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class InputSystem : MonoBehaviour
 {
@@ -42,6 +44,11 @@ public class InputSystem : MonoBehaviour
 
     public float holdingDistance = 5.0f;
 
+    public Canvas m_cardCanvas;
+    private GraphicRaycaster m_GRay;
+    private PointerEventData m_ped;
+    
+
     private DiceSystemManager diceSManager;
 
     private void Awake()
@@ -60,6 +67,9 @@ public class InputSystem : MonoBehaviour
         myMainCam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         m_line = line.GetComponent<LineDrawer>();
         diceSManager = GameObject.FindGameObjectWithTag("DiceBox").GetComponent<DiceSystemManager>();
+
+        m_GRay = m_cardCanvas.GetComponent<GraphicRaycaster>();
+        m_ped = new PointerEventData(null);
     }
 
     // Update is called once per frame
@@ -71,11 +81,20 @@ public class InputSystem : MonoBehaviour
 
             if (diceSManager.GetIsReadyToThrow())
             {
-                RaycastHit2D hit = Physics2D.Raycast(mousePosition, transform.forward, maxDistance);
-                Debug.DrawRay(mousePosition, transform.forward * 10, Color.red, 0.3f);
-                if (hit)
+                //RaycastHit2D hit = Physics2D.Raycast(mousePosition, transform.forward, maxDistance);
+                //Debug.DrawRay(mousePosition, transform.forward * 10, Color.red, 0.3f);
+
+                List<RaycastResult> results = new List<RaycastResult>();
+                m_GRay.Raycast(m_ped, results);
+                
+                //if (hit)
+                if(results.Count != 0)
                 {
-                    selectedCard = hit.transform.GetComponent<ICard>();
+                    //selectedCard = hit.transform.GetComponent<ICard>();
+                    if(results[0].gameObject.CompareTag("Card"))
+                    {
+                        selectedCard = results[0].gameObject.GetComponent<ICard>();
+                    }
                     if (selectedCard != null)
                     {
                         isSelected = true;
@@ -153,6 +172,7 @@ public class InputSystem : MonoBehaviour
     {
         mousePosition = Input.mousePosition;
         mousePosition = myMainCam.ScreenToWorldPoint(mousePosition);
+        m_ped.position = Input.mousePosition;
     }
 
     IEnumerator MouseHolding(Vector2 prevMousePosition)

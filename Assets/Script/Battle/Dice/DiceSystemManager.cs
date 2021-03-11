@@ -6,9 +6,11 @@ public class DiceSystemManager : MonoBehaviour
 {
     [Header("다이스 설정")]
     public GameObject[] normalDice; //2개 설정하면 됨.
-    //public GameObject sixDice;
+    public GameObject[] sixDice;
+    public int cnt_dice = 2;
     private List<GameObject> normal_listPool;
-    //private List<GameObject> six_listPool;
+    private List<GameObject> six_listPool;
+    private bool isOnSixDice = false;
     public GameObject diceChecker;
     public BattleUIManager battleUIManager;
 
@@ -24,14 +26,18 @@ public class DiceSystemManager : MonoBehaviour
     void Start()
     {
         normal_listPool = new List<GameObject>();
-        for (int i = 0; i < normalDice.Length; i++)
+        six_listPool = new List<GameObject>();
+        for (int i = 0; i < cnt_dice; i++)
         {
             GameObject dice = Instantiate(normalDice[i], gameObject.transform);
             dice.name = "NormalDice_" + (i + 1).ToString("0");
             dice.SetActive(false);
             normal_listPool.Add(dice);
-            
-            //여기서 sixDice도 똑같이 만들고 리스트화하면 됨.
+
+            GameObject sixdice = Instantiate(sixDice[i], gameObject.transform);
+            sixdice.name = "SixDice_" + (i + 1).ToString("0");
+            sixdice.SetActive(false);
+            six_listPool.Add(sixdice);
         }
 
         diceChecker.SetActive(false);
@@ -61,22 +67,44 @@ public class DiceSystemManager : MonoBehaviour
     {
         if (isReadyToThrow && activatedCard != null)
         {
-            battleUIManager.OffDiceSystem();
-            cnt_RollEnded = 0;
-            resValue = 0;
-            isReadyToThrow = false;
-            for (int i = 0; i < normal_listPool.Count; i++)
+            if(isOnSixDice)
             {
-                normal_listPool[i].SetActive(true);
-                normal_listPool[i].transform.position = new Vector3(-2 + (i * 4), 0, -8);
-                normal_listPool[i].transform.localEulerAngles = new Vector3(Random.Range(0f, 360f), Random.Range(0f, 360f), Random.Range(0f, 360f));
-                Rigidbody rb = normal_listPool[i].GetComponent<Rigidbody>();
-                rb.AddForce(transform.up * power);
-                rb.AddTorque(Random.Range(power * rotatePowerRate * 0.5f, power * rotatePowerRate)
-                    , Random.Range(power * rotatePowerRate * 0.5f, power * rotatePowerRate)
-                    , Random.Range(power * rotatePowerRate * 0.5f, power * rotatePowerRate));
+                battleUIManager.OffDiceSystem();
+                cnt_RollEnded = 0;
+                resValue = 0;
+                isReadyToThrow = false;
+                for (int i = 0; i < six_listPool.Count; i++)
+                {
+                    six_listPool[i].SetActive(true);
+                    six_listPool[i].transform.position = new Vector3(-2 + (i * 4), 0, -8);
+                    six_listPool[i].transform.localEulerAngles = new Vector3(Random.Range(0f, 360f), Random.Range(0f, 360f), Random.Range(0f, 360f));
+                    Rigidbody rb = normal_listPool[i].GetComponent<Rigidbody>();
+                    rb.AddForce(transform.up * power);
+                    rb.AddTorque(Random.Range(power * rotatePowerRate * 0.5f, power * rotatePowerRate)
+                        , Random.Range(power * rotatePowerRate * 0.5f, power * rotatePowerRate)
+                        , Random.Range(power * rotatePowerRate * 0.5f, power * rotatePowerRate));
+                }
+                isSucess = true;
             }
-            isSucess = true;
+            else
+            {
+                battleUIManager.OffDiceSystem();
+                cnt_RollEnded = 0;
+                resValue = 0;
+                isReadyToThrow = false;
+                for (int i = 0; i < normal_listPool.Count; i++)
+                {
+                    normal_listPool[i].SetActive(true);
+                    normal_listPool[i].transform.position = new Vector3(-2 + (i * 4), 0, -8);
+                    normal_listPool[i].transform.localEulerAngles = new Vector3(Random.Range(0f, 360f), Random.Range(0f, 360f), Random.Range(0f, 360f));
+                    Rigidbody rb = normal_listPool[i].GetComponent<Rigidbody>();
+                    rb.AddForce(transform.up * power);
+                    rb.AddTorque(Random.Range(power * rotatePowerRate * 0.5f, power * rotatePowerRate)
+                        , Random.Range(power * rotatePowerRate * 0.5f, power * rotatePowerRate)
+                        , Random.Range(power * rotatePowerRate * 0.5f, power * rotatePowerRate));
+                }
+                isSucess = true;
+            }
         }
         else
         {
@@ -103,17 +131,37 @@ public class DiceSystemManager : MonoBehaviour
         }
     }
 
+    public void OnSixDice()
+    {
+        isOnSixDice = true;
+    }
+
     IEnumerator UnActiveDice()
     {
         yield return new WaitForSeconds(1.0f);
         isReadyToThrow = true;
-        for (int i = 0; i < normal_listPool.Count; i++)
+        if (isOnSixDice)
         {
-            normal_listPool[i].GetComponent<DiceManager>().SetResValue();
+            isOnSixDice = false;
+            for (int i = 0; i < six_listPool.Count; i++)
+            {
+                six_listPool[i].GetComponent<DiceManager>().SetResValue();
+            }
+            for (int i = 0; i < six_listPool.Count; i++)
+            {
+                six_listPool[i].SetActive(false);
+            }
         }
-        for (int i = 0; i < normal_listPool.Count; i++)
+        else
         {
-            normal_listPool[i].SetActive(false);
+            for (int i = 0; i < normal_listPool.Count; i++)
+            {
+                normal_listPool[i].GetComponent<DiceManager>().SetResValue();
+            }
+            for (int i = 0; i < normal_listPool.Count; i++)
+            {
+                normal_listPool[i].SetActive(false);
+            }
         }
 
         Debug.Log("결과: " + resValue);

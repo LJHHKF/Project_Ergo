@@ -54,7 +54,7 @@ public class Card_Base : MonoBehaviour, ICard
     {
         //선택된 카드 투명화, 카드 위치 -> 타겟 위치 선 연결 준비
         //타겟 위치는 업데이트에서 받아올 것.
-        liner.SetLine(gameObject.transform, mousePos);
+        liner.SetLine_Canvas(gameObject.transform, mousePos);
     }
 
     public virtual void Use(int diceValue)
