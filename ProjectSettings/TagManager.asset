@@ -10,6 +10,7 @@ TagManager:
   - Enemy
   - InputManager
   - UIManager
+  - Card
   layers:
   - Default
   - TransparentFX
