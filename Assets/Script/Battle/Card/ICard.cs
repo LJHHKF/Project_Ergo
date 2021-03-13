@@ -7,8 +7,14 @@ public interface ICard
     void Dragged(Vector2 mousePos, LineDrawer liner);
 
     void Use(int diceValue);
-    void UnUse();
 
     void SetTarget(GameObject input);
 
+    void SortingCard(int usedRP);
+
+    bool GetIsNonTarget();
+
+    int GetRenderPriority();
+
+    int GetCardID();
 }
