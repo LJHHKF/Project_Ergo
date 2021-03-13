@@ -10,11 +10,11 @@ public interface ICard
 
     void SetTarget(GameObject input);
 
-    void SortingCard(int usedRP);
+    void SortingCard(int usedRP, int cntCards);
 
     bool GetIsNonTarget();
 
-    int GetRenderPriority();
+    void SetRenderPriority(int value);
 
     int GetCardID();
 }
