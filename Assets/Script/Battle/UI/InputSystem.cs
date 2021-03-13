@@ -148,14 +148,22 @@ public class InputSystem : MonoBehaviour
         {
             if (isSelected)
             {
-                SetMousePosition();
-
-                RaycastHit2D hit = Physics2D.Raycast(mousePosition, transform.forward, maxDistance);
-                Debug.DrawRay(mousePosition, transform.forward * 10, Color.red, 0.3f);
-                if (hit)
+                if (selectedCard.GetIsNonTarget())
                 {
-                    selectedCard.SetTarget(hit.transform.gameObject);
+                    selectedCard.SetTarget(null);
                     diceSManager.activatedCard = selectedCard;
+                }
+                else
+                {
+                    SetMousePosition();
+
+                    RaycastHit2D hit = Physics2D.Raycast(mousePosition, transform.forward, maxDistance);
+                    Debug.DrawRay(mousePosition, transform.forward * 10, Color.red, 0.3f);
+                    if (hit)
+                    {
+                        selectedCard.SetTarget(hit.transform.gameObject);
+                        diceSManager.activatedCard = selectedCard;
+                    }
                 }
                 isSelected = false;
                 selectedCard = null;
