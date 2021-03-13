@@ -11,6 +11,9 @@ TagManager:
   - InputManager
   - UIManager
   - Card
+  - CDeck
+  - CManager
+  - TurnManager
   layers:
   - Default
   - TransparentFX

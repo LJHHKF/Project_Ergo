@@ -13,7 +13,6 @@ public class LivingEntity : MonoBehaviour, IDamageable
     public bool dead { get; protected set; }
     
     public event Action onDeath;
-    public event Action turnStart;
 
     protected virtual void OnEnable()
     {
@@ -85,13 +84,5 @@ public class LivingEntity : MonoBehaviour, IDamageable
             onDeath();
         }
         dead = true;
-    }
-
-    public virtual void GetTurn()
-    {
-        if (turnStart != null)
-        {
-            turnStart();
-        }
     }
 }

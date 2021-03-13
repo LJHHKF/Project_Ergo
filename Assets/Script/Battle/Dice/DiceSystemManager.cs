@@ -22,6 +22,9 @@ public class DiceSystemManager : MonoBehaviour
     public int resValue { get; set; }
     public ICard activatedCard { get; set; }
 
+    [Header("그 외")]
+    public TurnManager m_TurnM;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -128,6 +131,7 @@ public class DiceSystemManager : MonoBehaviour
         {
             cnt_RollEnded = 0;
             StartCoroutine(UnActiveDice());
+            
         }
     }
 

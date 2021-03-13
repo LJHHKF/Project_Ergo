@@ -31,6 +31,7 @@ public class Card_NonTarget : Card_Base
         ready = true;
         for(int i = 0; i < m_sprRs.Length; i++)
             m_sprRs[i].color = new Color(m_sprRs[i].color.r, m_sprRs[i].color.g, m_sprRs[i].color.b, (m_sprRs[i].color.a * readyAlpha));
+        costText.color = new Color(costText.color.r, costText.color.g, costText.color.b, (costText.color.a * readyAlpha));
     }
 
     protected virtual void UnReadyToUse()
@@ -38,5 +39,6 @@ public class Card_NonTarget : Card_Base
         ready = false;
         for(int i = 0; i < m_sprRs.Length; i++)
             m_sprRs[i].color = new Color(m_sprRs[i].color.r, m_sprRs[i].color.g, m_sprRs[i].color.b, (m_sprRs[i].color.a / readyAlpha));
+        costText.color = new Color(costText.color.r, costText.color.g, costText.color.b, (costText.color.a / readyAlpha));
     }
 }
