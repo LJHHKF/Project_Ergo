@@ -7,9 +7,13 @@ public class Enemy_Base : LivingEntity
     public int monsterIndex = 0;
     public int monsterFieldIndex { get; set; }
     // Start is called before the first frame update
-    protected virtual void Start()
+    protected override void Start()
     {
         monsterFieldIndex = 0; //제작 중 디버그용 임시코드.
+
+        base.Start();
+        m_turnM.firstTurn += () => ResetGardPoint();
+        m_turnM.playerTurnEnd += () => ResetGardPoint();
     }
 
     // Update is called once per frame

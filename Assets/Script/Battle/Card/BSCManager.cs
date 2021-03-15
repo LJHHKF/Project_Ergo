@@ -25,6 +25,8 @@ public class BSCManager : MonoBehaviour
 
         m_turnM = GameObject.FindGameObjectWithTag("TurnManager").GetComponent<TurnManager>();
         m_turnM.battleEnd += () => CleanUpCards();
+        m_turnM.playerTurnEnd += () => UndoHandsTaransparency();
+        m_turnM.playerTurnEnd += () => SortingHand(0);
     }
 
     private void OnDestroy()
@@ -43,6 +45,11 @@ public class BSCManager : MonoBehaviour
             temp.SetRenderPriority(cntHand);
 
             added.SetActive(true);
+
+            if(m_turnM.GetIsFirstActivated())
+            {
+                SortingHand(0);
+            }
         }
     }
     
@@ -71,6 +78,7 @@ public class BSCManager : MonoBehaviour
         }
         moved.transform.SetParent(t_grave);
         list_grave.Add(moved);
+        SortingHand(moved.GetComponent<ICard>().GetRenderPriority());
         moved.SetActive(false);
 
         m_turnM.OnTurnStart();
@@ -99,6 +107,22 @@ public class BSCManager : MonoBehaviour
         for (int i = 0; i < list_grave.Count; i++)
         {
             m_Deck.MoveToDeck(list_grave[i]);
+        }
+    }
+
+    public void DoHandsTransparency()
+    {
+        for(int i = 0; i < list_hand.Count; i++)
+        {
+            list_hand[i].GetComponent<ICard>().DoTransparency();
+        }
+    }
+
+    public void UndoHandsTaransparency()
+    {
+        for(int i = 0; i < list_hand.Count; i++)
+        {
+            list_hand[i].GetComponent<ICard>().UndoTransparency();
         }
     }
 }

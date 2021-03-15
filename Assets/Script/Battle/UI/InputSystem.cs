@@ -161,8 +161,11 @@ public class InputSystem : MonoBehaviour
                     Debug.DrawRay(mousePosition, transform.forward * 10, Color.red, 0.3f);
                     if (hit)
                     {
-                        selectedCard.SetTarget(hit.transform.gameObject);
-                        diceSManager.activatedCard = selectedCard;
+                        if (hit.collider.CompareTag("Enemy"))
+                        {
+                            selectedCard.SetTarget(hit.transform.gameObject);
+                            diceSManager.activatedCard = selectedCard;
+                        }
                     }
                 }
                 isSelected = false;
