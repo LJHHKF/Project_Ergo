@@ -11,6 +11,7 @@ public class LivingEntity : MonoBehaviour, IDamageable
     public int regenGardPoint = 0;
     public int gardPoint { get; protected set; }
     public bool dead { get; protected set; }
+    protected TurnManager m_turnM;
     
     public event Action onDeath;
 
@@ -19,6 +20,11 @@ public class LivingEntity : MonoBehaviour, IDamageable
         dead = false;
         health = startingHealth;
         gardPoint = regenGardPoint;
+    }
+
+    protected virtual void Start()
+    {
+        m_turnM = GameObject.FindGameObjectWithTag("TurnManager").GetComponent<TurnManager>();
     }
 
     public virtual void OnDamage(int damage)

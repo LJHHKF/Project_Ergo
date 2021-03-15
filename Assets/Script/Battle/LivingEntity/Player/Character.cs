@@ -6,9 +6,11 @@ public class Character : LivingEntity
 {
 
     // Start is called before the first frame update
-    void Start()
+    protected override void Start()
     {
-        
+        base.Start();
+        m_turnM.turnStart += () => ResetGardPoint();
+        m_turnM.firstTurn += () => ResetGardPoint();
     }
 
     // Update is called once per frame

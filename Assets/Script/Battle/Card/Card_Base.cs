@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class Card_Base : MonoBehaviour, ICard
 {
@@ -19,7 +20,7 @@ public class Card_Base : MonoBehaviour, ICard
     public bool isNonTarget = false;
     public Sprite cardImage;
     [TextArea]
-    public string[] cardText;
+    public string cardText;
 
     //[Header("renderPriority Setting")]
     protected int renderPriority = 1;
@@ -32,8 +33,11 @@ public class Card_Base : MonoBehaviour, ICard
     protected bool isThrowed = false;
     protected SpriteRenderer[] m_sprRs = new SpriteRenderer[2];
     protected BoxCollider2D m_Collider;
-    protected TextMesh costText;
-    protected MeshRenderer costMeshR;
+    protected Canvas textCanvas;
+    protected TextMeshProUGUI text_cost;
+    protected TextMeshProUGUI text_plain;
+    protected TextMeshProUGUI text_name;
+    protected TextMeshProUGUI[] array_text;
     protected BSCManager m_cardM;
     protected TurnManager m_turnM;
 
@@ -47,6 +51,31 @@ public class Card_Base : MonoBehaviour, ICard
         {
             m_Position = gameObject.transform.position;
         }
+    }
+
+    protected virtual void Awake()
+    {
+        if (textCanvas == null)
+        {
+            textCanvas = gameObject.transform.Find("TextCanvas").GetComponent<Canvas>();
+            text_cost = textCanvas.gameObject.transform.Find("CostText").GetComponent<TextMeshProUGUI>();
+            text_plain = textCanvas.gameObject.transform.Find("CardText").GetComponent<TextMeshProUGUI>();
+            text_name = textCanvas.gameObject.transform.Find("CardName").GetComponent<TextMeshProUGUI>();
+
+            array_text = textCanvas.gameObject.GetComponents<TextMeshProUGUI>();
+        }
+
+        text_cost.text = cost.ToString();
+        string temp = "고정치()";
+        string temp2 = "고정치(" + fixP.ToString() + ")";
+        string temp3 = "(변동치)";
+        string temp4 = flucPRate.ToString();
+        cardText = cardText.Replace(temp, temp2);
+        cardText = cardText.Replace(temp3, temp4);
+        text_plain.text = cardText;
+
+        FindBSCardManager();
+        m_cardM.SetCardSortingValue(out rotP, out moveP);
     }
 
     protected virtual void OnEnable()
@@ -65,25 +94,28 @@ public class Card_Base : MonoBehaviour, ICard
         {
             m_sprRs[1] = gameObject.transform.Find("CardImage").GetComponent<SpriteRenderer>();
         }
-        if (costText == null)
+        if (textCanvas == null)
         {
-            costText = gameObject.transform.Find("CostText").GetComponent<TextMesh>();
+            textCanvas = gameObject.transform.Find("TextCanvas").GetComponent<Canvas>();
+            text_cost = textCanvas.gameObject.transform.Find("CostText").GetComponent<TextMeshProUGUI>();
+            text_plain = textCanvas.gameObject.transform.Find("CardText").GetComponent<TextMeshProUGUI>();
+            text_name = textCanvas.gameObject.transform.Find("CardName").GetComponent<TextMeshProUGUI>();
+
+            array_text = textCanvas.gameObject.GetComponents<TextMeshProUGUI>();
         }
 
-        for (int i = 0; i < m_sprRs.Length; i++)
-            m_sprRs[i].color = new Color(m_sprRs[i].color.r, m_sprRs[i].color.g, m_sprRs[i].color.b, 1.0f);
-        costText.color = new Color(costText.color.r, costText.color.g, costText.color.b, 1.0f);
+        UndoTransparency();
+
     }
 
     protected virtual void Start()
     {
         FindBattleUIManger();
         FindTurnManager();
-        FindBSCardManager();
-        costMeshR = costText.gameObject.GetComponent<MeshRenderer>();
-        costMeshR.sortingLayerName = m_sprRs[0].sortingLayerName;
-        costText.text = cost.ToString();
-        m_cardM.SetCardSortingValue(out rotP, out moveP);
+        //FindBSCardManager();
+
+        m_sprRs[0] = gameObject.GetComponent<SpriteRenderer>();
+        m_sprRs[1] = gameObject.transform.Find("CardImage").GetComponent<SpriteRenderer>();
     }
 
 
@@ -130,11 +162,7 @@ public class Card_Base : MonoBehaviour, ICard
             FindBattleUIManger();
         }
         battleUIManager.OnDiceSysetm(gameObject.transform.position);
-
-        for (int i = 0; i < m_sprRs.Length; i++)
-            m_sprRs[i].color = new Color(m_sprRs[i].color.r, m_sprRs[i].color.g, m_sprRs[i].color.b, 0);
-        costText.color = new Color(costText.color.r, costText.color.g, costText.color.b, 0);
-        gameObject.GetComponent<BoxCollider2D>().enabled = false;
+        m_Collider.enabled = false;
     }
 
 
@@ -157,16 +185,22 @@ public class Card_Base : MonoBehaviour, ICard
     {
         int middle = Mathf.CeilToInt(cntCards / 2.0f);
 
-        if(renderPriority > usedRP && usedRP != 0) // 0은 초기화 때만.
+        if(renderPriority > usedRP && usedRP != 0) // 0은 초기화나 턴 시작 시
         {
             renderPriority -= 1;
         }
+
         m_sprRs[0].sortingOrder = renderPriority - 1;
         for (int i = 1; i < m_sprRs.Length; i++)
             m_sprRs[i].sortingOrder = renderPriority;
-        costMeshR.sortingOrder = renderPriority;
-        gameObject.transform.localPosition = new Vector2(((renderPriority - middle) * moveP), 0);
-        gameObject.transform.localRotation = Quaternion.Euler(new Vector3(0, 0, (middle - renderPriority) * rotP));
+        textCanvas.sortingOrder = renderPriority - 1;
+
+        Vector2 tempV = new Vector2(((renderPriority - middle) * moveP), 0);
+        Quaternion tempQ = Quaternion.Euler(new Vector3(0, 0, (middle - renderPriority) * rotP));
+
+        gameObject.transform.localPosition = tempV;
+        gameObject.transform.localRotation = tempQ;
+
     }
 
     public bool GetIsNonTarget()
@@ -179,8 +213,33 @@ public class Card_Base : MonoBehaviour, ICard
         renderPriority = value;
     }
 
+    public int GetRenderPriority()
+    {
+        return renderPriority;
+    }
+
     public int GetCardID()
     {
         return cardID;
+    }
+
+    public void DoTransparency()
+    {
+        for (int i = 0; i < m_sprRs.Length; i++)
+            m_sprRs[i].color = new Color(m_sprRs[i].color.r, m_sprRs[i].color.g, m_sprRs[i].color.b, 0);
+        //for (int i = 0; i < array_text.Length; i++)   // 어쩐지 배열식 접근은 안됨. public 으로 접근해도 막힘. 개별로 할 것.
+        //    array_text[i].enabled = false;
+        text_cost.color = new Color(text_cost.color.r, text_cost.color.g, text_cost.color.b, 0);
+        text_plain.color = new Color(text_plain.color.r, text_plain.color.g, text_plain.color.b, 0);
+        text_name.color = new Color(text_name.color.r, text_name.color.g, text_name.color.b, 0);
+    }
+
+    public void UndoTransparency()
+    {
+        for (int i = 0; i < m_sprRs.Length; i++)
+            m_sprRs[i].color = new Color(m_sprRs[i].color.r, m_sprRs[i].color.g, m_sprRs[i].color.b, 1.0f);
+        text_cost.color = new Color(text_cost.color.r, text_cost.color.g, text_cost.color.b, 1.0f);
+        text_plain.color = new Color(text_plain.color.r, text_plain.color.g, text_plain.color.b, 1.0f);
+        text_name.color = new Color(text_name.color.r, text_name.color.g, text_name.color.b, 1.0f);
     }
 }

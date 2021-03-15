@@ -18,9 +18,7 @@ public class DeckManager : MonoBehaviour
 
     private void Start()
     {
-        m_turnM = GameObject.FindGameObjectWithTag("TurnManager").GetComponent<TurnManager>();
-        m_turnM.firstTurn += () => PullingInDeck_FirstTurn();
-        m_turnM.turnStart += () => PullingInDeck();
+        //SetTurnManager();
     }
 
     private void OnDestroy()
@@ -77,8 +75,8 @@ public class DeckManager : MonoBehaviour
         if(temp != null)
         {
             moved.transform.SetParent(gameObject.transform);
-            list_deck.Add(moved);
             moved.SetActive(false);
+            list_deck.Add(moved);
         }
     }
 
@@ -90,8 +88,8 @@ public class DeckManager : MonoBehaviour
             //여기에 같은 ID의 카드가 3장 이상이면~ 같은 예외 조항 추가해야 함.
 
             added.transform.SetParent(gameObject.transform);
-            list_deck.Add(added);
             added.SetActive(false);
+            list_deck.Add(added);
         }
     }
 
@@ -101,5 +99,19 @@ public class DeckManager : MonoBehaviour
         {
             m_BSCManager = GameObject.FindGameObjectWithTag("CManager").GetComponent<BSCManager>();
         }
+    }
+
+    //public void SetTurnManager()
+    //{
+    //    m_turnM = GameObject.FindGameObjectWithTag("TurnManager").GetComponent<TurnManager>();
+    //    m_turnM.firstTurn += () => PullingInDeck_FirstTurn();
+    //    m_turnM.turnStart += () => PullingInDeck();
+    //}
+
+    public void SetTurnManager(TurnManager tm)
+    {
+        m_turnM = tm;
+        m_turnM.firstTurn += () => PullingInDeck_FirstTurn();
+        m_turnM.turnStart += () => PullingInDeck();
     }
 }

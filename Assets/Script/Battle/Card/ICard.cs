@@ -16,5 +16,11 @@ public interface ICard
 
     void SetRenderPriority(int value);
 
+    int GetRenderPriority();
+
     int GetCardID();
+
+    void DoTransparency();
+
+    void UndoTransparency();
 }

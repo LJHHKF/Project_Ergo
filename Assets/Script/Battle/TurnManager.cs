@@ -14,12 +14,16 @@ public class TurnManager : MonoBehaviour
     public event Action battleEnd;
 
     private bool isFirstActived = false;
+    private DeckManager m_deckM;
 
     private void Awake()
     {
-        DontDestroyOnLoad(gameObject);
-
         battleEnd += () => isFirstActived = true;
+    }
+
+    private void Start()
+    {
+        GameObject.FindGameObjectWithTag("CDeck").GetComponent<DeckManager>().SetTurnManager(this);
     }
 
     // Update is called once per frame
@@ -62,5 +66,10 @@ public class TurnManager : MonoBehaviour
         {
             battleEnd();
         }
+    }
+
+    public bool GetIsFirstActivated()
+    {
+        return isFirstActived;
     }
 }
