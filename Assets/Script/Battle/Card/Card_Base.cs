@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System;
 
 public class Card_Base : MonoBehaviour, ICard
 {
@@ -17,7 +18,6 @@ public class Card_Base : MonoBehaviour, ICard
     public int fixP = 1;
     public float flucPRate = 1.0f;
     public Type type;
-    public bool isNonTarget = false;
     public Sprite cardImage;
     [TextArea]
     public string cardText;
@@ -26,6 +26,7 @@ public class Card_Base : MonoBehaviour, ICard
     protected int renderPriority = 1;
     protected float rotP;
     protected float moveP;
+    protected bool isNonTarget = false;
 
     protected GameObject target;
     protected DiceSystemManager diceManager;
@@ -40,6 +41,10 @@ public class Card_Base : MonoBehaviour, ICard
     protected TextMeshProUGUI[] array_text;
     protected BSCManager m_cardM;
     protected TurnManager m_turnM;
+
+    public delegate void UseHandler(int dicevalue);
+    public event UseHandler use;
+    //protected int d_Value;
 
     public Vector2 m_Position
     {
@@ -140,6 +145,7 @@ public class Card_Base : MonoBehaviour, ICard
 
     public virtual void Use(int diceValue)
     {
+        use(diceValue);
         m_cardM.MoveToGrave(gameObject);
         if(m_turnM == null)
         {
@@ -162,9 +168,25 @@ public class Card_Base : MonoBehaviour, ICard
             FindBattleUIManger();
         }
         battleUIManager.OnDiceSysetm(gameObject.transform.position);
+        if (m_cardM == null)
+        {
+            FindBSCardManager();
+        }
+        m_cardM.DoHandsTransparency();
         m_Collider.enabled = false;
     }
 
+    public virtual GameObject GetTarget()
+    {
+        return target;
+    }
+
+
+    public void GetCardUseInfo(out int o_fixP, out float o_flucPRate)
+    {
+        o_fixP = fixP;
+        o_flucPRate = flucPRate;
+    }
 
     protected void FindBattleUIManger()
     {
@@ -200,7 +222,6 @@ public class Card_Base : MonoBehaviour, ICard
 
         gameObject.transform.localPosition = tempV;
         gameObject.transform.localRotation = tempQ;
-
     }
 
     public bool GetIsNonTarget()

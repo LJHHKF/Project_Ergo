@@ -9,8 +9,8 @@ public class Character : LivingEntity
     protected override void Start()
     {
         base.Start();
-        m_turnM.turnStart += () => ResetGardPoint();
-        m_turnM.firstTurn += () => ResetGardPoint();
+        m_turnM.turnStart += () => ResetGuardPoint();
+        m_turnM.firstTurn += () => ResetGuardPoint();
     }
 
     // Update is called once per frame
@@ -19,10 +19,10 @@ public class Character : LivingEntity
         
     }
 
-    public override void GetGardPoint(int GetValue)
+    public override void GetGuardPoint(int GetValue)
     {
-        base.GetGardPoint(GetValue);
+        base.GetGuardPoint(GetValue);
         Debug.Log("플레이어가 가드 포인트를 획득했습니다. 획득치:" + GetValue);
-        Debug.Log("플레이어의 현재 가드 포인트치:" + gardPoint);
+        Debug.Log("플레이어의 현재 가드 포인트치:" + GuardPoint);
     }
 }
