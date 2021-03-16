@@ -10,6 +10,12 @@ public class Card_NonTarget : Card_Base
 
     protected bool ready = false;
 
+    protected override void Awake()
+    {
+        base.Awake();
+        isNonTarget = true;
+    }
+
     public override void Dragged(Vector2 mousePos, LineDrawer liner)
     {
         base.Dragged(mousePos, liner);

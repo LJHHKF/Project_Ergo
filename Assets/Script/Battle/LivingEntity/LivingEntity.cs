@@ -8,8 +8,8 @@ public class LivingEntity : MonoBehaviour, IDamageable
     public int startingHealth = 100;
     public int fullHealth = 100;
     public int health { get; protected set; }
-    public int regenGardPoint = 0;
-    public int gardPoint { get; protected set; }
+    public int regenGuardPoint = 0;
+    public int GuardPoint { get; protected set; }
     public bool dead { get; protected set; }
     protected TurnManager m_turnM;
     
@@ -19,7 +19,7 @@ public class LivingEntity : MonoBehaviour, IDamageable
     {
         dead = false;
         health = startingHealth;
-        gardPoint = regenGardPoint;
+        GuardPoint = regenGuardPoint;
     }
 
     protected virtual void Start()
@@ -29,12 +29,12 @@ public class LivingEntity : MonoBehaviour, IDamageable
 
     public virtual void OnDamage(int damage)
     {
-        if (gardPoint > 0)
+        if (GuardPoint > 0)
         {
-            gardPoint -= damage;
-            if (gardPoint < 0)
+            GuardPoint -= damage;
+            if (GuardPoint < 0)
             {
-                damage = Mathf.Abs(gardPoint);
+                damage = Mathf.Abs(GuardPoint);
             }
             else
             {
@@ -42,7 +42,7 @@ public class LivingEntity : MonoBehaviour, IDamageable
             }
         }
         
-        if (gardPoint <= 0)
+        if (GuardPoint <= 0)
         {
             health -= damage;
         }
@@ -73,14 +73,14 @@ public class LivingEntity : MonoBehaviour, IDamageable
         }
     }
 
-    public virtual void GetGardPoint(int GetValue)
+    public virtual void GetGuardPoint(int GetValue)
     {
-        gardPoint += GetValue;
+        GuardPoint += GetValue;
     }
 
-    public void ResetGardPoint()
+    public void ResetGuardPoint()
     {
-        gardPoint = regenGardPoint;
+        GuardPoint = regenGuardPoint;
     }
 
     public virtual void Die()

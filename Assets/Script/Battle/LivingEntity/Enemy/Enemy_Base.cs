@@ -12,8 +12,8 @@ public class Enemy_Base : LivingEntity
         monsterFieldIndex = 0; //제작 중 디버그용 임시코드.
 
         base.Start();
-        m_turnM.firstTurn += () => ResetGardPoint();
-        m_turnM.playerTurnEnd += () => ResetGardPoint();
+        m_turnM.firstTurn += () => ResetGuardPoint();
+        m_turnM.playerTurnEnd += () => ResetGuardPoint();
     }
 
     // Update is called once per frame
