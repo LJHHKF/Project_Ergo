@@ -167,7 +167,7 @@ public class Card_Base : MonoBehaviour, ICard
         {
             FindBattleUIManger();
         }
-        battleUIManager.OnDiceSysetm(gameObject.transform.position);
+        battleUIManager.OnDiceSysetm();
         if (m_cardM == null)
         {
             FindBSCardManager();
