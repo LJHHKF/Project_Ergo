@@ -26,11 +26,11 @@ public class BattleUIManager : MonoBehaviour
         
     }
 
-    public void OnDiceSysetm(Vector2 cardPos)
+    public void OnDiceSysetm()
     {
         forDice.SetActive(true);
-        cardPos = myMainCam.WorldToScreenPoint(cardPos);
-        diceRect.position = cardPos;
+        //cardPos = myMainCam.WorldToScreenPoint(cardPos);
+        //diceRect.position = cardPos;
     }
 
     public void OffDiceSystem()

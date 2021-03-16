@@ -70,16 +70,16 @@ public class DiceSystemManager : MonoBehaviour
     {
         if (isReadyToThrow && activatedCard != null)
         {
-            if(isOnSixDice)
+            battleUIManager.OffDiceSystem();
+            cnt_RollEnded = 0;
+            resValue = 0;
+            isReadyToThrow = false;
+            if (isOnSixDice)
             {
-                battleUIManager.OffDiceSystem();
-                cnt_RollEnded = 0;
-                resValue = 0;
-                isReadyToThrow = false;
                 for (int i = 0; i < six_listPool.Count; i++)
                 {
                     six_listPool[i].SetActive(true);
-                    six_listPool[i].transform.position = new Vector3(-2 + (i * 4), gameObject.transform.position.y, -8);
+                    six_listPool[i].transform.position = new Vector3(-2 + (i * 4), gameObject.transform.position.y, -7);
                     six_listPool[i].transform.localEulerAngles = new Vector3(Random.Range(0f, 360f), Random.Range(0f, 360f), Random.Range(0f, 360f));
                     Rigidbody rb = normal_listPool[i].GetComponent<Rigidbody>();
                     rb.AddForce(transform.up * power);
@@ -87,18 +87,13 @@ public class DiceSystemManager : MonoBehaviour
                         , Random.Range(power * rotatePowerRate * 0.5f, power * rotatePowerRate)
                         , Random.Range(power * rotatePowerRate * 0.5f, power * rotatePowerRate));
                 }
-                isSucess = true;
             }
             else
             {
-                battleUIManager.OffDiceSystem();
-                cnt_RollEnded = 0;
-                resValue = 0;
-                isReadyToThrow = false;
                 for (int i = 0; i < normal_listPool.Count; i++)
                 {
                     normal_listPool[i].SetActive(true);
-                    normal_listPool[i].transform.position = new Vector3(-2 + (i * 4), gameObject.transform.position.y, -8);
+                    normal_listPool[i].transform.position = new Vector3(-2 + (i * 4), gameObject.transform.position.y, -7);
                     normal_listPool[i].transform.localEulerAngles = new Vector3(Random.Range(0f, 360f), Random.Range(0f, 360f), Random.Range(0f, 360f));
                     Rigidbody rb = normal_listPool[i].GetComponent<Rigidbody>();
                     rb.AddForce(transform.up * power);
@@ -106,8 +101,9 @@ public class DiceSystemManager : MonoBehaviour
                         , Random.Range(power * rotatePowerRate * 0.5f, power * rotatePowerRate)
                         , Random.Range(power * rotatePowerRate * 0.5f, power * rotatePowerRate));
                 }
-                isSucess = true;
+
             }
+            isSucess = true;
         }
         else
         {
