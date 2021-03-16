@@ -47,7 +47,7 @@ public class TurnManager : MonoBehaviour
         }
     }
 
-    public void OnPlayerTurnEnd()
+    public void OnPlayerTurnEnd() // UI Btn에 연결되어 있음. 참조 0이라도 상관x.
     {
         if (playerTurnEnd != null)
         {

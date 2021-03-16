@@ -1,4 +1,6 @@
-﻿using System;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 
@@ -91,4 +93,12 @@ public class LivingEntity : MonoBehaviour, IDamageable
         }
         dead = true;
     }
+
+    protected IEnumerator DelayedUnActived(float sec)
+    {
+        yield return new WaitForSeconds(sec);
+        gameObject.SetActive(false);
+        yield break;
+    }
+
 }

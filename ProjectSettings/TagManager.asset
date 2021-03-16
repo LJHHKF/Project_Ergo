@@ -14,6 +14,8 @@ TagManager:
   - CDeck
   - CManager
   - TurnManager
+  - CostManager
+  - EnemiesManager
   layers:
   - Default
   - TransparentFX

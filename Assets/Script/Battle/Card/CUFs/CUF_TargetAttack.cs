@@ -13,8 +13,9 @@ public class CUF_TargetAttack : CUF_Base
         myCard.use += Use;
     }
 
-    void Use(int diceValue)
+    public override void Use(int diceValue)
     {
+        dv = diceValue;
         target = myCard.GetTarget();
         LivingEntity liv_target = target.GetComponent<LivingEntity>();
         if(liv_target == null)
@@ -32,5 +33,10 @@ public class CUF_TargetAttack : CUF_Base
             dmg = fixP + Mathf.RoundToInt(diceValue * flucPRate);
 
         liv_target.OnDamage(dmg);
+    }
+
+    public override void Use()
+    {
+        Use(dv);
     }
 }

@@ -11,8 +11,9 @@ public class CUF_Guard : CUF_Base
         myCard.use += Use;
     }
 
-    void Use(int diceValue)
+    public override void Use(int diceValue)
     {
+        dv = diceValue;
         target = GameObject.FindGameObjectWithTag("Player").gameObject;
         LivingEntity liv_target = target.GetComponent<LivingEntity>();
         if(liv_target == null)
@@ -31,5 +32,9 @@ public class CUF_Guard : CUF_Base
 
 
         liv_target.GetGuardPoint(gv);
+    }
+    public override void Use()
+    {
+        Use(dv);
     }
 }

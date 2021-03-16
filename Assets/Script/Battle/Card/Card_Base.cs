@@ -27,6 +27,7 @@ public class Card_Base : MonoBehaviour, ICard
     protected float rotP;
     protected float moveP;
     protected bool isNonTarget = false;
+    protected bool ready = true;
 
     protected GameObject target;
     protected DiceSystemManager diceManager;
@@ -40,10 +41,11 @@ public class Card_Base : MonoBehaviour, ICard
     protected TextMeshProUGUI text_name;
     protected TextMeshProUGUI[] array_text;
     protected BSCManager m_cardM;
-    protected TurnManager m_turnM;
+    protected CostManager m_costM;
 
     public delegate void UseHandler(int dicevalue);
     public event UseHandler use;
+    public event Action sub_use;
     //protected int d_Value;
 
     public Vector2 m_Position
@@ -116,18 +118,28 @@ public class Card_Base : MonoBehaviour, ICard
     protected virtual void Start()
     {
         FindBattleUIManger();
-        FindTurnManager();
-        //FindBSCardManager();
+        FindCostManager();
 
         m_sprRs[0] = gameObject.GetComponent<SpriteRenderer>();
         m_sprRs[1] = gameObject.transform.Find("CardImage").GetComponent<SpriteRenderer>();
+
+        m_Collider.enabled = true;
     }
 
 
-    //public virtual ICard Selected()
-    //{
-    //    return this;
-    //}
+    public virtual ICard Selected()
+    {
+        if (m_costM.cost < cost)
+        {
+            //실패처리 (붉은색 테두리 처리)
+            Debug.LogError("코스트가 (" + (m_costM.cost - cost) + ")만큼 모자랍니다.");
+            return null;
+        }
+        else
+        {
+            return this;
+        }
+    }
 
     public virtual void Holded()
     {
@@ -145,13 +157,31 @@ public class Card_Base : MonoBehaviour, ICard
 
     public virtual void Use(int diceValue)
     {
-        use(diceValue);
-        m_cardM.MoveToGrave(gameObject);
-        if(m_turnM == null)
+        if (m_costM == null)
         {
-            FindTurnManager();
+            FindCostManager();
         }
-        m_turnM.OnPlayerTurnEnd();
+        if (m_costM.cost < cost) // 보험삼아 넣어둔 곳
+        {
+            return;
+        }
+
+        m_costM.cost -= cost;
+        use(diceValue);
+
+        if (sub_use != null)
+        {
+            sub_use();
+        }
+
+
+        if (m_cardM == null)
+        {
+            FindBSCardManager();
+        }
+        m_cardM.MoveToGrave(gameObject);
+
+        DoTransparency();
     }
 
     protected void DrawLine()
@@ -162,6 +192,17 @@ public class Card_Base : MonoBehaviour, ICard
     public virtual void SetTarget(GameObject input)
     {
         target = input;
+
+        if(isNonTarget)
+        {
+            if (target != null)
+                return;
+        }
+        else
+        {
+            if (target.GetComponent<LivingEntity>() == null)
+                return;
+        }
 
         if (battleUIManager == null)
         {
@@ -188,6 +229,11 @@ public class Card_Base : MonoBehaviour, ICard
         o_flucPRate = flucPRate;
     }
 
+    public bool GetReady()
+    {
+        return ready;
+    }
+
     protected void FindBattleUIManger()
     {
         battleUIManager = GameObject.FindGameObjectWithTag("UIManager").GetComponent<BattleUIManager>();
@@ -198,9 +244,9 @@ public class Card_Base : MonoBehaviour, ICard
         m_cardM = GameObject.FindGameObjectWithTag("CManager").GetComponent<BSCManager>();
     }
 
-    protected void FindTurnManager()
+    protected void FindCostManager()
     {
-        m_turnM = GameObject.FindGameObjectWithTag("TurnManager").GetComponent<TurnManager>();
+        m_costM = GameObject.FindGameObjectWithTag("CostManager").GetComponent<CostManager>();
     }
 
     public void SortingCard(int usedRP, int cntCards)
