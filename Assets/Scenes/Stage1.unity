@@ -2184,6 +2184,7 @@ MonoBehaviour:
   cp_forwardS: {fileID: 626512514}
   cp_backwardS: {fileID: 779272820}
   battleUIManager: {fileID: 2097164265}
+  m_DiceManager: {fileID: 581166280}
   spGap: 0.05
   cpGap: 0.1
   gaugePower: 1

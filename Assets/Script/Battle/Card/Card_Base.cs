@@ -212,9 +212,9 @@ public class Card_Base : MonoBehaviour, ICard
             renderPriority -= 1;
         }
 
-        m_sprRs[0].sortingOrder = renderPriority - 1;
-        for (int i = 1; i < m_sprRs.Length; i++)
-            m_sprRs[i].sortingOrder = renderPriority;
+        //m_sprRs[0].sortingOrder = renderPriority - 1;
+        for (int i = 0; i < m_sprRs.Length; i++)
+            m_sprRs[i].sortingOrder = renderPriority -1;
         textCanvas.sortingOrder = renderPriority - 1;
 
         Vector2 tempV = new Vector2(((renderPriority - middle) * moveP), 0);
