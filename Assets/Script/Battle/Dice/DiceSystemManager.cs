@@ -24,6 +24,7 @@ public class DiceSystemManager : MonoBehaviour
 
     [Header("그 외")]
     public TurnManager m_TurnM;
+    public BSCManager m_CardM;
 
     // Start is called before the first frame update
     void Start()
@@ -68,9 +69,9 @@ public class DiceSystemManager : MonoBehaviour
 
     public void ActiveDice(out bool isSucess)
     {
+        battleUIManager.OffDiceSystem();
         if (isReadyToThrow && activatedCard != null)
         {
-            battleUIManager.OffDiceSystem();
             cnt_RollEnded = 0;
             resValue = 0;
             isReadyToThrow = false;
@@ -127,7 +128,6 @@ public class DiceSystemManager : MonoBehaviour
         {
             cnt_RollEnded = 0;
             StartCoroutine(UnActiveDice());
-            
         }
     }
 
@@ -168,6 +168,7 @@ public class DiceSystemManager : MonoBehaviour
 
         activatedCard.Use(resValue);
         activatedCard = null;
+        m_CardM.UndoHandsTaransparency();
 
         yield break;
     }

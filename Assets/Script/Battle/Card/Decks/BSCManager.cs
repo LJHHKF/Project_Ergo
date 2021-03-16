@@ -79,9 +79,7 @@ public class BSCManager : MonoBehaviour
         moved.transform.SetParent(t_grave);
         list_grave.Add(moved);
         SortingHand(moved.GetComponent<ICard>().GetRenderPriority());
-        moved.SetActive(false);
-
-        m_turnM.OnTurnStart();
+        DelayedUnActive(moved, 1.0f);
     }
 
     public void PullingInGrave() //Pulling at card in graveyard
@@ -124,5 +122,12 @@ public class BSCManager : MonoBehaviour
         {
             list_hand[i].GetComponent<ICard>().UndoTransparency();
         }
+    }
+
+    IEnumerator DelayedUnActive(GameObject target, float sec)
+    {
+        yield return new WaitForSeconds(sec);
+        target.SetActive(false);
+        yield break;
     }
 }

@@ -3,7 +3,7 @@
 public interface ICard
 {
 
-    //ICard Selected();
+    ICard Selected();
     void Holded();
     void Dragged(Vector2 mousePos, LineDrawer liner);
 
@@ -21,9 +21,7 @@ public interface ICard
 
     int GetCardID();
 
-    //void GetCardUseInfo(out int fixP, out float flucPRate);
-
-    //void SetUseFunc(System.Action<int> func);
+    bool GetReady();
 
     void DoTransparency();
 
