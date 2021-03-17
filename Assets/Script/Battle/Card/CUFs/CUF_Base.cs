@@ -8,6 +8,7 @@ public class CUF_Base : MonoBehaviour
     public Card_Base myCard;
     public bool isOnlyFixed = false;
     public bool isOnlyDiceValue = false;
+    public bool isSecondDmgFormula = false;
     protected int fixP = 1;
     protected float flucPRate = 1.0f;
     protected GameObject target;
@@ -24,7 +25,7 @@ public class CUF_Base : MonoBehaviour
 
     }
 
-    public virtual void Use()
+    public virtual void ReUse()
     {
 
     }

@@ -1,47 +1,38 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &2710759319597431911
+--- !u!114 &1373999264002013414
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4254622499720066016}
+  m_GameObject: {fileID: 7930505921670291970}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 551e0b082c9857a468513231dd11e239, type: 3}
+  m_Script: {fileID: 11500000, guid: c07bc5f919838164aa450ea834e2a2be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myCard: {fileID: 1606258494121189500}
+  myCard: {fileID: 8064694585387126748}
   isOnlyFixed: 0
-  isOnlyDiceValue: 0
-  isAllAttak: 0
-  isTargetOverlapped: 1
-  maxTarget: 2
---- !u!114 &1606258494121189500
+  isOnlyDiceValue: 1
+  isSecondDmgFormula: 0
+--- !u!114 &2483195720203541455
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4254622499720066016}
+  m_GameObject: {fileID: 7930505921670291970}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 326689878352408459dfed8c476e8c69, type: 3}
+  m_Script: {fileID: 11500000, guid: cb81c5f9495f4bd4faccc095fa31752c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cardID: 0
-  cost: 2
-  fixP: 1
-  flucPRate: 1
-  type: 1
-  cardImage: {fileID: 0}
-  cardText: "[\uACE0\uC815\uCE58()] + [\uC8FC\uC0AC\uC704 \uAC12 x (\uBCC0\uB3D9\uCE58)]\uB9CC\uD07C\uC758
-    \uD53C\uD574\uB97C 2\uBC88\uC5D0 \uAC78\uCCD0 \uBB34\uC791\uC704 \uC801\uB4E4\uC5D0\uAC8C
-    \uB098\uB204\uC5B4 \uC785\uD78C\uB2E4."
-  handHeightPoint: -2.5
-  readyAlpha: 0.5
---- !u!1001 &2963318582057328426
+  myCard: {fileID: 8064694585387126748}
+  isOnlyFixed: 1
+  isOnlyDiceValue: 0
+  isSecondDmgFormula: 0
+--- !u!1001 &8942590911786749640
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -51,22 +42,22 @@ PrefabInstance:
     - target: {fileID: 1302848795940883633, guid: 13514753735d515478a2178e20010343,
         type: 3}
       propertyPath: m_text
-      value: "\uB9C8\uB098\uBE14\uB77C\uC2A4\uD2B8"
+      value: "\uD788\uD2B8&\uB7F0"
       objectReference: {fileID: 0}
     - target: {fileID: 1302848795940883633, guid: 13514753735d515478a2178e20010343,
         type: 3}
       propertyPath: m_fontSize
-      value: 0.5
+      value: 0.9
       objectReference: {fileID: 0}
     - target: {fileID: 1302848795940883633, guid: 13514753735d515478a2178e20010343,
         type: 3}
       propertyPath: m_fontSizeBase
-      value: 0.5
+      value: 0.9
       objectReference: {fileID: 0}
     - target: {fileID: 1302848796289772746, guid: 13514753735d515478a2178e20010343,
         type: 3}
       propertyPath: m_Name
-      value: C_ManaBlast Variant
+      value: C8_Hit&Run Variant
       objectReference: {fileID: 0}
     - target: {fileID: 1302848796289772747, guid: 13514753735d515478a2178e20010343,
         type: 3}
@@ -123,6 +114,12 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1302848796289772750, guid: 13514753735d515478a2178e20010343,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 0d21ed5954b21f64b80d53dec2edf929,
+        type: 3}
     - target: {fileID: 1437206776610783508, guid: 13514753735d515478a2178e20010343,
         type: 3}
       propertyPath: cost
@@ -130,22 +127,43 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1437206776610783508, guid: 13514753735d515478a2178e20010343,
         type: 3}
-      propertyPath: type
-      value: 1
+      propertyPath: fixP
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1437206776610783508, guid: 13514753735d515478a2178e20010343,
+        type: 3}
+      propertyPath: cardID
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 1437206776610783508, guid: 13514753735d515478a2178e20010343,
         type: 3}
       propertyPath: cardText
-      value: "[\uACE0\uC815\uCE58()] + [\uC8FC\uC0AC\uC704 \uAC12 x (\uBCC0\uB3D9\uCE58)]\uB9CC\uD07C\uC758
-        \uD53C\uD574\uB97C 2\uBC88\uC5D0 \uAC78\uCCD0 \uBB34\uC791\uC704 \uC801\uB4E4\uC5D0\uAC8C
-        \uB098\uB204\uC5B4 \uC785\uD78C\uB2E4."
+      value: "\uC801 \uD558\uB098\uC5D0\uAC8C [\uC8FC\uC0AC\uC704 \uAC12]\uB9CC\uD07C\uC758
+        \uD53C\uD574\uB97C \uC785\uD78C \uD6C4 [\uACE0\uC815\uCE58()]\uB9CC\uD07C\uC758
+        \uBC29\uC5B4\uB3C4\uB97C \uD68D\uB4DD\uD55C\uB2E4."
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 1437206776610783508, guid: 13514753735d515478a2178e20010343, type: 3}
+    - target: {fileID: 1437206776610783508, guid: 13514753735d515478a2178e20010343,
+        type: 3}
+      propertyPath: flucPRate
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 13514753735d515478a2178e20010343, type: 3}
---- !u!1 &4254622499720066016 stripped
+--- !u!1 &7930505921670291970 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1302848796289772746, guid: 13514753735d515478a2178e20010343,
     type: 3}
-  m_PrefabInstance: {fileID: 2963318582057328426}
+  m_PrefabInstance: {fileID: 8942590911786749640}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8064694585387126748 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1437206776610783508, guid: 13514753735d515478a2178e20010343,
+    type: 3}
+  m_PrefabInstance: {fileID: 8942590911786749640}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7930505921670291970}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76681d3c7bd02584cac0449a62b50b73, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

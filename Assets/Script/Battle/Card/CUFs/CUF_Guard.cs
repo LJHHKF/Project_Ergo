@@ -8,7 +8,7 @@ public class CUF_Guard : CUF_Base
     protected override void Start()
     {
         base.Start();
-        myCard.use += Use;
+        myCard.use += this.Use;
     }
 
     public override void Use(int diceValue)
@@ -27,14 +27,16 @@ public class CUF_Guard : CUF_Base
             gv = fixP;
         else if (isOnlyDiceValue)
             gv = Mathf.RoundToInt(diceValue * flucPRate);
+        else if (isSecondDmgFormula)
+            gv = Mathf.RoundToInt((fixP + diceValue) * flucPRate);
         else
             gv = fixP + Mathf.RoundToInt(diceValue * flucPRate);
 
 
         liv_target.GetGuardPoint(gv);
     }
-    public override void Use()
+    public override void ReUse()
     {
-        Use(dv);
+        this.Use(dv);
     }
 }

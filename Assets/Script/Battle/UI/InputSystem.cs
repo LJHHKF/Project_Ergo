@@ -107,34 +107,42 @@ public class InputSystem : MonoBehaviour
             if (isSelected)
             {
                 SetMousePosition();
-                RaycastHit2D hit = Physics2D.Raycast(mousePosition, transform.forward, maxDistance);
-                Debug.DrawRay(mousePosition, transform.forward * 10, Color.red, 0.3f);
 
-                if (hit)
+                if (!selectedCard.GetIsNonTarget())
                 {
-                    if (hit.transform.gameObject.tag == "Enemy")
+                    RaycastHit2D hit = Physics2D.Raycast(mousePosition, transform.forward, maxDistance);
+                    Debug.DrawRay(mousePosition, transform.forward * 10, Color.red, 0.3f);
+
+                    if (hit)
                     {
-                        targetedPos = hit.transform.position;
-                        targetColSize = hit.transform.GetComponent<Collider2D>().bounds.size;
-                        targetColSize = targetColSize / 2;
-                        isTempTargeted = true;
+                        if (hit.transform.gameObject.tag == "Enemy")
+                        {
+                            targetedPos = hit.transform.position;
+                            targetColSize = hit.transform.GetComponent<Collider2D>().bounds.size;
+                            targetColSize = targetColSize / 2;
+                            isTempTargeted = true;
+                        }
                     }
-                }
 
-                if (mousePosition.x < targetedPos.x - targetColSize.x
-                    || mousePosition.x > targetedPos.x + targetColSize.x
-                    || mousePosition.y < targetedPos.y - targetColSize.y
-                    || mousePosition.y > targetedPos.y + targetColSize.y)
-                {
-                    isTempTargeted = false;
-                    targetedPos = Vector2.zero;
-                    targetColSize = Vector2.zero;
-                }
+                    if (mousePosition.x < targetedPos.x - targetColSize.x
+                        || mousePosition.x > targetedPos.x + targetColSize.x
+                        || mousePosition.y < targetedPos.y - targetColSize.y
+                        || mousePosition.y > targetedPos.y + targetColSize.y)
+                    {
+                        isTempTargeted = false;
+                        targetedPos = Vector2.zero;
+                        targetColSize = Vector2.zero;
+                    }
 
-                if (isTempTargeted)
-                {
-                    selectedCard.Dragged(targetedPos, m_line);
+                    if (isTempTargeted)
+                    {
+                        selectedCard.Dragged(targetedPos, m_line);
 
+                    }
+                    else
+                    {
+                        selectedCard.Dragged(mousePosition2D, m_line);
+                    }
                 }
                 else
                 {
