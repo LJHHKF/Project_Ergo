@@ -6,30 +6,29 @@ public struct AbCond
 {
     public int ID;
     public Sprite Icon;
-    public int persistTurn;
-    public bool isChecked;  // 스탯 증감식의 녀석은, 처음 조우 시 리스트 전체서 같은 id 체크하며 cnt 늘려가는 방식으로 증감되는 스탯치 계산 후 true로. true면 affacted 재실행x.
+    public int piledNum;
 
-    public AbCond(int _id, Sprite _icon, int _pTurn, bool _isChecked)
+    public AbCond(int _id, Sprite _icon, int _piledNum)
     {
         ID = _id;
         Icon = _icon;
-        persistTurn = _pTurn;
-        isChecked = _isChecked;
+        piledNum = _piledNum;
     }
 
     public void DecresePTurn()
     {
-        persistTurn -= 1;
+        piledNum -= 1;
     }
 
-    public void ChkFalse()
+
+    public void DecreseP(int num)
     {
-        isChecked = false;
+        piledNum -= num;
     }
 
-    public void ChkTrue()
+    public void IncreaseP(int num)
     {
-        isChecked = true;
+        piledNum += num;
     }
 }
 
@@ -45,27 +44,39 @@ public class AbCondition : MonoBehaviour
         abCondInfoM = GameObject.FindGameObjectWithTag("InfoM").GetComponent<AbCondInfoManager>();
     }
 
-    public void AddAbCondition(int id, int persistTurn)
+    public void AddAbCondition(int id, int piledN)
     {
-        AbCond temp;
-        temp.ID = id;
-        temp.Icon = abCondInfoM.GetAbCond_Img(id);
-        temp.persistTurn = persistTurn;
-        temp.isChecked = false;
+        bool isBeing = false;
 
-        list_conditions.Add(temp);
+        for(int i = 0; i < list_conditions.Count; i++)
+        {
+            if(list_conditions[i].ID == id)
+            {
+                isBeing = true;
+                list_conditions[i].IncreaseP(piledN);
+                break;
+            }
+        }
+
+        if (!isBeing)
+        {
+            AbCond temp;
+            temp.ID = id;
+            temp.Icon = abCondInfoM.GetAbCond_Img(id);
+            temp.piledNum = piledN;
+
+            list_conditions.Add(temp);
+        }
     }
 
     public void Affected() //자신에 걸린 모든 효과 발동
     {
         for (int i = 0; i < list_conditions.Count; i++)
         {
-            if (!list_conditions[i].isChecked)
-            {
-                Affected(list_conditions[i].ID);
-                list_conditions[i].DecresePTurn();
-            }
-            if(list_conditions[i].persistTurn <= 0)
+
+            Affected(list_conditions[i].ID);
+            list_conditions[i].DecresePTurn();
+            if(list_conditions[i].piledNum <= 0)
             {
                 list_conditions.RemoveAt(i);
             }
@@ -75,11 +86,5 @@ public class AbCondition : MonoBehaviour
     private void Affected(int id)
     {
 
-    }
-
-    private void ResetListChecked()
-    {
-        for (int i = 0; i < list_conditions.Count; i++)
-            list_conditions[i].ChkFalse();
     }
 }
