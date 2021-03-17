@@ -13,7 +13,6 @@ public class DeckManager : MonoBehaviour
     private void Awake()
     {
         ResetDeck();
-        DontDestroyOnLoad(gameObject);
     }
 
     private void Start()
