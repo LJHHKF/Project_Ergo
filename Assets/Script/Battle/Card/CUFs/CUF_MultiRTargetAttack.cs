@@ -25,7 +25,7 @@ public class CUF_MultiRTargetAttack : CUF_Base
         base.Start();
         e_manager = GameObject.FindGameObjectWithTag("EnemiesManager").GetComponent<EnemiesManager>();
 
-        myCard.use += Use;
+        myCard.use += this.Use;
     }
 
     public override void Use(int diceValue)
@@ -58,6 +58,10 @@ public class CUF_MultiRTargetAttack : CUF_Base
             dmg = fixP;
         else if (isOnlyDiceValue)
             dmg = Mathf.RoundToInt(diceValue * flucPRate);
+        else if (isSecondDmgFormula)
+        {
+            dmg = Mathf.RoundToInt((fixP + diceValue) * flucPRate);
+        }
         else
             dmg = fixP + Mathf.RoundToInt(diceValue * flucPRate);
 
@@ -67,8 +71,8 @@ public class CUF_MultiRTargetAttack : CUF_Base
         }
     }
 
-    public override void Use()
+    public override void ReUse()
     {
-        Use(dv);
+        this.Use(dv);
     }
 }

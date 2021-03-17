@@ -10,7 +10,7 @@ public class CUF_TargetAttack : CUF_Base
     protected override void Start()
     {
         base.Start();
-        myCard.use += Use;
+        myCard.use += this.Use;
     }
 
     public override void Use(int diceValue)
@@ -29,14 +29,16 @@ public class CUF_TargetAttack : CUF_Base
             dmg = fixP;
         else if (isOnlyDiceValue)
             dmg = Mathf.RoundToInt(diceValue * flucPRate);
+        else if (isSecondDmgFormula)
+            dmg = Mathf.RoundToInt((fixP + diceValue) * flucPRate);
         else
             dmg = fixP + Mathf.RoundToInt(diceValue * flucPRate);
 
         liv_target.OnDamage(dmg);
     }
 
-    public override void Use()
+    public override void ReUse()
     {
-        Use(dv);
+        this.Use(dv);
     }
 }

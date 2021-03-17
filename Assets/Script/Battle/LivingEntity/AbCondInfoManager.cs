@@ -34,4 +34,14 @@ public class AbCondInfoManager : MonoBehaviour
     {
         return conditions_img[id];
     }
+
+    public int GetAbCond_OnePower(int id)
+    {
+        return conditions_OnePower[id];
+    }
+
+    public string GetAbCond_text(int id)
+    {
+        return conditions_text[id];
+    }
 }
