@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DiceSystemManager : MonoBehaviour
 {
-    [Header("다이스 설정")]
+    [Header("Dice Setting")]
     public GameObject[] normalDice; //2개 설정하면 됨.
     public GameObject[] sixDice;
     public int cnt_dice = 2;
@@ -14,7 +14,7 @@ public class DiceSystemManager : MonoBehaviour
     public GameObject diceChecker;
     public BattleUIManager battleUIManager;
 
-    [Header("던지기 설정")]
+    [Header("Throw Setting")]
     public float power = 500f;
     public float rotatePowerRate = 0.5f;
     private int cnt_RollEnded = 0;
@@ -22,7 +22,7 @@ public class DiceSystemManager : MonoBehaviour
     public int resValue { get; set; }
     public ICard activatedCard { get; set; }
 
-    [Header("그 외")]
+    [Header("Other")]
     public TurnManager m_TurnM;
     public BSCManager m_CardM;
 
