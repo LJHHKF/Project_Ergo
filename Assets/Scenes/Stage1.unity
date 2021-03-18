@@ -1595,7 +1595,7 @@ GameObject:
   - component: {fileID: 435279689}
   m_Layer: 0
   m_Name: DiceWall_Bottom
-  m_TagString: Untagged
+  m_TagString: DiceBox_Bottom
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1851,7 +1851,12 @@ MonoBehaviour:
   diceChecker: {fileID: 2012209356}
   battleUIManager: {fileID: 2097164265}
   power: 500
-  rotatePowerRate: 0.5
+  rotatePower: 500
+  rotatePowerMinRate: 0.5
+  spawnP_minX: -2
+  interval_x: 4
+  spawnP_Y: 0
+  spawnP_Z: -7
   m_TurnM: {fileID: 2097296159}
   m_CardM: {fileID: 1536354039}
 --- !u!1 &613325936

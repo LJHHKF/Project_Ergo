@@ -16,7 +16,12 @@ public class DiceSystemManager : MonoBehaviour
 
     [Header("Throw Setting")]
     public float power = 500f;
-    public float rotatePowerRate = 0.5f;
+    public float rotatePower = 300f;
+    public float rotatePowerMinRate = 0.5f;
+    public float spawnP_minX = -2;
+    public float interval_x = 4;
+    public float spawnP_Y = 2;
+    public float spawnP_Z = -7;
     private int cnt_RollEnded = 0;
     private bool isReadyToThrow = true;
     public int resValue { get; set; }
@@ -80,13 +85,17 @@ public class DiceSystemManager : MonoBehaviour
                 for (int i = 0; i < six_listPool.Count; i++)
                 {
                     six_listPool[i].SetActive(true);
-                    six_listPool[i].transform.position = new Vector3(-2 + (i * 4), gameObject.transform.position.y, -7);
+                    six_listPool[i].transform.position = new Vector3(spawnP_minX + (i * interval_x), transform.position.y + spawnP_Y, spawnP_Z);
                     six_listPool[i].transform.localEulerAngles = new Vector3(Random.Range(0f, 360f), Random.Range(0f, 360f), Random.Range(0f, 360f));
+
+                    DiceManager m_dice = six_listPool[i].GetComponent<DiceManager>();
+                    m_dice.SetDiceRollPower(rotatePower, rotatePowerMinRate);
+
                     Rigidbody rb = normal_listPool[i].GetComponent<Rigidbody>();
                     rb.AddForce(transform.up * power);
-                    rb.AddTorque(Random.Range(power * rotatePowerRate * 0.5f, power * rotatePowerRate)
-                        , Random.Range(power * rotatePowerRate * 0.5f, power * rotatePowerRate)
-                        , Random.Range(power * rotatePowerRate * 0.5f, power * rotatePowerRate));
+                    //rb.AddTorque(Random.Range(rotatePower * rotatePowerMinRate, rotatePower)
+                    //    , Random.Range(rotatePower * rotatePowerMinRate, rotatePower)
+                    //    , Random.Range(rotatePower * rotatePowerMinRate, rotatePower));
                 }
             }
             else
@@ -94,13 +103,17 @@ public class DiceSystemManager : MonoBehaviour
                 for (int i = 0; i < normal_listPool.Count; i++)
                 {
                     normal_listPool[i].SetActive(true);
-                    normal_listPool[i].transform.position = new Vector3(-2 + (i * 4), gameObject.transform.position.y, -7);
+                    normal_listPool[i].transform.position = new Vector3(spawnP_minX + (i * interval_x), transform.position.y + spawnP_Y, spawnP_Z);
                     normal_listPool[i].transform.localEulerAngles = new Vector3(Random.Range(0f, 360f), Random.Range(0f, 360f), Random.Range(0f, 360f));
+
+                    DiceManager m_dice = normal_listPool[i].GetComponent<DiceManager>();
+                    m_dice.SetDiceRollPower(rotatePower, rotatePowerMinRate);
+
                     Rigidbody rb = normal_listPool[i].GetComponent<Rigidbody>();
                     rb.AddForce(transform.up * power);
-                    rb.AddTorque(Random.Range(power * rotatePowerRate * 0.5f, power * rotatePowerRate)
-                        , Random.Range(power * rotatePowerRate * 0.5f, power * rotatePowerRate)
-                        , Random.Range(power * rotatePowerRate * 0.5f, power * rotatePowerRate));
+                    //rb.AddTorque(Random.Range(rotatePower * rotatePowerMinRate, rotatePower)
+                    //    , Random.Range(rotatePower * rotatePowerMinRate, rotatePower)
+                    //    , Random.Range(rotatePower * rotatePowerMinRate, rotatePower));
                 }
 
             }

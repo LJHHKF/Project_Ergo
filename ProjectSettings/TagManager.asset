@@ -17,6 +17,7 @@ TagManager:
   - CostManager
   - EnemiesManager
   - InfoM
+  - DiceBox_Bottom
   layers:
   - Default
   - TransparentFX
