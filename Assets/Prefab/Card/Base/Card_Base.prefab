@@ -627,7 +627,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: 1}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -638,7 +638,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 6.2, y: 8.7}
+  m_Size: {x: 5.5, y: 10.7}
   m_EdgeRadius: 0
 --- !u!114 &1437206776610783508
 MonoBehaviour:
@@ -656,6 +656,7 @@ MonoBehaviour:
   cost: 1
   fixP: 1
   flucPRate: 1
+  isNonTarget: 0
   type: 0
   cardImage: {fileID: 0}
   cardText: 

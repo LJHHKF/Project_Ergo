@@ -84,8 +84,9 @@ public class LivingEntity : MonoBehaviour, IDamageable
     public virtual void OnPenDamage(int damage)
     {
         health -= damage;
+        myUI.HpUpdate();
 
-        if(health <= 0 && !dead)
+        if (health <= 0 && !dead)
         {
             Die();
         }

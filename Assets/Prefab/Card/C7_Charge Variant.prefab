@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fcbf81fde981a894d92a5d1c1a2980ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myCard: {fileID: 7217222156042440346}
+  myCard: {fileID: 6887725452202239111}
   isOnlyFixed: 0
   isOnlyDiceValue: 0
   isSecondDmgFormula: 1
@@ -20,28 +20,6 @@ MonoBehaviour:
   isOnlyUseSecondFixP: 0
   isSelfTarget: 1
   sec_fixP: 1
---- !u!114 &7217222156042440346
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6805854033947937113}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 326689878352408459dfed8c476e8c69, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cardID: 7
-  cost: 1
-  fixP: 0
-  flucPRate: 0.5
-  type: 1
-  cardImage: {fileID: 0}
-  cardText: "([\uACE0\uC815\uCE58() + \uC8FC\uC0AC\uC704 \uAC12]*(\uBCC0\uB3D9\uCE58))
-    \uBC88 \uB9CC\uD07C \uD30C\uC6CC\uC5C5\uC744 \uD68D\uB4DD\uD55C\uB2E4."
-  handHeightPoint: -2.5
-  readyAlpha: 0.5
 --- !u!1001 &5505622217075320211
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -121,6 +99,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1437206776610783508, guid: 13514753735d515478a2178e20010343,
         type: 3}
+      propertyPath: type
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1437206776610783508, guid: 13514753735d515478a2178e20010343,
+        type: 3}
+      propertyPath: cardID
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1437206776610783508, guid: 13514753735d515478a2178e20010343,
+        type: 3}
       propertyPath: cardText
       value: "([\uACE0\uC815\uCE58() + \uC8FC\uC0AC\uC704 \uAC12]*(\uBCC0\uB3D9\uCE58))
         \uBC88 \uB9CC\uD07C \uD30C\uC6CC\uC5C5\uC744 \uD68D\uB4DD\uD55C\uB2E4."
@@ -130,8 +118,12 @@ PrefabInstance:
       propertyPath: flucPRate
       value: 0.5
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 1437206776610783508, guid: 13514753735d515478a2178e20010343, type: 3}
+    - target: {fileID: 1437206776610783508, guid: 13514753735d515478a2178e20010343,
+        type: 3}
+      propertyPath: isNonTarget
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 13514753735d515478a2178e20010343, type: 3}
 --- !u!1 &6805854033947937113 stripped
 GameObject:
@@ -139,3 +131,15 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 5505622217075320211}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &6887725452202239111 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1437206776610783508, guid: 13514753735d515478a2178e20010343,
+    type: 3}
+  m_PrefabInstance: {fileID: 5505622217075320211}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6805854033947937113}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76681d3c7bd02584cac0449a62b50b73, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
