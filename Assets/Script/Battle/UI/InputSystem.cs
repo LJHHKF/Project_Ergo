@@ -177,6 +177,7 @@ public class InputSystem : MonoBehaviour
                         }
                     }
                 }
+                selectedCard.BringUpCard(false);
                 isSelected = false;
                 selectedCard = null;
                 line.SetActive(false);

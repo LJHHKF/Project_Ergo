@@ -10,6 +10,8 @@ public class BSCManager : MonoBehaviour
     public int cntHand { get; private set; }
     public float rotP = 2f;
     public float moveP = 1f;
+    public float handHeightPoint = -2.5f;
+    public float readyAlpha = 0.5f; 
 
     private DeckManager m_Deck;
     private List<GameObject> list_hand = new List<GameObject>();
@@ -90,10 +92,12 @@ public class BSCManager : MonoBehaviour
         }
     }
 
-    public void SetCardSortingValue(out float rotationPower, out float movePower)
+    public void SetCardValues(out float rotationPower, out float movePower, out float handHeight, out float alpha)
     {
         rotationPower = rotP;
         movePower = moveP;
+        handHeight = handHeightPoint;
+        alpha = readyAlpha;
     }
 
     private void CleanUpCards()

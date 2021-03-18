@@ -23,6 +23,8 @@ public interface ICard
 
     bool GetReady();
 
+    void BringUpCard(bool isSelected);
+
     void DoTransparency();
 
     void UndoTransparency();

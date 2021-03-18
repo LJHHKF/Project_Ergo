@@ -17,6 +17,7 @@ public class Card_Base : MonoBehaviour, ICard
     public int cost = 1;
     public int fixP = 1;
     public float flucPRate = 1.0f;
+    public bool isNonTarget = false;
     public Type type;
     public Sprite cardImage;
     [TextArea]
@@ -26,8 +27,9 @@ public class Card_Base : MonoBehaviour, ICard
     protected int renderPriority = 1;
     protected float rotP;
     protected float moveP;
-    protected bool isNonTarget = false;
     protected bool ready = true;
+    protected float handHeightPoint = -2.5f;
+    protected float readyAlpha = 0.5f;
 
     protected GameObject target;
     protected DiceSystemManager diceManager;
@@ -80,9 +82,10 @@ public class Card_Base : MonoBehaviour, ICard
         cardText = cardText.Replace(temp, temp2);
         cardText = cardText.Replace(temp3, temp4);
         text_plain.text = cardText;
+        ready = false;
 
         FindBSCardManager();
-        m_cardM.SetCardSortingValue(out rotP, out moveP);
+        m_cardM.SetCardValues(out rotP, out moveP, out handHeightPoint, out readyAlpha);
     }
 
     protected virtual void OnEnable()
@@ -137,6 +140,7 @@ public class Card_Base : MonoBehaviour, ICard
         }
         else
         {
+            BringUpCard(true);
             return this;
         }
     }
@@ -151,8 +155,35 @@ public class Card_Base : MonoBehaviour, ICard
         //선택된 카드 투명화, 카드 위치 -> 타겟 위치 선 연결 준비
         //타겟 위치는 업데이트에서 받아올 것.
         liner.SetLine_Worlds(gameObject.transform, mousePos);
-        
+
+        if (handHeightPoint < mousePos.y && !ready)
+        {
+            OnCardAlphaAndReady();
+        }
+        else if (handHeightPoint > mousePos.y && ready)
+        {
+            OffCardAlphaAndReady();
+        }
+
         //Debug.Log(mousePos); //논타겟 카드의 손패와 필드 영역 벗어남 구분하기 위해 y값 확인
+    }
+
+    protected virtual void OnCardAlphaAndReady()
+    {
+        ready = true;
+        for (int i = 0; i < m_sprRs.Length; i++)
+            m_sprRs[i].color = new Color(m_sprRs[i].color.r, m_sprRs[i].color.g, m_sprRs[i].color.b, (m_sprRs[i].color.a * readyAlpha));
+        for (int i = 0; i < array_text.Length; i++)
+            array_text[i].faceColor = new Color32((byte)array_text[i].color.r, (byte)array_text[i].color.g, (byte)array_text[i].color.b, (byte)(array_text[i].color.a * readyAlpha));
+    }
+
+    protected virtual void OffCardAlphaAndReady()
+    {
+        ready = false;
+        for (int i = 0; i < m_sprRs.Length; i++)
+            m_sprRs[i].color = new Color(m_sprRs[i].color.r, m_sprRs[i].color.g, m_sprRs[i].color.b, (m_sprRs[i].color.a / readyAlpha));
+        for (int i = 0; i < array_text.Length; i++)
+            array_text[i].faceColor = new Color32((byte)array_text[i].color.r, (byte)array_text[i].color.g, (byte)array_text[i].color.b, (byte)(array_text[i].color.a / readyAlpha));
     }
 
     public virtual void Use(int diceValue)
@@ -215,6 +246,29 @@ public class Card_Base : MonoBehaviour, ICard
         }
         m_cardM.DoHandsTransparency();
         m_Collider.enabled = false;
+    }
+
+    public void BringUpCard(bool isSelect)
+    {
+        int s_order;
+        if (isSelect)
+            s_order = renderPriority + 5;
+        else
+            s_order = renderPriority - 1;
+
+        for (int i = 0; i < m_sprRs.Length; i++)
+            m_sprRs[i].sortingOrder = s_order;
+        textCanvas.sortingOrder = s_order;
+
+        if (!isSelect)
+        {
+            m_Collider.enabled = true;
+            if (ready)
+            {
+                OffCardAlphaAndReady();
+            }
+            
+        }
     }
 
     public virtual GameObject GetTarget()

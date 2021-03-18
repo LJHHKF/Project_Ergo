@@ -4771,6 +4771,8 @@ MonoBehaviour:
   t_grave: {fileID: 136291860}
   rotP: 2
   moveP: 1
+  handHeightPoint: -2.5
+  readyAlpha: 0.5
 --- !u!4 &1536354040
 Transform:
   m_ObjectHideFlags: 0
