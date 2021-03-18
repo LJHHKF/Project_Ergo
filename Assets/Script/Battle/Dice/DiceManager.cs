@@ -10,6 +10,11 @@ public class DiceManager : MonoBehaviour
     private DiceSystemManager m_DsystemManager;
     private float activeTime = 0f;
     private int result = 0;
+
+    private bool isBottom = false;
+    private float rollPower = 0;
+    private float rollMinPowerRate = 0;
+
     public int resNum {
         get
         {
@@ -36,6 +41,7 @@ public class DiceManager : MonoBehaviour
     {
         isRollEnd = false;
         isGetRes = false;
+        isBottom = false;
         activeTime = Time.time;
     }
 
@@ -47,14 +53,41 @@ public class DiceManager : MonoBehaviour
 
     private void Update()
     {
-        if (activeTime + 1.0f <= Time.time)
+        if (!isBottom)
         {
-            if (m_rb.velocity.magnitude == 0f && !isRollEnd)
+            DiceRolled();
+        }
+        else if((activeTime + 1.0f <= Time.time) && !isRollEnd)
+        {
+            if (m_rb.velocity.magnitude == 0)
             {
-                isRollEnd = true;
                 m_DsystemManager.SumRollEnd();
+                isRollEnd = true;
             }
         }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.collider.CompareTag("DiceBox_Bottom"))
+        {
+            isBottom = true;
+        }
+    }
+
+
+    public void SetDiceRollPower(float _rollpower, float r_minPowerRate)
+    {
+        rollPower = _rollpower;
+        rollMinPowerRate = r_minPowerRate;
+
+    }
+
+    private void DiceRolled()
+    {
+        m_rb.AddTorque(Random.Range(rollPower * rollMinPowerRate, rollPower)
+            , Random.Range(rollPower * rollMinPowerRate, rollPower)
+            , Random.Range(rollPower * rollMinPowerRate, rollPower));
     }
 
     public void SetResValue()
