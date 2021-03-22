@@ -50,6 +50,7 @@ public class InputSystem : MonoBehaviour
     
 
     private DiceSystemManager diceSManager;
+    private BattleUIManager m_BaUIManager;
 
     private void Awake()
     {
@@ -67,6 +68,7 @@ public class InputSystem : MonoBehaviour
         myMainCam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         m_line = line.GetComponent<LineDrawer>();
         diceSManager = GameObject.FindGameObjectWithTag("DiceBox").GetComponent<DiceSystemManager>();
+        m_BaUIManager = GameObject.FindGameObjectWithTag("UIManager").GetComponent<BattleUIManager>();
 
         //m_GRay = m_cardCanvas.GetComponent<GraphicRaycaster>();
         //m_ped = new PointerEventData(null);
@@ -79,22 +81,18 @@ public class InputSystem : MonoBehaviour
         {
             SetMousePosition();
 
-            if (diceSManager.GetIsReadyToThrow())
+            RaycastHit2D hit = Physics2D.Raycast(mousePosition, transform.forward, maxDistance);
+            Debug.DrawRay(mousePosition, transform.forward * 10, Color.red, 0.3f);
+
+            //List<RaycastResult> results = new List<RaycastResult>();
+            //m_GRay.Raycast(m_ped, results);
+
+            //if (results.Count != 0)
+            if (hit)
             {
-                RaycastHit2D hit = Physics2D.Raycast(mousePosition, transform.forward, maxDistance);
-                Debug.DrawRay(mousePosition, transform.forward * 10, Color.red, 0.3f);
-
-                //List<RaycastResult> results = new List<RaycastResult>();
-                //m_GRay.Raycast(m_ped, results);
-
-                //if (results.Count != 0)
-                if (hit)
+                if (diceSManager.GetIsReadyToThrow())
                 {
-                    selectedCard = hit.transform.GetComponent<ICard>();
-                    //if(results[0].gameObject.CompareTag("Card"))
-                    //{
-                    //    selectedCard = results[0].gameObject.GetComponent<ICard>();
-                    //}
+                    selectedCard = hit.transform.GetComponent<ICard>().Selected();
                     if (selectedCard != null)
                     {
                         isSelected = true;
@@ -104,39 +102,47 @@ public class InputSystem : MonoBehaviour
                 }
             }
         }
-        if(Input.GetMouseButton(0))
+        else if(Input.GetMouseButton(0))
         {
             if (isSelected)
             {
                 SetMousePosition();
-                RaycastHit2D hit = Physics2D.Raycast(mousePosition, transform.forward, maxDistance);
-                Debug.DrawRay(mousePosition, transform.forward * 10, Color.red, 0.3f);
 
-                if (hit)
+                if (!selectedCard.GetIsNonTarget())
                 {
-                    if (hit.transform.gameObject.tag == "Enemy")
+                    RaycastHit2D hit = Physics2D.Raycast(mousePosition, transform.forward, maxDistance);
+                    Debug.DrawRay(mousePosition, transform.forward * 10, Color.red, 0.3f);
+
+                    if (hit)
                     {
-                        targetedPos = hit.transform.position;
-                        targetColSize = hit.transform.GetComponent<Collider2D>().bounds.size;
-                        targetColSize = targetColSize / 2;
-                        isTempTargeted = true;
+                        if (hit.transform.gameObject.tag == "Enemy")
+                        {
+                            targetedPos = hit.transform.position;
+                            targetColSize = hit.transform.GetComponent<Collider2D>().bounds.size;
+                            targetColSize = targetColSize / 2;
+                            isTempTargeted = true;
+                        }
                     }
-                }
 
-                if (mousePosition.x < targetedPos.x - targetColSize.x
-                    || mousePosition.x > targetedPos.x + targetColSize.x
-                    || mousePosition.y < targetedPos.y - targetColSize.y
-                    || mousePosition.y > targetedPos.y + targetColSize.y)
-                {
-                    isTempTargeted = false;
-                    targetedPos = Vector2.zero;
-                    targetColSize = Vector2.zero;
-                }
+                    if (mousePosition.x < targetedPos.x - targetColSize.x
+                        || mousePosition.x > targetedPos.x + targetColSize.x
+                        || mousePosition.y < targetedPos.y - targetColSize.y
+                        || mousePosition.y > targetedPos.y + targetColSize.y)
+                    {
+                        isTempTargeted = false;
+                        targetedPos = Vector2.zero;
+                        targetColSize = Vector2.zero;
+                    }
 
-                if (isTempTargeted)
-                {
-                    selectedCard.Dragged(targetedPos, m_line);
+                    if (isTempTargeted)
+                    {
+                        selectedCard.Dragged(targetedPos, m_line);
 
+                    }
+                    else
+                    {
+                        selectedCard.Dragged(mousePosition2D, m_line);
+                    }
                 }
                 else
                 {
@@ -144,14 +150,17 @@ public class InputSystem : MonoBehaviour
                 }
             }
         }
-        if(Input.GetMouseButtonUp(0))
+        if (Input.GetMouseButtonUp(0))
         {
             if (isSelected)
             {
                 if (selectedCard.GetIsNonTarget())
                 {
-                    selectedCard.SetTarget(null);
-                    diceSManager.activatedCard = selectedCard;
+                    if (selectedCard.GetReady())
+                    {
+                        selectedCard.SetTarget(null);
+                        diceSManager.activatedCard = selectedCard;
+                    }
                 }
                 else
                 {
@@ -161,10 +170,14 @@ public class InputSystem : MonoBehaviour
                     Debug.DrawRay(mousePosition, transform.forward * 10, Color.red, 0.3f);
                     if (hit)
                     {
-                        selectedCard.SetTarget(hit.transform.gameObject);
-                        diceSManager.activatedCard = selectedCard;
+                        if (hit.collider.CompareTag("Enemy"))
+                        {
+                            selectedCard.SetTarget(hit.transform.gameObject);
+                            diceSManager.activatedCard = selectedCard;
+                        }
                     }
                 }
+                selectedCard.BringUpCard(false);
                 isSelected = false;
                 selectedCard = null;
                 line.SetActive(false);

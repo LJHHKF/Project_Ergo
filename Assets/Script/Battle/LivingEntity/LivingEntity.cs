@@ -1,47 +1,91 @@
-﻿using System;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 
 //<레트로 유니티 게임 프로그래밍 에센스> 2권 참고하여 기본 제작 후 기능 추가
 public class LivingEntity : MonoBehaviour, IDamageable
 {
+    [Header("HP&GP Setting")]
     public int startingHealth = 100;
     public int fullHealth = 100;
     public int health { get; protected set; }
-    public int regenGardPoint = 0;
-    public int gardPoint { get; protected set; }
+    public int regenGuardPoint = 0;
+    public int GuardPoint { get; protected set; }
+    //[Header("Stat Setting")]
+    protected int fix_endu = 1;
+    protected int fix_stren = 1;
+    protected int fix_sol = 1;
+    protected int fix_int = 1;
+    public int fluc_endurance { get; set; }
+    public int fluc_strength { get; set; }
+    public int fluc_solid { get; set; }
+    public int fluc_intel { get; set; }
+    public int endurance { get; protected set; }
+    public int strength { get; protected set; }
+    public int solid { get; protected set; }
+    public int intel { get; protected set; }
+
     public bool dead { get; protected set; }
-    
+    protected TurnManager m_turnM;
     public event Action onDeath;
+
+    [Header("Ref Setting")]
+    public UnitUI myUI;
+    public AbCondition myAbCond;
 
     protected virtual void OnEnable()
     {
         dead = false;
-        health = startingHealth;
-        gardPoint = regenGardPoint;
+        HpAndGuardReset();
+    }
+
+    protected virtual void Start()
+    {
+        m_turnM = GameObject.FindGameObjectWithTag("TurnManager").GetComponent<TurnManager>();
+        m_turnM.firstTurn += () => ResetGuardPoint();
+        m_turnM.firstTurn += () => FlucStatReset();
+        m_turnM.firstTurn += () => CalculateStat();
+        m_turnM.firstTurn += () => myUI.HpUpdate();
     }
 
     public virtual void OnDamage(int damage)
     {
-        if (gardPoint > 0)
+        if (GuardPoint > 0)
         {
-            gardPoint -= damage;
-            if (gardPoint < 0)
+            GuardPoint -= damage;
+            if (GuardPoint < 0)
             {
-                damage = Mathf.Abs(gardPoint);
+                damage = Mathf.Abs(GuardPoint);
+                GuardPoint = 0;
             }
             else
             {
                 damage = 0;
             }
+            myUI.GuardUpdate();
         }
         
-        if (gardPoint <= 0)
+        if (GuardPoint <= 0)
         {
             health -= damage;
+            myUI.HpUpdate();
         }
 
-        if(health <= 0 && !dead)
+
+        if (health <= 0 && !dead)
+        {
+            Die();
+        }
+    }
+
+    public virtual void OnPenDamage(int damage)
+    {
+        health -= damage;
+        myUI.HpUpdate();
+
+        if (health <= 0 && !dead)
         {
             Die();
         }
@@ -54,9 +98,9 @@ public class LivingEntity : MonoBehaviour, IDamageable
             return;
         }
         
-        if(health + restoreValue >= fullHealth)
+        if(health + restoreValue >= (fullHealth + endurance))
         {
-            restoreValue -= fullHealth;
+            restoreValue -= (fullHealth + endurance);
             if (restoreValue <= 0)
                 return;
             health += restoreValue;
@@ -67,14 +111,26 @@ public class LivingEntity : MonoBehaviour, IDamageable
         }
     }
 
-    public virtual void GetGardPoint(int GetValue)
+    public virtual void GetGuardPoint(int GetValue)
     {
-        gardPoint += GetValue;
+        GuardPoint += GetValue;
+        myUI.GuardUpdate();
     }
 
-    public void ResetGardPoint()
+    public int GetFullHealth()
     {
-        gardPoint = regenGardPoint;
+        return fullHealth + endurance;
+    }
+
+    public void ResetGuardPoint()
+    {
+        GuardPoint = regenGuardPoint;
+        myUI.GuardUpdate();
+    }
+
+    public virtual void ChangeCost(int changeV)
+    {
+
     }
 
     public virtual void Die()
@@ -85,4 +141,65 @@ public class LivingEntity : MonoBehaviour, IDamageable
         }
         dead = true;
     }
+
+    protected IEnumerator DelayedUnActived(float sec)
+    {
+        yield return new WaitForSeconds(sec);
+        gameObject.SetActive(false);
+        yield break;
+    }
+
+    public void FlucStatReset()
+    {
+        fluc_endurance = 0;
+        fluc_strength = 0;
+        fluc_solid = 0;
+        fluc_intel = 0;
+    }
+
+    public void CalculateStat()
+    {
+        if(fix_endu + fluc_endurance < 0)
+        {
+            endurance = 0;
+        }
+        else
+        {
+            endurance = fix_endu + fluc_endurance;
+        }
+
+        if(fix_stren + fluc_strength < 0)
+        {
+            strength = 0;
+        }
+        else
+        {
+            strength = fix_stren + fluc_strength;
+        }
+
+        if(fix_sol + fluc_solid < 0)
+        {
+            solid = 0;
+        }
+        else
+        {
+            solid = fix_sol + fluc_solid;
+        }
+
+        if(fix_int + fluc_intel < 0)
+        {
+            intel = 0;
+        }
+        else
+        {
+            intel = fix_int + fluc_intel;
+        }
+    }
+
+    protected virtual void HpAndGuardReset()
+    {
+        health = startingHealth + endurance; // 만약 시작 HP는 스탯 영향 안 받게 하고 싶을 경우는 수정.
+        GuardPoint = regenGuardPoint;
+    }
+
 }

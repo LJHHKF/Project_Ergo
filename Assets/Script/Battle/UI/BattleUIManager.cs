@@ -5,36 +5,49 @@ using UnityEngine.UI;
 
 public class BattleUIManager : MonoBehaviour
 {
-    [Header("Object registration")]
+    [Header("UI Object registration")]
     public GameObject forDice;
-    private RectTransform diceRect;
+    public GameObject btn_TurnEnd;
 
-    private Camera myMainCam;
+    [Header("Managers registartion")]
+    public TurnManager turnManager;
+
+    private bool isDiceOn = false;
 
     // Start is called before the first frame update
     void Start()
     {
-        diceRect = forDice.GetComponent<RectTransform>();
         forDice.SetActive(false);
 
-        myMainCam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
+        turnManager.firstTurn += () => SetBtnTurnEActive(true);
+        turnManager.turnStart += () => SetBtnTurnEActive(true);
+        turnManager.playerTurnEnd += () => SetBtnTurnEActive(false);
     }
 
-    // Update is called once per frame
-    void Update()
+    public void OnDiceSysetm()
     {
-        
-    }
-
-    public void OnDiceSysetm(Vector2 cardPos)
-    {
-        forDice.SetActive(true);
-        cardPos = myMainCam.WorldToScreenPoint(cardPos);
-        diceRect.position = cardPos;
+        if (!isDiceOn)
+        {
+            forDice.SetActive(true);
+            isDiceOn = true;
+        }
     }
 
     public void OffDiceSystem()
     {
         forDice.SetActive(false);
+        StartCoroutine(DelayedFalse(1.0f));
+    }
+
+    public void SetBtnTurnEActive(bool isActive)
+    {
+        btn_TurnEnd.SetActive(isActive);
+    }
+
+    IEnumerator DelayedFalse(float sec)
+    {
+        yield return new WaitForSeconds(sec);
+        isDiceOn = false;
+        yield break;
     }
 }

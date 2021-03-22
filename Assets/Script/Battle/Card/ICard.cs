@@ -2,7 +2,8 @@
 
 public interface ICard
 {
-    //ICard Selected();
+
+    ICard Selected();
     void Holded();
     void Dragged(Vector2 mousePos, LineDrawer liner);
 
@@ -16,5 +17,15 @@ public interface ICard
 
     void SetRenderPriority(int value);
 
+    int GetRenderPriority();
+
     int GetCardID();
+
+    bool GetReady();
+
+    void BringUpCard(bool isSelected);
+
+    void DoTransparency();
+
+    void UndoTransparency();
 }

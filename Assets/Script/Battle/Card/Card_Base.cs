@@ -1,6 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+using System;
+using System.Text;
 
 public class Card_Base : MonoBehaviour, ICard
 {
@@ -14,17 +17,22 @@ public class Card_Base : MonoBehaviour, ICard
     public int cardID = 0;
     public int cost = 1;
     public int fixP = 1;
+    protected int r_fixP = 0;
     public float flucPRate = 1.0f;
-    public Type type;
     public bool isNonTarget = false;
+    public bool isFixGuard = false;
+    public Type type;
     public Sprite cardImage;
     [TextArea]
-    public string[] cardText;
+    public string cardText;
 
     //[Header("renderPriority Setting")]
     protected int renderPriority = 1;
     protected float rotP;
     protected float moveP;
+    protected bool ready = true;
+    protected float handHeightPoint = -2.5f;
+    protected float readyAlpha = 0.5f;
 
     protected GameObject target;
     protected DiceSystemManager diceManager;
@@ -32,10 +40,19 @@ public class Card_Base : MonoBehaviour, ICard
     protected bool isThrowed = false;
     protected SpriteRenderer[] m_sprRs = new SpriteRenderer[2];
     protected BoxCollider2D m_Collider;
-    protected TextMesh costText;
-    protected MeshRenderer costMeshR;
+    protected Canvas textCanvas;
+    protected TextMeshProUGUI text_cost;
+    protected TextMeshProUGUI text_plain;
+    protected TextMeshProUGUI text_name;
+    protected TextMeshProUGUI[] array_text;
     protected BSCManager m_cardM;
-    protected TurnManager m_turnM;
+    protected CostManager m_costM;
+    protected Character m_charM;
+
+    public delegate void UseHandler(int dicevalue);
+    public event UseHandler use;
+    public event Action sub_use;
+    //protected int d_Value;
 
     public Vector2 m_Position
     {
@@ -47,6 +64,47 @@ public class Card_Base : MonoBehaviour, ICard
         {
             m_Position = gameObject.transform.position;
         }
+    }
+
+    protected virtual void Awake()
+    {
+        if (textCanvas == null)
+        {
+            textCanvas = gameObject.transform.Find("TextCanvas").GetComponent<Canvas>();
+            text_cost = textCanvas.gameObject.transform.Find("CostText").GetComponent<TextMeshProUGUI>();
+            text_plain = textCanvas.gameObject.transform.Find("CardText").GetComponent<TextMeshProUGUI>();
+            text_name = textCanvas.gameObject.transform.Find("CardName").GetComponent<TextMeshProUGUI>();
+
+            array_text = textCanvas.gameObject.GetComponents<TextMeshProUGUI>();
+        }
+
+        if(m_charM == null)
+        {
+            m_charM = GameObject.FindGameObjectWithTag("Player").GetComponent<Character>();
+        }
+
+        if(isFixGuard)
+        {
+            r_fixP = fixP + Mathf.RoundToInt(m_charM.solid * 0.5f);
+        }
+        else if(type == Type.Sword)
+        {
+            r_fixP = fixP + Mathf.RoundToInt(m_charM.strength * 0.5f);
+        }
+        else if(type == Type.Magic)
+        {
+            r_fixP = fixP + Mathf.RoundToInt(m_charM.intel * 0.5f);
+        }
+
+        text_cost.text = cost.ToString();
+        StringBuilder sb = new StringBuilder(cardText);
+        sb.Replace("()", "(" + r_fixP.ToString() + ")");
+        sb.Replace("(변동치)", flucPRate.ToString());
+        text_plain.text = sb.ToString();
+        ready = false;
+
+        FindBSCardManager();
+        m_cardM.SetCardValues(out rotP, out moveP, out handHeightPoint, out readyAlpha);
     }
 
     protected virtual void OnEnable()
@@ -65,32 +123,46 @@ public class Card_Base : MonoBehaviour, ICard
         {
             m_sprRs[1] = gameObject.transform.Find("CardImage").GetComponent<SpriteRenderer>();
         }
-        if (costText == null)
+        if (textCanvas == null)
         {
-            costText = gameObject.transform.Find("CostText").GetComponent<TextMesh>();
+            textCanvas = gameObject.transform.Find("TextCanvas").GetComponent<Canvas>();
+            text_cost = textCanvas.gameObject.transform.Find("CostText").GetComponent<TextMeshProUGUI>();
+            text_plain = textCanvas.gameObject.transform.Find("CardText").GetComponent<TextMeshProUGUI>();
+            text_name = textCanvas.gameObject.transform.Find("CardName").GetComponent<TextMeshProUGUI>();
+
+            array_text = textCanvas.gameObject.GetComponents<TextMeshProUGUI>();
         }
 
-        for (int i = 0; i < m_sprRs.Length; i++)
-            m_sprRs[i].color = new Color(m_sprRs[i].color.r, m_sprRs[i].color.g, m_sprRs[i].color.b, 1.0f);
-        costText.color = new Color(costText.color.r, costText.color.g, costText.color.b, 1.0f);
+        UndoTransparency();
+
     }
 
     protected virtual void Start()
     {
         FindBattleUIManger();
-        FindTurnManager();
-        FindBSCardManager();
-        costMeshR = costText.gameObject.GetComponent<MeshRenderer>();
-        costMeshR.sortingLayerName = m_sprRs[0].sortingLayerName;
-        costText.text = cost.ToString();
-        m_cardM.SetCardSortingValue(out rotP, out moveP);
+        FindCostManager();
+
+        m_sprRs[0] = gameObject.GetComponent<SpriteRenderer>();
+        m_sprRs[1] = gameObject.transform.Find("CardImage").GetComponent<SpriteRenderer>();
+
+        m_Collider.enabled = true;
     }
 
 
-    //public virtual ICard Selected()
-    //{
-    //    return this;
-    //}
+    public virtual ICard Selected()
+    {
+        if (m_costM.cost < cost)
+        {
+            //실패처리 (붉은색 테두리 처리)
+            Debug.LogError("코스트가 (" + (m_costM.cost - cost) + ")만큼 모자랍니다.");
+            return null;
+        }
+        else
+        {
+            BringUpCard(true);
+            return this;
+        }
+    }
 
     public virtual void Holded()
     {
@@ -102,18 +174,64 @@ public class Card_Base : MonoBehaviour, ICard
         //선택된 카드 투명화, 카드 위치 -> 타겟 위치 선 연결 준비
         //타겟 위치는 업데이트에서 받아올 것.
         liner.SetLine_Worlds(gameObject.transform, mousePos);
-        
+
+        if (handHeightPoint < mousePos.y && !ready)
+        {
+            OnCardAlphaAndReady();
+        }
+        else if (handHeightPoint > mousePos.y && ready)
+        {
+            OffCardAlphaAndReady();
+        }
+
         //Debug.Log(mousePos); //논타겟 카드의 손패와 필드 영역 벗어남 구분하기 위해 y값 확인
+    }
+
+    protected virtual void OnCardAlphaAndReady()
+    {
+        ready = true;
+        for (int i = 0; i < m_sprRs.Length; i++)
+            m_sprRs[i].color = new Color(m_sprRs[i].color.r, m_sprRs[i].color.g, m_sprRs[i].color.b, (m_sprRs[i].color.a * readyAlpha));
+        for (int i = 0; i < array_text.Length; i++)
+            array_text[i].faceColor = new Color32((byte)array_text[i].color.r, (byte)array_text[i].color.g, (byte)array_text[i].color.b, (byte)(array_text[i].color.a * readyAlpha));
+    }
+
+    protected virtual void OffCardAlphaAndReady()
+    {
+        ready = false;
+        for (int i = 0; i < m_sprRs.Length; i++)
+            m_sprRs[i].color = new Color(m_sprRs[i].color.r, m_sprRs[i].color.g, m_sprRs[i].color.b, (m_sprRs[i].color.a / readyAlpha));
+        for (int i = 0; i < array_text.Length; i++)
+            array_text[i].faceColor = new Color32((byte)array_text[i].color.r, (byte)array_text[i].color.g, (byte)array_text[i].color.b, (byte)(array_text[i].color.a / readyAlpha));
     }
 
     public virtual void Use(int diceValue)
     {
-        m_cardM.MoveToGrave(gameObject);
-        if(m_turnM == null)
+        if (m_costM == null)
         {
-            FindTurnManager();
+            FindCostManager();
         }
-        m_turnM.OnPlayerTurnEnd();
+        if (m_costM.cost < cost) // 보험삼아 넣어둔 곳
+        {
+            return;
+        }
+
+        m_costM.cost -= cost;
+        use(diceValue);
+
+        if (sub_use != null)
+        {
+            sub_use();
+        }
+
+
+        if (m_cardM == null)
+        {
+            FindBSCardManager();
+        }
+        m_cardM.MoveToGrave(gameObject);
+
+        DoTransparency();
     }
 
     protected void DrawLine()
@@ -125,18 +243,87 @@ public class Card_Base : MonoBehaviour, ICard
     {
         target = input;
 
+        if(isNonTarget)
+        {
+            if (target != null)
+                return;
+        }
+        else
+        {
+            if (target.GetComponent<LivingEntity>() == null)
+                return;
+        }
+
         if (battleUIManager == null)
         {
             FindBattleUIManger();
         }
-        battleUIManager.OnDiceSysetm(gameObject.transform.position);
-
-        for (int i = 0; i < m_sprRs.Length; i++)
-            m_sprRs[i].color = new Color(m_sprRs[i].color.r, m_sprRs[i].color.g, m_sprRs[i].color.b, 0);
-        costText.color = new Color(costText.color.r, costText.color.g, costText.color.b, 0);
-        gameObject.GetComponent<BoxCollider2D>().enabled = false;
+        battleUIManager.OnDiceSysetm();
+        if (m_cardM == null)
+        {
+            FindBSCardManager();
+        }
+        m_cardM.DoHandsTransparency();
+        m_Collider.enabled = false;
     }
 
+    public void BringUpCard(bool isSelect)
+    {
+        int s_order;
+        if (isSelect)
+            s_order = renderPriority + 5;
+        else
+            s_order = renderPriority - 1;
+
+        for (int i = 0; i < m_sprRs.Length; i++)
+            m_sprRs[i].sortingOrder = s_order;
+        textCanvas.sortingOrder = s_order;
+
+        if (!isSelect)
+        {
+            m_Collider.enabled = true;
+            if (ready)
+            {
+                OffCardAlphaAndReady();
+            }
+            
+        }
+    }
+
+    public virtual GameObject GetTarget()
+    {
+        return target;
+    }
+
+
+    public void GetCardUseInfo(out int o_fixP, out float o_flucPRate)
+    {
+        if (m_charM == null)
+        {
+            m_charM = GameObject.FindGameObjectWithTag("Player").GetComponent<Character>();
+        }
+
+        if (isFixGuard)
+        {
+            r_fixP = fixP + Mathf.RoundToInt(m_charM.solid * 0.5f);
+        }
+        else if (type == Type.Sword)
+        {
+            r_fixP = fixP + Mathf.RoundToInt(m_charM.strength * 0.5f);
+        }
+        else if (type == Type.Magic)
+        {
+            r_fixP = fixP + Mathf.RoundToInt(m_charM.intel * 0.5f);
+        }
+
+        o_fixP = r_fixP;
+        o_flucPRate = flucPRate;
+    }
+
+    public bool GetReady()
+    {
+        return ready;
+    }
 
     protected void FindBattleUIManger()
     {
@@ -148,25 +335,49 @@ public class Card_Base : MonoBehaviour, ICard
         m_cardM = GameObject.FindGameObjectWithTag("CManager").GetComponent<BSCManager>();
     }
 
-    protected void FindTurnManager()
+    protected void FindCostManager()
     {
-        m_turnM = GameObject.FindGameObjectWithTag("TurnManager").GetComponent<TurnManager>();
+        m_costM = GameObject.FindGameObjectWithTag("CostManager").GetComponent<CostManager>();
     }
 
     public void SortingCard(int usedRP, int cntCards)
     {
         int middle = Mathf.CeilToInt(cntCards / 2.0f);
 
-        if(renderPriority > usedRP && usedRP != 0) // 0은 초기화 때만.
+        if(renderPriority > usedRP && usedRP != 0) // 0은 초기화나 턴 시작 시
         {
             renderPriority -= 1;
         }
-        m_sprRs[0].sortingOrder = renderPriority - 1;
-        for (int i = 1; i < m_sprRs.Length; i++)
-            m_sprRs[i].sortingOrder = renderPriority;
-        costMeshR.sortingOrder = renderPriority;
-        gameObject.transform.localPosition = new Vector2(((renderPriority - middle) * moveP), 0);
-        gameObject.transform.localRotation = Quaternion.Euler(new Vector3(0, 0, (middle - renderPriority) * rotP));
+
+        //m_sprRs[0].sortingOrder = renderPriority - 1;
+        for (int i = 0; i < m_sprRs.Length; i++)
+            m_sprRs[i].sortingOrder = renderPriority -1;
+        textCanvas.sortingOrder = renderPriority - 1;
+
+        Vector2 tempV = new Vector2(((renderPriority - middle) * moveP), 0);
+        Quaternion tempQ = Quaternion.Euler(new Vector3(0, 0, (middle - renderPriority) * rotP));
+        gameObject.transform.localPosition = tempV;
+        gameObject.transform.localRotation = tempQ;
+
+
+        if (isFixGuard)
+        {
+            r_fixP = fixP + Mathf.RoundToInt(m_charM.solid * 0.5f);
+        }
+        else if (type == Type.Sword)
+        {
+            r_fixP = fixP + Mathf.RoundToInt(m_charM.strength * 0.5f);
+            Debug.LogWarning(cardID + ":" + r_fixP);
+
+        }
+        else if (type == Type.Magic)
+        {
+            r_fixP = fixP + Mathf.RoundToInt(m_charM.intel * 0.5f);
+        }
+        StringBuilder sb = new StringBuilder(cardText);
+        sb.Replace("()", "(" + r_fixP.ToString() + ")");
+        sb.Replace("(변동치)", flucPRate.ToString());
+        text_plain.text = sb.ToString();
     }
 
     public bool GetIsNonTarget()
@@ -179,8 +390,33 @@ public class Card_Base : MonoBehaviour, ICard
         renderPriority = value;
     }
 
+    public int GetRenderPriority()
+    {
+        return renderPriority;
+    }
+
     public int GetCardID()
     {
         return cardID;
+    }
+
+    public void DoTransparency()
+    {
+        for (int i = 0; i < m_sprRs.Length; i++)
+            m_sprRs[i].color = new Color(m_sprRs[i].color.r, m_sprRs[i].color.g, m_sprRs[i].color.b, 0);
+        //for (int i = 0; i < array_text.Length; i++)   // 어쩐지 배열식 접근은 안됨. public 으로 접근해도 막힘. 개별로 할 것.
+        //    array_text[i].enabled = false;
+        text_cost.color = new Color(text_cost.color.r, text_cost.color.g, text_cost.color.b, 0);
+        text_plain.color = new Color(text_plain.color.r, text_plain.color.g, text_plain.color.b, 0);
+        text_name.color = new Color(text_name.color.r, text_name.color.g, text_name.color.b, 0);
+    }
+
+    public void UndoTransparency()
+    {
+        for (int i = 0; i < m_sprRs.Length; i++)
+            m_sprRs[i].color = new Color(m_sprRs[i].color.r, m_sprRs[i].color.g, m_sprRs[i].color.b, 1.0f);
+        text_cost.color = new Color(text_cost.color.r, text_cost.color.g, text_cost.color.b, 1.0f);
+        text_plain.color = new Color(text_plain.color.r, text_plain.color.g, text_plain.color.b, 1.0f);
+        text_name.color = new Color(text_name.color.r, text_name.color.g, text_name.color.b, 1.0f);
     }
 }
