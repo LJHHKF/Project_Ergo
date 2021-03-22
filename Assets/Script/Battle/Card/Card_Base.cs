@@ -298,7 +298,25 @@ public class Card_Base : MonoBehaviour, ICard
 
     public void GetCardUseInfo(out int o_fixP, out float o_flucPRate)
     {
-        o_fixP = fixP;
+        if (m_charM == null)
+        {
+            m_charM = GameObject.FindGameObjectWithTag("Player").GetComponent<Character>();
+        }
+
+        if (isFixGuard)
+        {
+            r_fixP = fixP + Mathf.RoundToInt(m_charM.solid * 0.5f);
+        }
+        else if (type == Type.Sword)
+        {
+            r_fixP = fixP + Mathf.RoundToInt(m_charM.strength * 0.5f);
+        }
+        else if (type == Type.Magic)
+        {
+            r_fixP = fixP + Mathf.RoundToInt(m_charM.intel * 0.5f);
+        }
+
+        o_fixP = r_fixP;
         o_flucPRate = flucPRate;
     }
 
