@@ -38,8 +38,7 @@ public class LivingEntity : MonoBehaviour, IDamageable
     protected virtual void OnEnable()
     {
         dead = false;
-        health = startingHealth;
-        GuardPoint = regenGuardPoint;
+        HpAndGuardReset();
     }
 
     protected virtual void Start()
@@ -99,9 +98,9 @@ public class LivingEntity : MonoBehaviour, IDamageable
             return;
         }
         
-        if(health + restoreValue >= fullHealth)
+        if(health + restoreValue >= (fullHealth + endurance))
         {
-            restoreValue -= fullHealth;
+            restoreValue -= (fullHealth + endurance);
             if (restoreValue <= 0)
                 return;
             health += restoreValue;
@@ -120,7 +119,7 @@ public class LivingEntity : MonoBehaviour, IDamageable
 
     public int GetFullHealth()
     {
-        return fullHealth;
+        return fullHealth + endurance;
     }
 
     public void ResetGuardPoint()
@@ -195,6 +194,12 @@ public class LivingEntity : MonoBehaviour, IDamageable
         {
             intel = fix_int + fluc_intel;
         }
+    }
+
+    protected virtual void HpAndGuardReset()
+    {
+        health = startingHealth + endurance; // 만약 시작 HP는 스탯 영향 안 받게 하고 싶을 경우는 수정.
+        GuardPoint = regenGuardPoint;
     }
 
 }

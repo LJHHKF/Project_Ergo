@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using System;
+using System.Text;
 
 public class Card_Base : MonoBehaviour, ICard
 {
@@ -16,8 +17,10 @@ public class Card_Base : MonoBehaviour, ICard
     public int cardID = 0;
     public int cost = 1;
     public int fixP = 1;
+    protected int r_fixP = 0;
     public float flucPRate = 1.0f;
     public bool isNonTarget = false;
+    public bool isFixGuard = false;
     public Type type;
     public Sprite cardImage;
     [TextArea]
@@ -44,6 +47,7 @@ public class Card_Base : MonoBehaviour, ICard
     protected TextMeshProUGUI[] array_text;
     protected BSCManager m_cardM;
     protected CostManager m_costM;
+    protected Character m_charM;
 
     public delegate void UseHandler(int dicevalue);
     public event UseHandler use;
@@ -74,14 +78,29 @@ public class Card_Base : MonoBehaviour, ICard
             array_text = textCanvas.gameObject.GetComponents<TextMeshProUGUI>();
         }
 
+        if(m_charM == null)
+        {
+            m_charM = GameObject.FindGameObjectWithTag("Player").GetComponent<Character>();
+        }
+
+        if(isFixGuard)
+        {
+            r_fixP = fixP + Mathf.RoundToInt(m_charM.solid * 0.5f);
+        }
+        else if(type == Type.Sword)
+        {
+            r_fixP = fixP + Mathf.RoundToInt(m_charM.strength * 0.5f);
+        }
+        else if(type == Type.Magic)
+        {
+            r_fixP = fixP + Mathf.RoundToInt(m_charM.intel * 0.5f);
+        }
+
         text_cost.text = cost.ToString();
-        string temp = "고정치()";
-        string temp2 = "고정치(" + fixP.ToString() + ")";
-        string temp3 = "(변동치)";
-        string temp4 = flucPRate.ToString();
-        cardText = cardText.Replace(temp, temp2);
-        cardText = cardText.Replace(temp3, temp4);
-        text_plain.text = cardText;
+        StringBuilder sb = new StringBuilder(cardText);
+        sb.Replace("()", "(" + r_fixP.ToString() + ")");
+        sb.Replace("(변동치)", flucPRate.ToString());
+        text_plain.text = sb.ToString();
         ready = false;
 
         FindBSCardManager();
@@ -319,9 +338,28 @@ public class Card_Base : MonoBehaviour, ICard
 
         Vector2 tempV = new Vector2(((renderPriority - middle) * moveP), 0);
         Quaternion tempQ = Quaternion.Euler(new Vector3(0, 0, (middle - renderPriority) * rotP));
-
         gameObject.transform.localPosition = tempV;
         gameObject.transform.localRotation = tempQ;
+
+
+        if (isFixGuard)
+        {
+            r_fixP = fixP + Mathf.RoundToInt(m_charM.solid * 0.5f);
+        }
+        else if (type == Type.Sword)
+        {
+            r_fixP = fixP + Mathf.RoundToInt(m_charM.strength * 0.5f);
+            Debug.LogWarning(cardID + ":" + r_fixP);
+
+        }
+        else if (type == Type.Magic)
+        {
+            r_fixP = fixP + Mathf.RoundToInt(m_charM.intel * 0.5f);
+        }
+        StringBuilder sb = new StringBuilder(cardText);
+        sb.Replace("()", "(" + r_fixP.ToString() + ")");
+        sb.Replace("(변동치)", flucPRate.ToString());
+        text_plain.text = sb.ToString();
     }
 
     public bool GetIsNonTarget()
