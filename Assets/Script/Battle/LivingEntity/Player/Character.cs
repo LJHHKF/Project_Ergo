@@ -7,11 +7,16 @@ public class Character : LivingEntity
     public int init_maxCost = 3;
     //private int _i_maxCost;
     private CostManager m_costM;
+    private CStatManager m_statM;
 
     // Start is called before the first frame update
     protected override void Start()
     {
         base.Start();
+
+        m_statM = GameObject.FindGameObjectWithTag("InfoM").GetComponent<CStatManager>();
+        m_statM.GetStats(out fix_endu, out fix_stren, out fix_sol, out fix_int);
+
         m_turnM.turnStart += () => ResetGuardPoint();
         m_turnM.firstTurn += () => InitMaxCostSetting();
         m_turnM.turnStart += () => myAbCond.Affected();
@@ -21,6 +26,11 @@ public class Character : LivingEntity
     void Update()
     {
         
+    }
+
+    protected void OnDestroy()
+    {
+        m_statM.SetStats(fix_endu, fix_stren, fix_sol, fix_int);
     }
 
     public override void GetGuardPoint(int GetValue)
@@ -48,5 +58,11 @@ public class Character : LivingEntity
     private void FindCostManager()
     {
         m_costM = GameObject.FindGameObjectWithTag("CostManager").GetComponent<CostManager>();
+    }
+
+    protected override void HpAndGuardReset()
+    {
+        base.HpAndGuardReset();
+        //첫 스테이지 진입때만 base로 하고, 기본적으론 health 값은 스탯 매니저에게서 얻어올 것.
     }
 }

@@ -464,6 +464,7 @@ GameObject:
   - component: {fileID: 55268638}
   - component: {fileID: 55268637}
   - component: {fileID: 55268636}
+  - component: {fileID: 55268639}
   m_Layer: 0
   m_Name: InfoManager
   m_TagString: InfoM
@@ -530,6 +531,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &55268639
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 55268635}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09ea1ab9444c02f47bed9ab5d05f6734, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  endurance: 5
+  strength: 5
+  solid: 2
+  intelligent: 5
 --- !u!4 &89772477 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 378262026131932629, guid: d628d01f520b4d945b99f3effd4a2340,

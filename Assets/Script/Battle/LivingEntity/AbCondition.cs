@@ -78,19 +78,21 @@ public class AbCondition : MonoBehaviour
 
     public void Affected() //자신에 걸린 모든 효과 발동
     {
-        bool isRemoved = false;
+        for(int i = 0; i < list_conditions.Count; i++)
+        {
+            if (list_conditions[i].piledNum <= 0)
+            {
+                Affected(i);
+                list_conditions.RemoveAt(i);
+                continue;
+            }
+        }
         for (int i = 0; i < list_conditions.Count; i++)
         {
             Affected(i);
             list_conditions[i].DecresePTurn();
-            if(list_conditions[i].piledNum <= 0)
-            {
-                list_conditions.RemoveAt(i);
-                isRemoved = true;
-            }
         }
-        if (isRemoved)
-            myUI.AbConditionsUpdate();
+        myUI.AbConditionsUpdate();
     }
 
     private void Affected(int listIndex)
@@ -111,17 +113,17 @@ public class AbCondition : MonoBehaviour
                 break;
             case 1: // 쇠약(1), 파워업(5)
             SetStr:
-                m_target.fluc_strength += _power;
+                m_target.fluc_strength = +_power;
                 m_target.CalculateStat();
                 break;
             case 2: // 골절(2), 단단함(6)
             SetSolid:
-                m_target.fluc_solid += _power;
+                m_target.fluc_solid = +_power;
                 m_target.CalculateStat();
                 break;
             case 3: // 고갈(3), 충만(7)
             SetInt:
-                m_target.fluc_intel += _power;
+                m_target.fluc_intel = +_power;
                 m_target.CalculateStat();
                 break;
             case 4: // 피로(4), 각성(8)
