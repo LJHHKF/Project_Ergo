@@ -15,6 +15,8 @@ public class UnitUI : MonoBehaviour
     private TextMeshProUGUI[] pileds_txt;
     private Sprite[] sprs_icon;
     private int[] nums_piled;
+    private bool[] isDAbs;
+    public float delayedAbsAlpha = 0.5f;
 
     [Header("Ref Setting")]
     public LivingEntity livTarget;
@@ -28,6 +30,7 @@ public class UnitUI : MonoBehaviour
 
         sprs_icon = new Sprite[icons_condition.Length];
         nums_piled = new int[icons_condition.Length];
+        isDAbs = new bool[icons_condition.Length];
         pileds_txt = new TextMeshProUGUI[icons_condition.Length];
         for(int i = 0; i < icons_condition.Length; i++)
         {
@@ -53,7 +56,7 @@ public class UnitUI : MonoBehaviour
 
     public void AbConditionsUpdate()
     {
-        int rs = abcondTarget.GetUIInfo(ref sprs_icon, ref nums_piled, icons_condition.Length);
+        int rs = abcondTarget.GetUIInfo(ref sprs_icon, ref nums_piled, ref isDAbs, icons_condition.Length);
 
         if(rs == 0)
         {
@@ -67,6 +70,14 @@ public class UnitUI : MonoBehaviour
                 icons_condition[i].gameObject.SetActive(true);
                 icons_condition[i].sprite = sprs_icon[i];
                 pileds_txt[i].text = (nums_piled[i] + 1).ToString();
+                if(isDAbs[i])
+                {
+                    icons_condition[i].color = new Color(255 / 255, 255 / 255, 255 / 255, (255 * delayedAbsAlpha) / 255);
+                }
+                else
+                {
+                    icons_condition[i].color = new Color(255 / 255, 255 / 255, 255 / 255, 255 / 255);
+                }
             }
         }
         else
@@ -76,6 +87,14 @@ public class UnitUI : MonoBehaviour
                 icons_condition[i].gameObject.SetActive(true);
                 icons_condition[i].sprite = sprs_icon[i];
                 pileds_txt[i].text = (nums_piled[i] + 1).ToString();
+                if (isDAbs[i])
+                {
+                    icons_condition[i].color = new Color(255 / 255, 255 / 255, 255 / 255, (255 * delayedAbsAlpha) / 255);
+                }
+                else
+                {
+                    icons_condition[i].color = new Color(255 / 255, 255 / 255, 255 / 255, 255 / 255);
+                }
             }
         }
     }
