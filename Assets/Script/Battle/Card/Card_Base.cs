@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 using System;
 using System.Text;
 
@@ -42,6 +43,7 @@ public class Card_Base : MonoBehaviour, ICard
     protected BoxCollider2D m_Collider;
     protected Canvas textCanvas;
     protected TextMeshProUGUI text_cost;
+    protected Image costImg;
     protected TextMeshProUGUI text_plain;
     protected TextMeshProUGUI text_name;
     protected TextMeshProUGUI[] array_text;
@@ -71,7 +73,8 @@ public class Card_Base : MonoBehaviour, ICard
         if (textCanvas == null)
         {
             textCanvas = gameObject.transform.Find("TextCanvas").GetComponent<Canvas>();
-            text_cost = textCanvas.gameObject.transform.Find("CostText").GetComponent<TextMeshProUGUI>();
+            costImg = textCanvas.gameObject.transform.Find("CostImage").GetComponent<Image>();
+            text_cost = costImg.transform.Find("CostText").GetComponent<TextMeshProUGUI>();
             text_plain = textCanvas.gameObject.transform.Find("CardText").GetComponent<TextMeshProUGUI>();
             text_name = textCanvas.gameObject.transform.Find("CardName").GetComponent<TextMeshProUGUI>();
 
@@ -194,6 +197,7 @@ public class Card_Base : MonoBehaviour, ICard
             m_sprRs[i].color = new Color(m_sprRs[i].color.r, m_sprRs[i].color.g, m_sprRs[i].color.b, (m_sprRs[i].color.a * readyAlpha));
         for (int i = 0; i < array_text.Length; i++)
             array_text[i].faceColor = new Color32((byte)array_text[i].color.r, (byte)array_text[i].color.g, (byte)array_text[i].color.b, (byte)(array_text[i].color.a * readyAlpha));
+        costImg.color = new Color(costImg.color.r, costImg.color.g, costImg.color.b, (costImg.color.a * readyAlpha));
     }
 
     protected virtual void OffCardAlphaAndReady()
@@ -203,6 +207,7 @@ public class Card_Base : MonoBehaviour, ICard
             m_sprRs[i].color = new Color(m_sprRs[i].color.r, m_sprRs[i].color.g, m_sprRs[i].color.b, (m_sprRs[i].color.a / readyAlpha));
         for (int i = 0; i < array_text.Length; i++)
             array_text[i].faceColor = new Color32((byte)array_text[i].color.r, (byte)array_text[i].color.g, (byte)array_text[i].color.b, (byte)(array_text[i].color.a / readyAlpha));
+        costImg.color = new Color(costImg.color.r, costImg.color.g, costImg.color.b, (costImg.color.a / readyAlpha));
     }
 
     public virtual void Use(int diceValue)
@@ -264,7 +269,6 @@ public class Card_Base : MonoBehaviour, ICard
             FindBSCardManager();
         }
         m_cardM.DoHandsTransparency();
-        m_Collider.enabled = false;
     }
 
     public void BringUpCard(bool isSelect)
@@ -350,10 +354,11 @@ public class Card_Base : MonoBehaviour, ICard
         }
 
         //m_sprRs[0].sortingOrder = renderPriority - 1;
-        for (int i = 0; i < m_sprRs.Length; i++)
-            m_sprRs[i].sortingOrder = renderPriority -1;
-        textCanvas.sortingOrder = renderPriority - 1;
-
+        //for (int i = 0; i < m_sprRs.Length; i++)
+        //    m_sprRs[i].sortingOrder = renderPriority -1;
+        textCanvas.sortingOrder = renderPriority;
+        m_sprRs[0].sortingOrder = renderPriority;
+        m_sprRs[1].sortingOrder = renderPriority - 1;
         Vector2 tempV = new Vector2(((renderPriority - middle) * moveP), 0);
         Quaternion tempQ = Quaternion.Euler(new Vector3(0, 0, (middle - renderPriority) * rotP));
         gameObject.transform.localPosition = tempV;
@@ -367,8 +372,6 @@ public class Card_Base : MonoBehaviour, ICard
         else if (type == Type.Sword)
         {
             r_fixP = fixP + Mathf.RoundToInt(m_charM.strength * 0.5f);
-            Debug.LogWarning(cardID + ":" + r_fixP);
-
         }
         else if (type == Type.Magic)
         {
@@ -409,6 +412,9 @@ public class Card_Base : MonoBehaviour, ICard
         text_cost.color = new Color(text_cost.color.r, text_cost.color.g, text_cost.color.b, 0);
         text_plain.color = new Color(text_plain.color.r, text_plain.color.g, text_plain.color.b, 0);
         text_name.color = new Color(text_name.color.r, text_name.color.g, text_name.color.b, 0);
+        costImg.color = new Color(costImg.color.r, costImg.color.g, costImg.color.b, 0);
+
+        m_Collider.enabled = false;
     }
 
     public void UndoTransparency()
@@ -418,5 +424,8 @@ public class Card_Base : MonoBehaviour, ICard
         text_cost.color = new Color(text_cost.color.r, text_cost.color.g, text_cost.color.b, 1.0f);
         text_plain.color = new Color(text_plain.color.r, text_plain.color.g, text_plain.color.b, 1.0f);
         text_name.color = new Color(text_name.color.r, text_name.color.g, text_name.color.b, 1.0f);
+        costImg.color = new Color(costImg.color.r, costImg.color.g, costImg.color.b, 1.0f);
+
+        m_Collider.enabled = true;
     }
 }

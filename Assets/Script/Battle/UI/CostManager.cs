@@ -22,6 +22,8 @@ public class CostManager : MonoBehaviour
     private bool isChanged1 = false;
     private bool isChanged2 = false;
     private int m_cost = 0;
+    private int prevCost = 0;
+    public float emptyAlpha = 0.5f;
     public int cost
     {
         get
@@ -30,6 +32,7 @@ public class CostManager : MonoBehaviour
         }
         set
         {
+            prevCost = m_cost;
             m_cost = value;
             isChanged1 = true;
         }
@@ -37,8 +40,7 @@ public class CostManager : MonoBehaviour
     
     [Header("Object registration")]
     public TurnManager turnManager;
-    public Text txt_max;
-    public Text txt_cur;
+    public GameObject[] etherImgs;
 
     // Start is called before the first frame update
     void Start()
@@ -46,20 +48,30 @@ public class CostManager : MonoBehaviour
         turnManager.firstTurn += () => ResetCost();
         turnManager.turnStart += () => ResetCost();
 
-        txt_cur.text = cost.ToString();
-        txt_max.text = "/" + _maxCost.ToString();
+        for (int i = 0; i < etherImgs.Length; i++)
+            etherImgs[i].SetActive(false);
+        for (int i = 0; i < _maxCost; i++)
+            etherImgs[i].SetActive(true);
     }
 
     private void Update()
     {
         if(isChanged1)
         {
-            txt_cur.text = cost.ToString();
+            if(cost < prevCost)
+                for (int i = cost; i < prevCost; i++)
+                    etherImgs[i].GetComponent<Image>().color = new Color(255/255, 255/255, 255/255, ((255/255) * emptyAlpha));
+            else if(cost > prevCost)
+                for (int i = prevCost; i < cost; i++)
+                    etherImgs[i].GetComponent<Image>().color = new Color(255/255, 255/255, 255/255, ((255/255) / emptyAlpha));
             isChanged1 = false;
         }
         if(isChanged2)
         {
-            txt_max.text = "/" + _maxCost.ToString();
+            for (int i = 0; i < etherImgs.Length; i++)
+                etherImgs[i].SetActive(false);
+            for (int i = 0; i < _maxCost; i++)
+                etherImgs[i].SetActive(true);
             isChanged2 = false;
         }
     }

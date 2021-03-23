@@ -12,12 +12,18 @@ public class BattleUIManager : MonoBehaviour
     [Header("Managers registartion")]
     public TurnManager turnManager;
 
-    private bool isDiceOn = false;
+    public bool isDiceOn
+    {
+        get { return _isDiceOn; }
+        private set { _isDiceOn = value; }
+    }
+    private bool _isDiceOn = false;
 
     // Start is called before the first frame update
     void Start()
     {
         forDice.SetActive(false);
+        isDiceOn = false;
 
         turnManager.firstTurn += () => SetBtnTurnEActive(true);
         turnManager.turnStart += () => SetBtnTurnEActive(true);
