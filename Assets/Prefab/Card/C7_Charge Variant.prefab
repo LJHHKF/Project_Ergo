@@ -17,6 +17,7 @@ MonoBehaviour:
   isOnlyDiceValue: 0
   isSecondDmgFormula: 1
   ab_ID: 5
+  isImidiateAbActive: 1
   isOnlyUseSecondFixP: 0
   isSelfTarget: 1
   sec_fixP: 1

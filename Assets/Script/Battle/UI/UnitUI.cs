@@ -66,7 +66,7 @@ public class UnitUI : MonoBehaviour
             {
                 icons_condition[i].gameObject.SetActive(true);
                 icons_condition[i].sprite = sprs_icon[i];
-                pileds_txt[i].text = nums_piled[i].ToString();
+                pileds_txt[i].text = (nums_piled[i] + 1).ToString();
             }
         }
         else
@@ -75,7 +75,7 @@ public class UnitUI : MonoBehaviour
             {
                 icons_condition[i].gameObject.SetActive(true);
                 icons_condition[i].sprite = sprs_icon[i];
-                pileds_txt[i].text = nums_piled[i].ToString();
+                pileds_txt[i].text = (nums_piled[i] + 1).ToString();
             }
         }
     }

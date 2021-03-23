@@ -6,6 +6,7 @@ public class CUF_AbCondition : CUF_Base
 {
     [Header("Abnormal Condition Setting")]
     public int ab_ID = 0;
+    public bool isImidiateAbActive = false;
     public bool isOnlyUseSecondFixP = false;
     public bool isSelfTarget = false;
     public int sec_fixP = 1;
@@ -49,7 +50,10 @@ public class CUF_AbCondition : CUF_Base
         else
             dmg = fixP + Mathf.RoundToInt(diceValue * flucPRate);
 
-        ab_target.AddAbCondition(ab_ID, dmg);
+        if (isImidiateAbActive)
+            ab_target.AddImdiateAbCondition(ab_ID, dmg);
+        else
+            ab_target.AddAbCondition(ab_ID, dmg);
     }
 
     public override void ReUse()

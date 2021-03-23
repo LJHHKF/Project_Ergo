@@ -21,11 +21,6 @@ public class AbCondition : MonoBehaviour
             onePower = _onePower;
         }
 
-        public void DecresePTurn()
-        {
-            this.piledNum -= 1;
-        }
-
         public void DecreseP(int num)
         {
             this.piledNum -= num;
@@ -72,6 +67,34 @@ public class AbCondition : MonoBehaviour
 
             list_conditions.Add(temp);
         }
+    }
+
+    public void AddImdiateAbCondition(int id, int piledN)
+    {
+        bool isBeing = false;
+
+        for (int i = 0; i < list_conditions.Count; i++)
+        {
+            if (list_conditions[i].ID == id)
+            {
+                isBeing = true;
+                list_conditions[i].IncreaseP(piledN);
+                Affected(i);
+                break;
+            }
+        }
+
+        if (!isBeing)
+        {
+            AbCond temp = new AbCond(id, abCondInfoM.GetAbCond_Img(id), piledN, abCondInfoM.GetAbCond_OnePower(id));
+            //temp.ID = id;
+            //temp.Icon = abCondInfoM.GetAbCond_Img(id);
+            //temp.piledNum = piledN;
+            //temp.onePower = abCondInfoM.GetAbCond_OnePower(id);
+
+            list_conditions.Add(temp);
+            Affected(list_conditions.Count - 1);
+        }
 
         myUI.AbConditionsUpdate();
     }
@@ -90,7 +113,6 @@ public class AbCondition : MonoBehaviour
         for (int i = 0; i < list_conditions.Count; i++)
         {
             Affected(i);
-            list_conditions[i].DecresePTurn();
         }
         myUI.AbConditionsUpdate();
     }
@@ -99,6 +121,8 @@ public class AbCondition : MonoBehaviour
     {
         int _id = list_conditions[listIndex].ID;
         int _power = list_conditions[listIndex].onePower * list_conditions[listIndex].piledNum;
+
+        list_conditions[listIndex].DecreseP(1);
 
         Debug.Log("상태이상 발동, ID(" + _id + "), 중첩수(" + list_conditions[listIndex].piledNum + ")");
 

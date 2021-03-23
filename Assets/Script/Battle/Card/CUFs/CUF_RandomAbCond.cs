@@ -6,6 +6,7 @@ public class CUF_RandomAbCond : CUF_Base
 {
     [Header("Abnormal Condition Setting")]
     public int ab_ID = 0;
+    public bool isImidiateAbActive = false;
     public bool isOnlyUseSecondFixP = false;
     public bool isSelfTarget = false;
     public int sec_fixP = 1;
@@ -78,7 +79,11 @@ public class CUF_RandomAbCond : CUF_Base
             }
             callCnt++;
         }
-        ab_target.AddAbCondition(rand, dmg);
+
+        if (isImidiateAbActive)
+            ab_target.AddImdiateAbCondition(rand, dmg);
+        else
+            ab_target.AddAbCondition(rand, dmg);
     }
 
     public override void ReUse()
