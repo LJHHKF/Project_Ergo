@@ -53,7 +53,7 @@ public class CUF_AbCondition : CUF_Base
         if (isImidiateAbActive)
             ab_target.AddImdiateAbCondition(ab_ID, dmg);
         else
-            ab_target.AddAbCondition(ab_ID, dmg);
+            ab_target.AddDelayedCondition(ab_ID, dmg);
     }
 
     public override void ReUse()

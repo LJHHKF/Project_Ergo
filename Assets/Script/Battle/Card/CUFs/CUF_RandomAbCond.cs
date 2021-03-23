@@ -83,7 +83,7 @@ public class CUF_RandomAbCond : CUF_Base
         if (isImidiateAbActive)
             ab_target.AddImdiateAbCondition(rand, dmg);
         else
-            ab_target.AddAbCondition(rand, dmg);
+            ab_target.AddDelayedCondition(rand, dmg);
     }
 
     public override void ReUse()
