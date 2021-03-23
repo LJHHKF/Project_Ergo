@@ -30,7 +30,7 @@ public class DiceUIManager : MonoBehaviour
     private void OnEnable()
     {
         stopPoint.fillAmount = 0.0f;
-        minCP = Random.Range(0.0f, 0.5f - cpGap);
+        minCP = Random.Range(0.0f, 1.0f - cpGap);
         cp_forwardS.fillAmount = minCP;
         cp_backwardS.fillAmount = 1.0f - (minCP + cpGap);
         sp_forwardS.fillAmount = stopPoint.fillAmount;
@@ -56,7 +56,7 @@ public class DiceUIManager : MonoBehaviour
 
             if (!reversed)
             {
-                if (stopPoint.fillAmount > 0.5f - spGap)
+                if (stopPoint.fillAmount > 1.0f - spGap)
                 {
                     reversed = true;
                 }
