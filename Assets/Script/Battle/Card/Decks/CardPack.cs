@@ -5,6 +5,19 @@ using System.Text;
 
 public class CardPack : MonoBehaviour
 {
+    public static CardPack instance
+    {
+        get
+        {
+            if (m_instance == null)
+            {
+                m_instance = FindObjectOfType<CardPack>();
+            }
+            return m_instance;
+        }
+    }
+    private static CardPack m_instance; //카드팩이 추가될 일은 없지만, 별도 카드팩이 추가될 경우 이것 방식 달리해야함. Tag로 구분 등의.
+
     [Header("Pack Settincg")]
     public int max_DuplicateValue = 3;
     private int saveID = 0;
@@ -14,6 +27,17 @@ public class CardPack : MonoBehaviour
     public float[] card_weight;
     private int[] cardIDs;
     private int[] card_HadCnt;
+
+    private StringBuilder key = new StringBuilder();
+
+    private void Awake()
+    {
+        if(instance != this)
+        {
+            Destroy(this);
+        }
+
+    }
 
     private void OnApplicationQuit()
     {
@@ -29,7 +53,7 @@ public class CardPack : MonoBehaviour
         {
             cardIDs[i] = card_prefabs[i].GetComponent<ICard>().GetCardID();
 
-            StringBuilder key = new StringBuilder();
+            key.Clear();
             key.Append("saveID(");
             key.Append(saveID.ToString());
             key.Append(").cardID(");
@@ -103,6 +127,7 @@ public class CardPack : MonoBehaviour
         {
             card_HadCnt[index] += 1;
             GameObject go = Instantiate(card_prefabs[index], _p);
+            go.SetActive(false);
             _out.Add(go);
         }
         else
@@ -120,6 +145,7 @@ public class CardPack : MonoBehaviour
                 for(int j = 0; j < card_HadCnt[i]; j++)
                 {
                     GameObject go = Instantiate(card_prefabs[i], _p);
+                    go.SetActive(false);
                     _out.Add(go);
                 }
             }
@@ -135,7 +161,7 @@ public class CardPack : MonoBehaviour
     {
         for(int i = 0; i < card_HadCnt.Length; i++)
         {
-            StringBuilder key = new StringBuilder();
+            key.Clear();
             key.Append("saveID(");
             key.Append(saveID.ToString());
             key.Append(").cardID(");
@@ -149,7 +175,7 @@ public class CardPack : MonoBehaviour
     {
         for (int i = 0; i < card_HadCnt.Length; i++)
         {
-            StringBuilder key = new StringBuilder();
+            key.Clear();
             key.Append("saveID(");
             key.Append(saveID.ToString());
             key.Append(").cardID(");
@@ -159,10 +185,10 @@ public class CardPack : MonoBehaviour
         }
 
         //이하 코드는 세이브 매니저 만들면 옮길 것
-        StringBuilder Key2 = new StringBuilder();
-        Key2.Append("SaveID(");
-        Key2.Append(saveID.ToString());
-        Key2.Append(")");
-        PlayerPrefs.SetInt(Key2.ToString(), 0); //false
+        key.Clear();
+        key.Append("SaveID(");
+        key.Append(saveID.ToString());
+        key.Append(")");
+        PlayerPrefs.SetInt(key.ToString(), 0); //false
     }
 }
