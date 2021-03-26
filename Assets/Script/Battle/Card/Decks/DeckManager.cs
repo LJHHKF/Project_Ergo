@@ -9,9 +9,11 @@ public class DeckManager : MonoBehaviour
     private BSCManager m_BSCManager;
     private List<GameObject> list_deck = new List<GameObject>();
     private TurnManager m_turnM;
+    private CardPack c_pack;
 
     private void Awake()
     {
+        c_pack = GameObject.FindGameObjectWithTag("InfoM").GetComponentInChildren<CardPack>();
         ResetDeck();
     }
 
@@ -27,13 +29,15 @@ public class DeckManager : MonoBehaviour
 
     public void ResetDeck()
     {
-        for (int i = 0; i < gameObject.transform.childCount; i++)
-        {
-            if (gameObject.transform.GetChild(i).GetComponent<ICard>() != null)
-            {
-                list_deck.Add(gameObject.transform.GetChild(i).gameObject);
-            }
-        }
+        //for (int i = 0; i < gameObject.transform.childCount; i++)
+        //{
+        //    if (gameObject.transform.GetChild(i).GetComponent<ICard>() != null)
+        //    {
+        //        list_deck.Add(gameObject.transform.GetChild(i).gameObject);
+        //    }
+        //}
+
+        c_pack.InstantiateCards(gameObject.transform, ref list_deck);
     }
 
     public void SetBSCManager(BSCManager input)
