@@ -11,12 +11,15 @@ public class UnitUI : MonoBehaviour
     private TextMeshProUGUI hp_txt;
     public GameObject guard_img_obj;
     private TextMeshProUGUI guard_txt;
+    public Image icon_EnemyActInfo;
+    private TextMeshProUGUI actPower_Text;
+    public float delayedAbsAlpha = 0.5f;
     public Image[] icons_condition;
     private TextMeshProUGUI[] pileds_txt;
     private Sprite[] sprs_icon;
     private int[] nums_piled;
     private bool[] isDAbs;
-    public float delayedAbsAlpha = 0.5f;
+
 
     [Header("Ref Setting")]
     public LivingEntity livTarget;
@@ -27,6 +30,11 @@ public class UnitUI : MonoBehaviour
     {
         hp_txt = hpBar_img.transform.Find("HPText").GetComponent<TextMeshProUGUI>();
         guard_txt = guard_img_obj.transform.Find("GuardText").GetComponent<TextMeshProUGUI>();
+
+        if(icon_EnemyActInfo != null)
+        {
+            actPower_Text = icon_EnemyActInfo.gameObject.transform.Find("PowerNumText").GetComponent<TextMeshProUGUI>();
+        }
 
         sprs_icon = new Sprite[icons_condition.Length];
         nums_piled = new int[icons_condition.Length];
@@ -96,6 +104,21 @@ public class UnitUI : MonoBehaviour
                     icons_condition[i].color = new Color(255 / 255, 255 / 255, 255 / 255, 255 / 255);
                 }
             }
+        }
+    }
+
+    public void SetActInfo(Sprite _actSprite, int _power, int _actTypeNum)
+    {
+        icon_EnemyActInfo.sprite = _actSprite;
+        actPower_Text.text = _power.ToString();
+
+        if(_actTypeNum == 1)
+        {
+            actPower_Text.color = new Color(0, 0, 255 / 255, 255/255);
+        }
+        else
+        {
+            actPower_Text.color = new Color(255 / 255, 0, 0, 255/255);
         }
     }
 }

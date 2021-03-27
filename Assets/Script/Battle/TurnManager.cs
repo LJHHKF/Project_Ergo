@@ -10,7 +10,7 @@ public class TurnManager : MonoBehaviour
     public event Action firstTurn;  
     public event Action turnStart;
     public event Action playerTurnEnd;
-    //public event Action turnEnd;
+    public event Action turnEnd;
     public event Action battleEnd;
 
     private bool isFirstActived = false;
@@ -55,10 +55,14 @@ public class TurnManager : MonoBehaviour
         }
     }
 
-    //public void OnTurnEnd()
-    //{
-    //    turnEnd();
-    //}
+    public void OnTurnEnd()
+    {
+        if (turnEnd != null)
+        {
+            turnEnd();
+        }
+        OnTurnStart();
+    }
 
     public void OnBattleEnd()
     {
