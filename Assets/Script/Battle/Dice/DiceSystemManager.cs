@@ -86,6 +86,7 @@ public class DiceSystemManager : MonoBehaviour
                 {
                     six_listPool[i].SetActive(true);
                     six_listPool[i].transform.position = new Vector3(spawnP_minX + (i * interval_x), transform.position.y + spawnP_Y, spawnP_Z);
+                    //six_listPool[i].transform.position = new Vector3(spawnPoint.position.x + spawnP_minX + (i * interval_x), spawnPoint.position.y, spawnPoint.position.z);
                     six_listPool[i].transform.localEulerAngles = new Vector3(Random.Range(0f, 360f), Random.Range(0f, 360f), Random.Range(0f, 360f));
 
                     DiceManager m_dice = six_listPool[i].GetComponent<DiceManager>();
@@ -104,6 +105,7 @@ public class DiceSystemManager : MonoBehaviour
                 {
                     normal_listPool[i].SetActive(true);
                     normal_listPool[i].transform.position = new Vector3(spawnP_minX + (i * interval_x), transform.position.y + spawnP_Y, spawnP_Z);
+                    //normal_listPool[i].transform.position = new Vector3(spawnPoint.position.x + spawnP_minX + (i * interval_x), spawnPoint.position.y, spawnPoint.position.z);
                     normal_listPool[i].transform.localEulerAngles = new Vector3(Random.Range(0f, 360f), Random.Range(0f, 360f), Random.Range(0f, 360f));
 
                     DiceManager m_dice = normal_listPool[i].GetComponent<DiceManager>();

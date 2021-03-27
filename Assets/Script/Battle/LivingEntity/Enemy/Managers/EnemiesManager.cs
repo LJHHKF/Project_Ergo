@@ -110,9 +110,9 @@ public class EnemiesManager : MonoBehaviour
             Enemy_Base temp = monsters[i].GetComponent<Enemy_Base>();
             Debug.Log("행동 대기:" + time_interval + "초");
             yield return new WaitForSeconds(time_interval);
-            temp.DummyAct();
+            temp.Act();
         }
-        turnManager.OnTurnStart();
+        turnManager.OnTurnEnd();
         yield break;
     }
 }
