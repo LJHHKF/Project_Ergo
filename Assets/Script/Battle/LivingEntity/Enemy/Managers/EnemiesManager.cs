@@ -6,6 +6,17 @@ public class EnemiesManager : MonoBehaviour
 {
     //[SerializeField] private int initAmount; // 스테이지 관리자를 만든 후엔 이 부분은 거기서 얻어올 것.
 
+    public EnemiesManager instance
+    {
+        get
+        {
+            if (m_instance == null)
+                m_instance = FindObjectOfType<EnemiesManager>();
+            return m_instance;
+        }
+    }
+    private static EnemiesManager m_instance;
+
     [SerializeField] private float minX;
     [SerializeField] private float x_interval = 1.0f;
     [SerializeField] private float time_interval = 1.0f;
@@ -14,6 +25,15 @@ public class EnemiesManager : MonoBehaviour
     [SerializeField] private GameObject[] m_array;
 
     private List<GameObject> monsters = new List<GameObject>();
+    private TurnManager m_TurnM;
+
+    private void Awake()
+    {
+        if(instance != this)
+        {
+            Destroy(gameObject);
+        }
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -25,25 +45,19 @@ public class EnemiesManager : MonoBehaviour
             mon.name = "Enemy_" + m_index[i].ToString("00") + "_" + i.ToString("00");
             Enemy_Base temp = mon.GetComponent<Enemy_Base>();
             temp.monsterFieldIndex = i;
-            temp.onDeath += () => SortMonstersList(mon);
+            temp.onDeath += () => RemoveAtMonstersList(mon);
             monsters.Add(mon);
         }
-
-         TurnManager.playerTurnEnd += () => StartCoroutine(StartMonsterActsControl());
+        m_TurnM = GameObject.FindGameObjectWithTag("TurnManager").GetComponent<TurnManager>();
+        m_TurnM.playerTurnEnd += () => this.StartCoroutine(StartMonsterActsControl());
     }
 
     private void OnDestroy()
     {
-        TurnManager.playerTurnEnd -= () => StartCoroutine(StartMonsterActsControl());
+        m_TurnM.playerTurnEnd -= () => this.StartCoroutine(StartMonsterActsControl());
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    void SortMonstersList(GameObject who)
+    void RemoveAtMonstersList(GameObject who)
     {
         for(int i = 0; i < monsters.Count; i++)
         {
@@ -51,6 +65,10 @@ public class EnemiesManager : MonoBehaviour
             {
                 monsters.RemoveAt(i);
             }
+        }
+        if(monsters.Count == 0)
+        {
+            m_TurnM.OnBattleEnd();
         }
     }
 
@@ -107,15 +125,8 @@ public class EnemiesManager : MonoBehaviour
     }
 
 
-
     IEnumerator StartMonsterActsControl()
     {
-        if(monsters.Count == 0)
-        {
-            TurnManager.OnBattleEnd();
-            yield break;
-        }
-
         for(int i = 0; i < monsters.Count; i++)
         {
             Enemy_Base temp = monsters[i].GetComponent<Enemy_Base>();
@@ -123,7 +134,7 @@ public class EnemiesManager : MonoBehaviour
             yield return new WaitForSeconds(time_interval);
             temp.Act();
         }
-        TurnManager.OnTurnEnd();
+        m_TurnM.OnTurnEnd();
         yield break;
     }
 }

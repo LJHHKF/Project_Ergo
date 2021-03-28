@@ -20,6 +20,7 @@ public class DeckManager : MonoBehaviour
     private BSCManager m_BSCManager;
     private List<GameObject> list_deck = new List<GameObject>();
     private CardPack c_pack;
+    private TurnManager m_TurnM;
 
     private void Awake()
     {
@@ -36,8 +37,14 @@ public class DeckManager : MonoBehaviour
 
         GameMaster.initSaveData_Start += () => ResetDeck();
         GameMaster.startGame_Start += () => ResetDeck();
-        TurnManager.firstTurn += () => PullingInDeck_FirstTurn();
-        TurnManager.turnStart += () => PullingInDeck();
+        GameMaster.battleStageStart += () => BattleStageInitSetting();
+    }
+
+    private void BattleStageInitSetting()
+    {
+        m_TurnM = GameObject.FindGameObjectWithTag("TurnManager").GetComponent<TurnManager>();
+        m_TurnM.firstTurn += () => PullingInDeck_FirstTurn();
+        m_TurnM.turnStart += () => PullingInDeck();
     }
 
     public void ResetDeck()

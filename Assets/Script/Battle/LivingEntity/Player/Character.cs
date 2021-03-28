@@ -18,15 +18,12 @@ public class Character : LivingEntity
         fix_sol = CStatManager.solid;
         fix_int = CStatManager.intelligent;
 
-        myUI.HpUpdate();
-        myUI.GuardUpdate();
-
         base.Start();
 
-        TurnManager.turnStart += () => ResetGuardPoint();
-        TurnManager.firstTurn += () => InitMaxCostSetting();
-        TurnManager.turnStart += () => myAbCond.Affected();
-        TurnManager.battleEnd += () => CStatManager.HealthPointUpdate(health);
+        m_turnM.turnStart += () => ResetGuardPoint();
+        m_turnM.firstTurn += () => InitMaxCostSetting();
+        m_turnM.turnStart += () => myAbCond.Affected();
+        m_turnM.battleEnd += () => CStatManager.HealthPointUpdate(health);
 
         onDeath += () => CStatManager.HealthPointUpdate(health); // 게임오버 체크는 여기 들어가서 함.
     }
@@ -34,10 +31,10 @@ public class Character : LivingEntity
     protected override void ReleseTurnAct()
     {
         base.ReleseTurnAct();
-        TurnManager.turnStart -= () => ResetGuardPoint();
-        TurnManager.firstTurn -= () => InitMaxCostSetting();
-        TurnManager.turnStart -= () => myAbCond.Affected();
-        TurnManager.battleEnd -= () => CStatManager.HealthPointUpdate(health);
+        m_turnM.turnStart -= () => ResetGuardPoint();
+        m_turnM.firstTurn -= () => InitMaxCostSetting();
+        m_turnM.turnStart -= () => myAbCond.Affected();
+        m_turnM.battleEnd -= () => CStatManager.HealthPointUpdate(health);
     }
 
     public override void GetGuardPoint(int GetValue)

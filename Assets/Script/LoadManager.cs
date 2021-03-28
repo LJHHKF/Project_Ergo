@@ -35,7 +35,15 @@ public class LoadManager : MonoBehaviour
     {
         GameMaster.GameStart(ID);
         isBattleReady = true;
-        LoadingSceneManager.LoadScene("Stage1");
+        LoadingSceneManager.LoadScene("Battle");
+    }
+
+    public static void LoadNextStage()
+    {
+        GameMaster.OnStageEnd();
+
+        m_instance.isBattleReady = true; // 이 부분은 추후 '전투씬'으로 들어갈 때만으로 한정할 필요가 있음
+        LoadingSceneManager.LoadScene("Battle");
     }
 
     public static void ChkAndPlayDelayOn()

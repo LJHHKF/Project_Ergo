@@ -44,12 +44,12 @@ public class Enemy_Base : LivingEntity
         //startingHealth = _startingHealth;
         regenGuardPoint = _regenGuardPoint;
         base.Start();
-        TurnManager.playerTurnEnd += () => ResetGuardPoint();
-        TurnManager.playerTurnEnd += () => myAbCond.Affected();
-        TurnManager.turnEnd += () => curSpGauge++;
+        m_turnM.playerTurnEnd += () => ResetGuardPoint();
+        m_turnM.playerTurnEnd += () => myAbCond.Affected();
+        m_turnM.turnEnd += () => curSpGauge++;
 
-        TurnManager.firstTurn += () => ActSetting();
-        TurnManager.turnEnd += () => ActSetting();
+        m_turnM.firstTurn += () => ActSetting();
+        m_turnM.turnEnd += () => ActSetting();
 
         onDeath += () => StartCoroutine(DelayedDestroy(1.0f));
     }
@@ -57,12 +57,12 @@ public class Enemy_Base : LivingEntity
     protected override void ReleseTurnAct()
     {
         base.ReleseTurnAct();
-        TurnManager.playerTurnEnd -= () => ResetGuardPoint();
-        TurnManager.playerTurnEnd -= () => myAbCond.Affected();
-        TurnManager.turnEnd -= () => curSpGauge++;
+        m_turnM.playerTurnEnd -= () => ResetGuardPoint();
+        m_turnM.playerTurnEnd -= () => myAbCond.Affected();
+        m_turnM.turnEnd -= () => curSpGauge++;
 
-        TurnManager.firstTurn -= () => ActSetting();
-        TurnManager.turnEnd -= () => ActSetting();
+        m_turnM.firstTurn -= () => ActSetting();
+        m_turnM.turnEnd -= () => ActSetting();
     }
 
     protected virtual void Update()
@@ -131,21 +131,9 @@ public class Enemy_Base : LivingEntity
     {
         Sprite actSpr = readyAct.GetActSprite();
         int power = -1;
-        //int methodID = -1;
-        //bool isAll = false;
-        //int abcondID = -1;
 
-        //if(readyAct.GetIsAbCondAct())
-        //{
-        //    readyAct.GetActInfo(out power, out abcondID, out isAll);
-        //    myUI.SetActInfo(0, actSpr, power, isAll, abcondID);
-        //}
-        //else
-        //{
         readyAct.GetActInfo(out power);
         myUI.SetActInfo(actSpr, power, readyAct.GetActTypeNumber());
-            //abcondID);
-        //}
     }
 
     public void Act()

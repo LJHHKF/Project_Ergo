@@ -37,6 +37,9 @@ public class CUF_Guard : CUF_Base
     }
     public override void ReUse()
     {
-        this.Use(dv);
+        if (target != null)
+        {
+            this.Use(dv);
+        }
     }
 }
