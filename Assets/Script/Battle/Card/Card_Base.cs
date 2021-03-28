@@ -16,6 +16,7 @@ public class Card_Base : MonoBehaviour, ICard
 
     [Header("Card Base Setting")]
     [SerializeField] protected int cardID = 0;
+    [SerializeField] protected string cardName;
     [SerializeField] protected int cost = 1;
     [SerializeField] protected int fixP = 1;
     protected int r_fixP = 0;
@@ -23,7 +24,6 @@ public class Card_Base : MonoBehaviour, ICard
     [SerializeField] protected bool isNonTarget = false;
     [SerializeField] protected bool isFixGuard = false;
     [SerializeField] protected Type type;
-    [SerializeField] protected Sprite cardImage;
     [TextArea]
     [SerializeField] protected string cardText;
 
@@ -87,17 +87,16 @@ public class Card_Base : MonoBehaviour, ICard
         sb.Replace("()", $"({r_fixP})");
         sb.Replace("(변동치)", flucPRate.ToString());
         text_plain.text = sb.ToString();
+        text_name.text = cardName;
         ready = false;
-
-        TurnManager.firstTurn += () => BattleInitSetting();
+        
+        GameMaster.battleStageStart += () => BattleInitSetting();
     }
 
     protected virtual void OnEnable()
     {
-
         m_Collider.enabled = true;
         UndoTransparency();
-        
     }
 
     protected virtual void Start()
@@ -377,7 +376,7 @@ public class Card_Base : MonoBehaviour, ICard
             r_fixP = fixP + Mathf.RoundToInt(m_charM.intel * 0.5f);
         }
         StringBuilder sb = new StringBuilder(cardText);
-        sb.Replace("()", "(" + r_fixP.ToString() + ")");
+        sb.Replace("()", $"({r_fixP})");
         sb.Replace("(변동치)", flucPRate.ToString());
         text_plain.text = sb.ToString();
     }
@@ -427,4 +426,25 @@ public class Card_Base : MonoBehaviour, ICard
 
         m_Collider.enabled = true;
     }
+
+    //private int cardID = 0;
+    //private int cost = 1;
+    //private int fixP = 1;
+    //private int r_fixP = 0;
+    //private float flucPRate = 1.0f;
+    //private Sprite cardImage;
+    //private string cardText;
+
+    public void CopyUIInfo(out int _cardID,out string _name ,out int _cost, out int _fixP, out float _flucPRate, out Sprite _cardImage, out Sprite _cardOuterImage ,out string _cardText)
+    {
+        _cardID = cardID;
+        _name = cardName;
+        _cost = cost;
+        _fixP = fixP;
+        _flucPRate = flucPRate;
+        _cardText = cardText;
+        _cardOuterImage = gameObject.GetComponent<SpriteRenderer>().sprite;
+        _cardImage = gameObject.transform.Find("CardImage").GetComponent<SpriteRenderer>().sprite;
+    }
+
 }

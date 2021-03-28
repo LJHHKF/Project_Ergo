@@ -28,6 +28,7 @@ public class GameMaster : MonoBehaviour
     public static event Action initSaveData_Start;
     public static event Action gameOver;
     public static event Action gameStop;
+    public static event Action battleStageStart;
     public static event Action stageEnd;
 
     protected void Awake()
@@ -110,6 +111,14 @@ public class GameMaster : MonoBehaviour
         if(gameStop != null)
         {
             gameStop();
+        }
+    }
+
+    public static void OnBattleStageStart()
+    {
+        if(battleStageStart != null)
+        {
+            battleStageStart();
         }
     }
 

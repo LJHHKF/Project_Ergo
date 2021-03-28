@@ -32,6 +32,8 @@ public class CardPack : MonoBehaviour
     [SerializeField] private CardField[] cards;
     private int[] cardIDs;
     private int[] card_HadCnt;
+    private int[] tempHadCnt;
+    private List<CardField> canList = new List<CardField>();
 
     private StringBuilder key = new StringBuilder();
 
@@ -48,6 +50,7 @@ public class CardPack : MonoBehaviour
     {
         cardIDs = new int[cards.Length];
         card_HadCnt = new int[cards.Length];
+        tempHadCnt = new int[cards.Length];
 
         key.Clear();
         for (int i = 0; i < cards.Length; i++)
@@ -68,6 +71,7 @@ public class CardPack : MonoBehaviour
             {
                 card_HadCnt[i] = PlayerPrefs.GetInt(key.ToString());
             }
+            tempHadCnt[i] = 0;
         }
     }
 
@@ -93,15 +97,7 @@ public class CardPack : MonoBehaviour
 
     public static void AddCard_OnlyHadData(int c_id)
     {
-        int index = -1;
-        for(int i = 0; i< m_instance.cardIDs.Length;i++)
-        {
-            if(m_instance.cardIDs[i] == c_id)
-            {
-                index = c_id;
-                break;
-            }
-        }
+        int index = m_instance.SearchIndexFromID(c_id);
 
         if(index == -1)
         {
@@ -119,17 +115,34 @@ public class CardPack : MonoBehaviour
         }
     }
 
-    public static void AddCard_Object(int c_id, Transform _p, ref List<GameObject> _out)
+    private int SearchIndexFromID(int c_id)
     {
-        int index = -1;
-        for (int i = 0; i < m_instance.cardIDs.Length; i++)
+        //아이디가 오름차순(작은 것 우선)으로 정렬되어 있다고 가정함. 다르다면 별도로 만들 것.
+        int head = 0;
+        int tail = cardIDs.Length - 1;
+        int center = Mathf.FloorToInt((head + tail / 2));
+
+        while (cardIDs[center] != c_id)
         {
-            if (m_instance.cardIDs[i] == c_id)
+            if (head > tail) return -1;
+
+            if(cardIDs[center] < c_id)
             {
-                index = c_id;
-                break;
+                head = center + 1;
+                center = Mathf.FloorToInt((head + tail) / 2);
+            }
+            else
+            {
+                tail = center - 1;
+                center = Mathf.FloorToInt((head + tail) / 2);
             }
         }
+        return center;
+    }
+
+    public static void AddCard_Object(int c_id, Transform _p, ref List<GameObject> _out)
+    {
+        int index = m_instance.SearchIndexFromID(c_id);
 
         if (index == -1)
         {
@@ -164,6 +177,58 @@ public class CardPack : MonoBehaviour
                 }
             }
         }
+    }
+
+public static GameObject GetRandomCard_isntConfirm()
+    {
+        int fullWeight = 0;
+        int max = -1;
+        int rand;
+        for(int i = 0; i < m_instance.canList.Count; i++)
+            fullWeight += m_instance.canList[i].card_weight;
+        rand = UnityEngine.Random.Range(0, fullWeight);
+
+        for (int i = 0; i < m_instance.canList.Count; i++)
+        {
+            max += m_instance.canList[i].card_weight;
+            if(rand >= max - m_instance.canList[i].card_weight && rand < max)
+            {
+                int id = m_instance.canList[i].card_prefab.GetComponent<ICard>().GetCardID();
+                int index = m_instance.SearchIndexFromID(id);
+                GameObject temp;
+                TempHadCntUpDown(id, true);
+                if (m_instance.card_HadCnt[i] + m_instance.tempHadCnt[i] >= 3)
+                {
+                    temp = m_instance.canList[i].card_prefab;
+                    m_instance.canList.RemoveAt(i);
+                    return temp;
+                }
+                return m_instance.canList[i].card_prefab;
+            }
+        }
+        Debug.LogError("랜덤 카드 값을 가져오는데 실패했습니다.");
+        return null;
+    }
+
+    public static void ResetCanList()
+    {
+        m_instance.canList.Clear();
+        for(int i = 0; i < m_instance.card_HadCnt.Length; i++)
+        {
+            if(m_instance.card_HadCnt[i] + m_instance.tempHadCnt[i] < 3)
+            {
+                m_instance.canList.Add(m_instance.cards[i]);
+            }
+        }
+    }
+
+    public static void TempHadCntUpDown(int _id, bool isUp)
+    {
+        int index = m_instance.SearchIndexFromID(_id);
+        if (isUp)
+            m_instance.tempHadCnt[index] += 1;
+        else
+            m_instance.tempHadCnt[index] -= 1;
     }
 
     public void SetSaveID(int id)

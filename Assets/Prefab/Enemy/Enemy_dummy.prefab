@@ -2636,9 +2636,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5cdcaa6e193015344930488cc7e5445b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingHealth: 100
-  fullHealth: 100
-  regenGuardPoint: 0
   myUI: {fileID: 7437075418122389897}
   myAbCond: {fileID: 1555760850280172699}
   monsterID: 0
@@ -2647,6 +2644,8 @@ MonoBehaviour:
   - {fileID: 41691091055468475}
   weights: 0500000005000000
   specialAct: {fileID: 602549775960270272}
+  _fullHealth: 1
+  _regenGuardPoint: 0
   fix_Endurance: 1
   fix_Strength: 1
   fix_Solid: 1
@@ -2706,6 +2705,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   typeNumber: 0
   actSprite: {fileID: 0}
+  type: 0
   power: 3
 --- !u!114 &41691091055468475
 MonoBehaviour:
@@ -2721,8 +2721,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   typeNumber: 1
   actSprite: {fileID: 0}
+  type: 0
   power: 3
-  target_self: {fileID: 8340102491789105971}
 --- !u!114 &602549775960270272
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2737,4 +2737,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   typeNumber: 0
   actSprite: {fileID: 0}
+  type: 0
   power: 5

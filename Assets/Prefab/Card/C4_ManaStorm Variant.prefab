@@ -153,6 +153,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1437206776610783508, guid: 13514753735d515478a2178e20010343,
         type: 3}
+      propertyPath: cardName
+      value: "\uB9C8\uB098\uC2A4\uD1B0"
+      objectReference: {fileID: 0}
+    - target: {fileID: 1437206776610783508, guid: 13514753735d515478a2178e20010343,
+        type: 3}
       propertyPath: cardText
       value: "\uBAA8\uB4E0 \uC801\uC5D0\uAC8C [\uACE0\uC815\uCE58()] + [\uC8FC\uC0AC\uC704
         \uAC12]\uB9CC\uD07C\uC758 \uD53C\uD574\uB97C 2\uBC88 \uC785\uD78C\uB2E4."

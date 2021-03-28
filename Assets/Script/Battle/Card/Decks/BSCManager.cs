@@ -11,25 +11,27 @@ public class BSCManager : MonoBehaviour
 
     private List<GameObject> list_hand = new List<GameObject>();
     private List<GameObject> list_grave = new List<GameObject>();
+    private TurnManager m_TurnM;
 
 
     // Start is called before the first frame update
     void Start()
     {
         DeckManager.SetBSCManager(this);
+        m_TurnM = GameObject.FindGameObjectWithTag("TurnManager").GetComponent<TurnManager>();
 
-        TurnManager.battleEnd += () => CleanUpCards();
-        TurnManager.playerTurnEnd += () => UndoHandsTaransparency();
-        TurnManager.playerTurnEnd += () => SortingHand(0);
+        m_TurnM.battleEnd += () => CleanUpCards();
+        m_TurnM.playerTurnEnd += () => UndoHandsTaransparency();
+        m_TurnM.playerTurnEnd += () => SortingHand(0);
 
         GameMaster.gameStop += () => CleanUpCards();
     }
 
     private void OnDestroy()
     {
-        TurnManager.battleEnd -= () => CleanUpCards();
-        TurnManager.playerTurnEnd -= () => UndoHandsTaransparency();
-        TurnManager.playerTurnEnd -= () => SortingHand(0);
+        m_TurnM.battleEnd -= () => CleanUpCards();
+        m_TurnM.playerTurnEnd -= () => UndoHandsTaransparency();
+        m_TurnM.playerTurnEnd -= () => SortingHand(0);
 
         GameMaster.gameStop -= () => CleanUpCards();
     }
@@ -46,7 +48,7 @@ public class BSCManager : MonoBehaviour
 
             added.SetActive(true);
 
-            if(TurnManager.GetIsFirstActivated())
+            if(m_TurnM.GetIsFirstActivated())
             {
                 SortingHand(0);
             }
@@ -79,7 +81,7 @@ public class BSCManager : MonoBehaviour
         moved.transform.SetParent(t_grave);
         list_grave.Add(moved);
         SortingHand(moved.GetComponent<ICard>().GetRenderPriority());
-        DelayedUnActive(moved, 1.0f);
+        moved.GetComponent<ICard>().DoTransparency();
     }
 
     public void PullingInGrave() //Pulling at card in graveyard
@@ -119,10 +121,10 @@ public class BSCManager : MonoBehaviour
         }
     }
 
-    IEnumerator DelayedUnActive(GameObject target, float sec)
-    {
-        yield return new WaitForSeconds(sec);
-        target.SetActive(false);
-        yield break;
-    }
+    //IEnumerator DelayedUnActive(GameObject target, float sec)
+    //{
+    //    yield return new WaitForSeconds(sec);
+    //    target.SetActive(false);
+    //    yield break;
+    //}
 }

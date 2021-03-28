@@ -73,6 +73,9 @@ public class CUF_MultiRTargetAttack : CUF_Base
 
     public override void ReUse()
     {
-        this.Use(dv);
+        if (target != null)
+        {
+            this.Use(dv);
+        }
     }
 }

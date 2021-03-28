@@ -40,13 +40,14 @@ public class CostManager : MonoBehaviour
     
     [Header("Object registration")]
     [SerializeField] private GameObject[] etherImgs;
+    private TurnManager m_TurnM;
 
     // Start is called before the first frame update
     void Start()
     {
-
-        TurnManager.firstTurn += () => ResetCost();
-        TurnManager.turnStart += () => ResetCost();
+        m_TurnM = GameObject.FindGameObjectWithTag("TurnManager").GetComponent<TurnManager>();
+        m_TurnM.firstTurn += () => ResetCost();
+        m_TurnM.turnStart += () => ResetCost();
 
         for (int i = 0; i < etherImgs.Length; i++)
             etherImgs[i].SetActive(false);

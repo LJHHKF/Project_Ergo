@@ -17,11 +17,11 @@ public class TurnManager : MonoBehaviour
     private static TurnManager m_instance;
 
     // On 함수들의 참조 개수에 주의. 참조가 1개가 아니면 문제.
-    public static event Action firstTurn;
-    public static event Action turnStart;
-    public static event Action playerTurnEnd;
-    public static event Action turnEnd;
-    public static event Action battleEnd;
+    public event Action firstTurn;
+    public event Action turnStart;
+    public event Action playerTurnEnd;
+    public event Action turnEnd;
+    public event Action battleEnd;
 
     private bool isFirstActived = false;
     private float start_time = 0;
@@ -34,8 +34,9 @@ public class TurnManager : MonoBehaviour
         }
 
         battleEnd += () => isFirstActived = false;
-        battleEnd += () => GameMaster.OnStageEnd();
         //GameObject.FindGameObjectWithTag("CDeck").GetComponent<DeckManager>().SetTurnManager(this);
+
+        GameMaster.OnBattleStageStart();
 
         start_time = Time.time;
     }
@@ -63,14 +64,14 @@ public class TurnManager : MonoBehaviour
 
     public static void OnFirstTurn()
     {
-        if (firstTurn != null)
+        if (m_instance.firstTurn != null)
         {
-            firstTurn();
+            m_instance.firstTurn();
         }
         m_instance.isFirstActived = true;
     }
 
-    public static void OnTurnStart()
+    public void OnTurnStart()
     {
         if (turnStart != null)
         {
@@ -78,7 +79,7 @@ public class TurnManager : MonoBehaviour
         }
     }
 
-    public static void OnPlayerTurnEnd() // UI Btn에 연결되어 있음. 참조 0이라도 상관x.
+    public void OnPlayerTurnEnd() // UI Btn에 연결되어 있음. 참조 0이라도 상관x.
     {
         if (playerTurnEnd != null)
         {
@@ -86,7 +87,7 @@ public class TurnManager : MonoBehaviour
         }
     }
 
-    public static void OnTurnEnd()
+    public void OnTurnEnd()
     {
         if (turnEnd != null)
         {
@@ -95,7 +96,7 @@ public class TurnManager : MonoBehaviour
         OnTurnStart();
     }
 
-    public static void OnBattleEnd()
+    public void OnBattleEnd()
     {
         if (battleEnd != null)
         {
@@ -103,7 +104,7 @@ public class TurnManager : MonoBehaviour
         }
     }
 
-    public static bool GetIsFirstActivated()
+    public bool GetIsFirstActivated()
     {
         return m_instance.isFirstActived;
     }
