@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class CUF_Repeat : MonoBehaviour
 {
-    public Card_Base myCard;
-    public int maxNum = 2;
-    public CUF_Base repeatTarget;
-    public float timeInterval = 1.0f;
-    public bool isUseFixP = false;
-    public bool isUseFlucP = false;
-    public bool isSecondDmgFormula = false;
+    [SerializeField] private Card_Base myCard;
+    [SerializeField] private int maxNum = 2;
+    [SerializeField] private CUF_Base repeatTarget;
+    [SerializeField] private float timeInterval = 1.0f;
+    [SerializeField] private bool isUseFixP = false;
+    [SerializeField] private bool isUseFlucP = false;
+    [SerializeField] private bool isSecondDmgFormula = false;
     private int fixP = 1;
     private float flucPRate = 1.0f;
     private int dv = 0;

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class AbCondInfoManager : MonoBehaviour
 {
@@ -17,10 +18,17 @@ public class AbCondInfoManager : MonoBehaviour
     }
     private static AbCondInfoManager m_instance;
 
-    public Sprite[] conditions_img;
-    [TextArea]
-    public string[] conditions_text; // 효과치가 계산되어 들어갈 자리엔 '(효과치)'라고 입력할 것.
-    public int[] conditions_OnePower; // 1중첩당 효과 증감 수치
+    [Serializable]
+    struct AbCondition
+    {
+        public Sprite img;
+        public string name;
+        [TextArea]
+        public string infoText; // 효과치가 계산되어 들어갈 자리엔 '(효과치)'라고 입력할 것.
+        public int onePower;
+    }
+
+    [SerializeField] private AbCondition[] abConditions;
 
     private void Awake()
     {
@@ -30,18 +38,19 @@ public class AbCondInfoManager : MonoBehaviour
         }
     }
 
-    public Sprite GetAbCond_Img(int id)
+    public static Sprite GetAbCond_Img(int id)
     {
-        return conditions_img[id];
+        return m_instance.abConditions[id].img;
     }
 
-    public int GetAbCond_OnePower(int id)
+    public static int GetAbCond_OnePower(int id)
     {
-        return conditions_OnePower[id];
+        return m_instance.abConditions[id].onePower;
     }
 
-    public string GetAbCond_text(int id)
+    public static void GetAbCond_text(int id, out string name, out string infoText)
     {
-        return conditions_text[id];
+        name = m_instance.abConditions[id].name;
+        infoText = m_instance.abConditions[id].infoText;
     }
 }

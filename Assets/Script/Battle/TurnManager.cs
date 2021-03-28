@@ -5,41 +5,72 @@ using UnityEngine;
 
 public class TurnManager : MonoBehaviour
 {
+    public TurnManager instance
+    {
+        get
+        {
+            if (m_instance == null)
+                m_instance = FindObjectOfType<TurnManager>();
+            return m_instance;
+        }
+    }
+    private static TurnManager m_instance;
 
     // On 함수들의 참조 개수에 주의. 참조가 1개가 아니면 문제.
-    public event Action firstTurn;  
-    public event Action turnStart;
-    public event Action playerTurnEnd;
-    public event Action turnEnd;
-    public event Action battleEnd;
+    public static event Action firstTurn;
+    public static event Action turnStart;
+    public static event Action playerTurnEnd;
+    public static event Action turnEnd;
+    public static event Action battleEnd;
 
     private bool isFirstActived = false;
-    private DeckManager m_deckM;
+    private float start_time = 0;
 
     private void Awake()
     {
-        battleEnd += () => isFirstActived = true;
-    }
-
-    private void Start()
-    {
-        GameObject.FindGameObjectWithTag("CDeck").GetComponent<DeckManager>().SetTurnManager(this);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if(!isFirstActived)
+        if(instance != this)
         {
-            if (firstTurn != null)
-            {
-                firstTurn();
-            }
-            isFirstActived = true;
+            Destroy(gameObject);
         }
+
+        battleEnd += () => isFirstActived = false;
+        battleEnd += () => GameMaster.OnStageEnd();
+        //GameObject.FindGameObjectWithTag("CDeck").GetComponent<DeckManager>().SetTurnManager(this);
+
+        start_time = Time.time;
     }
 
-    public void OnTurnStart()
+
+    //private void Update()
+    //{
+    //    if(!isFirstActived)
+    //    {
+    //        if (Time.time - start_time > 1.0f)
+    //        {
+    //            isFirstActived = true;
+    //            if (firstTurn != null)
+    //            {
+    //                firstTurn();
+    //            }
+    //        }
+    //    }
+    //}
+
+    //public void OnDelayedFirstTurn()
+    //{
+    //    StartCoroutine(DelayedFirstTurn());
+    //}
+
+    public static void OnFirstTurn()
+    {
+        if (firstTurn != null)
+        {
+            firstTurn();
+        }
+        m_instance.isFirstActived = true;
+    }
+
+    public static void OnTurnStart()
     {
         if (turnStart != null)
         {
@@ -47,7 +78,7 @@ public class TurnManager : MonoBehaviour
         }
     }
 
-    public void OnPlayerTurnEnd() // UI Btn에 연결되어 있음. 참조 0이라도 상관x.
+    public static void OnPlayerTurnEnd() // UI Btn에 연결되어 있음. 참조 0이라도 상관x.
     {
         if (playerTurnEnd != null)
         {
@@ -55,7 +86,7 @@ public class TurnManager : MonoBehaviour
         }
     }
 
-    public void OnTurnEnd()
+    public static void OnTurnEnd()
     {
         if (turnEnd != null)
         {
@@ -64,7 +95,7 @@ public class TurnManager : MonoBehaviour
         OnTurnStart();
     }
 
-    public void OnBattleEnd()
+    public static void OnBattleEnd()
     {
         if (battleEnd != null)
         {
@@ -72,8 +103,15 @@ public class TurnManager : MonoBehaviour
         }
     }
 
-    public bool GetIsFirstActivated()
+    public static bool GetIsFirstActivated()
     {
-        return isFirstActived;
+        return m_instance.isFirstActived;
     }
+
+    //IEnumerator DelayedFirstTurn()
+    //{
+    //    yield return new WaitForSeconds(1.0f);
+    //    OnFirstTurn();
+    //    yield break;
+    //}
 }

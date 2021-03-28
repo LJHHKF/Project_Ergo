@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class DCheckerManager : MonoBehaviour
 {
-    public float bottomValue = -5f;
-    public float startZValue = -10f;
-    public float moveSpeed = 30.0f;
-    public DiceSystemManager m_DsysetmManager;
+    [SerializeField] private float bottomValue = -5f;
+    [SerializeField] private float startZValue = -10f;
+    [SerializeField] private float moveSpeed = 30.0f;
+    [SerializeField] private DiceSystemManager m_DsysetmManager;
 
     private void OnEnable()
     {

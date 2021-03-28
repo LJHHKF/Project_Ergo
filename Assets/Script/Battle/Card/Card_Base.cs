@@ -15,25 +15,25 @@ public class Card_Base : MonoBehaviour, ICard
     }
 
     [Header("Card Base Setting")]
-    public int cardID = 0;
-    public int cost = 1;
-    public int fixP = 1;
+    [SerializeField] protected int cardID = 0;
+    [SerializeField] protected int cost = 1;
+    [SerializeField] protected int fixP = 1;
     protected int r_fixP = 0;
-    public float flucPRate = 1.0f;
-    public bool isNonTarget = false;
-    public bool isFixGuard = false;
-    public Type type;
-    public Sprite cardImage;
+    [SerializeField] protected float flucPRate = 1.0f;
+    [SerializeField] protected bool isNonTarget = false;
+    [SerializeField] protected bool isFixGuard = false;
+    [SerializeField] protected Type type;
+    [SerializeField] protected Sprite cardImage;
     [TextArea]
-    public string cardText;
+    [SerializeField] protected string cardText;
 
-    //[Header("renderPriority Setting")]
+    [Header("renderPriority Setting")]
     protected int renderPriority = 1;
-    protected float rotP;
-    protected float moveP;
+    [SerializeField]protected float rotP = 2f;
+    [SerializeField] protected float moveP = 1f;
     protected bool ready = true;
-    protected float handHeightPoint = -2.5f;
-    protected float readyAlpha = 0.5f;
+    [SerializeField] protected float handHeightPoint = -2.5f;
+    [SerializeField] protected float readyAlpha = 0.5f;
 
     protected GameObject target;
     protected DiceSystemManager diceManager;
@@ -70,34 +70,17 @@ public class Card_Base : MonoBehaviour, ICard
 
     protected virtual void Awake()
     {
-        if (textCanvas == null)
-        {
-            textCanvas = gameObject.transform.Find("TextCanvas").GetComponent<Canvas>();
-            costImg = textCanvas.gameObject.transform.Find("CostImage").GetComponent<Image>();
-            text_cost = costImg.transform.Find("CostText").GetComponent<TextMeshProUGUI>();
-            text_plain = textCanvas.gameObject.transform.Find("CardText").GetComponent<TextMeshProUGUI>();
-            text_name = textCanvas.gameObject.transform.Find("CardName").GetComponent<TextMeshProUGUI>();
+        textCanvas = gameObject.transform.Find("TextCanvas").GetComponent<Canvas>();
+        costImg = textCanvas.gameObject.transform.Find("CostImage").GetComponent<Image>();
+        text_cost = costImg.transform.Find("CostText").GetComponent<TextMeshProUGUI>();
+        text_plain = textCanvas.gameObject.transform.Find("CardText").GetComponent<TextMeshProUGUI>();
+        text_name = textCanvas.gameObject.transform.Find("CardName").GetComponent<TextMeshProUGUI>();
+        array_text = textCanvas.gameObject.GetComponents<TextMeshProUGUI>();
 
-            array_text = textCanvas.gameObject.GetComponents<TextMeshProUGUI>();
-        }
+        m_Collider = gameObject.GetComponent<BoxCollider2D>();
 
-        if(m_charM == null)
-        {
-            m_charM = GameObject.FindGameObjectWithTag("Player").GetComponent<Character>();
-        }
-
-        if(isFixGuard)
-        {
-            r_fixP = fixP + Mathf.RoundToInt(m_charM.solid * 0.5f);
-        }
-        else if(type == Type.Sword)
-        {
-            r_fixP = fixP + Mathf.RoundToInt(m_charM.strength * 0.5f);
-        }
-        else if(type == Type.Magic)
-        {
-            r_fixP = fixP + Mathf.RoundToInt(m_charM.intel * 0.5f);
-        }
+        m_sprRs[0] = gameObject.GetComponent<SpriteRenderer>();
+        m_sprRs[1] = gameObject.transform.Find("CardImage").GetComponent<SpriteRenderer>();
 
         text_cost.text = cost.ToString();
         StringBuilder sb = new StringBuilder(cardText);
@@ -106,54 +89,62 @@ public class Card_Base : MonoBehaviour, ICard
         text_plain.text = sb.ToString();
         ready = false;
 
-        FindBSCardManager();
-        m_cardM.SetCardValues(out rotP, out moveP, out handHeightPoint, out readyAlpha);
+        TurnManager.firstTurn += () => BattleInitSetting();
     }
 
     protected virtual void OnEnable()
     {
-        if(m_Collider == null)
-        {
-            m_Collider = gameObject.GetComponent<BoxCollider2D>();
-        }
+
         m_Collider.enabled = true;
-
-        if (m_sprRs[0] == null)
-        {
-            m_sprRs[0] = gameObject.GetComponent<SpriteRenderer>();
-        }
-        if (m_sprRs[1] == null)
-        {
-            m_sprRs[1] = gameObject.transform.Find("CardImage").GetComponent<SpriteRenderer>();
-        }
-        if (textCanvas == null)
-        {
-            textCanvas = gameObject.transform.Find("TextCanvas").GetComponent<Canvas>();
-            text_cost = textCanvas.gameObject.transform.Find("CostText").GetComponent<TextMeshProUGUI>();
-            text_plain = textCanvas.gameObject.transform.Find("CardText").GetComponent<TextMeshProUGUI>();
-            text_name = textCanvas.gameObject.transform.Find("CardName").GetComponent<TextMeshProUGUI>();
-
-            array_text = textCanvas.gameObject.GetComponents<TextMeshProUGUI>();
-        }
-
         UndoTransparency();
-
+        
     }
 
     protected virtual void Start()
     {
-        FindBattleUIManger();
-        FindCostManager();
 
-        m_sprRs[0] = gameObject.GetComponent<SpriteRenderer>();
-        m_sprRs[1] = gameObject.transform.Find("CardImage").GetComponent<SpriteRenderer>();
+    }
 
-        m_Collider.enabled = true;
+    public void BattleInitSetting()
+    {
+        if (m_cardM == null)
+        {
+            m_cardM = GameObject.FindGameObjectWithTag("CManager").GetComponent<BSCManager>();
+        }
+
+        if (m_charM == null)
+        {
+            m_charM = GameObject.FindGameObjectWithTag("Player").GetComponent<Character>();
+
+            if (isFixGuard)
+            {
+                r_fixP = fixP + Mathf.RoundToInt(m_charM.solid * 0.5f);
+            }
+            else if (type == Type.Sword)
+            {
+                r_fixP = fixP + Mathf.RoundToInt(m_charM.strength * 0.5f);
+            }
+            else if (type == Type.Magic)
+            {
+                r_fixP = fixP + Mathf.RoundToInt(m_charM.intel * 0.5f);
+            }
+        }
+
+        if (battleUIManager == null)
+        {
+            battleUIManager = GameObject.FindGameObjectWithTag("UIManager").GetComponent<BattleUIManager>();
+        }
+        if (m_costM == null)
+        {
+            m_costM = GameObject.FindGameObjectWithTag("CostManager").GetComponent<CostManager>();
+        }
     }
 
 
     public virtual ICard Selected()
     {
+        ChkAndFindCostManager();
+
         if (m_costM.cost < cost)
         {
             //실패처리 (붉은색 테두리 처리)
@@ -212,10 +203,9 @@ public class Card_Base : MonoBehaviour, ICard
 
     public virtual void Use(int diceValue)
     {
-        if (m_costM == null)
-        {
-            FindCostManager();
-        }
+
+        ChkAndFindCostManager();
+
         if (m_costM.cost < cost) // 보험삼아 넣어둔 곳
         {
             return;
@@ -230,10 +220,8 @@ public class Card_Base : MonoBehaviour, ICard
         }
 
 
-        if (m_cardM == null)
-        {
-            FindBSCardManager();
-        }
+
+        ChkAndFindBSCardManager();
         m_cardM.MoveToGrave(gameObject);
 
         DoTransparency();
@@ -259,15 +247,13 @@ public class Card_Base : MonoBehaviour, ICard
                 return;
         }
 
-        if (battleUIManager == null)
-        {
-            FindBattleUIManger();
-        }
+
+        ChkAndFindBattleUIManger();
+
         battleUIManager.OnDiceSysetm();
-        if (m_cardM == null)
-        {
-            FindBSCardManager();
-        }
+
+        ChkAndFindBSCardManager();
+
         m_cardM.DoHandsTransparency();
     }
 
@@ -329,19 +315,28 @@ public class Card_Base : MonoBehaviour, ICard
         return ready;
     }
 
-    protected void FindBattleUIManger()
+    protected void ChkAndFindBattleUIManger()
     {
-        battleUIManager = GameObject.FindGameObjectWithTag("UIManager").GetComponent<BattleUIManager>();
+        if (battleUIManager == null)
+        {
+            battleUIManager = GameObject.FindGameObjectWithTag("UIManager").GetComponent<BattleUIManager>();
+        }
     }
 
-    protected void FindBSCardManager()
+    protected void ChkAndFindBSCardManager()
     {
-        m_cardM = GameObject.FindGameObjectWithTag("CManager").GetComponent<BSCManager>();
+        if (m_cardM == null)
+        {
+            m_cardM = GameObject.FindGameObjectWithTag("CManager").GetComponent<BSCManager>();
+        }
     }
 
-    protected void FindCostManager()
+    protected void ChkAndFindCostManager()
     {
-        m_costM = GameObject.FindGameObjectWithTag("CostManager").GetComponent<CostManager>();
+        if (m_costM == null)
+        {
+            m_costM = GameObject.FindGameObjectWithTag("CostManager").GetComponent<CostManager>();
+        }
     }
 
     public void SortingCard(int usedRP, int cntCards)
@@ -364,6 +359,10 @@ public class Card_Base : MonoBehaviour, ICard
         gameObject.transform.localPosition = tempV;
         gameObject.transform.localRotation = tempQ;
 
+        if (m_charM == null)
+        {
+            m_charM = GameObject.FindGameObjectWithTag("Player").GetComponent<Character>();
+        }
 
         if (isFixGuard)
         {

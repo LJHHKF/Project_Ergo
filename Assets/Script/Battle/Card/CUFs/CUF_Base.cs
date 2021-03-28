@@ -5,10 +5,10 @@ using UnityEngine;
 public class CUF_Base : MonoBehaviour
 {
 
-    public Card_Base myCard;
-    public bool isOnlyFixed = false;
-    public bool isOnlyDiceValue = false;
-    public bool isSecondDmgFormula = false;
+    [SerializeField] protected Card_Base myCard;
+    [SerializeField] protected bool isOnlyFixed = false;
+    [SerializeField] protected bool isOnlyDiceValue = false;
+    [SerializeField] protected bool isSecondDmgFormula = false;
     protected int fixP = 1;
     protected float flucPRate = 1.0f;
     protected GameObject target;

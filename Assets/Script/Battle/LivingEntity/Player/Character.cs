@@ -4,33 +4,40 @@ using UnityEngine;
 
 public class Character : LivingEntity
 {
-    public int init_maxCost = 3;
+    [SerializeField] private int init_maxCost = 3;
     //private int _i_maxCost;
     private CostManager m_costM;
-    private CStatManager m_statM;
 
     // Start is called before the first frame update
     protected override void Start()
     {
+        fullHealth = CStatManager.fullHealth_pure;
+        health = CStatManager.health;
+        fix_endu = CStatManager.endurance;
+        fix_stren = CStatManager.strength;
+        fix_sol = CStatManager.solid;
+        fix_int = CStatManager.intelligent;
+
+        myUI.HpUpdate();
+        myUI.GuardUpdate();
+
         base.Start();
 
-        m_statM = GameObject.FindGameObjectWithTag("InfoM").GetComponent<CStatManager>();
-        m_statM.GetStats(out fix_endu, out fix_stren, out fix_sol, out fix_int);
+        TurnManager.turnStart += () => ResetGuardPoint();
+        TurnManager.firstTurn += () => InitMaxCostSetting();
+        TurnManager.turnStart += () => myAbCond.Affected();
+        TurnManager.battleEnd += () => CStatManager.HealthPointUpdate(health);
 
-        m_turnM.turnStart += () => ResetGuardPoint();
-        m_turnM.firstTurn += () => InitMaxCostSetting();
-        m_turnM.turnStart += () => myAbCond.Affected();
+        onDeath += () => CStatManager.HealthPointUpdate(health); // 게임오버 체크는 여기 들어가서 함.
     }
 
-    // Update is called once per frame
-    void Update()
+    protected override void ReleseTurnAct()
     {
-        
-    }
-
-    protected void OnDestroy()
-    {
-        m_statM.SetStats(fix_endu, fix_stren, fix_sol, fix_int);
+        base.ReleseTurnAct();
+        TurnManager.turnStart -= () => ResetGuardPoint();
+        TurnManager.firstTurn -= () => InitMaxCostSetting();
+        TurnManager.turnStart -= () => myAbCond.Affected();
+        TurnManager.battleEnd -= () => CStatManager.HealthPointUpdate(health);
     }
 
     public override void GetGuardPoint(int GetValue)

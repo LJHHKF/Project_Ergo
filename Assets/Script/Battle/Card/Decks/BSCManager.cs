@@ -5,35 +5,33 @@ using UnityEngine;
 //Battle Scean Card Manager
 public class BSCManager : MonoBehaviour
 {
-    public Transform t_hand;
-    public Transform t_grave;
+    [SerializeField] private Transform t_hand;
+    [SerializeField] private Transform t_grave;
     public int cntHand { get; private set; }
-    public float rotP = 2f;
-    public float moveP = 1f;
-    public float handHeightPoint = -2.5f;
-    public float readyAlpha = 0.5f; 
 
-    private DeckManager m_Deck;
     private List<GameObject> list_hand = new List<GameObject>();
     private List<GameObject> list_grave = new List<GameObject>();
 
-    private TurnManager m_turnM;
 
     // Start is called before the first frame update
     void Start()
     {
-        m_Deck = GameObject.FindGameObjectWithTag("CDeck").GetComponent<DeckManager>();
-        m_Deck.SetBSCManager(this);
+        DeckManager.SetBSCManager(this);
 
-        m_turnM = GameObject.FindGameObjectWithTag("TurnManager").GetComponent<TurnManager>();
-        m_turnM.battleEnd += () => CleanUpCards();
-        m_turnM.playerTurnEnd += () => UndoHandsTaransparency();
-        m_turnM.playerTurnEnd += () => SortingHand(0);
+        TurnManager.battleEnd += () => CleanUpCards();
+        TurnManager.playerTurnEnd += () => UndoHandsTaransparency();
+        TurnManager.playerTurnEnd += () => SortingHand(0);
+
+        GameMaster.gameStop += () => CleanUpCards();
     }
 
     private void OnDestroy()
     {
-        CleanUpCards();
+        TurnManager.battleEnd -= () => CleanUpCards();
+        TurnManager.playerTurnEnd -= () => UndoHandsTaransparency();
+        TurnManager.playerTurnEnd -= () => SortingHand(0);
+
+        GameMaster.gameStop -= () => CleanUpCards();
     }
 
     public void AddToHand(GameObject added)
@@ -48,7 +46,7 @@ public class BSCManager : MonoBehaviour
 
             added.SetActive(true);
 
-            if(m_turnM.GetIsFirstActivated())
+            if(TurnManager.GetIsFirstActivated())
             {
                 SortingHand(0);
             }
@@ -88,27 +86,20 @@ public class BSCManager : MonoBehaviour
     {
         for(int i = 0; i < list_grave.Count; i++)
         {
-            m_Deck.MoveToDeck(list_grave[i]);
+            DeckManager.MoveToDeck(list_grave[i]);
         }
     }
 
-    public void SetCardValues(out float rotationPower, out float movePower, out float handHeight, out float alpha)
-    {
-        rotationPower = rotP;
-        movePower = moveP;
-        handHeight = handHeightPoint;
-        alpha = readyAlpha;
-    }
 
     private void CleanUpCards()
     {
         for (int i = 0; i < list_hand.Count; i++)
         {
-            m_Deck.MoveToDeck(list_hand[i]);
+            DeckManager.MoveToDeck(list_hand[i]);
         }
         for (int i = 0; i < list_grave.Count; i++)
         {
-            m_Deck.MoveToDeck(list_grave[i]);
+            DeckManager.MoveToDeck(list_grave[i]);
         }
     }
 

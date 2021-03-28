@@ -6,11 +6,8 @@ using UnityEngine.UI;
 public class BattleUIManager : MonoBehaviour
 {
     [Header("UI Object registration")]
-    public GameObject forDice;
-    public GameObject btn_TurnEnd;
-
-    [Header("Managers registartion")]
-    public TurnManager turnManager;
+    [SerializeField] private GameObject forDice;
+    [SerializeField] private GameObject btn_TurnEnd;
 
     public bool isDiceOn
     {
@@ -24,10 +21,16 @@ public class BattleUIManager : MonoBehaviour
     {
         forDice.SetActive(false);
         isDiceOn = false;
+        TurnManager.firstTurn += () => SetBtnTurnEActive(true);
+        TurnManager.turnStart += () => SetBtnTurnEActive(true);
+        TurnManager.playerTurnEnd += () => SetBtnTurnEActive(false);
+    }
 
-        turnManager.firstTurn += () => SetBtnTurnEActive(true);
-        turnManager.turnStart += () => SetBtnTurnEActive(true);
-        turnManager.playerTurnEnd += () => SetBtnTurnEActive(false);
+    private void OnDestroy()
+    {
+        TurnManager.firstTurn -= () => SetBtnTurnEActive(true);
+        TurnManager.turnStart -= () => SetBtnTurnEActive(true);
+        TurnManager.playerTurnEnd -= () => SetBtnTurnEActive(false);
     }
 
     public void OnDiceSysetm()
@@ -55,5 +58,10 @@ public class BattleUIManager : MonoBehaviour
         yield return new WaitForSeconds(sec);
         isDiceOn = false;
         yield break;
+    }
+
+    public void BtnTurnEnd()
+    {
+        TurnManager.OnPlayerTurnEnd();
     }
 }
