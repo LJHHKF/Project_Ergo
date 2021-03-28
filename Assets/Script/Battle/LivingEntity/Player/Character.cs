@@ -18,8 +18,10 @@ public class Character : LivingEntity
         fix_sol = CStatManager.solid;
         fix_int = CStatManager.intelligent;
 
-        base.Start();
-
+        m_turnM = GameObject.FindGameObjectWithTag("TurnManager").GetComponent<TurnManager>();
+        m_turnM.firstTurn += () => myUI.HpUpdate();
+        m_turnM.firstTurn += () => FlucStatReset();
+        m_turnM.firstTurn += () => CalculateStat();
         m_turnM.turnStart += () => ResetGuardPoint();
         m_turnM.firstTurn += () => InitMaxCostSetting();
         m_turnM.turnStart += () => myAbCond.Affected();
@@ -30,7 +32,9 @@ public class Character : LivingEntity
 
     protected override void ReleseTurnAct()
     {
-        base.ReleseTurnAct();
+        m_turnM.firstTurn -= () => myUI.HpUpdate();
+        m_turnM.firstTurn -= () => FlucStatReset();
+        m_turnM.firstTurn -= () => CalculateStat();
         m_turnM.turnStart -= () => ResetGuardPoint();
         m_turnM.firstTurn -= () => InitMaxCostSetting();
         m_turnM.turnStart -= () => myAbCond.Affected();
