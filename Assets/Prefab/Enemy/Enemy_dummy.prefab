@@ -2644,7 +2644,7 @@ MonoBehaviour:
   - {fileID: 41691091055468475}
   weights: 0500000005000000
   specialAct: {fileID: 602549775960270272}
-  _fullHealth: 1
+  _fullHealth: 20
   _regenGuardPoint: 0
   fix_Endurance: 1
   fix_Strength: 1
