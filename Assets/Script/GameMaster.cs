@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Text;
 using System;
 
 public class GameMaster : MonoBehaviour
@@ -18,7 +17,7 @@ public class GameMaster : MonoBehaviour
     private static GameMaster m_instance;
 
     private int saveID = 0; //멀티 세이브 용도보단 ...
-    private StringBuilder key = new StringBuilder();
+    private string key;
     private int cur_stage = 0;
     [SerializeField] private float end_DelayTime = 2.0f;
     [SerializeField] private bool isReset = false;
@@ -41,12 +40,9 @@ public class GameMaster : MonoBehaviour
 
     private void Start()
     {
-        key.Clear();
-        key.Append("SaveID(");
-        key.Append(saveID.ToString());
-        key.Append(")");
+        key = $"SaveID({saveID})";
 
-        gameOver += () => PlayerPrefs.SetInt(key.ToString(), 0);
+        gameOver += () => PlayerPrefs.SetInt(key, 0);
 
         if (isReset)
             PlayerPrefs.DeleteAll();
@@ -81,14 +77,11 @@ public class GameMaster : MonoBehaviour
 
     public bool OnInitSaveData()
     {
-        key.Clear();
-        key.Append("SaveID(");
-        key.Append(saveID.ToString());
-        key.Append(")");
+        key = $"SaveID({saveID})";
 
-        if (PlayerPrefs.GetInt(key.ToString()) == 0 || PlayerPrefs.HasKey(key.ToString()) == false)
+        if (PlayerPrefs.GetInt(key) == 0 || PlayerPrefs.HasKey(key) == false)
         {
-            PlayerPrefs.SetInt(key.ToString(), 1);
+            PlayerPrefs.SetInt(key, 1);
             if (initSaveData_Awake != null)
             {
                 initSaveData_Awake();

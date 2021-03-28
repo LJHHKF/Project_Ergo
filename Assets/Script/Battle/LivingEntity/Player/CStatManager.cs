@@ -76,9 +76,7 @@ public class CStatManager : MonoBehaviour
     {
         int saveID = GameMaster.GetSaveID();
         key.Clear();
-        key.Append("SaveID(");
-        key.Append(saveID.ToString());
-        key.Append(").CStat.Endurance");
+        key.Append($"SaveID({saveID}).CStat.Endurance");
 
         endurance = PlayerPrefs.GetInt(key.ToString());
         key.Replace("Endurance", "Strength");
@@ -97,9 +95,7 @@ public class CStatManager : MonoBehaviour
     {
         int saveID = GameMaster.GetSaveID();
         key.Clear();
-        key.Append("SaveID(");
-        key.Append(saveID.ToString());
-        key.Append(").CStat.Endurance");
+        key.Append($"SaveID({saveID}).CStat.Endurance");
 
         PlayerPrefs.SetInt(key.ToString(), endurance);
         key.Replace("Endurance", "Strength");

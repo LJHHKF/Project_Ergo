@@ -35,7 +35,7 @@ public class LoadManager : MonoBehaviour
     {
         GameMaster.GameStart(ID);
         isBattleReady = true;
-        LoadingSceneManager.LoadScene("Stage1");
+        LoadingSceneManager.LoadScene("Battle");
     }
 
     public static void ChkAndPlayDelayOn()

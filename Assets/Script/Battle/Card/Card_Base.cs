@@ -84,7 +84,7 @@ public class Card_Base : MonoBehaviour, ICard
 
         text_cost.text = cost.ToString();
         StringBuilder sb = new StringBuilder(cardText);
-        sb.Replace("()", "(" + r_fixP.ToString() + ")");
+        sb.Replace("()", $"({r_fixP})");
         sb.Replace("(변동치)", flucPRate.ToString());
         text_plain.text = sb.ToString();
         ready = false;

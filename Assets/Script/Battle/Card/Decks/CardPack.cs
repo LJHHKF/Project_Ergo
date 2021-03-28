@@ -1,8 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Text;
 using System;
+using System.Text;
 
 public class CardPack : MonoBehaviour
 {
@@ -49,16 +49,15 @@ public class CardPack : MonoBehaviour
         cardIDs = new int[cards.Length];
         card_HadCnt = new int[cards.Length];
 
+        key.Clear();
         for (int i = 0; i < cards.Length; i++)
         {
             cardIDs[i] = cards[i].card_prefab.GetComponent<ICard>().GetCardID();
 
-            key.Clear();
-            key.Append("saveID(");
-            key.Append(saveID.ToString());
-            key.Append(").cardID(");
-            key.Append(cardIDs[i].ToString());
-            key.Append(").hadCnt");
+            if (i == 0)
+                key.Append($"SaveID({saveID}).CardID({cardIDs[i]}).HadCnt");
+            else
+                key.Replace($"CardID({cardIDs[i - 1]})", $"CardID({cardIDs[i]}");
 
             if (PlayerPrefs.HasKey(key.ToString()) == false)
             {
@@ -74,14 +73,13 @@ public class CardPack : MonoBehaviour
 
     private void CardPackClear()
     {
+        key.Clear();
         for(int i = 0; i < cards.Length; i++)
         {
-            key.Clear();
-            key.Append("saveID(");
-            key.Append(saveID.ToString());
-            key.Append(").cardID(");
-            key.Append(cardIDs[i].ToString());
-            key.Append(").hadCnt");
+            if (i == 0)
+                key.Append($"SaveID({saveID}).CardID({cardIDs[i]}).HadCnt");
+            else
+                key.Replace($"CardID({cardIDs[i - 1]})", $"CardID({cardIDs[i]})");
 
             card_HadCnt[i] = 0;
             PlayerPrefs.SetInt(key.ToString(), card_HadCnt[i]);
@@ -175,14 +173,13 @@ public class CardPack : MonoBehaviour
 
     private void SaveHadCnt()
     {
+        key.Clear();
         for(int i = 0; i < card_HadCnt.Length; i++)
         {
-            key.Clear();
-            key.Append("saveID(");
-            key.Append(saveID.ToString());
-            key.Append(").cardID(");
-            key.Append(cardIDs[i].ToString());
-            key.Append(").hadCnt");
+            if (i == 0)
+                key.Append($"SaveID({saveID}).CardID({cardIDs[i]}).HadCnt");
+            else
+                key.Replace($"CardID({cardIDs[i - 1]})", $"CardID({cardIDs[i]})");
             PlayerPrefs.SetInt(key.ToString(), card_HadCnt[i]);
         }
     }
