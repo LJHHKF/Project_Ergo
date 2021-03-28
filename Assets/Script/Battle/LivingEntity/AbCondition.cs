@@ -34,15 +34,8 @@ public class AbCondition : MonoBehaviour
 
     private List<AbCond> list_conditions = new List<AbCond>();
     private List<AbCond> list_delayed = new List<AbCond>();
-    private AbCondInfoManager abCondInfoM;
-    public LivingEntity m_target;
-    public UnitUI myUI;
-    
-    // Start is called before the first frame update
-    void Start()
-    {
-        abCondInfoM = GameObject.FindGameObjectWithTag("InfoM").GetComponent<AbCondInfoManager>();
-    }
+    [SerializeField] private LivingEntity m_target;
+    [SerializeField] private UnitUI myUI;
 
     private void AddAbCondition(int id, int piledN)
     {
@@ -60,7 +53,7 @@ public class AbCondition : MonoBehaviour
 
         if (!isBeing)
         {
-            AbCond temp = new AbCond(id, abCondInfoM.GetAbCond_Img(id), piledN, abCondInfoM.GetAbCond_OnePower(id));
+            AbCond temp = new AbCond(id, AbCondInfoManager.GetAbCond_Img(id), piledN, AbCondInfoManager.GetAbCond_OnePower(id));
             //temp.ID = id;
             //temp.Icon = abCondInfoM.GetAbCond_Img(id);
             //temp.piledNum = piledN;
@@ -87,7 +80,7 @@ public class AbCondition : MonoBehaviour
 
         if (!isBeing)
         {
-            AbCond temp = new AbCond(id, abCondInfoM.GetAbCond_Img(id), piledN, abCondInfoM.GetAbCond_OnePower(id));
+            AbCond temp = new AbCond(id, AbCondInfoManager.GetAbCond_Img(id), piledN, AbCondInfoManager.GetAbCond_OnePower(id));
             //temp.ID = id;
             //temp.Icon = abCondInfoM.GetAbCond_Img(id);
             //temp.piledNum = piledN;
@@ -116,7 +109,7 @@ public class AbCondition : MonoBehaviour
 
         if (!isBeing)
         {
-            AbCond temp = new AbCond(id, abCondInfoM.GetAbCond_Img(id), piledN, abCondInfoM.GetAbCond_OnePower(id));
+            AbCond temp = new AbCond(id, AbCondInfoManager.GetAbCond_Img(id), piledN, AbCondInfoManager.GetAbCond_OnePower(id));
             //temp.ID = id;
             //temp.Icon = abCondInfoM.GetAbCond_Img(id);
             //temp.piledNum = piledN;

@@ -5,17 +5,20 @@ using UnityEngine;
 public class Enemy_Base : LivingEntity
 {
     [Header("Enemy Setting")]
-    public int monsterID = 0;
-    public EnemyAct_Base[] normalActs;
-    public int[] weights;
-    public EnemyAct_Base specialAct;
+    [SerializeField] protected int monsterID = 0;
+    [SerializeField] protected EnemyAct_Base[] normalActs;
+    [SerializeField] protected int[] weights;
+    [SerializeField] protected EnemyAct_Base specialAct;
     private EnemyAct_Base readyAct;
     [Header("E_Stat Setting")]
-    public int fix_Endurance = 1;
-    public int fix_Strength = 1;
-    public int fix_Solid = 1;
-    public int fix_Inteligent = 1;
-    public int maxSpGauge = 3;
+    [SerializeField] protected int _fullHealth = 100;
+   // [SerializeField] protected int _startingHealth = 100;
+    [SerializeField] protected int _regenGuardPoint = 0;
+    [SerializeField] protected int fix_Endurance = 1;
+    [SerializeField] protected int fix_Strength = 1;
+    [SerializeField] protected int fix_Solid = 1;
+    [SerializeField] protected int fix_Inteligent = 1;
+    [SerializeField] protected int maxSpGauge = 3;
     protected int curSpGauge = 0;
 
     private int m_FieldIndex = 0;
@@ -37,15 +40,29 @@ public class Enemy_Base : LivingEntity
         fix_stren = fix_Strength;
         fix_sol = fix_Solid;
         fix_int = fix_Inteligent;
+        fullHealth = _fullHealth;
+        //startingHealth = _startingHealth;
+        regenGuardPoint = _regenGuardPoint;
         base.Start();
-        m_turnM.playerTurnEnd += () => ResetGuardPoint();
-        m_turnM.playerTurnEnd += () => myAbCond.Affected();
-        m_turnM.turnEnd += () => curSpGauge++;
+        TurnManager.playerTurnEnd += () => ResetGuardPoint();
+        TurnManager.playerTurnEnd += () => myAbCond.Affected();
+        TurnManager.turnEnd += () => curSpGauge++;
 
-        m_turnM.firstTurn += () => ActSetting();
-        m_turnM.turnEnd += () => ActSetting();
+        TurnManager.firstTurn += () => ActSetting();
+        TurnManager.turnEnd += () => ActSetting();
 
-        onDeath += () => StartCoroutine(DelayedUnActived(1.0f));
+        onDeath += () => StartCoroutine(DelayedDestroy(1.0f));
+    }
+
+    protected override void ReleseTurnAct()
+    {
+        base.ReleseTurnAct();
+        TurnManager.playerTurnEnd -= () => ResetGuardPoint();
+        TurnManager.playerTurnEnd -= () => myAbCond.Affected();
+        TurnManager.turnEnd -= () => curSpGauge++;
+
+        TurnManager.firstTurn -= () => ActSetting();
+        TurnManager.turnEnd -= () => ActSetting();
     }
 
     protected virtual void Update()

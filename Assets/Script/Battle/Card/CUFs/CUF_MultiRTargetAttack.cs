@@ -7,9 +7,9 @@ public class CUF_MultiRTargetAttack : CUF_Base
     //R = Random
 
     [Header("Multi Target Set")]
-    public bool isAllAttak = false;
-    public bool isTargetOverlapped = false;
-    public int maxTarget = 2;
+    [SerializeField] protected bool isAllAttak = false;
+    [SerializeField] protected bool isTargetOverlapped = false;
+    [SerializeField] protected int maxTarget = 2;
 
     private EnemiesManager e_manager;
     private List<GameObject> target_list = new List<GameObject>();

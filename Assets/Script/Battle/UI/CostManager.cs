@@ -39,14 +39,14 @@ public class CostManager : MonoBehaviour
     }// 만약 cost를 얻는 카드가 있고, 그게 max치보다 더 높게 쌓을 수 있다면 건들 필요 없지만, max까지만 찬다면 건드려야 함. 일단 안 건듦.
     
     [Header("Object registration")]
-    public TurnManager turnManager;
-    public GameObject[] etherImgs;
+    [SerializeField] private GameObject[] etherImgs;
 
     // Start is called before the first frame update
     void Start()
     {
-        turnManager.firstTurn += () => ResetCost();
-        turnManager.turnStart += () => ResetCost();
+
+        TurnManager.firstTurn += () => ResetCost();
+        TurnManager.turnStart += () => ResetCost();
 
         for (int i = 0; i < etherImgs.Length; i++)
             etherImgs[i].SetActive(false);

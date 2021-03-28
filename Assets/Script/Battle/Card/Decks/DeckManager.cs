@@ -4,27 +4,40 @@ using UnityEngine;
 
 public class DeckManager : MonoBehaviour
 {
-    public int startCardAmount = 5;
+    public DeckManager instance
+    {
+        get
+        {
+            if (m_instance == null)
+                m_instance = FindObjectOfType<DeckManager>();
+            return m_instance;
+        }
+    }
+    private static DeckManager m_instance;
+
+    [SerializeField]private int startCardAmount = 5;
 
     private BSCManager m_BSCManager;
     private List<GameObject> list_deck = new List<GameObject>();
-    private TurnManager m_turnM;
     private CardPack c_pack;
 
     private void Awake()
     {
-        c_pack = GameObject.FindGameObjectWithTag("InfoM").GetComponentInChildren<CardPack>();
-        ResetDeck();
+        if(instance != this)
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void Start()
     {
         //SetTurnManager();
-    }
+        c_pack = GameObject.FindGameObjectWithTag("InfoM").GetComponentInChildren<CardPack>();
 
-    private void OnDestroy()
-    {
-        //저장될 때.
+        GameMaster.initSaveData_Start += () => ResetDeck();
+        GameMaster.startGame_Start += () => ResetDeck();
+        TurnManager.firstTurn += () => PullingInDeck_FirstTurn();
+        TurnManager.turnStart += () => PullingInDeck();
     }
 
     public void ResetDeck()
@@ -40,59 +53,58 @@ public class DeckManager : MonoBehaviour
         c_pack.InstantiateCards(gameObject.transform, ref list_deck);
     }
 
-    public void SetBSCManager(BSCManager input)
+    public static void SetBSCManager(BSCManager input)
     {
-        m_BSCManager = input;
+         m_instance.m_BSCManager = input;
     }
 
-    public void PullingInDeck() // Pulling at card in deck to hand
+    public static void PullingInDeck() // Pulling at card in deck to hand
     {
-        if(list_deck.Count <= 0)
+        if(m_instance.list_deck.Count <= 0)
         {
-            ChkAndFindBSCManager();
-            m_BSCManager.PullingInGrave();
+            m_instance.ChkAndFindBSCManager();
+            m_instance.m_BSCManager.PullingInGrave();
         }
 
-        int rand = Random.Range(0, list_deck.Count);
-        m_BSCManager.AddToHand(list_deck[rand]);
-        list_deck.RemoveAt(rand);
+        int rand = Random.Range(0, m_instance.list_deck.Count);
+        m_instance.m_BSCManager.AddToHand(m_instance.list_deck[rand]);
+        m_instance.list_deck.RemoveAt(rand);
     }
 
-    public void PullingInDeck_FirstTurn()
+    public static void PullingInDeck_FirstTurn()
     {
-        if (list_deck.Count < startCardAmount)
+        if (m_instance.list_deck.Count < m_instance.startCardAmount)
         {
-            Debug.LogError("덱의 카드 수가 설정한 수(" + startCardAmount + ")보다 적기 때문에 현재 덱의 수(" + list_deck.Count + ")만큼으로만 시작 드로우 수를 조정했습니다.");
-            startCardAmount = list_deck.Count;
+            Debug.LogError("덱의 카드 수가 설정한 수(" + m_instance.startCardAmount + ")보다 적기 때문에 현재 덱의 수(" + m_instance.list_deck.Count + ")만큼으로만 시작 드로우 수를 조정했습니다.");
+            m_instance.startCardAmount = m_instance.list_deck.Count;
         }
-
-        for (int i = 0; i < startCardAmount; i++)
+        for (int i = 0; i < m_instance.startCardAmount; i++)
             PullingInDeck();
-        ChkAndFindBSCManager();
-        m_BSCManager.SortingHand(0);
+        m_instance.ChkAndFindBSCManager();
+        m_instance.m_BSCManager.SortingHand(0);
     }
 
-    public void MoveToDeck(GameObject moved)
+    public static void MoveToDeck(GameObject moved)
     {
         ICard temp = moved.GetComponent<ICard>();
         if(temp != null)
         {
-            moved.transform.SetParent(gameObject.transform);
+            moved.transform.SetParent(m_instance.gameObject.transform);
             moved.SetActive(false);
-            list_deck.Add(moved);
+            m_instance.list_deck.Add(moved);
         }
     }
 
-    public void AddToDeck(GameObject added)
+    public static void AddToDeck(GameObject added)
     {
         ICard temp = added.GetComponent<ICard>();
         if (temp != null)
         {
             //여기에 같은 ID의 카드가 3장 이상이면~ 같은 예외 조항 추가해야 함.
 
-            added.transform.SetParent(gameObject.transform);
+            added.transform.SetParent(m_instance.gameObject.transform);
             added.SetActive(false);
-            list_deck.Add(added);
+            m_instance.list_deck.Add(added);
         }
     }
 
@@ -102,19 +114,5 @@ public class DeckManager : MonoBehaviour
         {
             m_BSCManager = GameObject.FindGameObjectWithTag("CManager").GetComponent<BSCManager>();
         }
-    }
-
-    //public void SetTurnManager()
-    //{
-    //    m_turnM = GameObject.FindGameObjectWithTag("TurnManager").GetComponent<TurnManager>();
-    //    m_turnM.firstTurn += () => PullingInDeck_FirstTurn();
-    //    m_turnM.turnStart += () => PullingInDeck();
-    //}
-
-    public void SetTurnManager(TurnManager tm)
-    {
-        m_turnM = tm;
-        m_turnM.firstTurn += () => PullingInDeck_FirstTurn();
-        m_turnM.turnStart += () => PullingInDeck();
     }
 }

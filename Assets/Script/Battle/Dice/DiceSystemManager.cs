@@ -5,31 +5,30 @@ using UnityEngine;
 public class DiceSystemManager : MonoBehaviour
 {
     [Header("Dice Setting")]
-    public GameObject[] normalDice; //2개 설정하면 됨.
-    public GameObject[] sixDice;
-    public int cnt_dice = 2;
+    [SerializeField] private GameObject[] normalDice; //2개 설정하면 됨.
+    [SerializeField] private GameObject[] sixDice;
+    [SerializeField] private int cnt_dice = 2;
     private List<GameObject> normal_listPool;
     private List<GameObject> six_listPool;
     private bool isOnSixDice = false;
-    public GameObject diceChecker;
-    public BattleUIManager battleUIManager;
+    [SerializeField] private GameObject diceChecker;
+    [SerializeField] private BattleUIManager battleUIManager;
 
     [Header("Throw Setting")]
-    public float power = 500f;
-    public float rotatePower = 300f;
-    public float rotatePowerMinRate = 0.5f;
-    public float spawnP_minX = -2;
-    public float interval_x = 4;
-    public float spawnP_Y = 2;
-    public float spawnP_Z = -7;
+    [SerializeField] private float power = 500f;
+    [SerializeField] private float rotatePower = 300f;
+    [SerializeField] private float rotatePowerMinRate = 0.5f;
+    [SerializeField] private float spawnP_minX = -2;
+    [SerializeField] private float interval_x = 4;
+    [SerializeField] private float spawnP_Y = 2;
+    [SerializeField] private float spawnP_Z = -7;
     private int cnt_RollEnded = 0;
     private bool isReadyToThrow = true;
     public int resValue { get; set; }
     public ICard activatedCard { get; set; }
 
     [Header("Other")]
-    public TurnManager m_TurnM;
-    public BSCManager m_CardM;
+    [SerializeField] private BSCManager m_CardM;
 
     // Start is called before the first frame update
     void Start()

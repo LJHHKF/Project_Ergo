@@ -5,11 +5,11 @@ using UnityEngine;
 public class CUF_AbCondition : CUF_Base
 {
     [Header("Abnormal Condition Setting")]
-    public int ab_ID = 0;
-    public bool isImidiateAbActive = false;
-    public bool isOnlyUseSecondFixP = false;
-    public bool isSelfTarget = false;
-    public int sec_fixP = 1;
+    [SerializeField] protected int ab_ID = 0;
+    [SerializeField] protected bool isImidiateAbActive = false;
+    [SerializeField] protected bool isOnlyUseSecondFixP = false;
+    [SerializeField] protected bool isSelfTarget = false;
+    [SerializeField] protected int sec_fixP = 1;
 
     // Start is called before the first frame update
     protected override void Start()

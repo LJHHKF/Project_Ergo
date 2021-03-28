@@ -6,20 +6,20 @@ using UnityEngine.UI;
 public class DiceUIManager : MonoBehaviour
 {
     [Header("Object registration")]
-    public Image stopPoint;
-    public Image sp_forwardS;
-    public Image sp_backwardS;
-    public Image cp_forwardS;
-    public Image cp_backwardS;
-    public BattleUIManager battleUIManager;
-    public DiceSystemManager m_DiceManager;
+    [SerializeField] private Image stopPoint;
+    [SerializeField] private Image sp_forwardS;
+    [SerializeField] private Image sp_backwardS;
+    [SerializeField] private Image cp_forwardS;
+    [SerializeField] private Image cp_backwardS;
+    [SerializeField] private BattleUIManager battleUIManager;
+    [SerializeField] private DiceSystemManager m_DiceManager;
 
     //SP: StopPoint, CP: Catch Point
 
     [Header("Stat Setting")]
-    public float spGap = 0.05f;
-    public float cpGap = 0.1f;
-    public float gaugePower = 0.3f;
+    [SerializeField] private float spGap = 0.05f;
+    [SerializeField] private float cpGap = 0.1f;
+    [SerializeField] private float gaugePower = 0.3f;
 
     private bool isHolded = false;
     private bool reversed = false;

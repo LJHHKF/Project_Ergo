@@ -7,14 +7,14 @@ using TMPro;
 public class UnitUI : MonoBehaviour
 {
     [Header("UI Object Setting")]
-    public Image hpBar_img;
+    [SerializeField] private Image hpBar_img;
     private TextMeshProUGUI hp_txt;
-    public GameObject guard_img_obj;
+    [SerializeField] private GameObject guard_img_obj;
     private TextMeshProUGUI guard_txt;
-    public Image icon_EnemyActInfo;
+    [SerializeField] private Image icon_EnemyActInfo;
     private TextMeshProUGUI actPower_Text;
-    public float delayedAbsAlpha = 0.5f;
-    public Image[] icons_condition;
+    [SerializeField] private float delayedAbsAlpha = 0.5f;
+    [SerializeField] private Image[] icons_condition;
     private TextMeshProUGUI[] pileds_txt;
     private Sprite[] sprs_icon;
     private int[] nums_piled;
@@ -22,8 +22,8 @@ public class UnitUI : MonoBehaviour
 
 
     [Header("Ref Setting")]
-    public LivingEntity livTarget;
-    public AbCondition abcondTarget;
+    [SerializeField] private LivingEntity livTarget;
+    [SerializeField] private AbCondition abcondTarget;
 
     // Start is called before the first frame update
     void Start()

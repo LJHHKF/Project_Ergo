@@ -7,11 +7,11 @@ using UnityEngine;
 //<레트로 유니티 게임 프로그래밍 에센스> 2권 참고하여 기본 제작 후 기능 추가
 public class LivingEntity : MonoBehaviour, IDamageable
 {
-    [Header("HP&GP Setting")]
-    public int startingHealth = 100;
-    public int fullHealth = 100;
+    //public int startingHealth { get; protected set; }
+    public int fullHealth { get { return r_fullHealth; } protected set { r_fullHealth = value; } }
+    protected int r_fullHealth = 100;
     public int health { get; protected set; }
-    public int regenGuardPoint = 0;
+    public int regenGuardPoint { get; protected set; }
     public int GuardPoint { get; protected set; }
     //[Header("Stat Setting")]
     protected int fix_endu = 1;
@@ -28,12 +28,12 @@ public class LivingEntity : MonoBehaviour, IDamageable
     public int intel { get; protected set; }
 
     public bool dead { get; protected set; }
-    protected TurnManager m_turnM;
     public event Action onDeath;
 
     [Header("Ref Setting")]
-    public UnitUI myUI;
-    public AbCondition myAbCond;
+    [SerializeField] protected UnitUI myUI;
+    [SerializeField] protected AbCondition myAbCond;
+    protected TurnManager m_turnM;
 
     protected virtual void OnEnable()
     {
@@ -44,10 +44,23 @@ public class LivingEntity : MonoBehaviour, IDamageable
     protected virtual void Start()
     {
         m_turnM = GameObject.FindGameObjectWithTag("TurnManager").GetComponent<TurnManager>();
-        m_turnM.firstTurn += () => ResetGuardPoint();
-        m_turnM.firstTurn += () => FlucStatReset();
-        m_turnM.firstTurn += () => CalculateStat();
-        m_turnM.firstTurn += () => myUI.HpUpdate();
+        TurnManager.firstTurn += () => ResetGuardPoint();
+        TurnManager.firstTurn += () => FlucStatReset();
+        TurnManager.firstTurn += () => CalculateStat();
+        TurnManager.firstTurn += () => myUI.HpUpdate();
+    }
+
+    protected virtual void OnDestroy()
+    {
+        ReleseTurnAct();
+    }
+
+    protected virtual void ReleseTurnAct()
+    {
+        TurnManager.firstTurn -= () => ResetGuardPoint();
+        TurnManager.firstTurn -= () => FlucStatReset();
+        TurnManager.firstTurn -= () => CalculateStat();
+        TurnManager.firstTurn -= () => myUI.HpUpdate();
     }
 
     public virtual void OnDamage(int damage)
@@ -120,6 +133,7 @@ public class LivingEntity : MonoBehaviour, IDamageable
     public int GetFullHealth()
     {
         return fullHealth + endurance;
+        //(endurance * 1);
     }
 
     public void ResetGuardPoint()
@@ -142,7 +156,7 @@ public class LivingEntity : MonoBehaviour, IDamageable
         dead = true;
     }
 
-    protected IEnumerator DelayedUnActived(float sec)
+    protected IEnumerator DelayedDestroy(float sec)
     {
         yield return new WaitForSeconds(sec);
         gameObject.SetActive(false);
@@ -198,7 +212,8 @@ public class LivingEntity : MonoBehaviour, IDamageable
 
     protected virtual void HpAndGuardReset()
     {
-        health = startingHealth + endurance; // 만약 시작 HP는 스탯 영향 안 받게 하고 싶을 경우는 수정.
+        //health = startingHealth + endurance; // 만약 시작 HP는 스탯 영향 안 받게 하고 싶을 경우는 수정.
+        health = GetFullHealth();
         GuardPoint = regenGuardPoint;
     }
 

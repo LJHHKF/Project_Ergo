@@ -4,15 +4,14 @@ using UnityEngine;
 
 public class EnemiesManager : MonoBehaviour
 {
-    //public int initAmount; // 스테이지 관리자를 만든 후엔 이 부분은 거기서 얻어올 것.
-    public TurnManager turnManager;
+    //[SerializeField] private int initAmount; // 스테이지 관리자를 만든 후엔 이 부분은 거기서 얻어올 것.
 
-    public float minX;
-    public float x_interval = 1.0f;
-    public float time_interval = 1.0f;
+    [SerializeField] private float minX;
+    [SerializeField] private float x_interval = 1.0f;
+    [SerializeField] private float time_interval = 1.0f;
 
-    public int[] m_index;
-    public GameObject[] m_array;
+    [SerializeField] private int[] m_index;
+    [SerializeField] private GameObject[] m_array;
 
     private List<GameObject> monsters = new List<GameObject>();
 
@@ -30,8 +29,12 @@ public class EnemiesManager : MonoBehaviour
             monsters.Add(mon);
         }
 
-        turnManager.playerTurnEnd += () => StartCoroutine(StartMonsterActsControl());
+         TurnManager.playerTurnEnd += () => StartCoroutine(StartMonsterActsControl());
+    }
 
+    private void OnDestroy()
+    {
+        TurnManager.playerTurnEnd -= () => StartCoroutine(StartMonsterActsControl());
     }
 
     // Update is called once per frame
@@ -103,8 +106,16 @@ public class EnemiesManager : MonoBehaviour
         }
     }
 
+
+
     IEnumerator StartMonsterActsControl()
     {
+        if(monsters.Count == 0)
+        {
+            TurnManager.OnBattleEnd();
+            yield break;
+        }
+
         for(int i = 0; i < monsters.Count; i++)
         {
             Enemy_Base temp = monsters[i].GetComponent<Enemy_Base>();
@@ -112,7 +123,7 @@ public class EnemiesManager : MonoBehaviour
             yield return new WaitForSeconds(time_interval);
             temp.Act();
         }
-        turnManager.OnTurnEnd();
+        TurnManager.OnTurnEnd();
         yield break;
     }
 }

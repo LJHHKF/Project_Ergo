@@ -4,5 +4,17 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/Title_GMCall.unity
+    guid: c87b78391e9755849b9374b511022443
+  - enabled: 1
+    path: Assets/Scenes/LoadingScene.unity
+    guid: e6d7f6ea440ff3e42b9bf2ec7bfbfb28
+  - enabled: 1
+    path: Assets/Scenes/Entrance.unity
+    guid: d25e875cb111d5642b8bed91444cad5d
+  - enabled: 1
+    path: Assets/Scenes/Stage1.unity
+    guid: 2cda990e2423bbf4892e6590ba056729
   m_configObjects: {}

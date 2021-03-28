@@ -12,14 +12,14 @@ public class EnemyAct_Base : MonoBehaviour, IEAct
     }
     [Header("Base Setting")]
     protected Enemy_Base m_Enemy;
-    public int typeNumber = 0;
-    public Sprite actSprite;
-    public Type type;
-    public int power = 0;
+    [SerializeField] protected int typeNumber = 0;
+    [SerializeField] private Sprite actSprite;
+    [SerializeField] private Type type;
+    [SerializeField] private int power = 0;
     protected int r_power;
-    //public int abCondID = -1;
-    //public bool isRelatedAbCond = false;
-    //public bool isAllTargeted = false;
+    //[SerializeField] private int abCondID = -1;
+    //[SerializeField] private bool isRelatedAbCond = false;
+    //[SerializeField] private bool isAllTargeted = false;
 
     protected virtual void Start()
     {

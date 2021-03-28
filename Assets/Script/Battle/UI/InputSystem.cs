@@ -19,7 +19,7 @@ public class InputSystem : MonoBehaviour
     }
     private static InputSystem m_instance;
 
-    public GameObject line;
+    [SerializeField] private GameObject line;
     private LineDrawer m_line;
     private Vector2 mousePosition2D
     {
@@ -42,12 +42,12 @@ public class InputSystem : MonoBehaviour
     private bool isTempTargeted = false;
     private Vector2 targetColSize;
 
-    public float holdingDistance = 5.0f;
+    [SerializeField] private float holdingDistance = 5.0f;
 
-    //public Canvas m_cardCanvas;
+    //[SerializeField] private Canvas m_cardCanvas;
     //private GraphicRaycaster m_GRay;
     //private PointerEventData m_ped;
-    
+
 
     private DiceSystemManager diceSManager;
     private BattleUIManager m_BaUIManager;
