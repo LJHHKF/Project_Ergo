@@ -11,7 +11,6 @@ public class CUF_MultiRTargetAttack : CUF_Base
     [SerializeField] protected bool isTargetOverlapped = false;
     [SerializeField] protected int maxTarget = 2;
 
-    private EnemiesManager e_manager;
     private List<GameObject> target_list = new List<GameObject>();
 
     private void OnDisable()
@@ -23,7 +22,6 @@ public class CUF_MultiRTargetAttack : CUF_Base
     protected override void Start()
     {
         base.Start();
-        e_manager = GameObject.FindGameObjectWithTag("EnemiesManager").GetComponent<EnemiesManager>();
 
         myCard.use += this.Use;
     }
@@ -33,23 +31,23 @@ public class CUF_MultiRTargetAttack : CUF_Base
         dv = diceValue;
         if (isAllAttak)
         {
-            e_manager.AddAllTargeted(ref target_list);
+            EnemiesManager.instance.AddAllTargeted(ref target_list);
         }
         else if (!isAllAttak)
         {
             int targetNum = maxTarget;
-            if (targetNum > e_manager.GetMaxMonsCnt())
+            if (targetNum > EnemiesManager.instance.GetMaxMonsCnt())
             {
-                targetNum = e_manager.GetMaxMonsCnt();
+                targetNum = EnemiesManager.instance.GetMaxMonsCnt();
             }
 
             if (isTargetOverlapped)
             {
-                e_manager.AddMultiRTarget_Overlaped(ref target_list, targetNum);
+                EnemiesManager.instance.AddMultiRTarget_Overlaped(ref target_list, targetNum);
             }
             else
             {
-                e_manager.AddMultiRTarget_NotOverlaped(ref target_list, targetNum);
+                EnemiesManager.instance.AddMultiRTarget_NotOverlaped(ref target_list, targetNum);
             }
         }
 
@@ -73,9 +71,6 @@ public class CUF_MultiRTargetAttack : CUF_Base
 
     public override void ReUse()
     {
-        if (target != null)
-        {
-            this.Use(dv);
-        }
+        this.Use(dv);
     }
 }

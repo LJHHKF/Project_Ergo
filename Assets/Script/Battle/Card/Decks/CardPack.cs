@@ -6,7 +6,7 @@ using System.Text;
 
 public class CardPack : MonoBehaviour
 {
-    public CardPack instance
+    public static CardPack instance
     {
         get
         {
@@ -42,8 +42,8 @@ public class CardPack : MonoBehaviour
         if (instance != this)
             Destroy(gameObject);
 
-        GameMaster.gameOver += () => CardPackClear();
-        GameMaster.gameStop += () => SaveHadCnt();
+        GameMaster.instance.gameOver += () => CardPackClear();
+        GameMaster.instance.gameStop += () => SaveHadCnt();
     }
 
     public void CardPackInit()
@@ -95,9 +95,9 @@ public class CardPack : MonoBehaviour
     //    return card_prefabs.Length;
     //}
 
-    public static void AddCard_OnlyHadData(int c_id)
+    public void AddCard_OnlyHadData(int c_id)
     {
-        int index = m_instance.SearchIndexFromID(c_id);
+        int index = SearchIndexFromID(c_id);
 
         if(index == -1)
         {
@@ -105,9 +105,9 @@ public class CardPack : MonoBehaviour
             return;
         }
 
-        if (m_instance.card_HadCnt[index] < 3)
+        if (card_HadCnt[index] < 3)
         {
-            m_instance.card_HadCnt[index] += 1;
+            card_HadCnt[index] += 1;
         }
         else
         {
@@ -140,9 +140,9 @@ public class CardPack : MonoBehaviour
         return center;
     }
 
-    public static void AddCard_Object(int c_id, Transform _p, ref List<GameObject> _out)
+    public void AddCard_Object(int c_id, Transform _p, ref List<GameObject> _out)
     {
-        int index = m_instance.SearchIndexFromID(c_id);
+        int index = SearchIndexFromID(c_id);
 
         if (index == -1)
         {
@@ -150,10 +150,10 @@ public class CardPack : MonoBehaviour
             return;
         }
 
-        if (m_instance.card_HadCnt[index] < 3)
+        if (card_HadCnt[index] < 3)
         {
-            m_instance.card_HadCnt[index] += 1;
-            GameObject go = Instantiate(m_instance.cards[index].card_prefab, _p);
+            card_HadCnt[index] += 1;
+            GameObject go = Instantiate(cards[index].card_prefab, _p);
             go.SetActive(false);
             _out.Add(go);
         }
@@ -179,19 +179,19 @@ public class CardPack : MonoBehaviour
         }
     }
 
-public static GameObject GetRandomCard_isntConfirm()
+public GameObject GetRandomCard_isntConfirm()
     {
         int fullWeight = 0;
         int max = -1;
         int rand;
-        for(int i = 0; i < m_instance.canList.Count; i++)
-            fullWeight += m_instance.canList[i].card_weight;
+        for(int i = 0; i < canList.Count; i++)
+            fullWeight += canList[i].card_weight;
         rand = UnityEngine.Random.Range(0, fullWeight);
 
         for (int i = 0; i < m_instance.canList.Count; i++)
         {
             max += m_instance.canList[i].card_weight;
-            if(rand >= max - m_instance.canList[i].card_weight && rand < max)
+            if(rand >= max - canList[i].card_weight && rand < max)
             {
                 int id = m_instance.canList[i].card_prefab.GetComponent<ICard>().GetCardID();
                 int index = m_instance.SearchIndexFromID(id);
@@ -199,36 +199,36 @@ public static GameObject GetRandomCard_isntConfirm()
                 TempHadCntUpDown(id, true);
                 if (m_instance.card_HadCnt[i] + m_instance.tempHadCnt[i] >= 3)
                 {
-                    temp = m_instance.canList[i].card_prefab;
-                    m_instance.canList.RemoveAt(i);
+                    temp = canList[i].card_prefab;
+                    canList.RemoveAt(i);
                     return temp;
                 }
-                return m_instance.canList[i].card_prefab;
+                return canList[i].card_prefab;
             }
         }
         Debug.LogError("랜덤 카드 값을 가져오는데 실패했습니다.");
         return null;
     }
 
-    public static void ResetCanList()
+    public void ResetCanList()
     {
-        m_instance.canList.Clear();
-        for(int i = 0; i < m_instance.card_HadCnt.Length; i++)
+        canList.Clear();
+        for(int i = 0; i < card_HadCnt.Length; i++)
         {
-            if(m_instance.card_HadCnt[i] + m_instance.tempHadCnt[i] < 3)
+            if(card_HadCnt[i] + tempHadCnt[i] < 3)
             {
-                m_instance.canList.Add(m_instance.cards[i]);
+                canList.Add(m_instance.cards[i]);
             }
         }
     }
 
-    public static void TempHadCntUpDown(int _id, bool isUp)
+    public void TempHadCntUpDown(int _id, bool isUp)
     {
-        int index = m_instance.SearchIndexFromID(_id);
+        int index = SearchIndexFromID(_id);
         if (isUp)
-            m_instance.tempHadCnt[index] += 1;
+            tempHadCnt[index] += 1;
         else
-            m_instance.tempHadCnt[index] -= 1;
+            tempHadCnt[index] -= 1;
     }
 
     public void SetSaveID(int id)

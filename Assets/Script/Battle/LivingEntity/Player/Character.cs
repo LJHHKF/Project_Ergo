@@ -18,27 +18,26 @@ public class Character : LivingEntity
         fix_sol = CStatManager.solid;
         fix_int = CStatManager.intelligent;
 
-        m_turnM = GameObject.FindGameObjectWithTag("TurnManager").GetComponent<TurnManager>();
-        m_turnM.firstTurn += () => myUI.HpUpdate();
-        m_turnM.firstTurn += () => FlucStatReset();
-        m_turnM.firstTurn += () => CalculateStat();
-        m_turnM.turnStart += () => ResetGuardPoint();
-        m_turnM.firstTurn += () => InitMaxCostSetting();
-        m_turnM.turnStart += () => myAbCond.Affected();
-        m_turnM.battleEnd += () => CStatManager.HealthPointUpdate(health);
+        TurnManager.instance.firstTurn += () => myUI.HpUpdate();
+        TurnManager.instance.firstTurn += () => FlucStatReset();
+        TurnManager.instance.firstTurn += () => CalculateStat();
+        TurnManager.instance.turnStart += () => ResetGuardPoint();
+        TurnManager.instance.firstTurn += () => InitMaxCostSetting();
+        TurnManager.instance.turnStart += () => myAbCond.Affected();
+        TurnManager.instance.battleEnd += () => CStatManager.instance.HealthPointUpdate(health);
 
-        onDeath += () => CStatManager.HealthPointUpdate(health); // 게임오버 체크는 여기 들어가서 함.
+        onDeath += () => CStatManager.instance.HealthPointUpdate(health); // 게임오버 체크는 여기 들어가서 함.
     }
 
     protected override void ReleseTurnAct()
     {
-        m_turnM.firstTurn -= () => myUI.HpUpdate();
-        m_turnM.firstTurn -= () => FlucStatReset();
-        m_turnM.firstTurn -= () => CalculateStat();
-        m_turnM.turnStart -= () => ResetGuardPoint();
-        m_turnM.firstTurn -= () => InitMaxCostSetting();
-        m_turnM.turnStart -= () => myAbCond.Affected();
-        m_turnM.battleEnd -= () => CStatManager.HealthPointUpdate(health);
+        TurnManager.instance.firstTurn -= () => myUI.HpUpdate();
+        TurnManager.instance.firstTurn -= () => FlucStatReset();
+        TurnManager.instance.firstTurn -= () => CalculateStat();
+        TurnManager.instance.turnStart -= () => ResetGuardPoint();
+        TurnManager.instance.firstTurn -= () => InitMaxCostSetting();
+        TurnManager.instance.turnStart -= () => myAbCond.Affected();
+        TurnManager.instance.battleEnd -= () => CStatManager.instance.HealthPointUpdate(health);
     }
 
     public override void GetGuardPoint(int GetValue)

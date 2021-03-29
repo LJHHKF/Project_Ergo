@@ -5,7 +5,7 @@ using System;
 
 public class GameMaster : MonoBehaviour
 {
-    public GameMaster instance
+    public static GameMaster instance
     {
         get
         {
@@ -22,14 +22,14 @@ public class GameMaster : MonoBehaviour
     [SerializeField] private float end_DelayTime = 2.0f;
     [SerializeField] private bool isReset = false;
 
-    public static event Action startGame_Awake;
-    public static event Action startGame_Start;
-    public static event Action initSaveData_Awake;
-    public static event Action initSaveData_Start;
-    public static event Action gameOver;
-    public static event Action gameStop;
-    public static event Action battleStageStart;
-    public static event Action stageEnd;
+    public event Action startGame_Awake;
+    public event Action startGame_Start;
+    public event Action initSaveData_Awake;
+    public event Action initSaveData_Start;
+    public event Action gameOver;
+    public event Action gameStop;
+    public event Action battleStageStart;
+    public event Action stageEnd;
 
     protected void Awake()
     {
@@ -54,12 +54,12 @@ public class GameMaster : MonoBehaviour
         OnGameStop();
     }
 
-    public static int GetSaveID()
+    public int GetSaveID()
     {
         return m_instance.saveID;
     }
 
-    public static void GameStart(int _saveID)
+    public void GameStart(int _saveID)
     {
         m_instance.saveID = _saveID;
         if (!m_instance.OnInitSaveData())
@@ -100,13 +100,13 @@ public class GameMaster : MonoBehaviour
         }
     }
 
-    public static void OnGameOver()
+    public void OnGameOver()
     {
         Debug.LogWarning("게임오버가 되었습니다.");
         m_instance.StartCoroutine(m_instance.DelayedGameOver());
     }
 
-    public static void OnGameStop()
+    public void OnGameStop()
     {
         if(gameStop != null)
         {
@@ -114,7 +114,7 @@ public class GameMaster : MonoBehaviour
         }
     }
 
-    public static void OnBattleStageStart()
+    public void OnBattleStageStart()
     {
         if(battleStageStart != null)
         {
@@ -122,7 +122,7 @@ public class GameMaster : MonoBehaviour
         }
     }
 
-    public static void OnStageEnd()
+    public void OnStageEnd()
     {
         if(stageEnd != null)
         {

@@ -31,10 +31,10 @@ public class RewardUIManager : MonoBehaviour
         else
             itemBtn.SetActive(false);
 
-        CardPack.ResetCanList();
-        Card_Base m_card = CardPack.GetRandomCard_isntConfirm().GetComponent<Card_Base>();
+        CardPack.instance.ResetCanList();
+        Card_Base m_card = CardPack.instance.GetRandomCard_isntConfirm().GetComponent<Card_Base>();
         cardUIManager.SetTargetCard(m_card);
-        m_onDisable += () => CardPack.TempHadCntUpDown(m_card.GetCardID(), false);
+        m_onDisable += () => CardPack.instance.TempHadCntUpDown(m_card.GetCardID(), false);
         Debug.Log("CardID:" + m_card.GetCardID());
 
         for (int i = 0; i < selectEfs.Length; i++)
@@ -65,7 +65,7 @@ public class RewardUIManager : MonoBehaviour
 
     public void BtnDiscard()
     {
-        LoadManager.LoadNextStage();
+        LoadManager.instance.LoadNextStage();
     }
 
     private void BtnSelectClick(int index)
@@ -103,7 +103,7 @@ public class RewardUIManager : MonoBehaviour
     IEnumerator DeleayedNextStage()
     {
         yield return new WaitForSeconds(1.0f);
-        LoadManager.LoadNextStage();
+        LoadManager.instance.LoadNextStage();
         yield break;
     }
 }

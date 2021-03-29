@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System;
 using UnityEngine;
 
-public class TurnManager : MonoBehaviour
+public class TurnManager: MonoBehaviour
 {
-    public TurnManager instance
+    public static TurnManager instance
     {
         get
         {
@@ -36,9 +36,14 @@ public class TurnManager : MonoBehaviour
         battleEnd += () => isFirstActived = false;
         //GameObject.FindGameObjectWithTag("CDeck").GetComponent<DeckManager>().SetTurnManager(this);
 
-        GameMaster.OnBattleStageStart();
+        GameMaster.instance.OnBattleStageStart();
 
         start_time = Time.time;
+    }
+
+    private void OnDestroy()
+    {
+        m_instance = null;
     }
 
 
@@ -106,7 +111,7 @@ public class TurnManager : MonoBehaviour
 
     public bool GetIsFirstActivated()
     {
-        return m_instance.isFirstActived;
+        return isFirstActived;
     }
 
     //IEnumerator DelayedFirstTurn()

@@ -34,8 +34,6 @@ public class CStatManager : MonoBehaviour
     public static int solid { get; set; }
     public static int intelligent { get; set; }
 
-
-
     private StringBuilder key = new StringBuilder();
 
     private void Awake()
@@ -49,9 +47,14 @@ public class CStatManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        GameMaster.initSaveData_Awake += () => InitStatSetting();
-        GameMaster.startGame_Awake += () => StartStatSetting();
-        GameMaster.stageEnd += () => SaveStats();
+        GameMaster.instance.initSaveData_Awake += () => InitStatSetting();
+        GameMaster.instance.startGame_Awake += () => StartStatSetting();
+        GameMaster.instance.stageEnd += () => SaveStats();
+    }
+
+    private void OnDestroy()
+    {
+        m_instance = null;
     }
 
     private void InitStatSetting()
@@ -74,7 +77,7 @@ public class CStatManager : MonoBehaviour
 
     private void StartStatSetting()
     {
-        int saveID = GameMaster.GetSaveID();
+        int saveID = GameMaster.instance.GetSaveID();
         key.Clear();
         key.Append($"SaveID({saveID}).CStat.Endurance");
 
@@ -93,7 +96,7 @@ public class CStatManager : MonoBehaviour
 
     private void SaveStats()
     {
-        int saveID = GameMaster.GetSaveID();
+        int saveID = GameMaster.instance.GetSaveID();
         key.Clear();
         key.Append($"SaveID({saveID}).CStat.Endurance");
 
@@ -110,12 +113,12 @@ public class CStatManager : MonoBehaviour
         PlayerPrefs.SetInt(key.ToString(), health);
     }
 
-    public static void HealthPointUpdate(int value)
+    public void HealthPointUpdate(int value)
     {
-        CStatManager.health = value;
+        health = value;
         if(health <= 0)
         {
-            GameMaster.OnGameOver();
+            GameMaster.instance.OnGameOver();
         }
     }
 }

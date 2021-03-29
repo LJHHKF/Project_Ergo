@@ -90,7 +90,7 @@ public class Card_Base : MonoBehaviour, ICard
         text_name.text = cardName;
         ready = false;
         
-        GameMaster.battleStageStart += () => BattleInitSetting();
+        GameMaster.instance.battleStageStart += () => BattleInitSetting();
     }
 
     protected virtual void OnEnable()

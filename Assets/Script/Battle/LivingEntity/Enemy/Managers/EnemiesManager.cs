@@ -6,7 +6,7 @@ public class EnemiesManager : MonoBehaviour
 {
     //[SerializeField] private int initAmount; // 스테이지 관리자를 만든 후엔 이 부분은 거기서 얻어올 것.
 
-    public EnemiesManager instance
+    public static EnemiesManager instance
     {
         get
         {
@@ -25,7 +25,6 @@ public class EnemiesManager : MonoBehaviour
     [SerializeField] private GameObject[] m_array;
 
     private List<GameObject> monsters = new List<GameObject>();
-    private TurnManager m_TurnM;
 
     private void Awake()
     {
@@ -48,13 +47,13 @@ public class EnemiesManager : MonoBehaviour
             temp.onDeath += () => RemoveAtMonstersList(mon);
             monsters.Add(mon);
         }
-        m_TurnM = GameObject.FindGameObjectWithTag("TurnManager").GetComponent<TurnManager>();
-        m_TurnM.playerTurnEnd += () => this.StartCoroutine(StartMonsterActsControl());
+        TurnManager.instance.playerTurnEnd += () => this.StartCoroutine(StartMonsterActsControl());
     }
 
     private void OnDestroy()
     {
-        m_TurnM.playerTurnEnd -= () => this.StartCoroutine(StartMonsterActsControl());
+        TurnManager.instance.playerTurnEnd -= () => this.StartCoroutine(StartMonsterActsControl());
+        m_instance = null;
     }
 
     void RemoveAtMonstersList(GameObject who)
@@ -68,7 +67,7 @@ public class EnemiesManager : MonoBehaviour
         }
         if(monsters.Count == 0)
         {
-            m_TurnM.OnBattleEnd();
+            TurnManager.instance.OnBattleEnd();
         }
     }
 
@@ -134,7 +133,7 @@ public class EnemiesManager : MonoBehaviour
             yield return new WaitForSeconds(time_interval);
             temp.Act();
         }
-        m_TurnM.OnTurnEnd();
+        TurnManager.instance.OnTurnEnd();
         yield break;
     }
 }

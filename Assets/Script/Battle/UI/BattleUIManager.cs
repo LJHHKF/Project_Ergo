@@ -9,7 +9,6 @@ public class BattleUIManager : MonoBehaviour
     [SerializeField] private GameObject forDice;
     [SerializeField] private GameObject btn_TurnEnd;
     [SerializeField] private GameObject panel_reward;
-    private TurnManager m_TurnM;
 
     public bool isDiceOn
     {
@@ -21,24 +20,23 @@ public class BattleUIManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        m_TurnM = GameObject.FindGameObjectWithTag("TurnManager").GetComponent<TurnManager>();
         forDice.SetActive(false);
         panel_reward.SetActive(false);
         isDiceOn = false;
-        m_TurnM.firstTurn += () => SetBtnTurnEActive(true);
-        m_TurnM.turnStart += () => SetBtnTurnEActive(true);
-        m_TurnM.playerTurnEnd += () => SetBtnTurnEActive(false);
-        m_TurnM.battleEnd += () => SetBtnTurnEActive(false);
-        m_TurnM.battleEnd += () => panel_reward.SetActive(true);
+        TurnManager.instance.firstTurn += () => SetBtnTurnEActive(true);
+        TurnManager.instance.turnStart += () => SetBtnTurnEActive(true);
+        TurnManager.instance.playerTurnEnd += () => SetBtnTurnEActive(false);
+        TurnManager.instance.battleEnd += () => SetBtnTurnEActive(false);
+        TurnManager.instance.battleEnd += () => panel_reward.SetActive(true);
     }
 
     private void OnDestroy()
     {
-        m_TurnM.firstTurn -= () => SetBtnTurnEActive(true);
-        m_TurnM.turnStart -= () => SetBtnTurnEActive(true);
-        m_TurnM.playerTurnEnd -= () => SetBtnTurnEActive(false);
-        m_TurnM.battleEnd -= () => SetBtnTurnEActive(false);
-        m_TurnM.battleEnd -= () => panel_reward.SetActive(true);
+        TurnManager.instance.firstTurn -= () => SetBtnTurnEActive(true);
+        TurnManager.instance.turnStart -= () => SetBtnTurnEActive(true);
+        TurnManager.instance.playerTurnEnd -= () => SetBtnTurnEActive(false);
+        TurnManager.instance.battleEnd -= () => SetBtnTurnEActive(false);
+        TurnManager.instance.battleEnd -= () => panel_reward.SetActive(true);
     }
 
     public void OnDiceSysetm()
@@ -70,6 +68,6 @@ public class BattleUIManager : MonoBehaviour
 
     public void BtnTurnEnd()
     {
-        m_TurnM.OnPlayerTurnEnd();
+        TurnManager.instance.OnPlayerTurnEnd();
     }
 }

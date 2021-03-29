@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DeckManager : MonoBehaviour
 {
-    public DeckManager instance
+    public static DeckManager instance
     {
         get
         {
@@ -19,8 +19,6 @@ public class DeckManager : MonoBehaviour
 
     private BSCManager m_BSCManager;
     private List<GameObject> list_deck = new List<GameObject>();
-    private CardPack c_pack;
-    private TurnManager m_TurnM;
 
     private void Awake()
     {
@@ -33,18 +31,21 @@ public class DeckManager : MonoBehaviour
     private void Start()
     {
         //SetTurnManager();
-        c_pack = GameObject.FindGameObjectWithTag("InfoM").GetComponentInChildren<CardPack>();
 
-        GameMaster.initSaveData_Start += () => ResetDeck();
-        GameMaster.startGame_Start += () => ResetDeck();
-        GameMaster.battleStageStart += () => BattleStageInitSetting();
+        GameMaster.instance.initSaveData_Start += () => ResetDeck();
+        GameMaster.instance.startGame_Start += () => ResetDeck();
+        GameMaster.instance.battleStageStart += () => BattleStageInitSetting();
+    }
+
+    private void OnDestroy()
+    {
+        m_instance = null;
     }
 
     private void BattleStageInitSetting()
     {
-        m_TurnM = GameObject.FindGameObjectWithTag("TurnManager").GetComponent<TurnManager>();
-        m_TurnM.firstTurn += () => PullingInDeck_FirstTurn();
-        m_TurnM.turnStart += () => PullingInDeck();
+        TurnManager.instance.firstTurn += () => PullingInDeck_FirstTurn();
+        TurnManager.instance.turnStart += () => PullingInDeck();
     }
 
     public void ResetDeck()
@@ -57,15 +58,15 @@ public class DeckManager : MonoBehaviour
         //    }
         //}
 
-        c_pack.InstantiateCards(gameObject.transform, ref list_deck);
+        CardPack.instance.InstantiateCards(gameObject.transform, ref list_deck);
     }
 
-    public static void SetBSCManager(BSCManager input)
+    public void SetBSCManager(BSCManager input)
     {
          m_instance.m_BSCManager = input;
     }
 
-    public static void PullingInDeck() // Pulling at card in deck to hand
+    public void PullingInDeck() // Pulling at card in deck to hand
     {
         if(m_instance.list_deck.Count <= 0)
         {
@@ -78,7 +79,7 @@ public class DeckManager : MonoBehaviour
         m_instance.list_deck.RemoveAt(rand);
     }
 
-    public static void PullingInDeck_FirstTurn()
+    public void PullingInDeck_FirstTurn()
     {
         if (m_instance.list_deck.Count < m_instance.startCardAmount)
         {
@@ -91,7 +92,7 @@ public class DeckManager : MonoBehaviour
         m_instance.m_BSCManager.SortingHand(0);
     }
 
-    public static void MoveToDeck(GameObject moved)
+    public void MoveToDeck(GameObject moved)
     {
         ICard temp = moved.GetComponent<ICard>();
         if(temp != null)
@@ -102,7 +103,7 @@ public class DeckManager : MonoBehaviour
         }
     }
 
-    public static void AddToDeck(GameObject added)
+    public void AddToDeck(GameObject added)
     {
         ICard temp = added.GetComponent<ICard>();
         if (temp != null)

@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class LoadManager : MonoBehaviour
 {
-    public LoadManager instance
+    public static LoadManager instance
     {
         get
         {
@@ -33,20 +33,20 @@ public class LoadManager : MonoBehaviour
 
     public void GameStart(int ID)
     {
-        GameMaster.GameStart(ID);
+        GameMaster.instance.GameStart(ID);
         isBattleReady = true;
         LoadingSceneManager.LoadScene("Battle");
     }
 
-    public static void LoadNextStage()
+    public void LoadNextStage()
     {
-        GameMaster.OnStageEnd();
+        GameMaster.instance.OnStageEnd();
 
         m_instance.isBattleReady = true; // 이 부분은 추후 '전투씬'으로 들어갈 때만으로 한정할 필요가 있음
         LoadingSceneManager.LoadScene("Battle");
     }
 
-    public static void ChkAndPlayDelayOn()
+    public void ChkAndPlayDelayOn()
     {
         if(m_instance.isBattleReady)
         {

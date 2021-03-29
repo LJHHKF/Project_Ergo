@@ -11,29 +11,27 @@ public class BSCManager : MonoBehaviour
 
     private List<GameObject> list_hand = new List<GameObject>();
     private List<GameObject> list_grave = new List<GameObject>();
-    private TurnManager m_TurnM;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        DeckManager.SetBSCManager(this);
-        m_TurnM = GameObject.FindGameObjectWithTag("TurnManager").GetComponent<TurnManager>();
+        DeckManager.instance.SetBSCManager(this);
 
-        m_TurnM.battleEnd += () => CleanUpCards();
-        m_TurnM.playerTurnEnd += () => UndoHandsTaransparency();
-        m_TurnM.playerTurnEnd += () => SortingHand(0);
+        TurnManager.instance.battleEnd += () => CleanUpCards();
+        TurnManager.instance.playerTurnEnd += () => UndoHandsTaransparency();
+        TurnManager.instance.playerTurnEnd += () => SortingHand(0);
 
-        GameMaster.gameStop += () => CleanUpCards();
+        GameMaster.instance.gameStop += () => CleanUpCards();
     }
 
     private void OnDestroy()
     {
-        m_TurnM.battleEnd -= () => CleanUpCards();
-        m_TurnM.playerTurnEnd -= () => UndoHandsTaransparency();
-        m_TurnM.playerTurnEnd -= () => SortingHand(0);
+        TurnManager.instance.battleEnd -= () => CleanUpCards();
+        TurnManager.instance.playerTurnEnd -= () => UndoHandsTaransparency();
+        TurnManager.instance.playerTurnEnd -= () => SortingHand(0);
 
-        GameMaster.gameStop -= () => CleanUpCards();
+        GameMaster.instance.gameStop -= () => CleanUpCards();
     }
 
     public void AddToHand(GameObject added)
@@ -48,7 +46,7 @@ public class BSCManager : MonoBehaviour
 
             added.SetActive(true);
 
-            if(m_TurnM.GetIsFirstActivated())
+            if(TurnManager.instance.GetIsFirstActivated())
             {
                 SortingHand(0);
             }
@@ -88,7 +86,7 @@ public class BSCManager : MonoBehaviour
     {
         for(int i = 0; i < list_grave.Count; i++)
         {
-            DeckManager.MoveToDeck(list_grave[i]);
+            DeckManager.instance.MoveToDeck(list_grave[i]);
         }
     }
 
@@ -97,11 +95,11 @@ public class BSCManager : MonoBehaviour
     {
         for (int i = 0; i < list_hand.Count; i++)
         {
-            DeckManager.MoveToDeck(list_hand[i]);
+            DeckManager.instance.MoveToDeck(list_hand[i]);
         }
         for (int i = 0; i < list_grave.Count; i++)
         {
-            DeckManager.MoveToDeck(list_grave[i]);
+            DeckManager.instance.MoveToDeck(list_grave[i]);
         }
     }
 

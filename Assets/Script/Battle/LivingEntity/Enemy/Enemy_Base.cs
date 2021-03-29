@@ -44,12 +44,12 @@ public class Enemy_Base : LivingEntity
         //startingHealth = _startingHealth;
         regenGuardPoint = _regenGuardPoint;
         base.Start();
-        m_turnM.playerTurnEnd += () => ResetGuardPoint();
-        m_turnM.playerTurnEnd += () => myAbCond.Affected();
-        m_turnM.turnEnd += () => curSpGauge++;
+        TurnManager.instance.playerTurnEnd += () => ResetGuardPoint();
+        TurnManager.instance.playerTurnEnd += () => myAbCond.Affected();
+        TurnManager.instance.turnEnd += () => curSpGauge++;
 
-        m_turnM.firstTurn += () => ActSetting();
-        m_turnM.turnEnd += () => ActSetting();
+        TurnManager.instance.firstTurn += () => ActSetting();
+        TurnManager.instance.turnEnd += () => ActSetting();
 
         onDeath += () => StartCoroutine(DelayedDestroy(1.0f));
     }
@@ -57,12 +57,12 @@ public class Enemy_Base : LivingEntity
     protected override void ReleseTurnAct()
     {
         base.ReleseTurnAct();
-        m_turnM.playerTurnEnd -= () => ResetGuardPoint();
-        m_turnM.playerTurnEnd -= () => myAbCond.Affected();
-        m_turnM.turnEnd -= () => curSpGauge++;
+        TurnManager.instance.playerTurnEnd -= () => ResetGuardPoint();
+        TurnManager.instance.playerTurnEnd -= () => myAbCond.Affected();
+        TurnManager.instance.turnEnd -= () => curSpGauge++;
 
-        m_turnM.firstTurn -= () => ActSetting();
-        m_turnM.turnEnd -= () => ActSetting();
+        TurnManager.instance.firstTurn -= () => ActSetting();
+        TurnManager.instance.turnEnd -= () => ActSetting();
     }
 
     protected virtual void Update()

@@ -53,7 +53,7 @@ public class AbCondition : MonoBehaviour
 
         if (!isBeing)
         {
-            AbCond temp = new AbCond(id, AbCondInfoManager.GetAbCond_Img(id), piledN, AbCondInfoManager.GetAbCond_OnePower(id));
+            AbCond temp = new AbCond(id, AbCondInfoManager.instance.GetAbCond_Img(id), piledN, AbCondInfoManager.instance.GetAbCond_OnePower(id));
             //temp.ID = id;
             //temp.Icon = abCondInfoM.GetAbCond_Img(id);
             //temp.piledNum = piledN;
@@ -80,7 +80,7 @@ public class AbCondition : MonoBehaviour
 
         if (!isBeing)
         {
-            AbCond temp = new AbCond(id, AbCondInfoManager.GetAbCond_Img(id), piledN, AbCondInfoManager.GetAbCond_OnePower(id));
+            AbCond temp = new AbCond(id, AbCondInfoManager.instance.GetAbCond_Img(id), piledN, AbCondInfoManager.instance.GetAbCond_OnePower(id));
             //temp.ID = id;
             //temp.Icon = abCondInfoM.GetAbCond_Img(id);
             //temp.piledNum = piledN;
@@ -109,7 +109,7 @@ public class AbCondition : MonoBehaviour
 
         if (!isBeing)
         {
-            AbCond temp = new AbCond(id, AbCondInfoManager.GetAbCond_Img(id), piledN, AbCondInfoManager.GetAbCond_OnePower(id));
+            AbCond temp = new AbCond(id, AbCondInfoManager.instance.GetAbCond_Img(id), piledN, AbCondInfoManager.instance.GetAbCond_OnePower(id));
             //temp.ID = id;
             //temp.Icon = abCondInfoM.GetAbCond_Img(id);
             //temp.piledNum = piledN;
