@@ -50,6 +50,6 @@ public class Card_UI : MonoBehaviour
         GameObject m_deck = GameObject.FindGameObjectWithTag("CDeck");
         List<GameObject> tempList = new List<GameObject>();
         CardPack.instance.AddCard_Object(cardID, m_deck.transform, ref tempList);
-        DeckManager.instance.AddToDeck(tempList[0]);
+        DeckManager.instance.AddToDeck_NonList(tempList[0]);
     }
 }

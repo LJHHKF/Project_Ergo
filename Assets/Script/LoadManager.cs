@@ -40,8 +40,8 @@ public class LoadManager : MonoBehaviour
 
     public void LoadNextStage()
     {
-        GameMaster.instance.OnStageEnd();
-
+        //GameMaster.instance.OnStageEnd();
+        GameMaster.instance.OnBattleStageEnd();
         m_instance.isBattleReady = true; // 이 부분은 추후 '전투씬'으로 들어갈 때만으로 한정할 필요가 있음
         LoadingSceneManager.LoadScene("Battle");
     }

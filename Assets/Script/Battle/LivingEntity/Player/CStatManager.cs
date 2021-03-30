@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Text;
+using System;
 
 public class CStatManager : MonoBehaviour
 {
@@ -47,17 +48,20 @@ public class CStatManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        GameMaster.instance.initSaveData_Awake += () => InitStatSetting();
-        GameMaster.instance.startGame_Awake += () => StartStatSetting();
-        GameMaster.instance.stageEnd += () => SaveStats();
+        GameMaster.instance.initSaveData_Awake += Event_InitSaveDataAwake;
+        GameMaster.instance.startGame_Awake += Event_StartGameAwake;
+        GameMaster.instance.stageEnd += Event_StageEnd;
     }
 
     private void OnDestroy()
     {
         m_instance = null;
+        GameMaster.instance.initSaveData_Awake -= Event_InitSaveDataAwake;
+        GameMaster.instance.startGame_Awake -= Event_StartGameAwake;
+        GameMaster.instance.stageEnd -= Event_StageEnd;
     }
 
-    private void InitStatSetting()
+    private void Event_InitSaveDataAwake(object _o, EventArgs _e)
     {
         endurance = init_Endurance;
         strength = init_Strength;
@@ -69,13 +73,7 @@ public class CStatManager : MonoBehaviour
         SaveStats();
     }
 
-    private int CalcResultFullHealth()
-    {
-        return fullHealth_pure + endurance;
-        //(endurance * 1);
-    }
-
-    private void StartStatSetting()
+    private void Event_StartGameAwake(object _o, EventArgs _e)
     {
         int saveID = GameMaster.instance.GetSaveID();
         key.Clear();
@@ -92,6 +90,17 @@ public class CStatManager : MonoBehaviour
         fullHealth_pure = PlayerPrefs.GetInt(key.ToString());
         key.Replace("FullHealth", "Health");
         health = PlayerPrefs.GetInt(key.ToString());
+    }
+
+    private void Event_StageEnd(object _o, EventArgs _e)
+    {
+        SaveStats();
+    }
+
+    private int CalcResultFullHealth()
+    {
+        return fullHealth_pure + endurance;
+        //(endurance * 1);
     }
 
     private void SaveStats()

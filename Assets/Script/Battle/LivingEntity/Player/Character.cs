@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -18,26 +19,37 @@ public class Character : LivingEntity
         fix_sol = CStatManager.solid;
         fix_int = CStatManager.intelligent;
 
-        TurnManager.instance.firstTurn += () => myUI.HpUpdate();
-        TurnManager.instance.firstTurn += () => FlucStatReset();
-        TurnManager.instance.firstTurn += () => CalculateStat();
-        TurnManager.instance.turnStart += () => ResetGuardPoint();
-        TurnManager.instance.firstTurn += () => InitMaxCostSetting();
-        TurnManager.instance.turnStart += () => myAbCond.Affected();
-        TurnManager.instance.battleEnd += () => CStatManager.instance.HealthPointUpdate(health);
+        TurnManager.instance.firstTurn += Event_FirstTurn;
+        TurnManager.instance.turnStart += Event_TurnStart;
+        TurnManager.instance.battleEnd += Event_BattleEnd;
 
         onDeath += () => CStatManager.instance.HealthPointUpdate(health); // 게임오버 체크는 여기 들어가서 함.
     }
 
     protected override void ReleseTurnAct()
     {
-        TurnManager.instance.firstTurn -= () => myUI.HpUpdate();
-        TurnManager.instance.firstTurn -= () => FlucStatReset();
-        TurnManager.instance.firstTurn -= () => CalculateStat();
-        TurnManager.instance.turnStart -= () => ResetGuardPoint();
-        TurnManager.instance.firstTurn -= () => InitMaxCostSetting();
-        TurnManager.instance.turnStart -= () => myAbCond.Affected();
-        TurnManager.instance.battleEnd -= () => CStatManager.instance.HealthPointUpdate(health);
+        TurnManager.instance.firstTurn -= Event_FirstTurn;
+        TurnManager.instance.turnStart -= Event_TurnStart;
+        TurnManager.instance.battleEnd -= Event_BattleEnd;
+    }
+
+    protected override void Event_FirstTurn(object _o, EventArgs _e)
+    {
+        base.Event_FirstTurn(_o, _e);
+        myUI.HpUpdate();
+        InitMaxCostSetting();
+    }
+
+    protected override void Event_TurnStart(object _o, EventArgs _e)
+    {
+        base.Event_TurnStart(_o, _e);
+        ResetGuardPoint();
+        myAbCond.Affected();
+    }
+
+    protected override void Event_BattleEnd(object _o, EventArgs _e)
+    {
+        CStatManager.instance.HealthPointUpdate(health);
     }
 
     public override void GetGuardPoint(int GetValue)

@@ -17,11 +17,11 @@ public class TurnManager: MonoBehaviour
     private static TurnManager m_instance;
 
     // On 함수들의 참조 개수에 주의. 참조가 1개가 아니면 문제.
-    public event Action firstTurn;
-    public event Action turnStart;
-    public event Action playerTurnEnd;
-    public event Action turnEnd;
-    public event Action battleEnd;
+    public event EventHandler firstTurn;
+    public event EventHandler turnStart;
+    public event EventHandler playerTurnEnd;
+    public event EventHandler turnEnd;
+    public event EventHandler battleEnd;
 
     private bool isFirstActived = false;
     private float start_time = 0;
@@ -33,17 +33,32 @@ public class TurnManager: MonoBehaviour
             Destroy(gameObject);
         }
 
-        battleEnd += () => isFirstActived = false;
+        GameMaster.instance.battleStageEnd += Event_BattleStageEnd;
         //GameObject.FindGameObjectWithTag("CDeck").GetComponent<DeckManager>().SetTurnManager(this);
 
-        GameMaster.instance.OnBattleStageStart();
-
         start_time = Time.time;
+    }
+
+    private void Event_BattleStageEnd(object sender, EventArgs e)
+    {
+        isFirstActived = false;
+
+        foreach(Delegate d in firstTurn.GetInvocationList())
+            firstTurn -= (EventHandler)d;
+        foreach (Delegate d in turnStart.GetInvocationList())
+            turnStart -= (EventHandler)d;
+        foreach (Delegate d in playerTurnEnd.GetInvocationList())
+            playerTurnEnd -= (EventHandler)d;
+        foreach (Delegate d in turnEnd.GetInvocationList())
+            turnEnd -= (EventHandler)d;
+        foreach (Delegate d in battleEnd.GetInvocationList())
+            battleEnd -= (EventHandler)d;
     }
 
     private void OnDestroy()
     {
         m_instance = null;
+        GameMaster.instance.battleStageEnd -= Event_BattleStageEnd;
     }
 
 
@@ -71,7 +86,7 @@ public class TurnManager: MonoBehaviour
     {
         if (m_instance.firstTurn != null)
         {
-            m_instance.firstTurn();
+            m_instance.firstTurn.Invoke(m_instance, EventArgs.Empty);
         }
         m_instance.isFirstActived = true;
     }
@@ -80,7 +95,7 @@ public class TurnManager: MonoBehaviour
     {
         if (turnStart != null)
         {
-            turnStart();
+            turnStart.Invoke(m_instance, EventArgs.Empty);
         }
     }
 
@@ -88,7 +103,7 @@ public class TurnManager: MonoBehaviour
     {
         if (playerTurnEnd != null)
         {
-            playerTurnEnd();
+            playerTurnEnd.Invoke(m_instance, EventArgs.Empty);
         }
     }
 
@@ -96,7 +111,7 @@ public class TurnManager: MonoBehaviour
     {
         if (turnEnd != null)
         {
-            turnEnd();
+            turnEnd.Invoke(m_instance, EventArgs.Empty);
         }
         OnTurnStart();
     }
@@ -105,7 +120,7 @@ public class TurnManager: MonoBehaviour
     {
         if (battleEnd != null)
         {
-            battleEnd();
+            battleEnd.Invoke(m_instance, EventArgs.Empty);
         }
     }
 
@@ -113,11 +128,4 @@ public class TurnManager: MonoBehaviour
     {
         return isFirstActived;
     }
-
-    //IEnumerator DelayedFirstTurn()
-    //{
-    //    yield return new WaitForSeconds(1.0f);
-    //    OnFirstTurn();
-    //    yield break;
-    //}
 }

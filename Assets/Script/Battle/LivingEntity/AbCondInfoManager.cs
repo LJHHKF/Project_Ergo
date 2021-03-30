@@ -58,4 +58,9 @@ public class AbCondInfoManager : MonoBehaviour
         name = m_instance.abConditions[id].name;
         infoText = m_instance.abConditions[id].infoText;
     }
+
+    public int GetAbCondListLength()
+    {
+        return abConditions.Length;
+    }
 }

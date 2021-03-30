@@ -39,19 +39,33 @@ public class CardPack : MonoBehaviour
 
     private void Awake()
     {
-        if (instance != this)
-            Destroy(gameObject);
-
-        GameMaster.instance.gameOver += () => CardPackClear();
-        GameMaster.instance.gameStop += () => SaveHadCnt();
-    }
-
-    public void CardPackInit()
-    {
+        canList.Capacity = cards.Length + 1;
         cardIDs = new int[cards.Length];
         card_HadCnt = new int[cards.Length];
         tempHadCnt = new int[cards.Length];
 
+        if (instance != this)
+            Destroy(gameObject);
+    }
+
+    private void Start()
+    {
+        GameMaster.instance.gameOver += Event_GameOver;
+        GameMaster.instance.gameStop += Event_GameStop;
+    }
+
+    private void Event_GameOver(object _o, EventArgs e)
+    {
+        CardPackClear();
+    }
+
+    private void Event_GameStop(object _o, EventArgs e)
+    {
+        SaveHadCnt();
+    }
+
+    public void CardPackInit()
+    {
         key.Clear();
         for (int i = 0; i < cards.Length; i++)
         {
@@ -247,5 +261,18 @@ public GameObject GetRandomCard_isntConfirm()
                 key.Replace($"CardID({cardIDs[i - 1]})", $"CardID({cardIDs[i]})");
             PlayerPrefs.SetInt(key.ToString(), card_HadCnt[i]);
         }
+    }
+
+    public int GetCardsLength()
+    {
+        return cards.Length;
+    }
+
+    public int GetHadCardsNum()
+    {
+        int result = 0;
+        for (int i = 0; i < card_HadCnt.Length; i++)
+            result += card_HadCnt[i];
+        return result;
     }
 }

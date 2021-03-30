@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 public class BattleUIManager : MonoBehaviour
 {
@@ -23,20 +24,41 @@ public class BattleUIManager : MonoBehaviour
         forDice.SetActive(false);
         panel_reward.SetActive(false);
         isDiceOn = false;
-        TurnManager.instance.firstTurn += () => SetBtnTurnEActive(true);
-        TurnManager.instance.turnStart += () => SetBtnTurnEActive(true);
-        TurnManager.instance.playerTurnEnd += () => SetBtnTurnEActive(false);
-        TurnManager.instance.battleEnd += () => SetBtnTurnEActive(false);
-        TurnManager.instance.battleEnd += () => panel_reward.SetActive(true);
+        TurnManager.instance.firstTurn += Event_FirstTurn;
+        TurnManager.instance.turnStart += Event_TurnStart;
+        TurnManager.instance.playerTurnEnd += Event_PlayerTurnEnd;
+        TurnManager.instance.battleEnd += Event_BattleEnd;
+
+        GameMaster.instance.OnBattleStageStart();
     }
 
     private void OnDestroy()
     {
-        TurnManager.instance.firstTurn -= () => SetBtnTurnEActive(true);
-        TurnManager.instance.turnStart -= () => SetBtnTurnEActive(true);
-        TurnManager.instance.playerTurnEnd -= () => SetBtnTurnEActive(false);
-        TurnManager.instance.battleEnd -= () => SetBtnTurnEActive(false);
-        TurnManager.instance.battleEnd -= () => panel_reward.SetActive(true);
+        TurnManager.instance.firstTurn -= Event_FirstTurn;
+        TurnManager.instance.turnStart -= Event_TurnStart;
+        TurnManager.instance.playerTurnEnd -= Event_PlayerTurnEnd;
+        TurnManager.instance.battleEnd -= Event_BattleEnd;
+    }
+
+    private void Event_FirstTurn(object _o, EventArgs _e)
+    {
+        btn_TurnEnd.SetActive(true);
+    }
+
+    private void Event_TurnStart(object _o, EventArgs _e)
+    {
+        btn_TurnEnd.SetActive(true);
+    }
+
+    private void Event_PlayerTurnEnd(object _o, EventArgs _e)
+    {
+        btn_TurnEnd.SetActive(false);
+    }
+
+    private void Event_BattleEnd(object _o, EventArgs _e)
+    {
+        btn_TurnEnd.SetActive(false);
+        panel_reward.SetActive(true);
     }
 
     public void OnDiceSysetm()
@@ -52,11 +74,6 @@ public class BattleUIManager : MonoBehaviour
     {
         forDice.SetActive(false);
         StartCoroutine(DelayedFalse(1.0f));
-    }
-
-    public void SetBtnTurnEActive(bool isActive)
-    {
-        btn_TurnEnd.SetActive(isActive);
     }
 
     IEnumerator DelayedFalse(float sec)

@@ -19,8 +19,24 @@ public class InitCardSetting : MonoBehaviour
 
     private void Start()
     {
-        GameMaster.instance.initSaveData_Awake += () => OnInitCardsSetting(GameMaster.instance.GetSaveID());
-        GameMaster.instance.startGame_Awake += () => CardPackReset(GameMaster.instance.GetSaveID());
+        GameMaster.instance.initSaveData_Awake += Event_InitSaveDataAwake;
+        GameMaster.instance.startGame_Awake += Event_StartGameAwake;
+    }
+
+    private void OnDestroy()
+    {
+        GameMaster.instance.initSaveData_Awake -= Event_InitSaveDataAwake;
+        GameMaster.instance.startGame_Awake -= Event_StartGameAwake;
+    }
+
+    private void Event_InitSaveDataAwake(object _o, EventArgs _e)
+    {
+        OnInitCardsSetting(GameMaster.instance.GetSaveID());
+    }
+
+    private void Event_StartGameAwake(object _o, EventArgs _e)
+    {
+        CardPackReset(GameMaster.instance.GetSaveID());
     }
 
     public void OnInitCardsSetting(int saveID)

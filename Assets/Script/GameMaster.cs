@@ -22,14 +22,15 @@ public class GameMaster : MonoBehaviour
     [SerializeField] private float end_DelayTime = 2.0f;
     [SerializeField] private bool isReset = false;
 
-    public event Action startGame_Awake;
-    public event Action startGame_Start;
-    public event Action initSaveData_Awake;
-    public event Action initSaveData_Start;
-    public event Action gameOver;
-    public event Action gameStop;
-    public event Action battleStageStart;
-    public event Action stageEnd;
+    public event EventHandler startGame_Awake;
+    public event EventHandler startGame_Start;
+    public event EventHandler initSaveData_Awake;
+    public event EventHandler initSaveData_Start;
+    public event EventHandler gameOver;
+    public event EventHandler gameStop;
+    public event EventHandler battleStageStart;
+    public event EventHandler stageEnd;
+    public event EventHandler battleStageEnd;
 
     protected void Awake()
     {
@@ -41,12 +42,16 @@ public class GameMaster : MonoBehaviour
 
     private void Start()
     {
-        key = $"SaveID({saveID})";
-
-        gameOver += () => PlayerPrefs.SetInt(key, 0);
+        gameOver += Event_GameOver;
 
         if (isReset)
             PlayerPrefs.DeleteAll();
+    }
+
+    private void Event_GameOver(object _o, EventArgs _e)
+    {
+        key = $"SaveID({saveID})";
+        PlayerPrefs.SetInt(key, 0);
     }
 
     private void OnApplicationQuit()
@@ -56,22 +61,22 @@ public class GameMaster : MonoBehaviour
 
     public int GetSaveID()
     {
-        return m_instance.saveID;
+        return saveID;
     }
 
     public void GameStart(int _saveID)
     {
-        m_instance.saveID = _saveID;
-        if (!m_instance.OnInitSaveData())
+        saveID = _saveID;
+        if (!OnInitSaveData())
         {
             if (startGame_Awake != null)
             {
-                startGame_Awake();
+                startGame_Awake.Invoke(this, EventArgs.Empty);
             }
             //StartCoroutine(DelayedEvent(startGame_Start));
             if(startGame_Start != null)
             {
-                startGame_Start();
+                startGame_Start.Invoke(this, EventArgs.Empty);
             }
         }
     }
@@ -85,12 +90,12 @@ public class GameMaster : MonoBehaviour
             PlayerPrefs.SetInt(key, 1);
             if (initSaveData_Awake != null)
             {
-                initSaveData_Awake();
+                initSaveData_Awake.Invoke(this, EventArgs.Empty);
             }
             //StartCoroutine(DelayedEvent(initSaveData_Start));
             if(initSaveData_Start != null)
             {
-                initSaveData_Start();
+                initSaveData_Start.Invoke(this, EventArgs.Empty);
             }
             return true;
         }
@@ -103,14 +108,14 @@ public class GameMaster : MonoBehaviour
     public void OnGameOver()
     {
         Debug.LogWarning("게임오버가 되었습니다.");
-        m_instance.StartCoroutine(m_instance.DelayedGameOver());
+        m_instance.StartCoroutine(DelayedGameOver());
     }
 
     public void OnGameStop()
     {
         if(gameStop != null)
         {
-            gameStop();
+            gameStop.Invoke(this, EventArgs.Empty);
         }
     }
 
@@ -118,7 +123,7 @@ public class GameMaster : MonoBehaviour
     {
         if(battleStageStart != null)
         {
-            battleStageStart();
+            battleStageStart.Invoke(this, EventArgs.Empty);
         }
     }
 
@@ -126,8 +131,17 @@ public class GameMaster : MonoBehaviour
     {
         if(stageEnd != null)
         {
-            stageEnd();
+            stageEnd.Invoke(this, EventArgs.Empty);
         }
+    }
+
+    public void OnBattleStageEnd()
+    {
+        if(battleStageEnd != null)
+        {
+            battleStageEnd.Invoke(this, EventArgs.Empty);
+        }
+        OnStageEnd();
     }
 
 
@@ -136,7 +150,7 @@ public class GameMaster : MonoBehaviour
         yield return new WaitForSeconds(end_DelayTime);
         if (gameOver != null)
         {
-            gameOver();
+            gameOver.Invoke(this, EventArgs.Empty);
         }
         yield break;
     }

@@ -37,6 +37,13 @@ public class AbCondition : MonoBehaviour
     [SerializeField] private LivingEntity m_target;
     [SerializeField] private UnitUI myUI;
 
+    private void Awake()
+    {
+        int capacity = AbCondInfoManager.instance.GetAbCondListLength() + 1;
+        list_conditions.Capacity = capacity;
+        list_delayed.Capacity = capacity;
+    }
+
     private void AddAbCondition(int id, int piledN)
     {
         bool isBeing = false;

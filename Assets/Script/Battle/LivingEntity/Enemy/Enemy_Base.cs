@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class Enemy_Base : LivingEntity
 {
@@ -44,12 +45,9 @@ public class Enemy_Base : LivingEntity
         //startingHealth = _startingHealth;
         regenGuardPoint = _regenGuardPoint;
         base.Start();
-        TurnManager.instance.playerTurnEnd += () => ResetGuardPoint();
-        TurnManager.instance.playerTurnEnd += () => myAbCond.Affected();
-        TurnManager.instance.turnEnd += () => curSpGauge++;
-
-        TurnManager.instance.firstTurn += () => ActSetting();
-        TurnManager.instance.turnEnd += () => ActSetting();
+        TurnManager.instance.playerTurnEnd += Event_PlayerTurnEnd;
+        TurnManager.instance.turnEnd += Event_TurnEnd;
+        TurnManager.instance.firstTurn += Event_FirstTurn;
 
         onDeath += () => StartCoroutine(DelayedDestroy(1.0f));
     }
@@ -57,12 +55,29 @@ public class Enemy_Base : LivingEntity
     protected override void ReleseTurnAct()
     {
         base.ReleseTurnAct();
-        TurnManager.instance.playerTurnEnd -= () => ResetGuardPoint();
-        TurnManager.instance.playerTurnEnd -= () => myAbCond.Affected();
-        TurnManager.instance.turnEnd -= () => curSpGauge++;
+        TurnManager.instance.playerTurnEnd -= Event_PlayerTurnEnd;
+        TurnManager.instance.turnEnd -= Event_TurnEnd;
+        TurnManager.instance.firstTurn -= Event_FirstTurn;
+    }
 
-        TurnManager.instance.firstTurn -= () => ActSetting();
-        TurnManager.instance.turnEnd -= () => ActSetting();
+    protected override void Event_PlayerTurnEnd(object _o, EventArgs _e)
+    {
+        base.Event_PlayerTurnEnd(_o, _e);
+        ResetGuardPoint();
+        myAbCond.Affected();
+    }
+
+    protected override void Event_TurnEnd(object _o, EventArgs _e)
+    {
+        base.Event_TurnEnd(_o, _e);
+        curSpGauge++;
+        ActSetting();
+    }
+
+    protected override void Event_FirstTurn(object _o, EventArgs _e)
+    {
+        base.Event_FirstTurn(_o, _e);
+        ActSetting();
     }
 
     protected virtual void Update()
@@ -108,7 +123,7 @@ public class Enemy_Base : LivingEntity
             for (int i = 0; i < weights.Length; i++)
                 fullWeight += weights[i];
 
-            rand = Random.Range(0, fullWeight);
+            rand = UnityEngine.Random.Range(0, fullWeight);
 
             for(int i = 0; i < weights.Length; i++)
             {

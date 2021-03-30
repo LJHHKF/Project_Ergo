@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class EnemiesManager : MonoBehaviour
 {
@@ -23,12 +24,15 @@ public class EnemiesManager : MonoBehaviour
 
     [SerializeField] private int[] m_index;
     [SerializeField] private GameObject[] m_array;
+    [SerializeField] private int monsterMaxCnt = 10;
+    private float deleteTime;
 
     private List<GameObject> monsters = new List<GameObject>();
 
     private void Awake()
     {
-        if(instance != this)
+        monsters.Capacity = monsterMaxCnt;
+        if (instance != this)
         {
             Destroy(gameObject);
         }
@@ -47,17 +51,23 @@ public class EnemiesManager : MonoBehaviour
             temp.onDeath += () => RemoveAtMonstersList(mon);
             monsters.Add(mon);
         }
-        TurnManager.instance.playerTurnEnd += () => this.StartCoroutine(StartMonsterActsControl());
+        TurnManager.instance.playerTurnEnd += Event_PlayerTurnEnd;
     }
 
     private void OnDestroy()
     {
-        TurnManager.instance.playerTurnEnd -= () => this.StartCoroutine(StartMonsterActsControl());
+        TurnManager.instance.playerTurnEnd -= Event_PlayerTurnEnd;
         m_instance = null;
+    }
+
+    private void Event_PlayerTurnEnd(object _o, EventArgs _e)
+    {
+        StartCoroutine(StartMonsterActsControl());
     }
 
     void RemoveAtMonstersList(GameObject who)
     {
+        deleteTime = Time.time;
         for(int i = 0; i < monsters.Count; i++)
         {
             if (ReferenceEquals(monsters[i], who))
@@ -65,7 +75,7 @@ public class EnemiesManager : MonoBehaviour
                 monsters.RemoveAt(i);
             }
         }
-        if(monsters.Count == 0)
+        if (monsters.Count == 0)
         {
             TurnManager.instance.OnBattleEnd();
         }
@@ -85,7 +95,7 @@ public class EnemiesManager : MonoBehaviour
             isSuccess = false;
             while(!isSuccess)
             {
-                rands[i] = Random.Range(0, monsters.Count);
+                rands[i] = UnityEngine.Random.Range(0, monsters.Count);
                 bool isS2 = true;
                 for(int j = 0; j < i+1; j++)
                 {
@@ -110,7 +120,7 @@ public class EnemiesManager : MonoBehaviour
     {
         for(int i = 0; i < max; i++)
         {
-            int rand = Random.Range(0, monsters.Count);
+            int rand = UnityEngine.Random.Range(0, monsters.Count);
             o_list.Add(monsters[rand]);
         }
     }
@@ -126,6 +136,11 @@ public class EnemiesManager : MonoBehaviour
 
     IEnumerator StartMonsterActsControl()
     {
+        float curTime = Time.time;
+        if(curTime - deleteTime < 2.0f)
+        {
+            yield return new WaitForSeconds(2.0f);
+        }
         for(int i = 0; i < monsters.Count; i++)
         {
             Enemy_Base temp = monsters[i].GetComponent<Enemy_Base>();

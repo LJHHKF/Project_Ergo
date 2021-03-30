@@ -14,6 +14,7 @@ public class RewardUIManager : MonoBehaviour
 
     private event Action m_onDisable;
     private int selectedNum = -1;
+    private bool isAlreadySelected = false;
 
     private void Awake()
     {
@@ -71,17 +72,19 @@ public class RewardUIManager : MonoBehaviour
     private void BtnSelectClick(int index)
     {
         // 0: card, 1 : sout, 2: item
-        if (isSelected[index] == false)
+        if (!isSelected[index] && !isAlreadySelected)
         {
             selectedNum = index;
             selectEfs[index].SetActive(true);
             isSelected[index] = true;
+            isAlreadySelected = true;
         }
-        else
+        else if(isSelected[index] && isAlreadySelected)
         {
             selectedNum = -1;
             selectEfs[index].SetActive(false);
             isSelected[index] = false;
+            isAlreadySelected = false;
         }
     }
 

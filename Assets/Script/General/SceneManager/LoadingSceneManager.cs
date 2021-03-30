@@ -19,6 +19,7 @@ public class LoadingSceneManager : MonoBehaviour
     public static void LoadScene(string sceneName)
     {
         nextScene = sceneName;
+        InputSystem.instance.SetSceneName(sceneName);
         SceneManager.LoadScene("LoadingScene");
     }
 
