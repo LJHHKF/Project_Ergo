@@ -33,7 +33,6 @@ public class LivingEntity : MonoBehaviour, IDamageable
     [Header("Ref Setting")]
     [SerializeField] protected UnitUI myUI;
     [SerializeField] protected AbCondition myAbCond;
-    protected TurnManager m_turnM;
 
     protected virtual void OnEnable()
     {
@@ -42,10 +41,7 @@ public class LivingEntity : MonoBehaviour, IDamageable
 
     protected virtual void Start()
     {
-        m_turnM = GameObject.FindGameObjectWithTag("TurnManager").GetComponent<TurnManager>();
-        m_turnM.firstTurn += () => HpAndGuardReset();
-        m_turnM.firstTurn += () => FlucStatReset();
-        m_turnM.firstTurn += () => CalculateStat();
+        TurnManager.instance.firstTurn += Event_FirstTurn;
     }
 
     protected virtual void OnDestroy()
@@ -55,10 +51,26 @@ public class LivingEntity : MonoBehaviour, IDamageable
 
     protected virtual void ReleseTurnAct()
     {
-        m_turnM.firstTurn -= () => HpAndGuardReset();
-        m_turnM.firstTurn -= () => FlucStatReset();
-        m_turnM.firstTurn -= () => CalculateStat();
+        TurnManager.instance.firstTurn -= Event_FirstTurn;
     }
+
+    protected virtual void Event_FirstTurn(object _o, EventArgs _e)
+    {
+        HpAndGuardReset();
+        FlucStatReset();
+        CalculateStat();
+    }
+
+    protected virtual void Event_PlayerTurnEnd(object _o, EventArgs _e)
+    { }
+
+    protected virtual void Event_TurnEnd(object _o, EventArgs _e)
+    { }
+    protected virtual void Event_TurnStart(object _o, EventArgs _e)
+    {}
+
+    protected virtual void Event_BattleEnd(object _o, EventArgs _e)
+    {}
 
     public virtual void OnDamage(int damage)
     {

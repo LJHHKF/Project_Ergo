@@ -58,9 +58,6 @@ public class CUF_AbCondition : CUF_Base
 
     public override void ReUse()
     {
-        if (target != null)
-        {
-            this.Use(dv);
-        }
+        this.Use(dv);
     }
 }

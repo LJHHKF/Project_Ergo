@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 public class CostManager : MonoBehaviour
 {
@@ -40,14 +41,12 @@ public class CostManager : MonoBehaviour
     
     [Header("Object registration")]
     [SerializeField] private GameObject[] etherImgs;
-    private TurnManager m_TurnM;
 
     // Start is called before the first frame update
     void Start()
     {
-        m_TurnM = GameObject.FindGameObjectWithTag("TurnManager").GetComponent<TurnManager>();
-        m_TurnM.firstTurn += () => ResetCost();
-        m_TurnM.turnStart += () => ResetCost();
+        TurnManager.instance.firstTurn += Event_TurnStart;
+        TurnManager.instance.turnStart += Event_TurnStart;
 
         for (int i = 0; i < etherImgs.Length; i++)
             etherImgs[i].SetActive(false);
@@ -75,6 +74,22 @@ public class CostManager : MonoBehaviour
                 etherImgs[i].SetActive(true);
             isChanged2 = false;
         }
+    }
+
+    private void OnDestroy()
+    {
+        TurnManager.instance.firstTurn -= Event_TurnStart;
+        TurnManager.instance.turnStart -= Event_TurnStart;
+    }
+
+    //private void Event_FirstTurn(object _o, EventArgs _e)
+    //{
+    //    ResetCost();
+    //}
+
+    private void Event_TurnStart(object _o, EventArgs _e)
+    {
+        ResetCost();
     }
 
     private void ResetCost()

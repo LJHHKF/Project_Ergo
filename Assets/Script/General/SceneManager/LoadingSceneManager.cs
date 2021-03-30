@@ -19,6 +19,7 @@ public class LoadingSceneManager : MonoBehaviour
     public static void LoadScene(string sceneName)
     {
         nextScene = sceneName;
+        InputSystem.instance.SetSceneName(sceneName);
         SceneManager.LoadScene("LoadingScene");
     }
 
@@ -52,7 +53,7 @@ public class LoadingSceneManager : MonoBehaviour
                 progressBar.fillAmount = Mathf.Lerp(progressBar.fillAmount, 1f, timer);
                 if (progressBar.fillAmount == 1.0f)
                 {
-                    LoadManager.ChkAndPlayDelayOn();
+                    LoadManager.instance.ChkAndPlayDelayOn();
                     op.allowSceneActivation = true;
                     yield break;
                 }

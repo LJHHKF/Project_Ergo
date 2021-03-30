@@ -89,22 +89,11 @@ public class Card_Base : MonoBehaviour, ICard
         text_plain.text = sb.ToString();
         text_name.text = cardName;
         ready = false;
-        
-        GameMaster.battleStageStart += () => BattleInitSetting();
+
+        GameMaster.instance.battleStageStart += Event_BattleStageStart;
     }
 
-    protected virtual void OnEnable()
-    {
-        m_Collider.enabled = true;
-        UndoTransparency();
-    }
-
-    protected virtual void Start()
-    {
-
-    }
-
-    public void BattleInitSetting()
+    private void Event_BattleStageStart(object _o, EventArgs _e)
     {
         if (m_cardM == null)
         {
@@ -137,6 +126,22 @@ public class Card_Base : MonoBehaviour, ICard
         {
             m_costM = GameObject.FindGameObjectWithTag("CostManager").GetComponent<CostManager>();
         }
+    }
+
+    protected virtual void OnEnable()
+    {
+        m_Collider.enabled = true;
+        UndoTransparency();
+    }
+
+    protected virtual void Start()
+    {
+
+    }
+
+    public void BattleInitSetting()
+    {
+        
     }
 
 
@@ -221,7 +226,7 @@ public class Card_Base : MonoBehaviour, ICard
 
 
         ChkAndFindBSCardManager();
-        m_cardM.MoveToGrave(gameObject);
+        m_cardM.MoveToGrave_Hand(gameObject);
 
         DoTransparency();
     }

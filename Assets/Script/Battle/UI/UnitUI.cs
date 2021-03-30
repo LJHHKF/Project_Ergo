@@ -66,12 +66,12 @@ public class UnitUI : MonoBehaviour
     {
         int rs = abcondTarget.GetUIInfo(ref sprs_icon, ref nums_piled, ref isDAbs, icons_condition.Length);
 
-        if(rs == 0)
+        if(rs == 0) // 없다
         {
             for (int i = 0; i < icons_condition.Length; i++)
                 icons_condition[i].gameObject.SetActive(false);
         }
-        else if(rs == -1)
+        else if(rs == -1) // 넘친다
         {
             for (int i = 0; i < icons_condition.Length; i++)
             {

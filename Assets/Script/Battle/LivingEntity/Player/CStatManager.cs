@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Text;
+using System;
 
 public class CStatManager : MonoBehaviour
 {
@@ -34,8 +35,6 @@ public class CStatManager : MonoBehaviour
     public static int solid { get; set; }
     public static int intelligent { get; set; }
 
-
-
     private StringBuilder key = new StringBuilder();
 
     private void Awake()
@@ -49,12 +48,20 @@ public class CStatManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        GameMaster.initSaveData_Awake += () => InitStatSetting();
-        GameMaster.startGame_Awake += () => StartStatSetting();
-        GameMaster.stageEnd += () => SaveStats();
+        GameMaster.instance.initSaveData_Awake += Event_InitSaveDataAwake;
+        GameMaster.instance.startGame_Awake += Event_StartGameAwake;
+        GameMaster.instance.stageEnd += Event_StageEnd;
     }
 
-    private void InitStatSetting()
+    private void OnDestroy()
+    {
+        m_instance = null;
+        GameMaster.instance.initSaveData_Awake -= Event_InitSaveDataAwake;
+        GameMaster.instance.startGame_Awake -= Event_StartGameAwake;
+        GameMaster.instance.stageEnd -= Event_StageEnd;
+    }
+
+    private void Event_InitSaveDataAwake(object _o, EventArgs _e)
     {
         endurance = init_Endurance;
         strength = init_Strength;
@@ -66,15 +73,9 @@ public class CStatManager : MonoBehaviour
         SaveStats();
     }
 
-    private int CalcResultFullHealth()
+    private void Event_StartGameAwake(object _o, EventArgs _e)
     {
-        return fullHealth_pure + endurance;
-        //(endurance * 1);
-    }
-
-    private void StartStatSetting()
-    {
-        int saveID = GameMaster.GetSaveID();
+        int saveID = GameMaster.instance.GetSaveID();
         key.Clear();
         key.Append($"SaveID({saveID}).CStat.Endurance");
 
@@ -91,9 +92,20 @@ public class CStatManager : MonoBehaviour
         health = PlayerPrefs.GetInt(key.ToString());
     }
 
+    private void Event_StageEnd(object _o, EventArgs _e)
+    {
+        SaveStats();
+    }
+
+    private int CalcResultFullHealth()
+    {
+        return fullHealth_pure + endurance;
+        //(endurance * 1);
+    }
+
     private void SaveStats()
     {
-        int saveID = GameMaster.GetSaveID();
+        int saveID = GameMaster.instance.GetSaveID();
         key.Clear();
         key.Append($"SaveID({saveID}).CStat.Endurance");
 
@@ -110,12 +122,12 @@ public class CStatManager : MonoBehaviour
         PlayerPrefs.SetInt(key.ToString(), health);
     }
 
-    public static void HealthPointUpdate(int value)
+    public void HealthPointUpdate(int value)
     {
-        CStatManager.health = value;
+        health = value;
         if(health <= 0)
         {
-            GameMaster.OnGameOver();
+            GameMaster.instance.OnGameOver();
         }
     }
 }

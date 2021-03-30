@@ -37,6 +37,13 @@ public class AbCondition : MonoBehaviour
     [SerializeField] private LivingEntity m_target;
     [SerializeField] private UnitUI myUI;
 
+    private void Awake()
+    {
+        int capacity = AbCondInfoManager.instance.GetAbCondListLength() + 1;
+        list_conditions.Capacity = capacity;
+        list_delayed.Capacity = capacity;
+    }
+
     private void AddAbCondition(int id, int piledN)
     {
         bool isBeing = false;
@@ -53,7 +60,7 @@ public class AbCondition : MonoBehaviour
 
         if (!isBeing)
         {
-            AbCond temp = new AbCond(id, AbCondInfoManager.GetAbCond_Img(id), piledN, AbCondInfoManager.GetAbCond_OnePower(id));
+            AbCond temp = new AbCond(id, AbCondInfoManager.instance.GetAbCond_Img(id), piledN, AbCondInfoManager.instance.GetAbCond_OnePower(id));
             //temp.ID = id;
             //temp.Icon = abCondInfoM.GetAbCond_Img(id);
             //temp.piledNum = piledN;
@@ -80,7 +87,7 @@ public class AbCondition : MonoBehaviour
 
         if (!isBeing)
         {
-            AbCond temp = new AbCond(id, AbCondInfoManager.GetAbCond_Img(id), piledN, AbCondInfoManager.GetAbCond_OnePower(id));
+            AbCond temp = new AbCond(id, AbCondInfoManager.instance.GetAbCond_Img(id), piledN, AbCondInfoManager.instance.GetAbCond_OnePower(id));
             //temp.ID = id;
             //temp.Icon = abCondInfoM.GetAbCond_Img(id);
             //temp.piledNum = piledN;
@@ -109,7 +116,7 @@ public class AbCondition : MonoBehaviour
 
         if (!isBeing)
         {
-            AbCond temp = new AbCond(id, AbCondInfoManager.GetAbCond_Img(id), piledN, AbCondInfoManager.GetAbCond_OnePower(id));
+            AbCond temp = new AbCond(id, AbCondInfoManager.instance.GetAbCond_Img(id), piledN, AbCondInfoManager.instance.GetAbCond_OnePower(id));
             //temp.ID = id;
             //temp.Icon = abCondInfoM.GetAbCond_Img(id);
             //temp.piledNum = piledN;

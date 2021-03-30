@@ -19,8 +19,24 @@ public class InitCardSetting : MonoBehaviour
 
     private void Start()
     {
-        GameMaster.initSaveData_Awake += () => OnInitCardsSetting(GameMaster.GetSaveID());
-        GameMaster.startGame_Awake += () => CardPackReset(GameMaster.GetSaveID());
+        GameMaster.instance.initSaveData_Awake += Event_InitSaveDataAwake;
+        GameMaster.instance.startGame_Awake += Event_StartGameAwake;
+    }
+
+    private void OnDestroy()
+    {
+        GameMaster.instance.initSaveData_Awake -= Event_InitSaveDataAwake;
+        GameMaster.instance.startGame_Awake -= Event_StartGameAwake;
+    }
+
+    private void Event_InitSaveDataAwake(object _o, EventArgs _e)
+    {
+        OnInitCardsSetting(GameMaster.instance.GetSaveID());
+    }
+
+    private void Event_StartGameAwake(object _o, EventArgs _e)
+    {
+        CardPackReset(GameMaster.instance.GetSaveID());
     }
 
     public void OnInitCardsSetting(int saveID)
@@ -32,7 +48,7 @@ public class InitCardSetting : MonoBehaviour
             {
                 for (int j = 0; j < c_initInfos[i].cardHadValue; j++)
                 {
-                    CardPack.AddCard_OnlyHadData(c_initInfos[i].cardID);
+                    CardPack.instance.AddCard_OnlyHadData(c_initInfos[i].cardID);
                 }
             }
         }

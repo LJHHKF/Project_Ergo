@@ -38,19 +38,29 @@ public class AbCondInfoManager : MonoBehaviour
         }
     }
 
-    public static Sprite GetAbCond_Img(int id)
+    private void OnDestroy()
+    {
+        m_instance = null;
+    }
+
+    public Sprite GetAbCond_Img(int id)
     {
         return m_instance.abConditions[id].img;
     }
 
-    public static int GetAbCond_OnePower(int id)
+    public int GetAbCond_OnePower(int id)
     {
         return m_instance.abConditions[id].onePower;
     }
 
-    public static void GetAbCond_text(int id, out string name, out string infoText)
+    public void GetAbCond_text(int id, out string name, out string infoText)
     {
         name = m_instance.abConditions[id].name;
         infoText = m_instance.abConditions[id].infoText;
+    }
+
+    public int GetAbCondListLength()
+    {
+        return abConditions.Length;
     }
 }
