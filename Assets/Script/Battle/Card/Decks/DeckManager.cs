@@ -35,6 +35,7 @@ public class DeckManager : MonoBehaviour
         GameMaster.instance.initSaveData_Start += Event_InitSaveDataStart;
         GameMaster.instance.startGame_Start += Event_StartGame;
         GameMaster.instance.battleStageStart += Event_BattleStageStart;
+        GameMaster.instance.battleStageEnd += Event_BattleStageEnd;
     }
 
     private void OnDestroy()
@@ -43,6 +44,7 @@ public class DeckManager : MonoBehaviour
         GameMaster.instance.initSaveData_Start -= Event_InitSaveDataStart;
         GameMaster.instance.startGame_Start -= Event_StartGame;
         GameMaster.instance.battleStageStart -= Event_BattleStageStart;
+        GameMaster.instance.battleStageEnd -= Event_BattleStageEnd;
     }
 
     private void BattleStageInitSetting()
@@ -74,6 +76,11 @@ public class DeckManager : MonoBehaviour
     private void Event_BattleStageStart(object _o, EventArgs _e)
     {
         BattleStageInitSetting();
+    }
+
+    private void Event_BattleStageEnd(object _o, EventArgs _e)
+    {
+        GameMaster.instance.battleStageStart -= Event_BattleStageStart;
     }
 
     public void ResetDeck()
