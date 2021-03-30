@@ -6288,9 +6288,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ba46c14de00dc74e94c6b40e5ee171f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemBtn: {fileID: 99763328}
   itemOnPer_int: 30
   cardUIManager: {fileID: 4249642722458834242}
+  btns:
+  - {fileID: 964423951}
+  - {fileID: 2070812005}
+  - {fileID: 99763328}
   selectEfs:
   - {fileID: 1364241542}
   - {fileID: 1909581497}
