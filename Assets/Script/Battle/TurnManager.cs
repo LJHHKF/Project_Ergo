@@ -43,16 +43,16 @@ public class TurnManager: MonoBehaviour
     {
         isFirstActived = false;
 
-        foreach(Delegate d in firstTurn.GetInvocationList())
-            firstTurn -= (EventHandler)d;
-        foreach (Delegate d in turnStart.GetInvocationList())
-            turnStart -= (EventHandler)d;
-        foreach (Delegate d in playerTurnEnd.GetInvocationList())
-            playerTurnEnd -= (EventHandler)d;
-        foreach (Delegate d in turnEnd.GetInvocationList())
-            turnEnd -= (EventHandler)d;
-        foreach (Delegate d in battleEnd.GetInvocationList())
-            battleEnd -= (EventHandler)d;
+        //foreach(Delegate d in firstTurn.GetInvocationList())
+        //    firstTurn -= (EventHandler)d;
+        //foreach (Delegate d in turnStart.GetInvocationList())
+        //    turnStart -= (EventHandler)d;
+        //foreach (Delegate d in playerTurnEnd.GetInvocationList())
+        //    playerTurnEnd -= (EventHandler)d;
+        //foreach (Delegate d in turnEnd.GetInvocationList())
+        //    turnEnd -= (EventHandler)d;
+        //foreach (Delegate d in battleEnd.GetInvocationList())
+        //    battleEnd -= (EventHandler)d;
     }
 
     private void OnDestroy()

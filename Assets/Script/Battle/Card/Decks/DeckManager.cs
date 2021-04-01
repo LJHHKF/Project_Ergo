@@ -34,8 +34,10 @@ public class DeckManager : MonoBehaviour
     {
         GameMaster.instance.initSaveData_Start += Event_InitSaveDataStart;
         GameMaster.instance.startGame_Start += Event_StartGame;
-        GameMaster.instance.battleStageStart += Event_BattleStageStart;
-        GameMaster.instance.battleStageEnd += Event_BattleStageEnd;
+        TurnManager.instance.firstTurn += Event_FirstTurn;
+        TurnManager.instance.turnStart += Event_TurnStart;
+        //GameMaster.instance.battleStageStart += Event_BattleStageStart;
+        //GameMaster.instance.battleStageEnd += Event_BattleStageEnd;
     }
 
     private void OnDestroy()
@@ -43,15 +45,17 @@ public class DeckManager : MonoBehaviour
         m_instance = null;
         GameMaster.instance.initSaveData_Start -= Event_InitSaveDataStart;
         GameMaster.instance.startGame_Start -= Event_StartGame;
-        GameMaster.instance.battleStageStart -= Event_BattleStageStart;
-        GameMaster.instance.battleStageEnd -= Event_BattleStageEnd;
-    }
-
-    private void BattleStageInitSetting()
-    {
         TurnManager.instance.firstTurn += Event_FirstTurn;
         TurnManager.instance.turnStart += Event_TurnStart;
+        //GameMaster.instance.battleStageStart -= Event_BattleStageStart;
+        //GameMaster.instance.battleStageEnd -= Event_BattleStageEnd;
     }
+
+    //private void BattleStageInitSetting()
+    //{
+    //    TurnManager.instance.firstTurn += Event_FirstTurn;
+    //    TurnManager.instance.turnStart += Event_TurnStart;
+    //}
 
     private void Event_FirstTurn(object _o, EventArgs _e)
     {
@@ -73,15 +77,15 @@ public class DeckManager : MonoBehaviour
         ResetDeck();
     }
 
-    private void Event_BattleStageStart(object _o, EventArgs _e)
-    {
-        BattleStageInitSetting();
-    }
+    //private void Event_BattleStageStart(object _o, EventArgs _e)
+    //{
+    //    BattleStageInitSetting();
+    //}
 
-    private void Event_BattleStageEnd(object _o, EventArgs _e)
-    {
-        GameMaster.instance.battleStageStart -= Event_BattleStageStart;
-    }
+    //private void Event_BattleStageEnd(object _o, EventArgs _e)
+    //{
+    //    GameMaster.instance.battleStageStart -= Event_BattleStageStart;
+    //}
 
     public void ResetDeck()
     {
@@ -121,6 +125,7 @@ public class DeckManager : MonoBehaviour
             Debug.LogError("보유한 카드 수가 설정한 수(" + draw_num + ")보다 적기 때문에 현재 덱의 수(" + CardPack.instance.GetHadCardsNum() + ")만큼으로만 시작 드로우 수를 조정했습니다.");
             draw_num = CardPack.instance.GetHadCardsNum();
         }
+
         for (int i = 0; i < draw_num; i++)
             PullingInDeck();
         ChkAndFindBSCManager();

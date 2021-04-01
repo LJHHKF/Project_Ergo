@@ -19,6 +19,7 @@ public class RewardUIManager : MonoBehaviour
     private void Awake()
     {
         isSelected = new bool[selectEfs.Length];
+        isDiscarded = new bool[selectEfs.Length];
         for (int i = 0; i < isSelected.Length; i++)
             isSelected[i] = false;
     }
@@ -29,7 +30,6 @@ public class RewardUIManager : MonoBehaviour
         Card_Base m_card = CardPack.instance.GetRandomCard_isntConfirm().GetComponent<Card_Base>();
         cardUIManager.SetTargetCard(m_card);
         m_onDisable += () => CardPack.instance.TempHadCntUpDown(m_card.GetCardID(), false);
-        Debug.Log("CardID:" + m_card.GetCardID());
 
         for (int i = 0; i < selectEfs.Length; i++)
         {

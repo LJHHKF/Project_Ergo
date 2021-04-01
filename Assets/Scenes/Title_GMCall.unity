@@ -476,7 +476,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   end_DelayTime: 2
-  isReset: 1
+  isReset: 0
 --- !u!114 &796854120
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -898,7 +898,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 593b1fb3dfcd7994b83cd0e811d9d1c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startCardAmount: 5
+  draw_num: 5
 --- !u!4 &1663111890
 Transform:
   m_ObjectHideFlags: 0
