@@ -24,7 +24,7 @@ public class EnemiesManager : MonoBehaviour
 
     [SerializeField] private int[] m_index;
     [SerializeField] private GameObject[] m_array;
-    [SerializeField] private int monsterMaxCnt = 10;
+    private int monsterMaxCnt = 3;
     private float deleteTime;
 
     private List<GameObject> monsters = new List<GameObject>();
@@ -41,7 +41,16 @@ public class EnemiesManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        for(int i = 0; i < m_index.Length; i++)
+        int rand = UnityEngine.Random.Range(0, 9);
+        int curStageCnt;
+        if (rand < 3)
+            curStageCnt = 1;
+        else if (rand < 8)
+            curStageCnt = 2;
+        else //if (rand < 10)
+            curStageCnt = 3;
+
+        for(int i = 0; i < curStageCnt; i++)
         {
             GameObject mon = Instantiate(m_array[m_index[i]], gameObject.transform);
             mon.transform.position = new Vector2(minX + (x_interval * i), 0);

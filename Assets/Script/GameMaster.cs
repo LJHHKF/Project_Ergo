@@ -85,7 +85,7 @@ public class GameMaster : MonoBehaviour
     {
         key = $"SaveID({saveID})";
 
-        if (PlayerPrefs.GetInt(key) == 0 || PlayerPrefs.HasKey(key) == false)
+        if (PlayerPrefs.HasKey(key) == false || PlayerPrefs.GetInt(key) == 0)
         {
             PlayerPrefs.SetInt(key, 1);
             if (initSaveData_Awake != null)

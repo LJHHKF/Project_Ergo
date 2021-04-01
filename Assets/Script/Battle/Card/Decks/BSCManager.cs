@@ -107,7 +107,7 @@ public class BSCManager : MonoBehaviour
         }
         if(!isSuccess)
         {
-            Debug.LogError("카드를 묘지로 이동하는 데 실패했습니다. 단, 전투 종료 직후라면 문제 없는 결과입니다.");
+            Debug.LogWarning("카드를 묘지로 이동하는 데 실패했습니다. 단, 전투 종료 직후라면 문제 없는 결과입니다.");
             return;
         }
         moved.transform.SetParent(t_grave);

@@ -72,9 +72,14 @@ public class CardPack : MonoBehaviour
             cardIDs[i] = cards[i].card_prefab.GetComponent<ICard>().GetCardID();
 
             if (i == 0)
+            {
                 key.Append($"SaveID({saveID}).CardID({cardIDs[i]}).HadCnt");
+            }
             else
-                key.Replace($"CardID({cardIDs[i - 1]})", $"CardID({cardIDs[i]}");
+            {
+                key.Clear();
+                key.Append($"SaveID({saveID}).CardID({cardIDs[i]}).HadCnt");
+            }
 
             if (PlayerPrefs.HasKey(key.ToString()) == false)
             {
