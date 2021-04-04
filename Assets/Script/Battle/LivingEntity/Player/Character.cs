@@ -12,12 +12,14 @@ public class Character : LivingEntity
     // Start is called before the first frame update
     protected override void Start()
     {
-        fullHealth = CStatManager.fullHealth_pure;
-        health = CStatManager.health;
-        fix_endu = CStatManager.endurance;
-        fix_stren = CStatManager.strength;
-        fix_sol = CStatManager.solid;
-        fix_int = CStatManager.intelligent;
+        fullHealth = CStatManager.instance.fullHealth_pure;
+        health = CStatManager.instance.health;
+        fix_endu = CStatManager.instance.endurance;
+        fix_stren = CStatManager.instance.strength;
+        fix_sol = CStatManager.instance.solid;
+        fix_int = CStatManager.instance.intelligent;
+
+        CStatManager.instance.GetInheritedAbCond(ref myAbCond);
 
         TurnManager.instance.firstTurn += Event_FirstTurn;
         TurnManager.instance.turnStart += Event_TurnStart;
@@ -50,6 +52,7 @@ public class Character : LivingEntity
     protected override void Event_BattleEnd(object _o, EventArgs _e)
     {
         CStatManager.instance.HealthPointUpdate(health);
+        myAbCond.SaveCsCurAbCond();
     }
 
     public override void GetGuardPoint(int GetValue)
@@ -61,22 +64,20 @@ public class Character : LivingEntity
 
     public override void ChangeCost(int changeV)
     {
-        if (m_costM == null)
-            FindCostManager();
-
+        ChkAndFindCostManager();
         m_costM.maxCost += changeV;
     }
 
     private void InitMaxCostSetting()
     {
-        if (m_costM == null)
-            FindCostManager();
+        ChkAndFindCostManager();
         m_costM.maxCost = init_maxCost;
     }
 
-    private void FindCostManager()
+    private void ChkAndFindCostManager()
     {
-        m_costM = GameObject.FindGameObjectWithTag("CostManager").GetComponent<CostManager>();
+        if(m_costM == null)
+            m_costM = GameObject.FindGameObjectWithTag("CostManager").GetComponent<CostManager>();
     }
 
     protected override void HpAndGuardReset()

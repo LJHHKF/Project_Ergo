@@ -924,6 +924,7 @@ GameObject:
   - component: {fileID: 1732156870}
   - component: {fileID: 1732156872}
   - component: {fileID: 1732156871}
+  - component: {fileID: 1732156873}
   m_Layer: 0
   m_Name: InfoManager
   m_TagString: InfoM
@@ -1019,3 +1020,56 @@ MonoBehaviour:
       \uD2B9\uC218 \uACF5\uACA9 \uC2A4\uD0DD(\uBAAC\uC2A4\uD130)\uAC00 \uC911\uCCA9
       \uC218 *1\uB9CC\uD07C \uC99D"
     onePower: 1
+--- !u!114 &1732156873
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1732156869}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c66c6ed6917cb784392da2e5bcbef387, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  evStages:
+  - name: "\uC0C1\uC810 \uC774\uBCA4\uD2B8"
+    sceneName: Ev_Shop
+    weight: 40
+  - name: "\uD734\uC2DD \uC774\uBCA4\uD2B8"
+    sceneName: Ev_Rest
+    weight: 30
+  - name: "\uD568\uC815 \uC774\uBCA4\uD2B8"
+    sceneName: Ev_Trap
+    weight: 20
+  chapter1Weight:
+  - battleWeight: 100
+    evWeight: 0
+  - battleWeight: 70
+    evWeight: 30
+  - battleWeight: 50
+    evWeight: 50
+  - battleWeight: 50
+    evWeight: 50
+  - battleWeight: 100
+    evWeight: 0
+  - battleWeight: 30
+    evWeight: 70
+  - battleWeight: 60
+    evWeight: 40
+  - battleWeight: 50
+    evWeight: 50
+  - battleWeight: 50
+    evWeight: 50
+  - battleWeight: 100
+    evWeight: 0
+  - battleWeight: 30
+    evWeight: 70
+  - battleWeight: 60
+    evWeight: 40
+  - battleWeight: 50
+    evWeight: 50
+  - battleWeight: 50
+    evWeight: 50
+  - battleWeight: 100
+    evWeight: 0

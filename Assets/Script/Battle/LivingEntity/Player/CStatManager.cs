@@ -19,6 +19,12 @@ public class CStatManager : MonoBehaviour
     }
     private static CStatManager m_instance;
 
+    private struct AbCond_Saved
+    {
+        public int id;
+        public int piledNum;
+    }
+
     [Header("Init Stat Setting")]
     [SerializeField] private int init_FullHealth = 100;
     //public int init_StartingHealth = 100;
@@ -26,14 +32,15 @@ public class CStatManager : MonoBehaviour
     [SerializeField] private int init_Strength = 1;
     [SerializeField] private int init_Solid = 1;
     [SerializeField] private int init_Intelligent = 1;
+    private List<AbCond_Saved> abcond_list;
 
-    public static int fullHealth_pure { get; set; }
+    public int fullHealth_pure { get; set; }
     //public int startingHealth { get; set; }
-    public static int health { get; private set; }
-    public static int endurance { get; set; }
-    public static int strength { get; set; }
-    public static int solid { get; set; }
-    public static int intelligent { get; set; }
+    public int health { get; private set; }
+    public int endurance { get; set; }
+    public int strength { get; set; }
+    public int solid { get; set; }
+    public int intelligent { get; set; }
 
     private StringBuilder key = new StringBuilder();
 
@@ -43,6 +50,8 @@ public class CStatManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        abcond_list.Capacity = AbCondInfoManager.instance.GetAbCondListLength();
     }
 
     // Start is called before the first frame update
@@ -127,7 +136,29 @@ public class CStatManager : MonoBehaviour
         health = value;
         if(health <= 0)
         {
-            GameMaster.instance.OnGameOver();
+            GameMaster.instance.OnGameOver(); // 실패 시임.
+            LoadManager.instance.LoadGameOver();
         }
+    }
+
+    public void GetInheritedAbCond(ref AbCondition _target)
+    {
+        if (abcond_list.Count > 0)
+        {
+            for (int i = 0; i < abcond_list.Count; i++)
+            {
+                _target.AddImdiateAbCondition(abcond_list[i].id, abcond_list[i].piledNum);
+            }
+            abcond_list.Clear();
+        }
+        return;
+    }
+
+    public void SetInheriteAbCond(int _id, int _piledNum)
+    {
+        AbCond_Saved temp;
+        temp.id = _id;
+        temp.piledNum = _piledNum;
+        abcond_list.Add(temp);
     }
 }

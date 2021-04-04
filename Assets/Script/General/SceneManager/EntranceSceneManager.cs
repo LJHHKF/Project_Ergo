@@ -4,21 +4,9 @@ using UnityEngine;
 
 public class EntranceSceneManager : MonoBehaviour
 {
-    private LoadManager loadM;
-    // Start is called before the first frame update
-    void Start()
-    {
-        loadM = GameObject.FindGameObjectWithTag("GameMaster").GetComponent<LoadManager>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
+    //버튼에 등록되어 있음.
     public void GameStart(int ID)
     {
-        loadM.GameStart(ID);
+        GameMaster.instance.GameStart(ID);
     }
 }

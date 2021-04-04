@@ -124,13 +124,13 @@ public class CardPack : MonoBehaviour
             return;
         }
 
-        if (card_HadCnt[index] < 3)
+        if (card_HadCnt[index] < max_DuplicateValue)
         {
             card_HadCnt[index] += 1;
         }
         else
         {
-            Debug.Log("소지 카드수가 이미 3을 넘었습니다.");
+            Debug.Log($"소지 카드수가 이미 {max_DuplicateValue}을 넘었습니다.");
         }
     }
 
@@ -169,7 +169,7 @@ public class CardPack : MonoBehaviour
             return;
         }
 
-        if (card_HadCnt[index] < 3)
+        if (card_HadCnt[index] < max_DuplicateValue)
         {
             card_HadCnt[index] += 1;
             GameObject go = Instantiate(cards[index].card_prefab, _p);
@@ -178,7 +178,7 @@ public class CardPack : MonoBehaviour
         }
         else
         {
-            Debug.Log("소지 카드수가 이미 3을 넘었습니다.");
+            Debug.Log($"소지 카드수가 이미 {max_DuplicateValue}을 넘었습니다.");
         }
     }
 
@@ -216,7 +216,7 @@ public GameObject GetRandomCard_isntConfirm()
                 int index = m_instance.SearchIndexFromID(id);
                 GameObject temp;
                 TempHadCntUpDown(id, true);
-                if (m_instance.card_HadCnt[i] + m_instance.tempHadCnt[i] >= 3)
+                if (m_instance.card_HadCnt[i] + m_instance.tempHadCnt[i] >= max_DuplicateValue)
                 {
                     temp = canList[i].card_prefab;
                     canList.RemoveAt(i);
@@ -234,7 +234,7 @@ public GameObject GetRandomCard_isntConfirm()
         canList.Clear();
         for(int i = 0; i < card_HadCnt.Length; i++)
         {
-            if(card_HadCnt[i] + tempHadCnt[i] < 3)
+            if(card_HadCnt[i] + tempHadCnt[i] < max_DuplicateValue)
             {
                 canList.Add(m_instance.cards[i]);
             }
