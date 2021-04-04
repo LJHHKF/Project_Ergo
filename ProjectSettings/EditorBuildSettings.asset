@@ -17,4 +17,16 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Battle.unity
     guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/Scenes/Ev_Trap.unity
+    guid: b899a72e8bd7cdc4a8af7c1a54a63b83
+  - enabled: 1
+    path: Assets/Scenes/Ev_Shop.unity
+    guid: 0b594a69844612a48a3b5eaeb68b3874
+  - enabled: 1
+    path: Assets/Scenes/Ev_Rest.unity
+    guid: 7f6b84f480c5b5044824bbc25577ae0d
+  - enabled: 1
+    path: Assets/Scenes/GameOver.unity
+    guid: ecfd1ea1f1f58f942b82676731b18de9
   m_configObjects: {}

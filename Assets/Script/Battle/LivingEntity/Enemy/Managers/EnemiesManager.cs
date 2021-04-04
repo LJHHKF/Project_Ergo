@@ -28,6 +28,7 @@ public class EnemiesManager : MonoBehaviour
     private float deleteTime;
 
     private List<GameObject> monsters = new List<GameObject>();
+    private string key;
 
     private void Awake()
     {
@@ -41,37 +42,63 @@ public class EnemiesManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        int rand = UnityEngine.Random.Range(0, 9);
-        int curStageCnt;
-        if (rand < 3)
-            curStageCnt = 1;
-        else if (rand < 8)
-            curStageCnt = 2;
-        else //if (rand < 10)
-            curStageCnt = 3;
-
-        for(int i = 0; i < curStageCnt; i++)
+        string key = $"SaveID({GameMaster.instance.GetSaveID()}).LastMonsterNums"; // 몬스터 타입 인덱스도 랜덤이므로, 추후 관련 저장 기능 만들어야 함.
+        if (!PlayerPrefs.HasKey(key) || PlayerPrefs.GetInt(key) == -1)
         {
-            GameObject mon = Instantiate(m_array[m_index[i]], gameObject.transform);
-            mon.transform.position = new Vector2(minX + (x_interval * i), 0);
-            mon.name = "Enemy_" + m_index[i].ToString("00") + "_" + i.ToString("00");
-            Enemy_Base temp = mon.GetComponent<Enemy_Base>();
-            temp.monsterFieldIndex = i;
-            temp.onDeath += () => RemoveAtMonstersList(mon);
-            monsters.Add(mon);
+            int rand = UnityEngine.Random.Range(0, 9);
+            int curStageCnt;
+            if (rand < 3)
+                curStageCnt = 1;
+            else if (rand < 8)
+                curStageCnt = 2;
+            else //if (rand < 10)
+                curStageCnt = 3;
+
+            for (int i = 0; i < curStageCnt; i++)
+            {
+                GameObject mon = Instantiate(m_array[m_index[i]], gameObject.transform);
+                mon.transform.position = new Vector2(minX + (x_interval * i), 0);
+                mon.name = "Enemy_" + m_index[i].ToString("00") + "_" + i.ToString("00");
+                Enemy_Base temp = mon.GetComponent<Enemy_Base>();
+                temp.monsterFieldIndex = i;
+                temp.onDeath += () => RemoveAtMonstersList(mon);
+                monsters.Add(mon);
+            }
+            PlayerPrefs.SetInt(key, monsters.Count);
+        }
+        else
+        {
+            for (int i = 0; i < PlayerPrefs.GetInt(key); i++)
+            {
+                GameObject mon = Instantiate(m_array[m_index[i]], gameObject.transform);
+                mon.transform.position = new Vector2(minX + (x_interval * i), 0);
+                mon.name = "Enemy_" + m_index[i].ToString("00") + "_" + i.ToString("00");
+                Enemy_Base temp = mon.GetComponent<Enemy_Base>();
+                temp.monsterFieldIndex = i;
+                temp.onDeath += () => RemoveAtMonstersList(mon);
+                monsters.Add(mon);
+            }
         }
         TurnManager.instance.playerTurnEnd += Event_PlayerTurnEnd;
+        GameMaster.instance.gameStop += Event_GameStop;
     }
 
     private void OnDestroy()
     {
         TurnManager.instance.playerTurnEnd -= Event_PlayerTurnEnd;
+        GameMaster.instance.gameStop -= Event_GameStop;
         m_instance = null;
     }
 
     private void Event_PlayerTurnEnd(object _o, EventArgs _e)
     {
         StartCoroutine(StartMonsterActsControl());
+    }
+
+    private void Event_GameStop(object _o, EventArgs _e)
+    {
+        string key = $"SaveID({GameMaster.instance.GetSaveID()}).LastMonsterNums";
+        PlayerPrefs.SetInt(key, monsters.Count);
     }
 
     void RemoveAtMonstersList(GameObject who)
@@ -87,6 +114,8 @@ public class EnemiesManager : MonoBehaviour
         if (monsters.Count == 0)
         {
             TurnManager.instance.OnBattleEnd();
+            string key = $"SaveID({GameMaster.instance.GetSaveID()}).LastMonsterNums";
+            PlayerPrefs.SetInt(key, -1);
         }
     }
 

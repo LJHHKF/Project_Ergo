@@ -122,7 +122,7 @@ public class LivingEntity : MonoBehaviour, IDamageable
         
         if(health + restoreValue >= (fullHealth + endurance))
         {
-            restoreValue -= (fullHealth + endurance);
+            restoreValue = (fullHealth + endurance) - health;
             if (restoreValue <= 0)
                 return;
             health += restoreValue;

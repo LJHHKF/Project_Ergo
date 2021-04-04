@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class AbCondition : MonoBehaviour
 {
-    public class AbCond
+    private class AbCond
     {
         public int ID;
         public Sprite Icon;
@@ -23,12 +23,12 @@ public class AbCondition : MonoBehaviour
 
         public void DecreseP(int num)
         {
-            this.piledNum -= num;
+            piledNum -= num;
         }
 
         public void IncreaseP(int num)
         {
-            this.piledNum += num;
+            piledNum += num;
         }
     }
 
@@ -270,5 +270,15 @@ public class AbCondition : MonoBehaviour
         }
         else
             return 0;
+    }
+
+    public void SaveCsCurAbCond()
+    {
+        if (list_conditions.Count > 0)
+            for (int i = 0; i < list_conditions.Count; i++)
+                CStatManager.instance.SetInheriteAbCond(list_conditions[i].ID, list_conditions[i].piledNum);
+        if(list_delayed.Count > 0)
+            for(int i = 0; i < list_delayed.Count; i++)
+                CStatManager.instance.SetInheriteAbCond(list_delayed[i].ID, list_delayed[i].piledNum);
     }
 }
