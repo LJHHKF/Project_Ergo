@@ -45,8 +45,8 @@ public class DeckManager : MonoBehaviour
         m_instance = null;
         GameMaster.instance.initSaveData_Start -= Event_InitSaveDataStart;
         GameMaster.instance.startGame_Start -= Event_StartGame;
-        TurnManager.instance.firstTurn += Event_FirstTurn;
-        TurnManager.instance.turnStart += Event_TurnStart;
+        TurnManager.instance.firstTurn -= Event_FirstTurn;
+        TurnManager.instance.turnStart -= Event_TurnStart;
         //GameMaster.instance.battleStageStart -= Event_BattleStageStart;
         //GameMaster.instance.battleStageEnd -= Event_BattleStageEnd;
     }

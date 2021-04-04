@@ -32,7 +32,7 @@ public class CStatManager : MonoBehaviour
     [SerializeField] private int init_Strength = 1;
     [SerializeField] private int init_Solid = 1;
     [SerializeField] private int init_Intelligent = 1;
-    private List<AbCond_Saved> abcond_list;
+    private List<AbCond_Saved> abcond_list = new List<AbCond_Saved>();
 
     public int fullHealth_pure { get; set; }
     //public int startingHealth { get; set; }
@@ -51,7 +51,7 @@ public class CStatManager : MonoBehaviour
             Destroy(gameObject);
         }
 
-        abcond_list.Capacity = AbCondInfoManager.instance.GetAbCondListLength();
+        
     }
 
     // Start is called before the first frame update
@@ -60,6 +60,8 @@ public class CStatManager : MonoBehaviour
         GameMaster.instance.initSaveData_Awake += Event_InitSaveDataAwake;
         GameMaster.instance.startGame_Awake += Event_StartGameAwake;
         GameMaster.instance.stageEnd += Event_StageEnd;
+
+        abcond_list.Capacity = AbCondInfoManager.instance.GetAbCondListLength() + 1;
     }
 
     private void OnDestroy()

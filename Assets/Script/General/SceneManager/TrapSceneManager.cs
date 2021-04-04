@@ -32,37 +32,41 @@ public class TrapSceneManager : MonoBehaviour
     [SerializeField] private Trap[] traps;
     [SerializeField] private AbCond_Trap[] traps_abcond;
     private int trap_index;
+    private string key;
 
     // Start is called before the first frame update
     void Start()
     {
-        int full_weight = 0;
-        for(int i = 0; i < traps.Length; i++)
+        key = $"SaveID({GameMaster.instance.GetSaveID()}).LastTrap";
+        if (!PlayerPrefs.HasKey(key) || PlayerPrefs.GetInt(key) == -1)
         {
-            full_weight += traps[i].weight;
-        }
-
-        int rand = UnityEngine.Random.Range(0, full_weight-1);
-        full_weight = 0;
-        for (int i = 0; i < traps.Length; i++)
-        {
-            full_weight += traps[i].weight;
-            if(traps[i].weight >= full_weight - traps[i].weight && traps[i].weight < full_weight)
+            int full_weight = 0;
+            for (int i = 0; i < traps.Length; i++)
             {
-                nameField.text = traps[i].name;
-                desciptionField.text = traps[i].description;
-                trap_index = i;
-                break;
+                full_weight += traps[i].weight;
+            }
+
+            int rand = UnityEngine.Random.Range(0, full_weight - 1);
+            full_weight = 0;
+            for (int i = 0; i < traps.Length; i++)
+            {
+                full_weight += traps[i].weight;
+                if (traps[i].weight >= full_weight - traps[i].weight && traps[i].weight < full_weight)
+                {
+                    nameField.text = traps[i].name;
+                    desciptionField.text = traps[i].description;
+                    trap_index = i;
+                    PlayerPrefs.SetInt(key, i);
+                    break;
+                }
             }
         }
-
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        else
+        {
+            trap_index = PlayerPrefs.GetInt(key);
+            nameField.text = traps[trap_index].name;
+            desciptionField.text = traps[trap_index].description;
+        }
     }
 
     public void BtnConfirm()
@@ -79,6 +83,9 @@ public class TrapSceneManager : MonoBehaviour
             }
         }
         CStatManager.instance.HealthPointUpdate(CStatManager.instance.health - traps[trap_index].damage);
+
+        key = $"SaveID({GameMaster.instance.GetSaveID()}).LastTrap";
+        PlayerPrefs.SetInt(key, -1);
 
         if (CStatManager.instance.health > 0)
             LoadManager.instance.LoadNextStage();

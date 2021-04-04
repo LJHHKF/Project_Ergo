@@ -61,6 +61,32 @@ public class LoadManager : MonoBehaviour
                 break;
         }
 
+        StageManager.instance.SetCurrentStageTypeIndex(nextStageTypeIndex);
+        StageManager.instance.SetNextStage();
+    }
+
+    public void LoadFirst(int _stageTypeIndex)
+    {
+        switch(_stageTypeIndex)
+        {
+            case 0:
+                m_instance.isBattleReady = true;
+                StageManager.instance.SetCurrentStageTypeIndex(0);
+                LoadingSceneManager.LoadScene("Battle");
+                break;
+            case 1:
+                LoadingSceneManager.LoadScene("Ev_Shop");
+                StageManager.instance.SetCurrentStageTypeIndex(1);
+                break;
+            case 2:
+                LoadingSceneManager.LoadScene("Ev_Rest");
+                StageManager.instance.SetCurrentStageTypeIndex(2);
+                break;
+            case 3:
+                LoadingSceneManager.LoadScene("Ev_Trap");
+                StageManager.instance.SetCurrentStageTypeIndex(3);
+                break;
+        }
         StageManager.instance.SetNextStage();
     }
 
@@ -76,6 +102,9 @@ public class LoadManager : MonoBehaviour
     public void ReturnLobby()
     {
         ChkAndOnStageEndEvent();
+
+        GameMaster.instance.OnGameStop();
+        LoadingSceneManager.LoadScene("Entrance");
     }
 
     private void ChkAndOnStageEndEvent()
