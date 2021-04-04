@@ -32,12 +32,11 @@ public class TrapSceneManager : MonoBehaviour
     [SerializeField] private Trap[] traps;
     [SerializeField] private AbCond_Trap[] traps_abcond;
     private int trap_index;
-    private string key;
 
     // Start is called before the first frame update
     void Start()
     {
-        key = $"SaveID({GameMaster.instance.GetSaveID()}).LastTrap";
+        string key = $"SaveID({GameMaster.instance.GetSaveID()}).LastTrap";
         if (!PlayerPrefs.HasKey(key) || PlayerPrefs.GetInt(key) == -1)
         {
             int full_weight = 0;
@@ -84,7 +83,7 @@ public class TrapSceneManager : MonoBehaviour
         }
         CStatManager.instance.HealthPointUpdate(CStatManager.instance.health - traps[trap_index].damage);
 
-        key = $"SaveID({GameMaster.instance.GetSaveID()}).LastTrap";
+        string key = $"SaveID({GameMaster.instance.GetSaveID()}).LastTrap";
         PlayerPrefs.SetInt(key, -1);
 
         if (CStatManager.instance.health > 0)
