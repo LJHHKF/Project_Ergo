@@ -16,6 +16,8 @@ MonoBehaviour:
   isOnlyFixed: 0
   isOnlyDiceValue: 0
   isSecondDmgFormula: 1
+  isUseFixRate: 0
+  fixPRate: 0.5
 --- !u!1001 &6033248376237319925
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -138,7 +140,7 @@ PrefabInstance:
     - target: {fileID: 1437206776610783508, guid: 13514753735d515478a2178e20010343,
         type: 3}
       propertyPath: fixP
-      value: 2
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1437206776610783508, guid: 13514753735d515478a2178e20010343,
         type: 3}
@@ -153,13 +155,13 @@ PrefabInstance:
     - target: {fileID: 1437206776610783508, guid: 13514753735d515478a2178e20010343,
         type: 3}
       propertyPath: cardText
-      value: "([\uACE0\uC815\uCE58()] + [\uC8FC\uC0AC\uC704 \uAC12]*1.5)\uB9CC\uD07C\uC758
+      value: "([\uACE0\uC815\uCE58()] + [\uC8FC\uC0AC\uC704 \uAC12]*(\uBCC0\uB3D9\uCE58))\uB9CC\uD07C\uC758
         \uBC29\uC5B4\uB3C4\uB97C \uD68D\uB4DD\uD55C\uB2E4."
       objectReference: {fileID: 0}
     - target: {fileID: 1437206776610783508, guid: 13514753735d515478a2178e20010343,
         type: 3}
       propertyPath: flucPRate
-      value: 1.5
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1437206776610783508, guid: 13514753735d515478a2178e20010343,
         type: 3}
