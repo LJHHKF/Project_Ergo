@@ -28,6 +28,7 @@ public class EnemiesManager : MonoBehaviour
     private float deleteTime;
 
     private List<GameObject> monsters = new List<GameObject>();
+    private int initCnt;
     private string key;
 
     private void Awake()
@@ -79,6 +80,7 @@ public class EnemiesManager : MonoBehaviour
                 monsters.Add(mon);
             }
         }
+        initCnt = monsters.Count;
         TurnManager.instance.playerTurnEnd += Event_PlayerTurnEnd;
         GameMaster.instance.gameStop += Event_GameStop;
     }
@@ -98,7 +100,7 @@ public class EnemiesManager : MonoBehaviour
     private void Event_GameStop(object _o, EventArgs _e)
     {
         string key = $"SaveID({GameMaster.instance.GetSaveID()}).LastMonsterNums";
-        PlayerPrefs.SetInt(key, monsters.Count);
+        PlayerPrefs.SetInt(key, initCnt);
     }
 
     void RemoveAtMonstersList(GameObject who)

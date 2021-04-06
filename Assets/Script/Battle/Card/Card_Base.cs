@@ -6,14 +6,14 @@ using UnityEngine.UI;
 using System;
 using System.Text;
 
+public enum CardType
+{
+    Sword,
+    Magic
+}
+
 public class Card_Base : MonoBehaviour, ICard
 {
-    public enum Type
-    {
-        Sword,
-        Magic
-    }
-
     [Header("Card Base Setting")]
     [SerializeField] protected int cardID = 0;
     [SerializeField] protected string cardName;
@@ -23,14 +23,15 @@ public class Card_Base : MonoBehaviour, ICard
     [SerializeField] protected float flucPRate = 1.0f;
     [SerializeField] protected bool isNonTarget = false;
     [SerializeField] protected bool isFixGuard = false;
-    [SerializeField] protected Type type;
+    [SerializeField] protected CardType type;
     [TextArea]
     [SerializeField] protected string cardText;
 
     [Header("renderPriority Setting")]
     protected int renderPriority = 1;
     [SerializeField]protected float rotP = 2f;
-    [SerializeField] protected float moveP = 1f;
+    [SerializeField] protected float x_moveP = 1f;
+    [SerializeField] protected float y_heightP = 0f;
     protected bool ready = true;
     [SerializeField] protected float handHeightPoint = -2.5f;
     [SerializeField] protected float readyAlpha = 0.5f;
@@ -95,10 +96,7 @@ public class Card_Base : MonoBehaviour, ICard
 
     private void Event_BattleStageStart(object _o, EventArgs _e)
     {
-        if (m_cardM == null)
-        {
-            m_cardM = GameObject.FindGameObjectWithTag("CManager").GetComponent<BSCManager>();
-        }
+        ChkAndFindBSCardManager();
 
         if (m_charM == null)
         {
@@ -108,40 +106,25 @@ public class Card_Base : MonoBehaviour, ICard
             {
                 r_fixP = fixP + Mathf.RoundToInt(m_charM.solid * 0.5f);
             }
-            else if (type == Type.Sword)
+            else if (type == CardType.Sword)
             {
                 r_fixP = fixP + Mathf.RoundToInt(m_charM.strength * 0.5f);
             }
-            else if (type == Type.Magic)
+            else if (type == CardType.Magic)
             {
                 r_fixP = fixP + Mathf.RoundToInt(m_charM.intel * 0.5f);
             }
         }
 
-        if (battleUIManager == null)
-        {
-            battleUIManager = GameObject.FindGameObjectWithTag("UIManager").GetComponent<BattleUIManager>();
-        }
-        if (m_costM == null)
-        {
-            m_costM = GameObject.FindGameObjectWithTag("CostManager").GetComponent<CostManager>();
-        }
+
+        ChkAndFindBattleUIManger();
+        ChkAndFindCostManager();
     }
 
     protected virtual void OnEnable()
     {
         m_Collider.enabled = true;
         UndoTransparency();
-    }
-
-    protected virtual void Start()
-    {
-
-    }
-
-    public void BattleInitSetting()
-    {
-        
     }
 
 
@@ -209,7 +192,6 @@ public class Card_Base : MonoBehaviour, ICard
     {
 
         ChkAndFindCostManager();
-
         if (m_costM.cost < cost) // 보험삼아 넣어둔 곳
         {
             return;
@@ -223,7 +205,8 @@ public class Card_Base : MonoBehaviour, ICard
             sub_use();
         }
 
-
+        ChkAndFindCharcter();
+        m_charM.OnCardUseAnimation(type);
 
         ChkAndFindBSCardManager();
         m_cardM.MoveToGrave_Hand(gameObject);
@@ -292,20 +275,17 @@ public class Card_Base : MonoBehaviour, ICard
 
     public void GetCardUseInfo(out int o_fixP, out float o_flucPRate)
     {
-        if (m_charM == null)
-        {
-            m_charM = GameObject.FindGameObjectWithTag("Player").GetComponent<Character>();
-        }
+        ChkAndFindCharcter();
 
         if (isFixGuard)
         {
             r_fixP = fixP + Mathf.RoundToInt(m_charM.solid * 0.5f);
         }
-        else if (type == Type.Sword)
+        else if (type == CardType.Sword)
         {
             r_fixP = fixP + Mathf.RoundToInt(m_charM.strength * 0.5f);
         }
-        else if (type == Type.Magic)
+        else if (type == CardType.Magic)
         {
             r_fixP = fixP + Mathf.RoundToInt(m_charM.intel * 0.5f);
         }
@@ -343,6 +323,14 @@ public class Card_Base : MonoBehaviour, ICard
         }
     }
 
+    protected void ChkAndFindCharcter()
+    {
+        if(m_charM == null)
+        {
+            m_charM = GameObject.FindGameObjectWithTag("Player").GetComponent<Character>();
+        }
+    }
+
     public void SortingCard(int usedRP, int cntCards)
     {
         int middle = Mathf.CeilToInt(cntCards / 2.0f);
@@ -358,7 +346,7 @@ public class Card_Base : MonoBehaviour, ICard
         textCanvas.sortingOrder = renderPriority;
         m_sprRs[0].sortingOrder = renderPriority;
         m_sprRs[1].sortingOrder = renderPriority - 1;
-        Vector2 tempV = new Vector2(((renderPriority - middle) * moveP), 0);
+        Vector2 tempV = new Vector2(((renderPriority - middle) * x_moveP), y_heightP);
         Quaternion tempQ = Quaternion.Euler(new Vector3(0, 0, (middle - renderPriority) * rotP));
         gameObject.transform.localPosition = tempV;
         gameObject.transform.localRotation = tempQ;
@@ -372,11 +360,11 @@ public class Card_Base : MonoBehaviour, ICard
         {
             r_fixP = fixP + Mathf.RoundToInt(m_charM.solid * 0.5f);
         }
-        else if (type == Type.Sword)
+        else if (type == CardType.Sword)
         {
             r_fixP = fixP + Mathf.RoundToInt(m_charM.strength * 0.5f);
         }
-        else if (type == Type.Magic)
+        else if (type == CardType.Magic)
         {
             r_fixP = fixP + Mathf.RoundToInt(m_charM.intel * 0.5f);
         }

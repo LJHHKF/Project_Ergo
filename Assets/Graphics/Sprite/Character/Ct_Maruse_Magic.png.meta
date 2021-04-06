@@ -1,7 +1,37 @@
 fileFormatVersion: 2
 guid: 7a9655a28078c9f40bba5c55508bbb4f
 TextureImporter:
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      213: -5275094080653436863
+    second: Ct_Maruse_Magic_0
+  - first:
+      213: 7243073685574929741
+    second: Ct_Maruse_Magic_1
+  - first:
+      213: 2214297024740478814
+    second: Ct_Maruse_Magic_2
+  - first:
+      213: 5120824923473752149
+    second: Ct_Maruse_Magic_3
+  - first:
+      213: 5568336835291525004
+    second: Ct_Maruse_Magic_4
+  - first:
+      213: 254698582252389362
+    second: Ct_Maruse_Magic_5
+  - first:
+      213: -1484820576875782326
+    second: Ct_Maruse_Magic_6
+  - first:
+      213: -3502502990075970181
+    second: Ct_Maruse_Magic_7
+  - first:
+      213: -4417993203840011413
+    second: Ct_Maruse_Magic_8
+  - first:
+      213: 87883313873697671
+    second: Ct_Maruse_Magic_9
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -40,7 +70,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -71,9 +101,255 @@ TextureImporter:
     overridden: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: iPhone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: Ct_Maruse_Magic_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1748
+        width: 450
+        height: 300
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 148d2edd1e91bc6b0800000000000000
+      internalID: -5275094080653436863
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ct_Maruse_Magic_1
+      rect:
+        serializedVersion: 2
+        x: 450
+        y: 1748
+        width: 450
+        height: 300
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d4d4cae3421948460800000000000000
+      internalID: 7243073685574929741
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ct_Maruse_Magic_2
+      rect:
+        serializedVersion: 2
+        x: 900
+        y: 1748
+        width: 450
+        height: 300
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e5f4cd28963cabe10800000000000000
+      internalID: 2214297024740478814
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ct_Maruse_Magic_3
+      rect:
+        serializedVersion: 2
+        x: 1350
+        y: 1748
+        width: 450
+        height: 300
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 550be98f223d01740800000000000000
+      internalID: 5120824923473752149
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ct_Maruse_Magic_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1448
+        width: 450
+        height: 300
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c8f264179d4b64d40800000000000000
+      internalID: 5568336835291525004
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ct_Maruse_Magic_5
+      rect:
+        serializedVersion: 2
+        x: 450
+        y: 1448
+        width: 450
+        height: 300
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2f303f7d20fd88300800000000000000
+      internalID: 254698582252389362
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ct_Maruse_Magic_6
+      rect:
+        serializedVersion: 2
+        x: 900
+        y: 1448
+        width: 450
+        height: 300
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a4fd0206d8bd46be0800000000000000
+      internalID: -1484820576875782326
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ct_Maruse_Magic_7
+      rect:
+        serializedVersion: 2
+        x: 1350
+        y: 1448
+        width: 450
+        height: 300
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b7d37cb661c946fc0800000000000000
+      internalID: -3502502990075970181
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ct_Maruse_Magic_8
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1148
+        width: 450
+        height: 300
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b63b601b69220b2c0800000000000000
+      internalID: -4417993203840011413
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ct_Maruse_Magic_9
+      rect:
+        serializedVersion: 2
+        x: 450
+        y: 1148
+        width: 450
+        height: 300
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 78b30298869383100800000000000000
+      internalID: 87883313873697671
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
