@@ -148,9 +148,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 1598
-        width: 475
-        height: 450
+        y: 1588
+        width: 460
+        height: 460
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -168,10 +168,10 @@ TextureImporter:
       name: Ct_Maruse_Sword_1
       rect:
         serializedVersion: 2
-        x: 475
-        y: 1598
-        width: 475
-        height: 450
+        x: 460
+        y: 1588
+        width: 460
+        height: 460
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -189,10 +189,10 @@ TextureImporter:
       name: Ct_Maruse_Sword_2
       rect:
         serializedVersion: 2
-        x: 950
-        y: 1598
-        width: 475
-        height: 450
+        x: 920
+        y: 1588
+        width: 460
+        height: 460
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -210,10 +210,10 @@ TextureImporter:
       name: Ct_Maruse_Sword_3
       rect:
         serializedVersion: 2
-        x: 1425
-        y: 1598
-        width: 475
-        height: 450
+        x: 1380
+        y: 1588
+        width: 460
+        height: 460
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -232,9 +232,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 1148
-        width: 475
-        height: 450
+        y: 1128
+        width: 460
+        height: 460
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -252,10 +252,10 @@ TextureImporter:
       name: Ct_Maruse_Sword_5
       rect:
         serializedVersion: 2
-        x: 475
-        y: 1148
-        width: 475
-        height: 450
+        x: 460
+        y: 1128
+        width: 460
+        height: 460
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -273,10 +273,10 @@ TextureImporter:
       name: Ct_Maruse_Sword_6
       rect:
         serializedVersion: 2
-        x: 950
-        y: 1148
-        width: 475
-        height: 450
+        x: 920
+        y: 1128
+        width: 460
+        height: 460
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -294,10 +294,10 @@ TextureImporter:
       name: Ct_Maruse_Sword_7
       rect:
         serializedVersion: 2
-        x: 1425
-        y: 1148
-        width: 475
-        height: 450
+        x: 1380
+        y: 1128
+        width: 460
+        height: 460
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -316,9 +316,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 698
-        width: 475
-        height: 450
+        y: 668
+        width: 460
+        height: 460
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -336,10 +336,10 @@ TextureImporter:
       name: Ct_Maruse_Sword_9
       rect:
         serializedVersion: 2
-        x: 475
-        y: 698
-        width: 475
-        height: 450
+        x: 460
+        y: 668
+        width: 460
+        height: 460
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -357,10 +357,10 @@ TextureImporter:
       name: Ct_Maruse_Sword_10
       rect:
         serializedVersion: 2
-        x: 950
-        y: 698
-        width: 475
-        height: 450
+        x: 920
+        y: 668
+        width: 460
+        height: 460
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
