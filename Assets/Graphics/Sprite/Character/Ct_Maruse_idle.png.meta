@@ -130,9 +130,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 724
-        width: 450
-        height: 300
+        y: 1588
+        width: 460
+        height: 460
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -150,10 +150,10 @@ TextureImporter:
       name: Ct_Maruse_idle_1
       rect:
         serializedVersion: 2
-        x: 450
-        y: 724
-        width: 450
-        height: 300
+        x: 460
+        y: 1588
+        width: 460
+        height: 460
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -171,10 +171,10 @@ TextureImporter:
       name: Ct_Maruse_idle_2
       rect:
         serializedVersion: 2
-        x: 0
-        y: 424
-        width: 450
-        height: 300
+        x: 920
+        y: 1588
+        width: 460
+        height: 460
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -192,10 +192,10 @@ TextureImporter:
       name: Ct_Maruse_idle_3
       rect:
         serializedVersion: 2
-        x: 450
-        y: 424
-        width: 450
-        height: 300
+        x: 1380
+        y: 1588
+        width: 460
+        height: 460
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -214,9 +214,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 124
-        width: 450
-        height: 300
+        y: 1128
+        width: 460
+        height: 460
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
