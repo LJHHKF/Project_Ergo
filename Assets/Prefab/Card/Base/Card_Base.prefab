@@ -557,7 +557,7 @@ Transform:
   m_GameObject: {fileID: 1302848796289772746}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 1, y: 0, z: 0}
-  m_LocalScale: {x: 0.3, y: 0.25, z: 1}
+  m_LocalScale: {x: 0.35, y: 0.35, z: 1}
   m_Children:
   - {fileID: 1302848795740026345}
   - {fileID: 1302848796080162937}
@@ -661,10 +661,10 @@ MonoBehaviour:
   isFixGuard: 0
   type: 0
   cardText: 
-  rotP: 2
-  x_moveP: 1
-  y_heightP: 1
-  handHeightPoint: -2.5
+  rotP: 5
+  x_moveP: 1.25
+  y_heightP: 0.4
+  handHeightPoint: -1.8
   readyAlpha: 0.5
 --- !u!1 &1302848796633442125
 GameObject:
