@@ -28,10 +28,10 @@ public class Card_Base : MonoBehaviour, ICard
     [SerializeField] protected string cardText;
 
     [Header("renderPriority Setting")]
-    protected int renderPriority = 1;
     [SerializeField]protected float rotP = 2f;
     [SerializeField] protected float x_moveP = 1f;
     [SerializeField] protected float y_heightP = 0f;
+    protected int renderPriority = 1;
     protected bool ready = true;
     [SerializeField] protected float handHeightPoint = -2.5f;
     [SerializeField] protected float readyAlpha = 0.5f;
