@@ -33,6 +33,7 @@ public class LivingEntity : MonoBehaviour, IDamageable
     [Header("Ref Setting")]
     [SerializeField] protected UnitUI myUI;
     [SerializeField] protected AbCondition myAbCond;
+    [SerializeField] protected Animator myAnimator;
 
     protected virtual void OnEnable()
     {

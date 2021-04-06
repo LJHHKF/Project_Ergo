@@ -653,16 +653,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardID: 0
+  cardName: 
   cost: 1
   fixP: 1
   flucPRate: 1
   isNonTarget: 0
   isFixGuard: 0
   type: 0
-  cardImage: {fileID: 0}
   cardText: 
   rotP: 2
-  moveP: 1
+  x_moveP: 1
+  y_heightP: 1
   handHeightPoint: -2.5
   readyAlpha: 0.5
 --- !u!1 &1302848796633442125

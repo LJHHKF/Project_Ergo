@@ -85,4 +85,11 @@ public class Character : LivingEntity
         base.HpAndGuardReset();
         //첫 스테이지 진입때만 base로 하고, 기본적으론 health 값은 스탯 매니저에게서 얻어올 것.
     }
+
+    public void OnCardUseAnimation(CardType _type)
+    {
+        string trigger = $"Attack_{_type}";
+        Debug.LogWarning(trigger);
+        myAnimator.SetTrigger(trigger);
+    }
 }
