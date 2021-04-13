@@ -16,6 +16,8 @@ MonoBehaviour:
   isOnlyFixed: 0
   isOnlyDiceValue: 1
   isSecondDmgFormula: 0
+  isUseFixRate: 0
+  fixPRate: 0.5
 --- !u!114 &2483195720203541455
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -32,6 +34,8 @@ MonoBehaviour:
   isOnlyFixed: 1
   isOnlyDiceValue: 0
   isSecondDmgFormula: 0
+  isUseFixRate: 0
+  fixPRate: 0.5
 --- !u!1001 &8942590911786749640
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -154,7 +158,7 @@ PrefabInstance:
     - target: {fileID: 1437206776610783508, guid: 13514753735d515478a2178e20010343,
         type: 3}
       propertyPath: fixP
-      value: 4
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1437206776610783508, guid: 13514753735d515478a2178e20010343,
         type: 3}
