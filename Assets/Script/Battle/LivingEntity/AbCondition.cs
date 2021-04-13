@@ -9,14 +9,14 @@ public class AbCondition : MonoBehaviour
     private class AbCond
     {
         public int ID;
-        public Sprite Icon;
+        //public Sprite Icon;
         public int piledNum;
         public int onePower;
 
-        public AbCond(int _id, Sprite _icon, int _piledNum, int _onePower)
+        public AbCond(int _id, /*Sprite _icon,*/ int _piledNum, int _onePower)
         {
             ID = _id;
-            Icon = _icon;
+            //Icon = _icon;
             piledNum = _piledNum;
             onePower = _onePower;
         }
@@ -60,7 +60,8 @@ public class AbCondition : MonoBehaviour
 
         if (!isBeing)
         {
-            AbCond temp = new AbCond(id, AbCondInfoManager.instance.GetAbCond_Img(id), piledN, AbCondInfoManager.instance.GetAbCond_OnePower(id));
+            AbCond temp = new AbCond(id, /*AbCondInfoManager.instance.GetAbCond_Img(id),*/ piledN, AbCondInfoManager.instance.GetAbCond_OnePower(id));
+
             //temp.ID = id;
             //temp.Icon = abCondInfoM.GetAbCond_Img(id);
             //temp.piledNum = piledN;
@@ -87,7 +88,7 @@ public class AbCondition : MonoBehaviour
 
         if (!isBeing)
         {
-            AbCond temp = new AbCond(id, AbCondInfoManager.instance.GetAbCond_Img(id), piledN, AbCondInfoManager.instance.GetAbCond_OnePower(id));
+            AbCond temp = new AbCond(id, /*AbCondInfoManager.instance.GetAbCond_Img(id),*/ piledN, AbCondInfoManager.instance.GetAbCond_OnePower(id));
             //temp.ID = id;
             //temp.Icon = abCondInfoM.GetAbCond_Img(id);
             //temp.piledNum = piledN;
@@ -116,7 +117,7 @@ public class AbCondition : MonoBehaviour
 
         if (!isBeing)
         {
-            AbCond temp = new AbCond(id, AbCondInfoManager.instance.GetAbCond_Img(id), piledN, AbCondInfoManager.instance.GetAbCond_OnePower(id));
+            AbCond temp = new AbCond(id, /*AbCondInfoManager.instance.GetAbCond_Img(id),*/ piledN, AbCondInfoManager.instance.GetAbCond_OnePower(id));
             //temp.ID = id;
             //temp.Icon = abCondInfoM.GetAbCond_Img(id);
             //temp.piledNum = piledN;
@@ -202,7 +203,7 @@ public class AbCondition : MonoBehaviour
         list_delayed.Clear();
     }
 
-    public int GetUIInfo(ref Sprite[] icons, ref int[] piledNums, ref bool[] isDAbs, int max)
+    public int GetUIInfo(/*ref Sprite[] icons,*/ ref int[] id, ref int[] piledNums, ref bool[] isDAbs, int max)
     {
         int c_sum = list_conditions.Count + list_delayed.Count;
         int cnt = 0;
@@ -217,7 +218,8 @@ public class AbCondition : MonoBehaviour
                         bool isBreaked = false;
                         while (cnt >= list_conditions.Count)
                         {
-                            icons[cnt] = list_conditions[cnt].Icon;
+                            //icons[cnt] = list_conditions[cnt].Icon;
+                            id[cnt] = list_conditions[cnt].ID;
                             piledNums[cnt] = list_conditions[cnt].piledNum;
                             isDAbs[cnt] = false;
 
@@ -233,7 +235,8 @@ public class AbCondition : MonoBehaviour
                     while (cnt >= c_sum)
                     {
                         int j = cnt - list_conditions.Count;
-                        icons[cnt] = list_delayed[j].Icon;
+                        //icons[cnt] = list_delayed[j].Icon;
+                        id[cnt] = list_conditions[j].ID;
                         piledNums[cnt] = list_delayed[j].piledNum;
                         isDAbs[cnt] = true;
 
@@ -251,7 +254,8 @@ public class AbCondition : MonoBehaviour
                 {
                     while (cnt >= list_conditions.Count)
                     {
-                        icons[cnt] = list_conditions[cnt].Icon;
+                        //icons[cnt] = list_conditions[cnt].Icon;
+                        id[cnt] = list_conditions[cnt].ID;
                         piledNums[cnt] = list_conditions[cnt].piledNum;
                         isDAbs[cnt] = false;
                         cnt++;
@@ -259,7 +263,8 @@ public class AbCondition : MonoBehaviour
                     while (cnt >= c_sum)
                     {
                         int j = cnt - list_conditions.Count;
-                        icons[cnt] = list_delayed[j].Icon;
+                        //icons[cnt] = list_delayed[j].Icon;
+                        id[cnt] = list_conditions[j].ID;
                         piledNums[cnt] = list_delayed[j].piledNum;
                         isDAbs[cnt] = true;
                         cnt++;

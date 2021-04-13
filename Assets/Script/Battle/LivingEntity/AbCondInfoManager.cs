@@ -45,12 +45,12 @@ public class AbCondInfoManager : MonoBehaviour
 
     public Sprite GetAbCond_Img(int id)
     {
-        return m_instance.abConditions[id].img;
+        return abConditions[id].img;
     }
 
     public int GetAbCond_OnePower(int id)
     {
-        return m_instance.abConditions[id].onePower;
+        return abConditions[id].onePower;
     }
 
     public void GetAbCond_text(int id, out string name, out string infoText)
