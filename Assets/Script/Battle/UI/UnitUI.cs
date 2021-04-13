@@ -71,7 +71,9 @@ public class UnitUI : MonoBehaviour
         if(rs == 0) // 없다
         {
             for (int i = 0; i < icons_condition.Length; i++)
+            {
                 icons_condition[i].gameObject.SetActive(false);
+            }
         }
         else if(rs == -1) // 넘친다
         {
@@ -80,7 +82,6 @@ public class UnitUI : MonoBehaviour
                 int i = _i;
                 icons_condition[i].gameObject.SetActive(true);
                 icons_condition[i].sprite = AbCondInfoManager.instance.GetAbCond_Img(ids[i]);
-                    //sprs_icon[i];
                 pileds_txt[_i].text = (nums_piled[i] + 1).ToString();
                 if(isDAbs[i])
                 {
