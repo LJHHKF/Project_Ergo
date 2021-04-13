@@ -73,25 +73,27 @@ public class UnitUI : MonoBehaviour
         }
         else if(rs == -1) // 넘친다
         {
-            for (int i = 0; i < icons_condition.Length; i++)
+            for (int _i = 0; _i < icons_condition.Length; _i++)
             {
+                int i = _i;
                 icons_condition[i].gameObject.SetActive(true);
                 icons_condition[i].sprite = sprs_icon[i];
-                pileds_txt[i].text = (nums_piled[i] + 1).ToString();
+                pileds_txt[_i].text = (nums_piled[i] + 1).ToString();
                 if(isDAbs[i])
                 {
-                    icons_condition[i].color = new Color(255 / 255, 255 / 255, 255 / 255, (255 * delayedAbsAlpha) / 255);
+                    icons_condition[_i].color = new Color(255 / 255, 255 / 255, 255 / 255, (255 * delayedAbsAlpha) / 255);
                 }
                 else
                 {
-                    icons_condition[i].color = new Color(255 / 255, 255 / 255, 255 / 255, 255 / 255);
+                    icons_condition[_i].color = new Color(255 / 255, 255 / 255, 255 / 255, 255 / 255);
                 }
             }
         }
         else
         {
-            for(int i = 0; i < rs; i++)
+            for(int _i = 0; _i < rs; _i++)
             {
+                int i = _i;
                 icons_condition[i].gameObject.SetActive(true);
                 icons_condition[i].sprite = sprs_icon[i];
                 pileds_txt[i].text = (nums_piled[i] + 1).ToString();
