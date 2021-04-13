@@ -16,7 +16,8 @@ public class UnitUI : MonoBehaviour
     [SerializeField] private float delayedAbsAlpha = 0.5f;
     [SerializeField] private Image[] icons_condition;
     private TextMeshProUGUI[] pileds_txt;
-    private Sprite[] sprs_icon;
+    private int[] ids;
+    //private Sprite[] sprs_icon;
     private int[] nums_piled;
     private bool[] isDAbs;
 
@@ -36,7 +37,8 @@ public class UnitUI : MonoBehaviour
             actPower_Text = icon_EnemyActInfo.gameObject.transform.Find("PowerNumText").GetComponent<TextMeshProUGUI>();
         }
 
-        sprs_icon = new Sprite[icons_condition.Length];
+        //sprs_icon = new Sprite[icons_condition.Length];
+        ids = new int[icons_condition.Length];
         nums_piled = new int[icons_condition.Length];
         isDAbs = new bool[icons_condition.Length];
         pileds_txt = new TextMeshProUGUI[icons_condition.Length];
@@ -64,7 +66,7 @@ public class UnitUI : MonoBehaviour
 
     public void AbConditionsUpdate()
     {
-        int rs = abcondTarget.GetUIInfo(ref sprs_icon, ref nums_piled, ref isDAbs, icons_condition.Length);
+        int rs = abcondTarget.GetUIInfo(/*ref sprs_icon,*/ref ids, ref nums_piled, ref isDAbs, icons_condition.Length);
 
         if(rs == 0) // 없다
         {
@@ -77,7 +79,8 @@ public class UnitUI : MonoBehaviour
             {
                 int i = _i;
                 icons_condition[i].gameObject.SetActive(true);
-                icons_condition[i].sprite = sprs_icon[i];
+                icons_condition[i].sprite = AbCondInfoManager.instance.GetAbCond_Img(ids[i]);
+                    //sprs_icon[i];
                 pileds_txt[_i].text = (nums_piled[i] + 1).ToString();
                 if(isDAbs[i])
                 {
@@ -95,7 +98,8 @@ public class UnitUI : MonoBehaviour
             {
                 int i = _i;
                 icons_condition[i].gameObject.SetActive(true);
-                icons_condition[i].sprite = sprs_icon[i];
+                icons_condition[i].sprite = AbCondInfoManager.instance.GetAbCond_Img(ids[i]);
+                    //sprs_icon[i];
                 pileds_txt[i].text = (nums_piled[i] + 1).ToString();
                 if (isDAbs[i])
                 {
