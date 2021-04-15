@@ -925,6 +925,7 @@ GameObject:
   - component: {fileID: 1732156872}
   - component: {fileID: 1732156871}
   - component: {fileID: 1732156873}
+  - component: {fileID: 1732156874}
   m_Layer: 0
   m_Name: InfoManager
   m_TagString: InfoM
@@ -1073,3 +1074,131 @@ MonoBehaviour:
     evWeight: 50
   - battleWeight: 100
     evWeight: 0
+--- !u!114 &1732156874
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1732156869}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: acfc7e27c538a96478b61eda7ec1ec2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  monsterPrefabs:
+  - {fileID: 8235354379927405375, guid: da21197f1f4ad7d4198996faa2fa711a, type: 3}
+  - {fileID: 1316377401732371494, guid: c245a0f1c5dbcb541ac823e4e1f0f263, type: 3}
+  - {fileID: 5408336127037449860, guid: a23e6f4568dd811408ba26242b5febd3, type: 3}
+  - {fileID: 3013602315065010771, guid: 98f15e86b79db5648ab3278013f8d43b, type: 3}
+  - {fileID: 2672451415407953963, guid: 1186e24fcffd1814286e46c25e9c63ba, type: 3}
+  - {fileID: 8440027325771580739, guid: 4c9fabe8b5f4b5244897d7c3a1849f0c, type: 3}
+  - {fileID: 5773982873909156013, guid: 82b6b9756705ec144a8c7fe38137fb84, type: 3}
+  - {fileID: 6578364910450022217, guid: 3d3d847e50fdd46459d831e47e331a75, type: 3}
+  - {fileID: 4930178910651182555, guid: 8dea228d17f85c94ba6cdb512dfc44e8, type: 3}
+  c1_stages:
+  - monsters:
+    - m_index: 0
+      weight: 60
+    - m_index: 3
+      weight: 20
+    - m_index: 6
+      weight: 20
+  - monsters:
+    - m_index: 0
+      weight: 60
+    - m_index: 3
+      weight: 20
+    - m_index: 6
+      weight: 20
+  - monsters:
+    - m_index: 0
+      weight: 60
+    - m_index: 3
+      weight: 20
+    - m_index: 6
+      weight: 20
+  - monsters:
+    - m_index: 0
+      weight: 60
+    - m_index: 3
+      weight: 20
+    - m_index: 6
+      weight: 20
+  - monsters:
+    - m_index: 1
+      weight: 40
+    - m_index: 4
+      weight: 30
+    - m_index: 7
+      weight: 30
+  - monsters:
+    - m_index: 0
+      weight: 20
+    - m_index: 3
+      weight: 60
+    - m_index: 6
+      weight: 20
+  - monsters:
+    - m_index: 0
+      weight: 20
+    - m_index: 3
+      weight: 60
+    - m_index: 6
+      weight: 20
+  - monsters:
+    - m_index: 0
+      weight: 20
+    - m_index: 3
+      weight: 60
+    - m_index: 6
+      weight: 20
+  - monsters:
+    - m_index: 0
+      weight: 20
+    - m_index: 3
+      weight: 60
+    - m_index: 6
+      weight: 20
+  - monsters:
+    - m_index: 1
+      weight: 30
+    - m_index: 4
+      weight: 40
+    - m_index: 7
+      weight: 30
+  - monsters:
+    - m_index: 0
+      weight: 20
+    - m_index: 3
+      weight: 20
+    - m_index: 6
+      weight: 60
+  - monsters:
+    - m_index: 0
+      weight: 20
+    - m_index: 3
+      weight: 20
+    - m_index: 6
+      weight: 60
+  - monsters:
+    - m_index: 0
+      weight: 20
+    - m_index: 3
+      weight: 20
+    - m_index: 6
+      weight: 60
+  - monsters:
+    - m_index: 0
+      weight: 20
+    - m_index: 3
+      weight: 20
+    - m_index: 6
+      weight: 60
+  - monsters:
+    - m_index: 2
+      weight: 30
+    - m_index: 5
+      weight: 30
+    - m_index: 8
+      weight: 40

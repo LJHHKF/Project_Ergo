@@ -22,8 +22,6 @@ public class EnemiesManager : MonoBehaviour
     [SerializeField] private float x_interval = 1.0f;
     [SerializeField] private float time_interval = 1.0f;
 
-    [SerializeField] private int[] m_index;
-    [SerializeField] private GameObject[] m_array;
     private int monsterMaxCnt = 3;
     private float deleteTime;
 
@@ -57,9 +55,9 @@ public class EnemiesManager : MonoBehaviour
 
             for (int i = 0; i < curStageCnt; i++)
             {
-                GameObject mon = Instantiate(m_array[m_index[i]], gameObject.transform);
+                GameObject mon = Instantiate(BattleStageManager.instance.GetMonster(), gameObject.transform);
                 mon.transform.position = new Vector2(minX + (x_interval * i), 0);
-                mon.name = "Enemy_" + m_index[i].ToString("00") + "_" + i.ToString("00");
+                mon.name = "Enemy_" + mon.name + "_" + i.ToString("00");
                 Enemy_Base temp = mon.GetComponent<Enemy_Base>();
                 temp.monsterFieldIndex = i;
                 temp.onDeath += () => RemoveAtMonstersList(mon);
@@ -71,9 +69,9 @@ public class EnemiesManager : MonoBehaviour
         {
             for (int i = 0; i < PlayerPrefs.GetInt(key); i++)
             {
-                GameObject mon = Instantiate(m_array[m_index[i]], gameObject.transform);
+                GameObject mon = Instantiate(BattleStageManager.instance.GetMonster(), gameObject.transform);
                 mon.transform.position = new Vector2(minX + (x_interval * i), 0);
-                mon.name = "Enemy_" + m_index[i].ToString("00") + "_" + i.ToString("00");
+                mon.name = "Enemy_" + mon.name + "_" + i.ToString("00");
                 Enemy_Base temp = mon.GetComponent<Enemy_Base>();
                 temp.monsterFieldIndex = i;
                 temp.onDeath += () => RemoveAtMonstersList(mon);
@@ -173,6 +171,39 @@ public class EnemiesManager : MonoBehaviour
         }
     }
 
+    public bool SearchHadMonster(int _id)
+    {
+        for (int i = 0; i < monsters.Count; i++)
+        {
+            Enemy_Base temp = monsters[i].GetComponent<Enemy_Base>();
+            if (temp.m_ID == _id)
+                return true;
+        }
+        return false;
+    }
+
+    public void SummonMonster(int _id, int _max)
+    {
+        for(int i = 0; i < _max; i++)
+        {
+            GameObject mon = Instantiate(BattleStageManager.instance.GetMonster(_id), gameObject.transform);
+            mon.name = "Enemy_" + mon.name + "_s_" + i.ToString("00");
+            Enemy_Base temp = mon.GetComponent<Enemy_Base>();
+            temp.monsterFieldIndex = i;
+            temp.onDeath += () => RemoveAtMonstersList(mon);
+            monsters.Add(mon);
+        }
+        ReSortMonsters();
+    }
+
+    private void ReSortMonsters()
+    {
+        int j = monsters.Count - 1;
+        for (int i = 0; i < monsters.Count; i--)
+        {
+            monsters[i].transform.position = new Vector2(minX + (x_interval * j--), 0);
+        }
+    }
 
     IEnumerator StartMonsterActsControl()
     {

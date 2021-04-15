@@ -73,8 +73,9 @@ public class LivingEntity : MonoBehaviour, IDamageable
     protected virtual void Event_BattleEnd(object _o, EventArgs _e)
     {}
 
-    public virtual void OnDamage(int damage)
+    public virtual bool OnDamage(int damage)
     {
+        bool isDamaged;
         if (GuardPoint > 0)
         {
             GuardPoint -= damage;
@@ -89,18 +90,23 @@ public class LivingEntity : MonoBehaviour, IDamageable
             }
             myUI.GuardUpdate();
         }
-        
+
         if (GuardPoint <= 0)
         {
             health -= damage;
             myUI.HpUpdate();
+
+            isDamaged = true;
         }
+        else
+            isDamaged = false;
 
 
         if (health <= 0 && !dead)
         {
             Die();
         }
+        return isDamaged;
     }
 
     public virtual void OnPenDamage(int damage)
@@ -112,6 +118,14 @@ public class LivingEntity : MonoBehaviour, IDamageable
         {
             Die();
         }
+    }
+
+    public virtual void OnAddAbCond(int id, int pilledNum, bool isDelayed)
+    {
+        if (isDelayed)
+            myAbCond.AddDelayedCondition(id, pilledNum);
+        else
+            myAbCond.AddImdiateAbCondition(id, pilledNum);
     }
 
     public virtual void RestoreHealth(int restoreValue)
