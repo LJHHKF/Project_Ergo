@@ -5,11 +5,15 @@ using TMPro;
 using UnityEngine.UI;
 using System;
 using System.Text;
+using Card;
 
-public enum CardType
+namespace Card
 {
-    Sword,
-    Magic
+    public enum CardType
+    {
+        Sword,
+        Magic
+    }
 }
 
 public class Card_Base : MonoBehaviour, ICard

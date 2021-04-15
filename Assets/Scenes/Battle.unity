@@ -2223,6 +2223,7 @@ GameObject:
   m_Component:
   - component: {fileID: 622375038}
   - component: {fileID: 622375039}
+  - component: {fileID: 622375040}
   m_Layer: 0
   m_Name: DiceWall_Right
   m_TagString: Untagged
@@ -2257,6 +2258,20 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 7.5, y: 0.1, z: 5}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &622375040
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 622375037}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2bdac06d05de4945b059fd51f3899be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  x_power: -1
+  z_power: 0
 --- !u!1 &626512512
 GameObject:
   m_ObjectHideFlags: 0
@@ -2415,6 +2430,7 @@ GameObject:
   m_Component:
   - component: {fileID: 654390196}
   - component: {fileID: 654390197}
+  - component: {fileID: 654390198}
   m_Layer: 0
   m_Name: DiceWall_Front
   m_TagString: Untagged
@@ -2449,6 +2465,20 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 15, y: 0.1, z: 5}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &654390198
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 654390195}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2bdac06d05de4945b059fd51f3899be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  x_power: 0
+  z_power: -1
 --- !u!1 &735692426
 GameObject:
   m_ObjectHideFlags: 0
@@ -2807,6 +2837,7 @@ GameObject:
   m_Component:
   - component: {fileID: 862807173}
   - component: {fileID: 862807174}
+  - component: {fileID: 862807175}
   m_Layer: 0
   m_Name: DiceWall_Back
   m_TagString: Untagged
@@ -2841,6 +2872,20 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 15, y: 0.1, z: 5}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &862807175
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 862807172}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2bdac06d05de4945b059fd51f3899be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  x_power: 0
+  z_power: 1
 --- !u!1 &927318789
 GameObject:
   m_ObjectHideFlags: 0
@@ -4482,6 +4527,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1414673596}
   - component: {fileID: 1414673597}
+  - component: {fileID: 1414673598}
   m_Layer: 0
   m_Name: DiceWall_Left
   m_TagString: Untagged
@@ -4516,6 +4562,20 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 7.5, y: 0.1, z: 5}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1414673598
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1414673595}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2bdac06d05de4945b059fd51f3899be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  x_power: 1
+  z_power: 0
 --- !u!1 &1490975689
 GameObject:
   m_ObjectHideFlags: 0
