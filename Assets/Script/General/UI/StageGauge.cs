@@ -6,8 +6,8 @@ using UnityEngine.UI;
 public class StageGauge : MonoBehaviour
 {
     [SerializeField] private Image gaugeImg;
-    private int cur;
-    private int max;
+    private float cur;
+    private float max;
     // Start is called before the first frame update
     void Start()
     {
