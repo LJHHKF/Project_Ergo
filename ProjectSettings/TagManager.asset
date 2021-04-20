@@ -18,6 +18,7 @@ TagManager:
   - EnemiesManager
   - InfoM
   - DiceBox_Bottom
+  - GameMaster
   layers:
   - Default
   - TransparentFX
@@ -27,8 +28,8 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
+  - DiceBox
+  - Dice
   - 
   - 
   - 

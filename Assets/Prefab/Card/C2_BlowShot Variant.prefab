@@ -16,6 +16,8 @@ MonoBehaviour:
   isOnlyFixed: 0
   isOnlyDiceValue: 0
   isSecondDmgFormula: 1
+  isUseFixRate: 0
+  fixPRate: 0.5
 --- !u!1001 &7794849621308714436
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -39,10 +41,30 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 21300000, guid: 48012dbee516ef6459c83229bd5f0a00,
         type: 3}
+    - target: {fileID: 1302848795940883632, guid: 13514753735d515478a2178e20010343,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1302848795940883632, guid: 13514753735d515478a2178e20010343,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -4.5
+      objectReference: {fileID: 0}
     - target: {fileID: 1302848795940883633, guid: 13514753735d515478a2178e20010343,
         type: 3}
       propertyPath: m_text
       value: "\uC77C\uACA9\uD544\uC0B4"
+      objectReference: {fileID: 0}
+    - target: {fileID: 1302848795940883633, guid: 13514753735d515478a2178e20010343,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1302848795940883633, guid: 13514753735d515478a2178e20010343,
+        type: 3}
+      propertyPath: m_fontSizeBase
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 1302848796289772746, guid: 13514753735d515478a2178e20010343,
         type: 3}
@@ -108,7 +130,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 6ec3cd28cdd6e5f4eb324862f313d4db,
+      objectReference: {fileID: 21300000, guid: 04bc8b064866cd34d924922abb379eb1,
         type: 3}
     - target: {fileID: 1437206776610783508, guid: 13514753735d515478a2178e20010343,
         type: 3}
@@ -124,6 +146,11 @@ PrefabInstance:
         type: 3}
       propertyPath: cardID
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1437206776610783508, guid: 13514753735d515478a2178e20010343,
+        type: 3}
+      propertyPath: cardName
+      value: "\uC77C\uACA9\uD544\uC0B4"
       objectReference: {fileID: 0}
     - target: {fileID: 1437206776610783508, guid: 13514753735d515478a2178e20010343,
         type: 3}

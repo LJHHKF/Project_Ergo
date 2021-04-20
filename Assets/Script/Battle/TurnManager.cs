@@ -3,47 +3,99 @@ using System.Collections.Generic;
 using System;
 using UnityEngine;
 
-public class TurnManager : MonoBehaviour
+public class TurnManager: MonoBehaviour
 {
+    public static TurnManager instance
+    {
+        get
+        {
+            if (m_instance == null)
+                m_instance = FindObjectOfType<TurnManager>();
+            return m_instance;
+        }
+    }
+    private static TurnManager m_instance;
 
     // On 함수들의 참조 개수에 주의. 참조가 1개가 아니면 문제.
-    public event Action firstTurn;  
-    public event Action turnStart;
-    public event Action playerTurnEnd;
-    //public event Action turnEnd;
-    public event Action battleEnd;
+    public event EventHandler firstTurn;
+    public event EventHandler turnStart;
+    public event EventHandler playerTurnEnd;
+    public event EventHandler turnEnd;
+    public event EventHandler battleEnd;
 
     private bool isFirstActived = false;
-    private DeckManager m_deckM;
+    private float start_time = 0;
 
     private void Awake()
     {
-        battleEnd += () => isFirstActived = true;
-    }
-
-    private void Start()
-    {
-        GameObject.FindGameObjectWithTag("CDeck").GetComponent<DeckManager>().SetTurnManager(this);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if(!isFirstActived)
+        if(instance != this)
         {
-            if (firstTurn != null)
-            {
-                firstTurn();
-            }
-            isFirstActived = true;
+            Destroy(gameObject);
         }
+
+        GameMaster.instance.battleStageEnd += Event_BattleStageEnd;
+        //GameObject.FindGameObjectWithTag("CDeck").GetComponent<DeckManager>().SetTurnManager(this);
+
+        start_time = Time.time;
+    }
+
+    private void Event_BattleStageEnd(object sender, EventArgs e)
+    {
+        isFirstActived = false;
+
+        //foreach(Delegate d in firstTurn.GetInvocationList())
+        //    firstTurn -= (EventHandler)d;
+        //foreach (Delegate d in turnStart.GetInvocationList())
+        //    turnStart -= (EventHandler)d;
+        //foreach (Delegate d in playerTurnEnd.GetInvocationList())
+        //    playerTurnEnd -= (EventHandler)d;
+        //foreach (Delegate d in turnEnd.GetInvocationList())
+        //    turnEnd -= (EventHandler)d;
+        //foreach (Delegate d in battleEnd.GetInvocationList())
+        //    battleEnd -= (EventHandler)d;
+    }
+
+    private void OnDestroy()
+    {
+        m_instance = null;
+        GameMaster.instance.battleStageEnd -= Event_BattleStageEnd;
+    }
+
+
+    //private void Update()
+    //{
+    //    if(!isFirstActived)
+    //    {
+    //        if (Time.time - start_time > 1.0f)
+    //        {
+    //            isFirstActived = true;
+    //            if (firstTurn != null)
+    //            {
+    //                firstTurn();
+    //            }
+    //        }
+    //    }
+    //}
+
+    //public void OnDelayedFirstTurn()
+    //{
+    //    StartCoroutine(DelayedFirstTurn());
+    //}
+
+    public static void OnFirstTurn()
+    {
+        if (m_instance.firstTurn != null)
+        {
+            m_instance.firstTurn.Invoke(m_instance, EventArgs.Empty);
+        }
+        m_instance.isFirstActived = true;
     }
 
     public void OnTurnStart()
     {
         if (turnStart != null)
         {
-            turnStart();
+            turnStart.Invoke(m_instance, EventArgs.Empty);
         }
     }
 
@@ -51,20 +103,24 @@ public class TurnManager : MonoBehaviour
     {
         if (playerTurnEnd != null)
         {
-            playerTurnEnd();
+            playerTurnEnd.Invoke(m_instance, EventArgs.Empty);
         }
     }
 
-    //public void OnTurnEnd()
-    //{
-    //    turnEnd();
-    //}
+    public void OnTurnEnd()
+    {
+        if (turnEnd != null)
+        {
+            turnEnd.Invoke(m_instance, EventArgs.Empty);
+        }
+        OnTurnStart();
+    }
 
     public void OnBattleEnd()
     {
         if (battleEnd != null)
         {
-            battleEnd();
+            battleEnd.Invoke(m_instance, EventArgs.Empty);
         }
     }
 

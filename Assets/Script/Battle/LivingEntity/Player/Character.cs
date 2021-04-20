@@ -1,36 +1,61 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Card;
 
 public class Character : LivingEntity
 {
-    public int init_maxCost = 3;
+    [SerializeField] private int init_maxCost = 3;
     //private int _i_maxCost;
     private CostManager m_costM;
-    private CStatManager m_statM;
 
     // Start is called before the first frame update
     protected override void Start()
     {
-        base.Start();
+        fullHealth = CStatManager.instance.fullHealth_pure;
+        health = CStatManager.instance.health;
+        fix_endu = CStatManager.instance.endurance;
+        fix_stren = CStatManager.instance.strength;
+        fix_sol = CStatManager.instance.solid;
+        fix_int = CStatManager.instance.intelligent;
 
-        m_statM = GameObject.FindGameObjectWithTag("InfoM").GetComponent<CStatManager>();
-        m_statM.GetStats(out fix_endu, out fix_stren, out fix_sol, out fix_int);
+        TurnManager.instance.firstTurn += Event_FirstTurn;
+        TurnManager.instance.turnStart += Event_TurnStart;
+        TurnManager.instance.battleEnd += Event_BattleEnd;
 
-        m_turnM.turnStart += () => ResetGuardPoint();
-        m_turnM.firstTurn += () => InitMaxCostSetting();
-        m_turnM.turnStart += () => myAbCond.Affected();
+        onDeath += () => CStatManager.instance.HealthPointUpdate(health); // 게임오버 체크는 여기 들어가서 함.
     }
 
-    // Update is called once per frame
-    void Update()
+    protected override void ReleseTurnAct()
     {
-        
+        TurnManager.instance.firstTurn -= Event_FirstTurn;
+        TurnManager.instance.turnStart -= Event_TurnStart;
+        TurnManager.instance.battleEnd -= Event_BattleEnd;
     }
 
-    protected void OnDestroy()
+    protected override void Event_FirstTurn(object _o, EventArgs _e)
     {
-        m_statM.SetStats(fix_endu, fix_stren, fix_sol, fix_int);
+        //base.Event_FirstTurn(_o, _e);
+        FlucStatReset();
+        CalculateStat();
+        CStatManager.instance.GetInheritedAbCond(ref myAbCond);
+        myUI.HpUpdate();
+        ResetGuardPoint();
+        InitMaxCostSetting();
+    }
+
+    protected override void Event_TurnStart(object _o, EventArgs _e)
+    {
+        base.Event_TurnStart(_o, _e);
+        ResetGuardPoint();
+        myAbCond.Affected();
+    }
+
+    protected override void Event_BattleEnd(object _o, EventArgs _e)
+    {
+        CStatManager.instance.HealthPointUpdate(health);
+        myAbCond.SaveCsCurAbCond();
     }
 
     public override void GetGuardPoint(int GetValue)
@@ -42,27 +67,38 @@ public class Character : LivingEntity
 
     public override void ChangeCost(int changeV)
     {
-        if (m_costM == null)
-            FindCostManager();
-
+        ChkAndFindCostManager();
         m_costM.maxCost += changeV;
     }
 
     private void InitMaxCostSetting()
     {
-        if (m_costM == null)
-            FindCostManager();
+        ChkAndFindCostManager();
         m_costM.maxCost = init_maxCost;
     }
 
-    private void FindCostManager()
+    private void ChkAndFindCostManager()
     {
-        m_costM = GameObject.FindGameObjectWithTag("CostManager").GetComponent<CostManager>();
+        if(m_costM == null)
+            m_costM = GameObject.FindGameObjectWithTag("CostManager").GetComponent<CostManager>();
     }
 
-    protected override void HpAndGuardReset()
+    public void OnCardUseAnimation(CardType _type)
     {
-        base.HpAndGuardReset();
-        //첫 스테이지 진입때만 base로 하고, 기본적으론 health 값은 스탯 매니저에게서 얻어올 것.
+        string trigger = $"Attack_{_type}";
+        Debug.LogWarning(trigger);
+        myAnimator.SetTrigger(trigger);
+    }
+
+    public override bool OnDamage(int damage)
+    {
+        myAnimator.SetTrigger("Hit");
+        return base.OnDamage(damage);
+    }
+
+    public override void OnPenDamage(int damage)
+    {
+        myAnimator.SetTrigger("Hit");
+        base.OnPenDamage(damage);
     }
 }

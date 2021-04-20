@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DiceManager : MonoBehaviour
 {
-    public bool isGetRes = false;
+    [SerializeField] private bool isGetRes = false;
     private bool isRollEnd = false;
     private Rigidbody m_rb;
     private DiceSystemManager m_DsystemManager;

@@ -61,6 +61,16 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 21300000, guid: f838647a1279bde4c910b57537df045a,
         type: 3}
+    - target: {fileID: 1302848795940883632, guid: 13514753735d515478a2178e20010343,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1302848795940883632, guid: 13514753735d515478a2178e20010343,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -4.5
+      objectReference: {fileID: 0}
     - target: {fileID: 1302848795940883633, guid: 13514753735d515478a2178e20010343,
         type: 3}
       propertyPath: m_text
@@ -69,12 +79,12 @@ PrefabInstance:
     - target: {fileID: 1302848795940883633, guid: 13514753735d515478a2178e20010343,
         type: 3}
       propertyPath: m_fontSize
-      value: 0.8
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 1302848795940883633, guid: 13514753735d515478a2178e20010343,
         type: 3}
       propertyPath: m_fontSizeBase
-      value: 0.8
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 1302848796289772746, guid: 13514753735d515478a2178e20010343,
         type: 3}
@@ -143,6 +153,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1437206776610783508, guid: 13514753735d515478a2178e20010343,
         type: 3}
+      propertyPath: fixP
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1437206776610783508, guid: 13514753735d515478a2178e20010343,
+        type: 3}
       propertyPath: type
       value: 1
       objectReference: {fileID: 0}
@@ -150,6 +165,11 @@ PrefabInstance:
         type: 3}
       propertyPath: cardID
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1437206776610783508, guid: 13514753735d515478a2178e20010343,
+        type: 3}
+      propertyPath: cardName
+      value: "\uB9C8\uB098\uC2A4\uD1B0"
       objectReference: {fileID: 0}
     - target: {fileID: 1437206776610783508, guid: 13514753735d515478a2178e20010343,
         type: 3}

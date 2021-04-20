@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class AlphaButton : MonoBehaviour
 {
-    public float AlphaThreshold = 0.1f;
+    [SerializeField] private float AlphaThreshold = 0.1f;
 
     void Start()
     {

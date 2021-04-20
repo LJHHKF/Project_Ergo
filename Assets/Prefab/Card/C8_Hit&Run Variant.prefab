@@ -16,6 +16,8 @@ MonoBehaviour:
   isOnlyFixed: 0
   isOnlyDiceValue: 1
   isSecondDmgFormula: 0
+  isUseFixRate: 0
+  fixPRate: 0.5
 --- !u!114 &2483195720203541455
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -32,6 +34,8 @@ MonoBehaviour:
   isOnlyFixed: 1
   isOnlyDiceValue: 0
   isSecondDmgFormula: 0
+  isUseFixRate: 0
+  fixPRate: 0.5
 --- !u!1001 &8942590911786749640
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -39,6 +43,32 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1302848795740026345, guid: 13514753735d515478a2178e20010343,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1302848795740026345, guid: 13514753735d515478a2178e20010343,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1302848795740026350, guid: 13514753735d515478a2178e20010343,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 4f8130ac5a230be41a85845f25599c0d,
+        type: 3}
+    - target: {fileID: 1302848795940883632, guid: 13514753735d515478a2178e20010343,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1302848795940883632, guid: 13514753735d515478a2178e20010343,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -4.5
+      objectReference: {fileID: 0}
     - target: {fileID: 1302848795940883633, guid: 13514753735d515478a2178e20010343,
         type: 3}
       propertyPath: m_text
@@ -47,12 +77,12 @@ PrefabInstance:
     - target: {fileID: 1302848795940883633, guid: 13514753735d515478a2178e20010343,
         type: 3}
       propertyPath: m_fontSize
-      value: 0.9
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 1302848795940883633, guid: 13514753735d515478a2178e20010343,
         type: 3}
       propertyPath: m_fontSizeBase
-      value: 0.9
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 1302848796289772746, guid: 13514753735d515478a2178e20010343,
         type: 3}
@@ -118,7 +148,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 6ec3cd28cdd6e5f4eb324862f313d4db,
+      objectReference: {fileID: 21300000, guid: 04bc8b064866cd34d924922abb379eb1,
         type: 3}
     - target: {fileID: 1437206776610783508, guid: 13514753735d515478a2178e20010343,
         type: 3}
@@ -128,12 +158,17 @@ PrefabInstance:
     - target: {fileID: 1437206776610783508, guid: 13514753735d515478a2178e20010343,
         type: 3}
       propertyPath: fixP
-      value: 4
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1437206776610783508, guid: 13514753735d515478a2178e20010343,
         type: 3}
       propertyPath: cardID
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1437206776610783508, guid: 13514753735d515478a2178e20010343,
+        type: 3}
+      propertyPath: cardName
+      value: "\uD788\uD2B8&\uB7F0"
       objectReference: {fileID: 0}
     - target: {fileID: 1437206776610783508, guid: 13514753735d515478a2178e20010343,
         type: 3}

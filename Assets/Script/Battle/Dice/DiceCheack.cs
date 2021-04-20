@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class DiceCheack : MonoBehaviour
 {
-    public DiceManager p_diceManager;
-    public int m_number;
+    [SerializeField] private DiceManager p_diceManager;
+    [SerializeField] private int m_number;
 
     private void Start()
     {

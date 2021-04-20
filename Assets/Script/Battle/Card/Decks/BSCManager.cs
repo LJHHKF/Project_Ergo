@@ -1,39 +1,63 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 //Battle Scean Card Manager
 public class BSCManager : MonoBehaviour
 {
-    public Transform t_hand;
-    public Transform t_grave;
-    public int cntHand { get; private set; }
-    public float rotP = 2f;
-    public float moveP = 1f;
-    public float handHeightPoint = -2.5f;
-    public float readyAlpha = 0.5f; 
+    [SerializeField] private Transform t_hand;
+    [SerializeField] private int hand_max = 10;
+    [SerializeField] private Transform t_grave;
 
-    private DeckManager m_Deck;
+    public int cntHand { get; private set; }
+
     private List<GameObject> list_hand = new List<GameObject>();
     private List<GameObject> list_grave = new List<GameObject>();
 
-    private TurnManager m_turnM;
 
     // Start is called before the first frame update
     void Start()
     {
-        m_Deck = GameObject.FindGameObjectWithTag("CDeck").GetComponent<DeckManager>();
-        m_Deck.SetBSCManager(this);
+        list_hand.Capacity = hand_max + 1;
+        list_grave.Capacity = (CardPack.instance.GetCardsLength() * 3) + 1;
+        DeckManager.instance.SetBSCManager(this);
 
-        m_turnM = GameObject.FindGameObjectWithTag("TurnManager").GetComponent<TurnManager>();
-        m_turnM.battleEnd += () => CleanUpCards();
-        m_turnM.playerTurnEnd += () => UndoHandsTaransparency();
-        m_turnM.playerTurnEnd += () => SortingHand(0);
+        TurnManager.instance.battleEnd += Event_BattleEnd;
+        TurnManager.instance.playerTurnEnd += Event_PlayerTurnEnd;
+
+        GameMaster.instance.gameStop += Event_GameStop;
     }
 
     private void OnDestroy()
     {
+        TurnManager.instance.battleEnd -= Event_BattleEnd;
+        TurnManager.instance.playerTurnEnd -= Event_PlayerTurnEnd;
+
+        GameMaster.instance.gameStop -= Event_GameStop;
+    }
+
+    private void Event_BattleEnd(object _o, EventArgs e)
+    {
         CleanUpCards();
+    }
+
+    private void Event_PlayerTurnEnd(object _o, EventArgs e)
+    {
+        ClearHandToGrave();
+        //UndoHandsTaransparency();
+        //SortingHand(0);
+    }
+
+    private void Event_GameStop(object _o, EventArgs e)
+    {
+        CleanUpCards();
+    }
+
+    public void AddToHand(GameObject added, ref List<GameObject> prev_list, int prev_index)
+    {
+        AddToHand(added);
+        prev_list.RemoveAt(prev_index);
     }
 
     public void AddToHand(GameObject added)
@@ -41,16 +65,23 @@ public class BSCManager : MonoBehaviour
         ICard temp = added.GetComponent<ICard>();
         if (temp != null)
         {
-            added.transform.SetParent(t_hand);
-            list_hand.Add(added);
-            cntHand = list_hand.Count;
-            temp.SetRenderPriority(cntHand);
-
-            added.SetActive(true);
-
-            if(m_turnM.GetIsFirstActivated())
+            if (list_hand.Count < hand_max)
             {
-                SortingHand(0);
+                added.transform.SetParent(t_hand);
+                list_hand.Add(added);
+                cntHand = list_hand.Count;
+                temp.SetRenderPriority(cntHand);
+
+                added.SetActive(true);
+
+                if (TurnManager.instance.GetIsFirstActivated())
+                {
+                    SortingHand(0);
+                }
+            }
+            else
+            {
+                MoveToGrave_Direct(added);
             }
         }
     }
@@ -63,7 +94,7 @@ public class BSCManager : MonoBehaviour
         }
     }
 
-    public void MoveToGrave(GameObject moved)
+    public void MoveToGrave_Hand(GameObject moved)
     {
         bool isSuccess = false;
         for(int i = 0; i < list_hand.Count; i++)
@@ -76,40 +107,51 @@ public class BSCManager : MonoBehaviour
         }
         if(!isSuccess)
         {
-            Debug.LogError("카드를 묘지로 이동하는 데 실패했습니다.");
+            Debug.LogWarning("카드를 묘지로 이동하는 데 실패했습니다. 단, 전투 종료 직후라면 문제 없는 결과입니다.");
+            return;
         }
         moved.transform.SetParent(t_grave);
         list_grave.Add(moved);
         SortingHand(moved.GetComponent<ICard>().GetRenderPriority());
-        DelayedUnActive(moved, 1.0f);
+        moved.GetComponent<ICard>().DoTransparency();
+    }
+
+    public void MoveToGrave_Direct(GameObject moved)
+    {
+        moved.transform.SetParent(t_grave);
+        list_grave.Add(moved);
+        moved.GetComponent<ICard>().DoTransparency();
+    }
+
+    public void MoveToGrave_Dircet(GameObject moved, ref List<GameObject> prev_list, int prev_index)
+    {
+        MoveToGrave_Direct(moved);
+        prev_list.RemoveAt(prev_index);
     }
 
     public void PullingInGrave() //Pulling at card in graveyard
     {
-        for(int i = 0; i < list_grave.Count; i++)
-        {
-            m_Deck.MoveToDeck(list_grave[i]);
-        }
-    }
-
-    public void SetCardValues(out float rotationPower, out float movePower, out float handHeight, out float alpha)
-    {
-        rotationPower = rotP;
-        movePower = moveP;
-        handHeight = handHeightPoint;
-        alpha = readyAlpha;
+        DeckManager.instance.MoveToDeck_All(ref list_grave);
     }
 
     private void CleanUpCards()
     {
+        DeckManager.instance.MoveToDeck_All(ref list_hand);
+        DeckManager.instance.MoveToDeck_All(ref list_grave);
+    }
+
+    private void ClearHandToGrave()
+    {
+        GameObject moved;
         for (int i = 0; i < list_hand.Count; i++)
         {
-            m_Deck.MoveToDeck(list_hand[i]);
+            moved = list_hand[i];
+
+            moved.transform.SetParent(t_grave);
+            list_grave.Add(moved);
+            moved.GetComponent<ICard>().DoTransparency();
         }
-        for (int i = 0; i < list_grave.Count; i++)
-        {
-            m_Deck.MoveToDeck(list_grave[i]);
-        }
+        list_hand.Clear();
     }
 
     public void DoHandsTransparency()
@@ -128,10 +170,10 @@ public class BSCManager : MonoBehaviour
         }
     }
 
-    IEnumerator DelayedUnActive(GameObject target, float sec)
-    {
-        yield return new WaitForSeconds(sec);
-        target.SetActive(false);
-        yield break;
-    }
+    //IEnumerator DelayedUnActive(GameObject target, float sec)
+    //{
+    //    yield return new WaitForSeconds(sec);
+    //    target.SetActive(false);
+    //    yield break;
+    //}
 }

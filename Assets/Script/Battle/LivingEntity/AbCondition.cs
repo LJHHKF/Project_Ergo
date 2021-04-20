@@ -6,50 +6,51 @@ using UnityEngine;
 
 public class AbCondition : MonoBehaviour
 {
-    public class AbCond
+    private class AbCond
     {
         public int ID;
         public Sprite Icon;
         public int piledNum;
         public int onePower;
 
-        public AbCond(int _id, Sprite _icon, int _piledNum, int _onePower)
+        public AbCond(int _id, /*Sprite _icon,*/ int _piledNum, int _onePower)
         {
             ID = _id;
-            Icon = _icon;
+            //Icon = _icon;
             piledNum = _piledNum;
             onePower = _onePower;
         }
 
         public void DecreseP(int num)
         {
-            this.piledNum -= num;
+            piledNum -= num;
         }
 
         public void IncreaseP(int num)
         {
-            this.piledNum += num;
+            piledNum += num;
         }
     }
 
     private List<AbCond> list_conditions = new List<AbCond>();
-    private AbCondInfoManager abCondInfoM;
-    public LivingEntity m_target;
-    public UnitUI myUI;
-    
-    // Start is called before the first frame update
-    void Start()
+    private List<AbCond> list_delayed = new List<AbCond>();
+    [SerializeField] private LivingEntity m_target;
+    [SerializeField] private UnitUI myUI;
+
+    private void Awake()
     {
-        abCondInfoM = GameObject.FindGameObjectWithTag("InfoM").GetComponent<AbCondInfoManager>();
+        int capacity = AbCondInfoManager.instance.GetAbCondListLength() + 1;
+        list_conditions.Capacity = capacity;
+        list_delayed.Capacity = capacity;
     }
 
-    public void AddAbCondition(int id, int piledN)
+    private void AddAbCondition(int id, int piledN)
     {
         bool isBeing = false;
 
-        for(int i = 0; i < list_conditions.Count; i++)
+        for (int i = 0; i < list_conditions.Count; i++)
         {
-            if(list_conditions[i].ID == id)
+            if (list_conditions[i].ID == id)
             {
                 isBeing = true;
                 list_conditions[i].IncreaseP(piledN);
@@ -59,12 +60,12 @@ public class AbCondition : MonoBehaviour
 
         if (!isBeing)
         {
-            AbCond temp = new AbCond(id, abCondInfoM.GetAbCond_Img(id), piledN, abCondInfoM.GetAbCond_OnePower(id));
+            AbCond temp = new AbCond(id, /*AbCondInfoManager.instance.GetAbCond_Img(id),*/ piledN, AbCondInfoManager.instance.GetAbCond_OnePower(id));
+
             //temp.ID = id;
             //temp.Icon = abCondInfoM.GetAbCond_Img(id);
             //temp.piledNum = piledN;
             //temp.onePower = abCondInfoM.GetAbCond_OnePower(id);
-
             list_conditions.Add(temp);
         }
     }
@@ -86,11 +87,12 @@ public class AbCondition : MonoBehaviour
 
         if (!isBeing)
         {
-            AbCond temp = new AbCond(id, abCondInfoM.GetAbCond_Img(id), piledN, abCondInfoM.GetAbCond_OnePower(id));
+            AbCond temp = new AbCond(id, /*AbCondInfoManager.instance.GetAbCond_Img(id),*/ piledN, AbCondInfoManager.instance.GetAbCond_OnePower(id));
             //temp.ID = id;
             //temp.Icon = abCondInfoM.GetAbCond_Img(id);
             //temp.piledNum = piledN;
             //temp.onePower = abCondInfoM.GetAbCond_OnePower(id);
+
 
             list_conditions.Add(temp);
             Affected(list_conditions.Count - 1);
@@ -99,8 +101,48 @@ public class AbCondition : MonoBehaviour
         myUI.AbConditionsUpdate();
     }
 
+    public void AddDelayedCondition(int id, int piledN)
+    {
+        bool isBeing = false;
+
+        for (int i = 0; i < list_delayed.Count; i++)
+        {
+            if (list_delayed[i].ID == id)
+            {
+                isBeing = true;
+                list_delayed[i].IncreaseP(piledN);
+                break;
+            }
+        }
+
+        if (!isBeing)
+        {
+            AbCond temp = new AbCond(id, /*AbCondInfoManager.instance.GetAbCond_Img(id),*/ piledN, AbCondInfoManager.instance.GetAbCond_OnePower(id));
+            //temp.ID = id;
+            //temp.Icon = abCondInfoM.GetAbCond_Img(id);
+            //temp.piledNum = piledN;
+            //temp.onePower = abCondInfoM.GetAbCond_OnePower(id);
+
+            list_delayed.Add(temp);
+        }
+
+        myUI.AbConditionsUpdate();
+    }
+
+    public void Affected_FirstTurn()
+    {
+        if (list_delayed.Count > 0)
+            D_Affected();
+        for(int i = 0; i < list_conditions.Count; i++)
+        {
+            
+        }
+    }
+
     public void Affected() //자신에 걸린 모든 효과 발동
     {
+        if (list_delayed.Count > 0)
+            D_Affected();
         for(int i = 0; i < list_conditions.Count; i++)
         {
             if (list_conditions[i].piledNum <= 0)
@@ -109,10 +151,7 @@ public class AbCondition : MonoBehaviour
                 list_conditions.RemoveAt(i);
                 continue;
             }
-        }
-        for (int i = 0; i < list_conditions.Count; i++)
-        {
-            Affected(i);
+            Affected(i); // 순서 바꿔서 코드 줄이려 하지 말 것. 이유 있음.
         }
         myUI.AbConditionsUpdate();
     }
@@ -165,30 +204,97 @@ public class AbCondition : MonoBehaviour
         }
     }
 
-    public int GetUIInfo(ref Sprite[] icons, ref int[] piledNums, int max)
+    private void D_Affected()
     {
-        if (list_conditions.Count > 0)
+        for (int i = 0; i < list_delayed.Count; i++)
         {
-            if (max < list_conditions.Count)
+            Debug.Log("상태이상 축적 이동, ID(" + list_delayed[i].ID + "), 중첩수(" + list_delayed[i].piledNum + ")");
+            AddAbCondition(list_delayed[i].ID, list_delayed[i].piledNum);
+        }
+        list_delayed.Clear();
+    }
+
+    public int GetUIInfo(/*ref Sprite[] icons,*/ ref int[] id, ref int[] piledNums, ref bool[] isDAbs, int max)
+    {
+        int c_sum = list_conditions.Count + list_delayed.Count;
+        int cnt = 0;
+        if (c_sum > 0)
+        {
+            if (max < c_sum)
             {
-                for (int i = 0; i < max; i++)
+                while (cnt == max)
                 {
-                    icons[i] = list_conditions[i].Icon;
-                    piledNums[i] = list_conditions[i].piledNum;
+                    if (list_conditions.Count != 0)
+                    {
+                        bool isBreaked = false;
+                        while (cnt >= list_conditions.Count)
+                        {
+                            //icons[cnt] = list_conditions[cnt].Icon;
+                            id[cnt] = list_conditions[cnt].ID;
+                            piledNums[cnt] = list_conditions[cnt].piledNum;
+                            isDAbs[cnt] = false;
+
+                            if (cnt++ == max)
+                            {
+                                isBreaked = true;
+                                break;
+                            }
+                        }
+                        if (isBreaked)
+                            break;
+                    }
+                    while (cnt < c_sum)
+                    {
+                        int j = cnt - list_conditions.Count;
+                        //icons[cnt] = list_delayed[j].Icon;
+                        id[cnt] = list_delayed[j].ID;
+                        piledNums[cnt] = list_delayed[j].piledNum;
+                        isDAbs[cnt] = true;
+
+                        if (++cnt == max)
+                        {
+                            break;
+                        }
+                    }
                 }
                 return -1;
             }
             else
             {
-                for (int i = 0; i < list_conditions.Count; i++)
+                if (list_conditions.Count > 0)
                 {
-                    icons[i] = list_conditions[i].Icon;
-                    piledNums[i] = list_conditions[i].piledNum;
+                    while (cnt < list_conditions.Count)
+                    {
+                        //icons[cnt] = list_conditions[cnt].Icon;
+                        id[cnt] = list_conditions[cnt].ID;
+                        piledNums[cnt] = list_conditions[cnt].piledNum;
+                        isDAbs[cnt] = false;
+                        cnt++;
+                    }
                 }
-                return list_conditions.Count;
+                while (cnt < c_sum)
+                {
+                    int j = cnt - list_conditions.Count;
+                    //icons[cnt] = list_delayed[j].Icon;
+                    id[cnt] = list_delayed[j].ID;
+                    piledNums[cnt] = list_delayed[j].piledNum;
+                    isDAbs[cnt] = true;
+                    cnt++;
+                }
+                return c_sum;
             }
         }
         else
             return 0;
+    }
+
+    public void SaveCsCurAbCond()
+    {
+        if (list_conditions.Count > 0)
+            for (int i = 0; i < list_conditions.Count; i++)
+                CStatManager.instance.SetInheriteAbCond(list_conditions[i].ID, list_conditions[i].piledNum);
+        if(list_delayed.Count > 0)
+            for(int i = 0; i < list_delayed.Count; i++)
+                CStatManager.instance.SetInheriteAbCond(list_delayed[i].ID, list_delayed[i].piledNum);
     }
 }

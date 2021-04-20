@@ -13,9 +13,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myCard: {fileID: 4148327381170989699}
-  isOnlyFixed: 1
-  isOnlyDiceValue: 0
+  isOnlyFixed: 0
+  isOnlyDiceValue: 1
   isSecondDmgFormula: 0
+  isUseFixRate: 0
+  fixPRate: 0.5
   ab_ID: 2
   isImidiateAbActive: 1
   isOnlyUseSecondFixP: 0
@@ -34,9 +36,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myCard: {fileID: 4148327381170989699}
-  isOnlyFixed: 0
-  isOnlyDiceValue: 1
+  isOnlyFixed: 1
+  isOnlyDiceValue: 0
   isSecondDmgFormula: 0
+  isUseFixRate: 1
+  fixPRate: 0.5
 --- !u!1001 &3053486953976736663
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -44,20 +48,46 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1302848795740026345, guid: 13514753735d515478a2178e20010343,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1302848795740026345, guid: 13514753735d515478a2178e20010343,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1302848795740026350, guid: 13514753735d515478a2178e20010343,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 858da3c5fe531664c872b85da187f830,
+        type: 3}
+    - target: {fileID: 1302848795940883632, guid: 13514753735d515478a2178e20010343,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1302848795940883632, guid: 13514753735d515478a2178e20010343,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -4.5
+      objectReference: {fileID: 0}
     - target: {fileID: 1302848795940883633, guid: 13514753735d515478a2178e20010343,
         type: 3}
       propertyPath: m_text
-      value: "\uD3FC\uBA5C\uCC0D\uAE30"
+      value: "\uD558\uD504\uC18C\uB529"
       objectReference: {fileID: 0}
     - target: {fileID: 1302848795940883633, guid: 13514753735d515478a2178e20010343,
         type: 3}
       propertyPath: m_fontSize
-      value: 0.8
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 1302848795940883633, guid: 13514753735d515478a2178e20010343,
         type: 3}
       propertyPath: m_fontSizeBase
-      value: 0.8
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 1302848796289772746, guid: 13514753735d515478a2178e20010343,
         type: 3}
@@ -123,7 +153,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 6ec3cd28cdd6e5f4eb324862f313d4db,
+      objectReference: {fileID: 21300000, guid: 04bc8b064866cd34d924922abb379eb1,
         type: 3}
     - target: {fileID: 1437206776610783508, guid: 13514753735d515478a2178e20010343,
         type: 3}
@@ -142,10 +172,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1437206776610783508, guid: 13514753735d515478a2178e20010343,
         type: 3}
+      propertyPath: cardName
+      value: "\uD3FC\uBA5C\uCC0D\uAE30"
+      objectReference: {fileID: 0}
+    - target: {fileID: 1437206776610783508, guid: 13514753735d515478a2178e20010343,
+        type: 3}
       propertyPath: cardText
-      value: "\uC801 \uD558\uB098\uC5D0\uAC8C [\uC8FC\uC0AC\uC704 \uAC12]*(\uBCC0\uB3D9\uCE58)\uB9CC\uD07C\uC758
-        \uD53C\uD574\uB97C \uC785\uD78C \uD6C4 [\uACE0\uC815\uCE58()]\uBC88 [\uACE8\uC808]\uC744
-        \uC911\uCCA9 \uC2DC\uD0A8\uB2E4."
+      value: "\uC801 \uD558\uB098\uC5D0\uAC8C [\uACE0\uC815\uCE58()]*0.5\uB9CC\uD07C\uC758
+        \uD53C\uD574\uB97C \uC785\uD78C \uD6C4 [\uC8FC\uC0AC\uC704 \uAC12] * (\uBCC0\uB3D9\uCE58)\uBC88
+        [\uACE8\uC808]\uC744 \uC911\uCCA9 \uC2DC\uD0A8\uB2E4."
       objectReference: {fileID: 0}
     - target: {fileID: 1437206776610783508, guid: 13514753735d515478a2178e20010343,
         type: 3}
