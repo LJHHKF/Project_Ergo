@@ -48,7 +48,6 @@ public class Card_Base : MonoBehaviour, ICard
     protected BoxCollider2D m_Collider;
     protected Canvas textCanvas;
     protected TextMeshProUGUI text_cost;
-    protected Image costImg;
     protected TextMeshProUGUI text_plain;
     protected TextMeshProUGUI text_name;
     protected TextMeshProUGUI[] array_text;
@@ -76,8 +75,7 @@ public class Card_Base : MonoBehaviour, ICard
     protected virtual void Awake()
     {
         textCanvas = gameObject.transform.Find("TextCanvas").GetComponent<Canvas>();
-        costImg = textCanvas.gameObject.transform.Find("CostImage").GetComponent<Image>();
-        text_cost = costImg.transform.Find("CostText").GetComponent<TextMeshProUGUI>();
+        text_cost = textCanvas.transform.Find("CostText").GetComponent<TextMeshProUGUI>();
         text_plain = textCanvas.gameObject.transform.Find("CardText").GetComponent<TextMeshProUGUI>();
         text_name = textCanvas.gameObject.transform.Find("CardName").GetComponent<TextMeshProUGUI>();
         array_text = textCanvas.gameObject.GetComponents<TextMeshProUGUI>();
@@ -179,7 +177,6 @@ public class Card_Base : MonoBehaviour, ICard
             m_sprRs[i].color = new Color(m_sprRs[i].color.r, m_sprRs[i].color.g, m_sprRs[i].color.b, (m_sprRs[i].color.a * readyAlpha));
         for (int i = 0; i < array_text.Length; i++)
             array_text[i].faceColor = new Color32((byte)array_text[i].color.r, (byte)array_text[i].color.g, (byte)array_text[i].color.b, (byte)(array_text[i].color.a * readyAlpha));
-        costImg.color = new Color(costImg.color.r, costImg.color.g, costImg.color.b, (costImg.color.a * readyAlpha));
     }
 
     protected virtual void OffCardAlphaAndReady()
@@ -189,7 +186,6 @@ public class Card_Base : MonoBehaviour, ICard
             m_sprRs[i].color = new Color(m_sprRs[i].color.r, m_sprRs[i].color.g, m_sprRs[i].color.b, (m_sprRs[i].color.a / readyAlpha));
         for (int i = 0; i < array_text.Length; i++)
             array_text[i].faceColor = new Color32((byte)array_text[i].color.r, (byte)array_text[i].color.g, (byte)array_text[i].color.b, (byte)(array_text[i].color.a / readyAlpha));
-        costImg.color = new Color(costImg.color.r, costImg.color.g, costImg.color.b, (costImg.color.a / readyAlpha));
     }
 
     public virtual void Use(int diceValue)
@@ -407,7 +403,6 @@ public class Card_Base : MonoBehaviour, ICard
         text_cost.color = new Color(text_cost.color.r, text_cost.color.g, text_cost.color.b, 0);
         text_plain.color = new Color(text_plain.color.r, text_plain.color.g, text_plain.color.b, 0);
         text_name.color = new Color(text_name.color.r, text_name.color.g, text_name.color.b, 0);
-        costImg.color = new Color(costImg.color.r, costImg.color.g, costImg.color.b, 0);
 
         m_Collider.enabled = false;
     }
@@ -419,7 +414,6 @@ public class Card_Base : MonoBehaviour, ICard
         text_cost.color = new Color(text_cost.color.r, text_cost.color.g, text_cost.color.b, 1.0f);
         text_plain.color = new Color(text_plain.color.r, text_plain.color.g, text_plain.color.b, 1.0f);
         text_name.color = new Color(text_name.color.r, text_name.color.g, text_name.color.b, 1.0f);
-        costImg.color = new Color(costImg.color.r, costImg.color.g, costImg.color.b, 1.0f);
 
         m_Collider.enabled = true;
     }

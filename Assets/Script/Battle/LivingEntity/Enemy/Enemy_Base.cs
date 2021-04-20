@@ -61,7 +61,7 @@ public class Enemy_Base : LivingEntity
         fullHealth = _fullHealth;
         //startingHealth = _startingHealth;
         regenGuardPoint = _regenGuardPoint;
-        base.Start();
+
         TurnManager.instance.playerTurnEnd += Event_PlayerTurnEnd;
         TurnManager.instance.turnEnd += Event_TurnEnd;
         TurnManager.instance.firstTurn += Event_FirstTurn;
@@ -71,7 +71,6 @@ public class Enemy_Base : LivingEntity
 
     protected override void ReleseTurnAct()
     {
-        base.ReleseTurnAct();
         TurnManager.instance.playerTurnEnd -= Event_PlayerTurnEnd;
         TurnManager.instance.turnEnd -= Event_TurnEnd;
         TurnManager.instance.firstTurn -= Event_FirstTurn;
@@ -79,21 +78,22 @@ public class Enemy_Base : LivingEntity
 
     protected override void Event_PlayerTurnEnd(object _o, EventArgs _e)
     {
-        base.Event_PlayerTurnEnd(_o, _e);
         ResetGuardPoint();
         myAbCond.Affected();
     }
 
     protected override void Event_TurnEnd(object _o, EventArgs _e)
     {
-        base.Event_TurnEnd(_o, _e);
         curSpGauge++;
         ActSetting();
     }
 
     protected override void Event_FirstTurn(object _o, EventArgs _e)
     {
-        base.Event_FirstTurn(_o, _e);
+        ResetHP();
+        ResetGuardPoint();
+        FlucStatReset();
+        CalculateStat();
         ActSetting();
     }
 

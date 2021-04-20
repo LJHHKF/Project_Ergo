@@ -129,6 +129,16 @@ public class AbCondition : MonoBehaviour
         myUI.AbConditionsUpdate();
     }
 
+    public void Affected_FirstTurn()
+    {
+        if (list_delayed.Count > 0)
+            D_Affected();
+        for(int i = 0; i < list_conditions.Count; i++)
+        {
+            
+        }
+    }
+
     public void Affected() //자신에 걸린 모든 효과 발동
     {
         if (list_delayed.Count > 0)
