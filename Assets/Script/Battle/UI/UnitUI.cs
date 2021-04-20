@@ -9,7 +9,7 @@ public class UnitUI : MonoBehaviour
 {
     [Header("UI Object Setting")]
     [SerializeField] private Image hpBar_img;
-    private TextMeshProUGUI hp_txt;
+    [SerializeField] private TextMeshProUGUI hp_txt;
     [SerializeField] private GameObject guard_img_obj;
     private TextMeshProUGUI guard_txt;
     [SerializeField] private Image icon_EnemyActInfo;
@@ -30,7 +30,6 @@ public class UnitUI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        hp_txt = hpBar_img.transform.Find("HPText").GetComponent<TextMeshProUGUI>();
         guard_txt = guard_img_obj.transform.Find("GuardText").GetComponent<TextMeshProUGUI>();
 
         //if(icon_EnemyActInfo != null)

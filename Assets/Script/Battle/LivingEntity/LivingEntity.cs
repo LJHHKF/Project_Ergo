@@ -42,7 +42,7 @@ public class LivingEntity : MonoBehaviour, IDamageable
 
     protected virtual void Start()
     {
-        TurnManager.instance.firstTurn += Event_FirstTurn;
+        //TurnManager.instance.firstTurn += Event_FirstTurn;
     }
 
     protected virtual void OnDestroy()
@@ -52,14 +52,14 @@ public class LivingEntity : MonoBehaviour, IDamageable
 
     protected virtual void ReleseTurnAct()
     {
-        TurnManager.instance.firstTurn -= Event_FirstTurn;
+        //TurnManager.instance.firstTurn -= Event_FirstTurn;
     }
 
     protected virtual void Event_FirstTurn(object _o, EventArgs _e)
     {
-        HpAndGuardReset();
-        FlucStatReset();
-        CalculateStat();
+        //HpAndGuardReset();
+        //FlucStatReset();
+        //CalculateStat();
     }
 
     protected virtual void Event_PlayerTurnEnd(object _o, EventArgs _e)
@@ -234,13 +234,9 @@ public class LivingEntity : MonoBehaviour, IDamageable
         }
     }
 
-    protected virtual void HpAndGuardReset()
+    protected virtual void ResetHP()
     {
-        //health = startingHealth + endurance; // 만약 시작 HP는 스탯 영향 안 받게 하고 싶을 경우는 수정.
         health = GetFullHealth();
-        GuardPoint = regenGuardPoint;
         myUI.HpUpdate();
-        myUI.GuardUpdate();
     }
-
 }

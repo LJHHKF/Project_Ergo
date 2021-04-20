@@ -476,7 +476,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   end_DelayTime: 2
-  isReset: 0
+  isReset: 1
 --- !u!114 &796854120
 MonoBehaviour:
   m_ObjectHideFlags: 0
