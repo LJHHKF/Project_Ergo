@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class DiceSystemManager : MonoBehaviour
 {
@@ -29,6 +30,8 @@ public class DiceSystemManager : MonoBehaviour
 
     [Header("Other")]
     [SerializeField] private BSCManager m_CardM;
+    [SerializeField] private Image[] d_resImgs;
+    private int imgIndex = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -59,11 +62,6 @@ public class DiceSystemManager : MonoBehaviour
         //{
         //    ActiveDice();
         //}
-        
-        if(cnt_RollEnded == 2)
-        {
-            ActiveChecker();
-        }
     }
 
     public bool GetIsReadyToThrow()
@@ -129,19 +127,29 @@ public class DiceSystemManager : MonoBehaviour
     public void SumRollEnd()
     {
         cnt_RollEnded += 1;
-    }
 
-    private void ActiveChecker()
-    {
-        diceChecker.SetActive(true);
-    }
-
-    public void CheckEnd()
-    {
         if(cnt_RollEnded == 2)
         {
             cnt_RollEnded = 0;
+            diceChecker.SetActive(true);
             StartCoroutine(UnActiveDice());
+        }
+    }
+
+    //public void CheckEnd()
+    //{
+    //    if(cnt_RollEnded == 2)
+    //    {
+    //        cnt_RollEnded = 0;
+    //        StartCoroutine(UnActiveDice());
+    //    }
+    //}
+
+    public void SetResImg(Sprite _img)
+    {
+        if(imgIndex < d_resImgs.Length)
+        {
+            d_resImgs[imgIndex++].sprite = _img;
         }
     }
 
@@ -153,6 +161,7 @@ public class DiceSystemManager : MonoBehaviour
     IEnumerator UnActiveDice()
     {
         yield return new WaitForSeconds(1.0f);
+        diceChecker.SetActive(false);
         isReadyToThrow = true;
         if (isOnSixDice)
         {
@@ -183,6 +192,9 @@ public class DiceSystemManager : MonoBehaviour
         activatedCard.Use(resValue);
         activatedCard = null;
         m_CardM.UndoHandsTaransparency();
+
+        imgIndex = 0;
+        battleUIManager.OnDiceRes();
 
         yield break;
     }
