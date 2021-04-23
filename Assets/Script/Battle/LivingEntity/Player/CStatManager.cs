@@ -79,7 +79,7 @@ public class CStatManager : MonoBehaviour
         solid = init_Solid;
         intelligent = init_Intelligent;
         fullHealth_pure = init_FullHealth;
-        health = CalcResultFullHealth();
+        health = GetCalcFullHealth();
 
         SaveStats();
     }
@@ -108,10 +108,9 @@ public class CStatManager : MonoBehaviour
         SaveStats();
     }
 
-    private int CalcResultFullHealth()
+    public int GetCalcFullHealth()
     {
         return fullHealth_pure + endurance;
-        //(endurance * 1);
     }
 
     private void SaveStats()

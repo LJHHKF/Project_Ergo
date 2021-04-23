@@ -29,6 +29,7 @@ public class LivingEntity : MonoBehaviour, IDamageable
 
     public bool dead { get; protected set; }
     public event Action onDeath;
+    public event Action onHPDamage;
 
     [Header("Ref Setting")]
     [SerializeField] protected UnitUI myUI;
@@ -97,6 +98,7 @@ public class LivingEntity : MonoBehaviour, IDamageable
             myUI.HpUpdate();
 
             isDamaged = true;
+            onHPDamage?.Invoke();
         }
         else
             isDamaged = false;
@@ -113,6 +115,7 @@ public class LivingEntity : MonoBehaviour, IDamageable
     {
         health -= damage;
         myUI.HpUpdate();
+        onHPDamage.Invoke();
 
         if (health <= 0 && !dead)
         {
@@ -173,10 +176,7 @@ public class LivingEntity : MonoBehaviour, IDamageable
 
     public virtual void Die()
     {
-        if (onDeath != null)
-        {
-            onDeath();
-        }
+        onDeath?.Invoke();
         dead = true;
     }
 
