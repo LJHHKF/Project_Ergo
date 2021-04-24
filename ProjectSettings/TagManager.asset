@@ -26,7 +26,7 @@ TagManager:
   - 
   - Water
   - UI
-  - 
+  - BackEffect
   - 
   - DiceBox
   - Dice
@@ -55,6 +55,9 @@ TagManager:
   m_SortingLayers:
   - name: BG
     uniqueID: 3269054235
+    locked: 0
+  - name: BackEffect
+    uniqueID: 2603851213
     locked: 0
   - name: Hand
     uniqueID: 4163120029

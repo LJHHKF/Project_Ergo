@@ -37,10 +37,10 @@ public class CStatManager : MonoBehaviour
     public int fullHealth_pure { get; set; }
     //public int startingHealth { get; set; }
     public int health { get; private set; }
-    public int endurance { get; set; }
-    public int strength { get; set; }
-    public int solid { get; set; }
-    public int intelligent { get; set; }
+    public int endurance { get; private set; }
+    public int strength { get; private set; }
+    public int solid { get; private set; }
+    public int intelligent { get; private set; }
 
     private StringBuilder key = new StringBuilder();
 
@@ -60,6 +60,7 @@ public class CStatManager : MonoBehaviour
         GameMaster.instance.initSaveData_Awake += Event_InitSaveDataAwake;
         GameMaster.instance.startGame_Awake += Event_StartGameAwake;
         GameMaster.instance.stageEnd += Event_StageEnd;
+        GameMaster.instance.gameOver += Event_GameOver;
 
         abcond_list.Capacity = AbCondInfoManager.instance.GetAbCondListLength() + 1;
     }
@@ -79,7 +80,7 @@ public class CStatManager : MonoBehaviour
         solid = init_Solid;
         intelligent = init_Intelligent;
         fullHealth_pure = init_FullHealth;
-        health = CalcResultFullHealth();
+        health = GetCalcFullHealth();
 
         SaveStats();
     }
@@ -103,15 +104,33 @@ public class CStatManager : MonoBehaviour
         health = PlayerPrefs.GetInt(key.ToString());
     }
 
+    private void Event_GameOver(object _o, EventArgs _e)
+    {
+        int saveID = GameMaster.instance.GetSaveID();
+        key.Clear();
+        key.Append($"SaveID({saveID}).CStat.Endurance");
+
+        PlayerPrefs.DeleteKey(key.ToString());
+        key.Replace("Endurance", "Strength");
+        PlayerPrefs.DeleteKey(key.ToString());
+        key.Replace("Strength", "Solid");
+        PlayerPrefs.DeleteKey(key.ToString());
+        key.Replace("Solid", "Intelligent");
+        PlayerPrefs.DeleteKey(key.ToString());
+        key.Replace("Intelligent", "FullHealth");
+        PlayerPrefs.DeleteKey(key.ToString());
+        key.Replace("FullHealth", "Health");
+        PlayerPrefs.DeleteKey(key.ToString());
+    }
+
     private void Event_StageEnd(object _o, EventArgs _e)
     {
         SaveStats();
     }
 
-    private int CalcResultFullHealth()
+    public int GetCalcFullHealth()
     {
         return fullHealth_pure + endurance;
-        //(endurance * 1);
     }
 
     private void SaveStats()
@@ -138,7 +157,6 @@ public class CStatManager : MonoBehaviour
         health = value;
         if(health <= 0)
         {
-            GameMaster.instance.OnGameOver(); // 실패 시임.
             LoadManager.instance.LoadGameOver();
         }
     }
@@ -162,5 +180,13 @@ public class CStatManager : MonoBehaviour
         temp.id = _id;
         temp.piledNum = _piledNum;
         abcond_list.Add(temp);
+    }
+
+    public void SetStatChange(int _endu, int _str, int _solid, int _int)
+    {
+        endurance += _endu;
+        strength += _str;
+        solid += _solid;
+        intelligent += _int;
     }
 }

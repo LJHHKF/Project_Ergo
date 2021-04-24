@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using EnemyActType;
 using System;
+using System.Text;
 
 namespace EnemyActType
 {
@@ -45,6 +46,7 @@ public class EnemyAct_Base : MonoBehaviour
     [SerializeField] protected ActSet[] acts;
     [SerializeField] protected int typeVariationNum = 1;
     [SerializeField] protected Sprite actSprite;
+    [SerializeField] protected string actAnimTrigger;
     [TextArea] public string actExplain;
     protected int[] r_power;
     //[SerializeField] private int abCondID = -1;
@@ -85,6 +87,7 @@ public class EnemyAct_Base : MonoBehaviour
                 }
             }
         }
+        m_Enemy.SetAnimTrigger(actAnimTrigger);
     }
 
     protected virtual void SummonAct()
@@ -132,6 +135,21 @@ public class EnemyAct_Base : MonoBehaviour
         types = _out;
         typeVariNum = typeVariationNum;
         _repeatNum = _out2;
+    }
+
+    public string GetActPlainText()
+    {
+        StringBuilder m_sb = new StringBuilder();
+        m_sb.Append(actExplain);
+        m_sb.Replace("[힘]", m_Enemy.strength.ToString());
+        m_sb.Replace("[내구]", m_Enemy.endurance.ToString());
+        m_sb.Replace("[특공]", m_Enemy.intel.ToString());
+        return m_sb.ToString();
+    }
+
+    public string GetActName()
+    {
+        return actName;
     }
 
     //public virtual void GetActInfo(out int _power, out bool _isAll)

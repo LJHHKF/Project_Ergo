@@ -8,8 +8,7 @@ using UnityEngine;
 public class LivingEntity : MonoBehaviour, IDamageable
 {
     //public int startingHealth { get; protected set; }
-    public int fullHealth { get { return r_fullHealth; } protected set { r_fullHealth = value; } }
-    protected int r_fullHealth = 100;
+    public int fullHealth { get; protected set; }
     public int health { get; protected set; }
     public int regenGuardPoint { get; protected set; }
     public int GuardPoint { get; protected set; }
@@ -29,6 +28,7 @@ public class LivingEntity : MonoBehaviour, IDamageable
 
     public bool dead { get; protected set; }
     public event Action onDeath;
+    public event Action onHPDamage;
 
     [Header("Ref Setting")]
     [SerializeField] protected UnitUI myUI;
@@ -97,6 +97,7 @@ public class LivingEntity : MonoBehaviour, IDamageable
             myUI.HpUpdate();
 
             isDamaged = true;
+            onHPDamage?.Invoke();
         }
         else
             isDamaged = false;
@@ -113,6 +114,7 @@ public class LivingEntity : MonoBehaviour, IDamageable
     {
         health -= damage;
         myUI.HpUpdate();
+        onHPDamage.Invoke();
 
         if (health <= 0 && !dead)
         {
@@ -156,7 +158,7 @@ public class LivingEntity : MonoBehaviour, IDamageable
 
     public int GetFullHealth()
     {
-        return fullHealth + endurance;
+        return (fullHealth + endurance);
         //(endurance * 1);
     }
 
@@ -173,10 +175,7 @@ public class LivingEntity : MonoBehaviour, IDamageable
 
     public virtual void Die()
     {
-        if (onDeath != null)
-        {
-            onDeath();
-        }
+        onDeath?.Invoke();
         dead = true;
     }
 
@@ -238,5 +237,10 @@ public class LivingEntity : MonoBehaviour, IDamageable
     {
         health = GetFullHealth();
         myUI.HpUpdate();
+    }
+
+    public void SetAnimTrigger(string _name)
+    {
+        myAnimator.SetTrigger(_name);
     }
 }

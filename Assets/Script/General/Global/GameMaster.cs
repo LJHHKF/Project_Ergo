@@ -18,9 +18,9 @@ public class GameMaster : MonoBehaviour
 
     private int saveID = 0; //멀티 세이브 용도보단 ...
     private string key;
-    private int cur_stage = 0;
     [SerializeField] private float end_DelayTime = 2.0f;
     [SerializeField] private bool isReset = false;
+    private bool isDoGameStop = false;
 
     public event EventHandler startGame_Awake;
     public event EventHandler startGame_Start;
@@ -51,7 +51,7 @@ public class GameMaster : MonoBehaviour
     private void Event_GameOver(object _o, EventArgs _e)
     {
         key = $"SaveID({saveID})";
-        PlayerPrefs.SetInt(key, 0);
+        PlayerPrefs.DeleteKey(key);
     }
 
     private void OnApplicationQuit()
@@ -64,20 +64,32 @@ public class GameMaster : MonoBehaviour
         return saveID;
     }
 
-    public void GameStart(int _saveID)
+    //public void GameStart(int _saveID)
+    //{
+    //    saveID = _saveID;
+    //    if (!OnInitSaveData())
+    //    {
+    //        startGame_Awake?.Invoke(this, EventArgs.Empty);
+    //        startGame_Start?.Invoke(this, EventArgs.Empty);
+    //    }
+    //}
+
+    public void GameStart(int _saveID, bool _isNew)
     {
         saveID = _saveID;
-        if (!OnInitSaveData())
+        isDoGameStop = false;
+
+        if (_isNew)
         {
-            if (startGame_Awake != null)
-            {
-                startGame_Awake.Invoke(this, EventArgs.Empty);
-            }
-            //StartCoroutine(DelayedEvent(startGame_Start));
-            if(startGame_Start != null)
-            {
-                startGame_Start.Invoke(this, EventArgs.Empty);
-            }
+            key = $"SaveID({saveID})";
+            PlayerPrefs.SetInt(key, 1);
+            initSaveData_Awake?.Invoke(this, EventArgs.Empty);
+            initSaveData_Start?.Invoke(this, EventArgs.Empty);
+        }
+        else if (!OnInitSaveData())
+        {
+            startGame_Awake?.Invoke(this, EventArgs.Empty);
+            startGame_Start?.Invoke(this, EventArgs.Empty);
         }
     }
 
@@ -85,18 +97,11 @@ public class GameMaster : MonoBehaviour
     {
         key = $"SaveID({saveID})";
 
-        if (PlayerPrefs.HasKey(key) == false || PlayerPrefs.GetInt(key) == 0)
+        if (!PlayerPrefs.HasKey(key) || PlayerPrefs.GetInt(key) == 0)
         {
             PlayerPrefs.SetInt(key, 1);
-            if (initSaveData_Awake != null)
-            {
-                initSaveData_Awake.Invoke(this, EventArgs.Empty);
-            }
-            //StartCoroutine(DelayedEvent(initSaveData_Start));
-            if(initSaveData_Start != null)
-            {
-                initSaveData_Start.Invoke(this, EventArgs.Empty);
-            }
+            initSaveData_Awake?.Invoke(this, EventArgs.Empty);
+            initSaveData_Start?.Invoke(this, EventArgs.Empty);
             return true;
         }
         else
@@ -113,34 +118,26 @@ public class GameMaster : MonoBehaviour
 
     public void OnGameStop()
     {
-        if(gameStop != null)
+        if (!isDoGameStop)
         {
-            gameStop.Invoke(this, EventArgs.Empty);
+            gameStop?.Invoke(this, EventArgs.Empty);
+            isDoGameStop = true;
         }
     }
 
     public void OnBattleStageStart()
     {
-        if(battleStageStart != null)
-        {
-            battleStageStart.Invoke(this, EventArgs.Empty);
-        }
+        battleStageStart?.Invoke(this, EventArgs.Empty);
     }
 
     public void OnStageEnd()
     {
-        if(stageEnd != null)
-        {
-            stageEnd.Invoke(this, EventArgs.Empty);
-        }
+        stageEnd?.Invoke(this, EventArgs.Empty);
     }
 
     public void OnBattleStageEnd()
     {
-        if(battleStageEnd != null)
-        {
-            battleStageEnd.Invoke(this, EventArgs.Empty);
-        }
+        battleStageEnd?.Invoke(this, EventArgs.Empty);
         OnStageEnd();
     }
 
@@ -148,10 +145,7 @@ public class GameMaster : MonoBehaviour
     IEnumerator DelayedGameOver()
     {
         yield return new WaitForSeconds(end_DelayTime);
-        if (gameOver != null)
-        {
-            gameOver.Invoke(this, EventArgs.Empty);
-        }
+        gameOver?.Invoke(this, EventArgs.Empty);
         yield break;
     }
 

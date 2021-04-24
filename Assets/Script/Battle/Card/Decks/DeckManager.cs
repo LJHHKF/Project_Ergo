@@ -36,8 +36,6 @@ public class DeckManager : MonoBehaviour
         GameMaster.instance.startGame_Start += Event_StartGame;
         TurnManager.instance.firstTurn += Event_FirstTurn;
         TurnManager.instance.turnStart += Event_TurnStart;
-        //GameMaster.instance.battleStageStart += Event_BattleStageStart;
-        //GameMaster.instance.battleStageEnd += Event_BattleStageEnd;
     }
 
     private void OnDestroy()
@@ -47,15 +45,7 @@ public class DeckManager : MonoBehaviour
         GameMaster.instance.startGame_Start -= Event_StartGame;
         TurnManager.instance.firstTurn -= Event_FirstTurn;
         TurnManager.instance.turnStart -= Event_TurnStart;
-        //GameMaster.instance.battleStageStart -= Event_BattleStageStart;
-        //GameMaster.instance.battleStageEnd -= Event_BattleStageEnd;
     }
-
-    //private void BattleStageInitSetting()
-    //{
-    //    TurnManager.instance.firstTurn += Event_FirstTurn;
-    //    TurnManager.instance.turnStart += Event_TurnStart;
-    //}
 
     private void Event_FirstTurn(object _o, EventArgs _e)
     {
@@ -77,26 +67,8 @@ public class DeckManager : MonoBehaviour
         ResetDeck();
     }
 
-    //private void Event_BattleStageStart(object _o, EventArgs _e)
-    //{
-    //    BattleStageInitSetting();
-    //}
-
-    //private void Event_BattleStageEnd(object _o, EventArgs _e)
-    //{
-    //    GameMaster.instance.battleStageStart -= Event_BattleStageStart;
-    //}
-
     public void ResetDeck()
     {
-        //for (int i = 0; i < gameObject.transform.childCount; i++)
-        //{
-        //    if (gameObject.transform.GetChild(i).GetComponent<ICard>() != null)
-        //    {
-        //        list_deck.Add(gameObject.transform.GetChild(i).gameObject);
-        //    }
-        //}
-
         CardPack.instance.InstantiateCards(gameObject.transform, ref list_deck);
     }
 
@@ -181,5 +153,47 @@ public class DeckManager : MonoBehaviour
         {
             m_BSCManager = GameObject.FindGameObjectWithTag("CManager").GetComponent<BSCManager>();
         }
+    }
+
+    public void GetDeckList(ref List<Card_Base> _cardList)
+    {
+        for(int i = 0; i < list_deck.Count; i++)
+        {
+            int _i = i;
+            _cardList.Add(list_deck[_i].GetComponent<Card_Base>());
+        }
+    }
+
+    public bool DeleteCard_listindex(int _index)
+    {
+        if (list_deck.Count > 10)
+        {
+            list_deck.RemoveAt(_index);
+            return true;
+        }
+        else
+            return false;
+    }
+
+    public bool DeleteCard_CardID(int _id)
+    {
+        if(list_deck.Count > 10)
+        {
+            for (int i = 0; i < list_deck.Count; i++)
+            {
+                int _i = i;
+                if (list_deck[_i].GetComponent<Card_Base>().GetCardID() == _id)
+                {
+                    list_deck.RemoveAt(_i);
+                    return true;
+                }
+            }
+            return false;
+        }
+        else
+        {
+            return false;
+        }
+
     }
 }

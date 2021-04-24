@@ -37,7 +37,7 @@ public class TrapSceneManager : MonoBehaviour
     void Start()
     {
         string key = $"SaveID({GameMaster.instance.GetSaveID()}).LastTrap";
-        if (!PlayerPrefs.HasKey(key) || PlayerPrefs.GetInt(key) == -1)
+        if (!PlayerPrefs.HasKey(key) || PlayerPrefs.GetInt(key) <= -1)
         {
             int full_weight = 0;
             for (int i = 0; i < traps.Length; i++)
@@ -84,7 +84,7 @@ public class TrapSceneManager : MonoBehaviour
         CStatManager.instance.HealthPointUpdate(CStatManager.instance.health - traps[trap_index].damage);
 
         string key = $"SaveID({GameMaster.instance.GetSaveID()}).LastTrap";
-        PlayerPrefs.SetInt(key, -1);
+        PlayerPrefs.DeleteKey(key.ToString());
 
         if (CStatManager.instance.health > 0)
             LoadManager.instance.LoadNextStage();

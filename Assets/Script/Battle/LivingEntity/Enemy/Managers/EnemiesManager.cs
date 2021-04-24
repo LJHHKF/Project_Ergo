@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using System.Text;
 
 public class EnemiesManager : MonoBehaviour
 {
@@ -28,6 +29,7 @@ public class EnemiesManager : MonoBehaviour
     private List<GameObject> monsters = new List<GameObject>();
     private int initCnt;
     private string key;
+    private StringBuilder m_sb = new StringBuilder(30);
 
     private void Awake()
     {
@@ -41,17 +43,25 @@ public class EnemiesManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        string key = $"SaveID({GameMaster.instance.GetSaveID()}).LastMonsterNums"; // 몬스터 타입 인덱스도 랜덤이므로, 추후 관련 저장 기능 만들어야 함.
-        if (!PlayerPrefs.HasKey(key) || PlayerPrefs.GetInt(key) == -1)
+        key = $"SaveID({GameMaster.instance.GetSaveID()}).LastMonsterNums";
+        if (!PlayerPrefs.HasKey(key) || PlayerPrefs.GetInt(key) <= 0)
         {
             int rand = UnityEngine.Random.Range(0, 9);
             int curStageCnt;
-            if (rand < 3)
+
+            if (StageManager.instance.curStage % 5 == 0)
+            {
                 curStageCnt = 1;
-            else if (rand < 8)
-                curStageCnt = 2;
-            else //if (rand < 10)
-                curStageCnt = 3;
+            }
+            else
+            {
+                if (rand < 3)
+                    curStageCnt = 1;
+                else if (rand < 8)
+                    curStageCnt = 2;
+                else //if (rand < 10)
+                    curStageCnt = 3;
+            }
 
             for (int i = 0; i < curStageCnt; i++)
             {
@@ -62,6 +72,11 @@ public class EnemiesManager : MonoBehaviour
                 temp.monsterFieldIndex = i;
                 temp.onDeath += () => RemoveAtMonstersList(mon);
                 monsters.Add(mon);
+
+                int _i = i; //델리게이트 연관 등서 i값을 제대로 못 받는 경우가 있어서 습관적 추가
+                m_sb.Clear();
+                m_sb.Append($"{key}.{_i}");
+                PlayerPrefs.SetInt(m_sb.ToString(), temp.m_ID);
             }
             PlayerPrefs.SetInt(key, monsters.Count);
         }
@@ -69,11 +84,15 @@ public class EnemiesManager : MonoBehaviour
         {
             for (int i = 0; i < PlayerPrefs.GetInt(key); i++)
             {
-                GameObject mon = Instantiate(BattleStageManager.instance.GetMonster(), gameObject.transform);
-                mon.transform.position = new Vector2(minX + (x_interval * i), 0);
-                mon.name = "Enemy_" + mon.name + "_" + i.ToString("00");
+                int _i = i;
+                m_sb.Clear();
+                m_sb.Append($"{key}.{_i}");
+                int m_id = PlayerPrefs.GetInt(m_sb.ToString());
+                GameObject mon = Instantiate(BattleStageManager.instance.GetMonster(m_id), gameObject.transform);
+                mon.transform.position = new Vector2(minX + (x_interval * _i), 0);
+                mon.name = "Enemy_" + mon.name + "_" + _i.ToString("00");
                 Enemy_Base temp = mon.GetComponent<Enemy_Base>();
-                temp.monsterFieldIndex = i;
+                temp.monsterFieldIndex = _i;
                 temp.onDeath += () => RemoveAtMonstersList(mon);
                 monsters.Add(mon);
             }
@@ -97,7 +116,6 @@ public class EnemiesManager : MonoBehaviour
 
     private void Event_GameStop(object _o, EventArgs _e)
     {
-        string key = $"SaveID({GameMaster.instance.GetSaveID()}).LastMonsterNums";
         PlayerPrefs.SetInt(key, initCnt);
     }
 
@@ -114,14 +132,18 @@ public class EnemiesManager : MonoBehaviour
         if (monsters.Count == 0)
         {
             TurnManager.instance.OnBattleEnd();
-            string key = $"SaveID({GameMaster.instance.GetSaveID()}).LastMonsterNums";
-            PlayerPrefs.SetInt(key, -1);
+            PlayerPrefs.DeleteKey(key);
         }
     }
 
     public int GetMaxMonsCnt()
     {
         return monsters.Count;
+    }
+
+    public int GetInitCnt()
+    {
+        return initCnt;
     }
 
     public void AddMultiRTarget_NotOverlaped(ref List<GameObject> o_list, int max)

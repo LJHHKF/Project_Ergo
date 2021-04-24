@@ -34,7 +34,6 @@ public class TurnManager: MonoBehaviour
         }
 
         GameMaster.instance.battleStageEnd += Event_BattleStageEnd;
-        //GameObject.FindGameObjectWithTag("CDeck").GetComponent<DeckManager>().SetTurnManager(this);
 
         start_time = Time.time;
     }
@@ -61,67 +60,31 @@ public class TurnManager: MonoBehaviour
         GameMaster.instance.battleStageEnd -= Event_BattleStageEnd;
     }
 
-
-    //private void Update()
-    //{
-    //    if(!isFirstActived)
-    //    {
-    //        if (Time.time - start_time > 1.0f)
-    //        {
-    //            isFirstActived = true;
-    //            if (firstTurn != null)
-    //            {
-    //                firstTurn();
-    //            }
-    //        }
-    //    }
-    //}
-
-    //public void OnDelayedFirstTurn()
-    //{
-    //    StartCoroutine(DelayedFirstTurn());
-    //}
-
     public static void OnFirstTurn()
     {
-        if (m_instance.firstTurn != null)
-        {
-            m_instance.firstTurn.Invoke(m_instance, EventArgs.Empty);
-        }
+        m_instance.firstTurn?.Invoke(m_instance, EventArgs.Empty);
         m_instance.isFirstActived = true;
     }
 
     public void OnTurnStart()
     {
-        if (turnStart != null)
-        {
-            turnStart.Invoke(m_instance, EventArgs.Empty);
-        }
+        turnStart?.Invoke(m_instance, EventArgs.Empty);
     }
 
     public void OnPlayerTurnEnd() // UI Btn에 연결되어 있음. 참조 0이라도 상관x.
     {
-        if (playerTurnEnd != null)
-        {
-            playerTurnEnd.Invoke(m_instance, EventArgs.Empty);
-        }
+         playerTurnEnd?.Invoke(m_instance, EventArgs.Empty);
     }
 
     public void OnTurnEnd()
     {
-        if (turnEnd != null)
-        {
-            turnEnd.Invoke(m_instance, EventArgs.Empty);
-        }
+        turnEnd?.Invoke(m_instance, EventArgs.Empty);
         OnTurnStart();
     }
 
     public void OnBattleEnd()
     {
-        if (battleEnd != null)
-        {
-            battleEnd.Invoke(m_instance, EventArgs.Empty);
-        }
+        battleEnd?.Invoke(m_instance, EventArgs.Empty);
     }
 
     public bool GetIsFirstActivated()

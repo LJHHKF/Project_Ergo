@@ -43,7 +43,7 @@ RenderSettings:
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 11
+  serializedVersion: 12
   m_GIWorkflowMode: 1
   m_GISettings:
     serializedVersion: 2
@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_LightingSettings: {fileID: 1788368398}
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -118,6 +118,8 @@ NavMeshSettings:
     manualTileSize: 0
     tileSize: 256
     accuratePlacement: 0
+    maxJobWorkers: 0
+    preserveTilesOutsideBounds: 0
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
@@ -180,6 +182,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
+  m_PresetInfoIsWorld: 0
 --- !u!223 &250638624
 Canvas:
   m_ObjectHideFlags: 0
@@ -456,6 +459,8 @@ GameObject:
   - component: {fileID: 796854120}
   - component: {fileID: 796854119}
   - component: {fileID: 796854122}
+  - component: {fileID: 796854123}
+  - component: {fileID: 796854124}
   m_Layer: 0
   m_Name: GameMaster
   m_TagString: GameMaster
@@ -476,7 +481,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   end_DelayTime: 2
-  isReset: 1
+  isReset: 0
 --- !u!114 &796854120
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -514,6 +519,30 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 21f4cf1d16549ae429efa1ccf944357f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &796854123
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 796854118}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f699b4d04d244a640974e1b12dee68d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &796854124
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 796854118}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2de73aa33d538a64c8234d522ecae111, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1104325066
@@ -568,6 +597,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -642,6 +672,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -979,47 +1010,48 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abConditions:
   - img: {fileID: 21300000, guid: 251351363a7995c478abe883bbcc2a7d, type: 3}
-    name: "\uC911"
-    infoText: "\uD134\uB9C8\uB2E4 \uC911\uCCA9 \uC218 * 2\uC758 \uAD00\uD1B5 \uB370\uBBF8\uC9C0"
+    name: "\uC911\uB3C5"
+    infoText: "(n)\uD134 \uB3D9\uC548 \uD134\uB9C8\uB2E4 (n) * 2\uC758 \uAD00\uD1B5
+      \uB370\uBBF8\uC9C0"
     onePower: 2
   - img: {fileID: 21300000, guid: 532dc2e62c7f4f047bc2c48735dd33ba, type: 3}
-    name: 
-    infoText: "\uC1E0\uC57D : \uC911\uCCA9 \uC218 * 1\uB9CC\uD07C \uD798\uC774 \uAC10\uC18C
-      (0\uBBF8\uB9CC\uC740 \uB418\uC9C0 \uC54A\uC74C)"
+    name: "\uC1E0\uC57D"
+    infoText: "(n)\uD134 \uB3D9\uC548 (n)\uB9CC\uD07C \uD798\uC774 \uAC10\uC18C (0\uBBF8\uB9CC\uC740
+      \uB418\uC9C0 \uC54A\uC74C)"
     onePower: -1
   - img: {fileID: 21300000, guid: b373f33afb4c56042808cdd9573ab59e, type: 3}
     name: "\uACE8\uC808"
-    infoText: "\uC911\uCCA9 \uC218 * 1\uB9CC\uD07C \uB0B4\uAD6C\uAC00 \uAC10\uC18C.
+    infoText: "(n)\uD134 \uB3D9\uC548 (n)\uB9CC\uD07C \uB0B4\uAD6C\uAC00 \uAC10\uC18C.
       (0\uBBF8\uB9CC\uC740 \uB418\uC9C0 \uC54A\uC74C)"
     onePower: -1
   - img: {fileID: 21300000, guid: 32ad5f64bce7fde498cd288b7e8115b5, type: 3}
     name: "\uACE0"
-    infoText: "\uC911\uCCA9 \uC218 * 1\uB9CC\uD07C \uC9C0\uB2A5\uC774 \uAC10\uC18C.
+    infoText: "(n)\uD134 \uB3D9\uC548 (n)\uB9CC\uD07C \uC9C0\uB2A5\uC774 \uAC10\uC18C.
       (0\uBBF8\uB9CC\uC740 \uB418\uC9C0  \uC54A\uC74C)"
     onePower: -1
   - img: {fileID: 21300000, guid: d8af58a939112e44f86aa67940bc67a8, type: 3}
     name: "\uD53C\uB85C"
-    infoText: "\uD68D\uB4DD \uCF54\uC2A4\uD2B8(\uD50C\uB808\uC774\uC5B4) \uB610\uB294
-      \uD2B9\uC218 \uACF5\uACA9 \uC2A4\uD0DD(\uBAAC\uC2A4\uD130)\uAC00 \uC911\uCCA9\uC218
-      * 1\uB9CC\uD07C \uAC10\uC18C (0\uBBF8\uB9CC\uC740 \uB418\uC9C0 \uC54A\uC74C)"
+    infoText: "(n)\uD134 \uB3D9\uC548  (n)\uB9CC\uD07C \uD68D\uB4DD \uCF54\uC2A4\uD2B8(\uD50C\uB808\uC774\uC5B4)
+      \uAC10\uC18C \uB610\uB294 \uD2B9\uC218 \uACF5\uACA9 \uC2A4\uD0DD \uCD5C\uB300\uCE58(\uBAAC\uC2A4\uD130)
+      \uC99D\uAC00 (0\uBBF8\uB9CC\uC740 \uB418\uC9C0 \uC54A\uC74C)"
     onePower: -1
   - img: {fileID: 21300000, guid: e0d86c5c63667534f8d655006b0a12b2, type: 3}
     name: "\uD30C\uC6CC\uC5C5"
-    infoText: "\uC911\uCCA9 \uC218 * 1\uB9CC\uD07C \uD798\uC774 \uC99D\uAC00"
+    infoText: "(n)\uD134 \uB3D9\uC548 (n)\uB9CC\uD07C \uD798\uC774 \uC99D\uAC00"
     onePower: 1
   - img: {fileID: 21300000, guid: 49bbfa27327168b499935ec243f1dc26, type: 3}
     name: "\uB2E8\uB2E8"
-    infoText: "\uC911\uCCA9 \uC218 * 1\uB9CC\uD07C \uB0B4\uAD6C\uAC00 \uC99D\uAC00"
+    infoText: "(n)\uD134 \uB3D9\uC548 (n)\uB9CC\uD07C \uB0B4\uAD6C\uAC00 \uC99D\uAC00"
     onePower: 1
   - img: {fileID: 21300000, guid: bfe4a85aaf30ad4428e0a281a29c143e, type: 3}
     name: "\uCDA9\uB9CC"
-    infoText: "\uC911\uCCA9 \uC218 *1\uB9CC\uD07C \uC9C0\uB2A5\uC774 \uC99D\uAC00"
+    infoText: "(n)\uD134 \uB3D9\uC548 (n)\uB9CC\uD07C \uC9C0\uB2A5\uC774 \uC99D\uAC00"
     onePower: 1
   - img: {fileID: 21300000, guid: ad3b8405b985f4747bbf5ee463c5bca9, type: 3}
     name: "\uAC01\uC131"
-    infoText: "\uD68D\uB4DD \uCF54\uC2A4\uD2B8(\uD50C\uB808\uC774\uC5B4) \uB610\uB294
-      \uD2B9\uC218 \uACF5\uACA9 \uC2A4\uD0DD(\uBAAC\uC2A4\uD130)\uAC00 \uC911\uCCA9
-      \uC218 *1\uB9CC\uD07C \uC99D"
+    infoText: "(n)\uD134 \uB3D9\uC548 (n)\uB9CC\uD07C \uD68D\uB4DD \uCF54\uC2A4\uD2B8(\uD50C\uB808\uC774\uC5B4)
+      \uC99D\uAC00 \uB610\uB294 \uD2B9\uC218 \uACF5\uACA9 \uC2A4\uD0DD \uCD5C\uB300\uCE58(\uBAAC\uC2A4\uD130)
+      \uAC10\uC18C"
     onePower: 1
 --- !u!114 &1732156873
 MonoBehaviour:
@@ -1202,3 +1234,64 @@ MonoBehaviour:
       weight: 30
     - m_index: 8
       weight: 40
+--- !u!850595691 &1788368398
+LightingSettings:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Settings.lighting
+  serializedVersion: 3
+  m_GIWorkflowMode: 1
+  m_EnableBakedLightmaps: 0
+  m_EnableRealtimeLightmaps: 0
+  m_RealtimeEnvironmentLighting: 1
+  m_BounceScale: 1
+  m_AlbedoBoost: 1
+  m_IndirectOutputScale: 1
+  m_UsingShadowmask: 1
+  m_BakeBackend: 1
+  m_LightmapMaxSize: 1024
+  m_BakeResolution: 40
+  m_Padding: 2
+  m_TextureCompression: 1
+  m_AO: 0
+  m_AOMaxDistance: 1
+  m_CompAOExponent: 1
+  m_CompAOExponentDirect: 0
+  m_ExtractAO: 0
+  m_MixedBakeMode: 2
+  m_LightmapsBakeMode: 1
+  m_FilterMode: 1
+  m_LightmapParameters: {fileID: 15204, guid: 0000000000000000f000000000000000, type: 0}
+  m_ExportTrainingData: 0
+  m_TrainingDataDestination: TrainingData
+  m_RealtimeResolution: 2
+  m_ForceWhiteAlbedo: 0
+  m_ForceUpdates: 0
+  m_FinalGather: 0
+  m_FinalGatherRayCount: 256
+  m_FinalGatherFiltering: 1
+  m_PVRCulling: 1
+  m_PVRSampling: 1
+  m_PVRDirectSampleCount: 32
+  m_PVRSampleCount: 512
+  m_PVREnvironmentSampleCount: 256
+  m_PVREnvironmentReferencePointCount: 2048
+  m_LightProbeSampleCountMultiplier: 4
+  m_PVRBounces: 2
+  m_PVRMinBounces: 2
+  m_PVREnvironmentMIS: 1
+  m_PVRFilteringMode: 1
+  m_PVRDenoiserTypeDirect: 1
+  m_PVRDenoiserTypeIndirect: 1
+  m_PVRDenoiserTypeAO: 1
+  m_PVRFilterTypeDirect: 0
+  m_PVRFilterTypeIndirect: 0
+  m_PVRFilterTypeAO: 0
+  m_PVRFilteringGaussRadiusDirect: 1
+  m_PVRFilteringGaussRadiusIndirect: 5
+  m_PVRFilteringGaussRadiusAO: 2
+  m_PVRFilteringAtrousPositionSigmaDirect: 0.5
+  m_PVRFilteringAtrousPositionSigmaIndirect: 2
+  m_PVRFilteringAtrousPositionSigmaAO: 1

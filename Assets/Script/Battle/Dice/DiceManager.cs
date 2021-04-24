@@ -4,38 +4,17 @@ using UnityEngine;
 
 public class DiceManager : MonoBehaviour
 {
-    [SerializeField] private bool isGetRes = false;
+    private bool isGetRes = false;
     private bool isRollEnd = false;
     private Rigidbody m_rb;
     private DiceSystemManager m_DsystemManager;
     private float activeTime = 0f;
-    private int result = 0;
+    private int resNum = 0;
+    private Sprite resImg;
 
     private bool isBottom = false;
     private float rollPower = 0;
     private float rollMinPowerRate = 0;
-
-    public int resNum {
-        get
-        {
-            if (isGetRes)
-            {
-                return result;
-            }
-            else
-            {
-                return 0;
-            }
-        }
-        set
-        {
-            if(!isGetRes)
-            {
-                result = value;
-                isGetRes = true;
-            }
-        }
-    }
 
     private void OnEnable()
     {
@@ -75,6 +54,15 @@ public class DiceManager : MonoBehaviour
         }
     }
 
+    public void SetRes(int _num, Sprite _spr)
+    {
+        if (!isGetRes)
+        {
+            resNum = _num;
+            resImg = _spr;
+            isGetRes = true;
+        }
+    }
 
     public void SetDiceRollPower(float _rollpower, float r_minPowerRate)
     {
@@ -93,5 +81,6 @@ public class DiceManager : MonoBehaviour
     public void SetResValue()
     {
         m_DsystemManager.resValue += resNum;
+        m_DsystemManager.SetResImg(resImg);
     }
 }
