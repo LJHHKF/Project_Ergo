@@ -67,8 +67,21 @@ public class Card_UI : MonoBehaviour
         DeckManager.instance.AddToDeck_NonList(tempList[0]);
     }
 
-    public void DeleteToDeckTargetedCard()
+    public void SetImagesAlpha(float _alpha)
     {
+        text_cost.color = new Color(text_cost.color.r, text_cost.color.g, text_cost.color.b, _alpha);
+        text_name.color = new Color(text_name.color.r, text_name.color.g, text_name.color.b, _alpha);
+        text_plain.color = new Color(text_plain.color.r, text_plain.color.g, text_plain.color.b, _alpha);
+        image_card.color = new Color(image_card.color.r, image_card.color.g, image_card.color.b, _alpha);
+        image_cardOuter.color = new Color(image_cardOuter.color.r, image_cardOuter.color.g, image_cardOuter.color.b, _alpha);
+    }
 
+    public void UnDoTransparent()
+    {
+        text_cost.color = new Color(text_cost.color.r, text_cost.color.g, text_cost.color.b, 1.0f);
+        text_name.color = new Color(text_name.color.r, text_name.color.g, text_name.color.b, 1.0f);
+        text_plain.color = new Color(text_plain.color.r, text_plain.color.g, text_plain.color.b, 1.0f);
+        image_card.color = new Color(image_card.color.r, image_card.color.g, image_card.color.b, 1.0f);
+        image_cardOuter.color = new Color(image_cardOuter.color.r, image_cardOuter.color.g, image_cardOuter.color.b, 1.0f);
     }
 }

@@ -51,7 +51,7 @@ public class GameMaster : MonoBehaviour
     private void Event_GameOver(object _o, EventArgs _e)
     {
         key = $"SaveID({saveID})";
-        PlayerPrefs.SetInt(key, 0);
+        PlayerPrefs.DeleteKey(key);
     }
 
     private void OnApplicationQuit()
@@ -97,7 +97,7 @@ public class GameMaster : MonoBehaviour
     {
         key = $"SaveID({saveID})";
 
-        if (PlayerPrefs.HasKey(key) == false || PlayerPrefs.GetInt(key) == 0)
+        if (!PlayerPrefs.HasKey(key) || PlayerPrefs.GetInt(key) == 0)
         {
             PlayerPrefs.SetInt(key, 1);
             initSaveData_Awake?.Invoke(this, EventArgs.Empty);

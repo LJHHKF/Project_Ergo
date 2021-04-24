@@ -60,6 +60,7 @@ public class CStatManager : MonoBehaviour
         GameMaster.instance.initSaveData_Awake += Event_InitSaveDataAwake;
         GameMaster.instance.startGame_Awake += Event_StartGameAwake;
         GameMaster.instance.stageEnd += Event_StageEnd;
+        GameMaster.instance.gameOver += Event_GameOver;
 
         abcond_list.Capacity = AbCondInfoManager.instance.GetAbCondListLength() + 1;
     }
@@ -103,6 +104,25 @@ public class CStatManager : MonoBehaviour
         health = PlayerPrefs.GetInt(key.ToString());
     }
 
+    private void Event_GameOver(object _o, EventArgs _e)
+    {
+        int saveID = GameMaster.instance.GetSaveID();
+        key.Clear();
+        key.Append($"SaveID({saveID}).CStat.Endurance");
+
+        PlayerPrefs.DeleteKey(key.ToString());
+        key.Replace("Endurance", "Strength");
+        PlayerPrefs.DeleteKey(key.ToString());
+        key.Replace("Strength", "Solid");
+        PlayerPrefs.DeleteKey(key.ToString());
+        key.Replace("Solid", "Intelligent");
+        PlayerPrefs.DeleteKey(key.ToString());
+        key.Replace("Intelligent", "FullHealth");
+        PlayerPrefs.DeleteKey(key.ToString());
+        key.Replace("FullHealth", "Health");
+        PlayerPrefs.DeleteKey(key.ToString());
+    }
+
     private void Event_StageEnd(object _o, EventArgs _e)
     {
         SaveStats();
@@ -137,7 +157,6 @@ public class CStatManager : MonoBehaviour
         health = value;
         if(health <= 0)
         {
-            GameMaster.instance.OnGameOver(); // 실패 시임.
             LoadManager.instance.LoadGameOver();
         }
     }

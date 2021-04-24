@@ -10,6 +10,7 @@ public class TopHpText : MonoBehaviour
     private TextMeshProUGUI m_text;
     private int max;
     private int cur;
+    private bool isEventAdded = false;
 
     private Character m_char;
     private CStatManager m_statM;
@@ -22,6 +23,7 @@ public class TopHpText : MonoBehaviour
             m_char = GameObject.FindGameObjectWithTag("Player").GetComponent<Character>();
             m_char.onHPDamage += UpdateText;
             TurnManager.instance.firstTurn += firstTurnEvent;
+            isEventAdded = true;
         }
         else
         {
@@ -31,6 +33,12 @@ public class TopHpText : MonoBehaviour
             m_text.text = $"{cur} / {max}";
         }
         
+    }
+
+    private void OnDisable()
+    {
+        if(isEventAdded)
+            TurnManager.instance.firstTurn -= firstTurnEvent;
     }
 
     private void firstTurnEvent(object _o, EventArgs _e)
