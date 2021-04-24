@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.UI;
 
 public class Enemy_Base : LivingEntity
 {
@@ -36,6 +37,7 @@ public class Enemy_Base : LivingEntity
     [SerializeField] protected int fix_Inteligent = 1;
     [SerializeField] protected int maxSpGauge = 3;
     protected int curSpGauge = 0;
+    protected int r_maxSpGauge;
 
     public int m_ID { get { return monsterID; } }
 
@@ -61,6 +63,7 @@ public class Enemy_Base : LivingEntity
         fullHealth = _fullHealth;
         //startingHealth = _startingHealth;
         regenGuardPoint = _regenGuardPoint;
+        r_maxSpGauge = maxSpGauge;
 
         TurnManager.instance.playerTurnEnd += Event_PlayerTurnEnd;
         TurnManager.instance.turnEnd += Event_TurnEnd;
@@ -112,21 +115,27 @@ public class Enemy_Base : LivingEntity
 
     public override void ChangeCost(int changeV)
     {
-        if(curSpGauge + changeV < 0)
-        {
-            changeV = -curSpGauge;
-        }
-        else if(curSpGauge + changeV > maxSpGauge)
-        {
-            changeV = maxSpGauge - curSpGauge;
-        }
-        curSpGauge += changeV;
+        //if(curSpGauge - changeV < 0)
+        //{
+        //    changeV = curSpGauge;
+        //}
+        //else if(curSpGauge - changeV > maxSpGauge)
+        //{
+        //    changeV = -(maxSpGauge - curSpGauge);
+        //}
+        //curSpGauge -= changeV;
+
+        //최대치 수정 방식으로 변경. -1이 들어오면 +1식으로 부호를 바꿔야 함.
+        //if (maxSpGauge - changeV < 0)
+        //    r_maxSpGauge = 0;
+        //else
+            r_maxSpGauge = maxSpGauge - changeV;
     }
 
     protected virtual void ActSetting()
     {
         bool isSuccess = false;
-        if (curSpGauge == maxSpGauge)
+        if (curSpGauge >= r_maxSpGauge)
         {
             readyAct = specialAct;
             isSuccess = true;
@@ -169,6 +178,12 @@ public class Enemy_Base : LivingEntity
 
         readyAct.GetActInfo(out powers, out types,out repeat ,out typeVariationNum);
         myUI.SetActInfo(readyAct.GetActSprite(), powers, types,repeat,typeVariationNum);
+    }
+
+    public void GetReadyActText(ref Text _head, ref Text _body)
+    {
+        _head.text = readyAct.GetActName();
+        _body.text = readyAct.GetActPlainText();
     }
 
     public void Act()

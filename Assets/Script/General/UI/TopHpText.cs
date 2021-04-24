@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
+using System;
 
 public class TopHpText : MonoBehaviour
 {
@@ -16,27 +17,31 @@ public class TopHpText : MonoBehaviour
     void Start()
     {
         m_text = gameObject.GetComponent<TextMeshProUGUI>();
-        if(SceneManager.GetActiveScene().name == "Battle")
+        if (SceneManager.GetActiveScene().name == "Battle")
         {
             m_char = GameObject.FindGameObjectWithTag("Player").GetComponent<Character>();
-            max = m_char.GetFullHealth();
-            cur = m_char.health;
             m_char.onHPDamage += UpdateText;
+            TurnManager.instance.firstTurn += firstTurnEvent;
         }
         else
         {
             m_statM = GameObject.FindGameObjectWithTag("InfoM").GetComponent<CStatManager>();
             max = m_statM.GetCalcFullHealth();
             cur = m_statM.health;
+            m_text.text = $"{cur} / {max}";
         }
-        m_text.text = $"{cur} / {max}";
+        
+    }
 
+    private void firstTurnEvent(object _o, EventArgs _e)
+    {
+        UpdateText();
     }
 
     private void UpdateText()
     {
-        max = m_char.GetFullHealth();
         cur = m_char.health;
+        max = m_char.GetFullHealth();
         m_text.text = $"{cur} / {max}";
     }
 }

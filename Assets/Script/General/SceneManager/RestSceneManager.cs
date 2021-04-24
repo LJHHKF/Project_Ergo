@@ -62,6 +62,7 @@ public class RestSceneManager : MonoBehaviour
     public void BtnDiscardConfirm()
     {
         ev_DeleteConfirm?.Invoke();
+        LoadManager.instance.LoadNextStage();
     }
 
     public void BtnDiscardClose()
