@@ -82,7 +82,7 @@ public class StageManager : MonoBehaviour
         key.Replace("Chapter", "StageTypeIndex");
         PlayerPrefs.SetInt(key.ToString(), curStageTypeIndex);
 
-        LoadManager.instance.LoadFirst(curStageTypeIndex);
+        LoadManager.instance.LoadFirst_Init_ToSetting();
     }
 
     private void Event_GameStart(object _sender, EventArgs _e)

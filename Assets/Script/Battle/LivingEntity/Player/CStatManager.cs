@@ -37,10 +37,10 @@ public class CStatManager : MonoBehaviour
     public int fullHealth_pure { get; set; }
     //public int startingHealth { get; set; }
     public int health { get; private set; }
-    public int endurance { get; set; }
-    public int strength { get; set; }
-    public int solid { get; set; }
-    public int intelligent { get; set; }
+    public int endurance { get; private set; }
+    public int strength { get; private set; }
+    public int solid { get; private set; }
+    public int intelligent { get; private set; }
 
     private StringBuilder key = new StringBuilder();
 
@@ -180,5 +180,13 @@ public class CStatManager : MonoBehaviour
         temp.id = _id;
         temp.piledNum = _piledNum;
         abcond_list.Add(temp);
+    }
+
+    public void SetStatChange(int _endu, int _str, int _solid, int _int)
+    {
+        endurance += _endu;
+        strength += _str;
+        solid += _solid;
+        intelligent += _int;
     }
 }
