@@ -417,7 +417,8 @@ public class Card_Base : MonoBehaviour, ICard
 
     public string GetCurPlainText()
     {
-        if(m_charM = null)
+        ChkAndFindCharcter();
+        if(m_charM == null)
         {
             if (isFixGuard)
             {
