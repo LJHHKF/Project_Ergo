@@ -29,6 +29,7 @@ public class LivingEntity : MonoBehaviour, IDamageable
 
     public bool dead { get; protected set; }
     public event Action onDeath;
+    public event Action onHPDamage;
 
     [Header("Ref Setting")]
     [SerializeField] protected UnitUI myUI;
@@ -42,7 +43,7 @@ public class LivingEntity : MonoBehaviour, IDamageable
 
     protected virtual void Start()
     {
-        TurnManager.instance.firstTurn += Event_FirstTurn;
+        //TurnManager.instance.firstTurn += Event_FirstTurn;
     }
 
     protected virtual void OnDestroy()
@@ -52,14 +53,14 @@ public class LivingEntity : MonoBehaviour, IDamageable
 
     protected virtual void ReleseTurnAct()
     {
-        TurnManager.instance.firstTurn -= Event_FirstTurn;
+        //TurnManager.instance.firstTurn -= Event_FirstTurn;
     }
 
     protected virtual void Event_FirstTurn(object _o, EventArgs _e)
     {
-        HpAndGuardReset();
-        FlucStatReset();
-        CalculateStat();
+        //HpAndGuardReset();
+        //FlucStatReset();
+        //CalculateStat();
     }
 
     protected virtual void Event_PlayerTurnEnd(object _o, EventArgs _e)
@@ -73,8 +74,9 @@ public class LivingEntity : MonoBehaviour, IDamageable
     protected virtual void Event_BattleEnd(object _o, EventArgs _e)
     {}
 
-    public virtual void OnDamage(int damage)
+    public virtual bool OnDamage(int damage)
     {
+        bool isDamaged;
         if (GuardPoint > 0)
         {
             GuardPoint -= damage;
@@ -89,13 +91,31 @@ public class LivingEntity : MonoBehaviour, IDamageable
             }
             myUI.GuardUpdate();
         }
-        
+
         if (GuardPoint <= 0)
         {
             health -= damage;
             myUI.HpUpdate();
-        }
 
+            isDamaged = true;
+            onHPDamage?.Invoke();
+        }
+        else
+            isDamaged = false;
+
+
+        if (health <= 0 && !dead)
+        {
+            Die();
+        }
+        return isDamaged;
+    }
+
+    public virtual void OnPenDamage(int damage)
+    {
+        health -= damage;
+        myUI.HpUpdate();
+        onHPDamage.Invoke();
 
         if (health <= 0 && !dead)
         {
@@ -103,15 +123,12 @@ public class LivingEntity : MonoBehaviour, IDamageable
         }
     }
 
-    public virtual void OnPenDamage(int damage)
+    public virtual void OnAddAbCond(int id, int pilledNum, bool isDelayed)
     {
-        health -= damage;
-        myUI.HpUpdate();
-
-        if (health <= 0 && !dead)
-        {
-            Die();
-        }
+        if (isDelayed)
+            myAbCond.AddDelayedCondition(id, pilledNum);
+        else
+            myAbCond.AddImdiateAbCondition(id, pilledNum);
     }
 
     public virtual void RestoreHealth(int restoreValue)
@@ -159,10 +176,7 @@ public class LivingEntity : MonoBehaviour, IDamageable
 
     public virtual void Die()
     {
-        if (onDeath != null)
-        {
-            onDeath();
-        }
+        onDeath?.Invoke();
         dead = true;
     }
 
@@ -220,13 +234,9 @@ public class LivingEntity : MonoBehaviour, IDamageable
         }
     }
 
-    protected virtual void HpAndGuardReset()
+    protected virtual void ResetHP()
     {
-        //health = startingHealth + endurance; // 만약 시작 HP는 스탯 영향 안 받게 하고 싶을 경우는 수정.
         health = GetFullHealth();
-        GuardPoint = regenGuardPoint;
         myUI.HpUpdate();
-        myUI.GuardUpdate();
     }
-
 }

@@ -3,16 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Text;
 
 public class UnitUI : MonoBehaviour
 {
     [Header("UI Object Setting")]
     [SerializeField] private Image hpBar_img;
-    private TextMeshProUGUI hp_txt;
+    [SerializeField] private TextMeshProUGUI hp_txt;
     [SerializeField] private GameObject guard_img_obj;
     private TextMeshProUGUI guard_txt;
     [SerializeField] private Image icon_EnemyActInfo;
-    private TextMeshProUGUI actPower_Text;
+    [SerializeField] private TextMeshProUGUI[] actPower_Text;
     [SerializeField] private float delayedAbsAlpha = 0.5f;
     [SerializeField] private Image[] icons_condition;
     private TextMeshProUGUI[] pileds_txt;
@@ -29,13 +30,12 @@ public class UnitUI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        hp_txt = hpBar_img.transform.Find("HPText").GetComponent<TextMeshProUGUI>();
         guard_txt = guard_img_obj.transform.Find("GuardText").GetComponent<TextMeshProUGUI>();
 
-        if(icon_EnemyActInfo != null)
-        {
-            actPower_Text = icon_EnemyActInfo.gameObject.transform.Find("PowerNumText").GetComponent<TextMeshProUGUI>();
-        }
+        //if(icon_EnemyActInfo != null)
+        //{
+        //    actPower_Text = icon_EnemyActInfo.gameObject.transform.Find("PowerNumText").GetComponent<TextMeshProUGUI>();
+        //}
 
         //sprs_icon = new Sprite[icons_condition.Length];
         ids = new int[icons_condition.Length];
@@ -114,18 +114,57 @@ public class UnitUI : MonoBehaviour
         }
     }
 
-    public void SetActInfo(Sprite _actSprite, int _power, int _actTypeNum)
+    public void SetActInfo(Sprite _actSprite, int[] _powers, EnemyActType.AffectType[] _actTypes,int[] _repeat ,int _ActVariationNum)
     {
-        icon_EnemyActInfo.sprite = _actSprite;
-        actPower_Text.text = _power.ToString();
+        for (int i = 0; i < actPower_Text.Length; i++)
+            actPower_Text[i].gameObject.SetActive(false);
 
-        if(_actTypeNum == 1)
-        {
-            actPower_Text.color = new Color(0, 0, 255 / 255, 255/255);
-        }
+        icon_EnemyActInfo.sprite = _actSprite;
+        StringBuilder sb = new StringBuilder(10);
+
+        int max;
+        if (_ActVariationNum < actPower_Text.Length)
+            max = _ActVariationNum;
         else
+            max = actPower_Text.Length;
+
+        for (int i = 0; i < max; i++)
         {
-            actPower_Text.color = new Color(255 / 255, 0, 0, 255/255);
+            sb.Append(_powers[i].ToString());
+            if (_repeat[i] > 1)
+            {
+                sb.Append(" *" + _repeat[i].ToString());
+            }
+
+            actPower_Text[i].gameObject.SetActive(true);
+            actPower_Text[i].text = sb.ToString();
+
+            sb.Clear();
+
+            if (_actTypes[i] == EnemyActType.AffectType.Guard)
+            {
+                actPower_Text[i].color = new Color(0, 0, 255 / 255, 255 / 255);
+            }
+            else if (_actTypes[i] == EnemyActType.AffectType.Attack)
+            {
+                actPower_Text[i].color = new Color(255 / 255, 0, 0, 255 / 255);
+            }
+            else if (_actTypes[i] == EnemyActType.AffectType.CondAttack_Info)
+            {
+                actPower_Text[i].color = new Color(255 / 255, 0, 0, 128 / 255);
+            }
+            else if (_actTypes[i] == EnemyActType.AffectType.Abcond)
+            {
+                actPower_Text[i].color = new Color(0, 255 / 255, 0, 255 / 255);
+            }
+            else if(_actTypes[i] == EnemyActType.AffectType.CondAbcond_Info)
+            {
+                actPower_Text[i].color = new Color(0, 255 / 255, 0, 128 / 255);
+            }
+            else
+            {
+                actPower_Text[i].color = new Color(255 / 255, 255 / 255, 255 / 255, 255 / 255);
+            }
         }
     }
 }

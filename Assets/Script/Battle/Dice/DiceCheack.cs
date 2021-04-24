@@ -6,6 +6,7 @@ public class DiceCheack : MonoBehaviour
 {
     [SerializeField] private DiceManager p_diceManager;
     [SerializeField] private int m_number;
+    [SerializeField] private SpriteRenderer m_spr;
 
     private void Start()
     {
@@ -17,7 +18,7 @@ public class DiceCheack : MonoBehaviour
     {
         if (other.tag == "DiceChecker")
         {
-            p_diceManager.resNum = m_number;
+            p_diceManager.SetRes(m_number, m_spr.sprite);
         }
     }
 }

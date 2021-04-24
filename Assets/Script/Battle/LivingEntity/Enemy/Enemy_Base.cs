@@ -5,12 +5,27 @@ using System;
 
 public class Enemy_Base : LivingEntity
 {
+    [Serializable]
+    public struct Acts
+    {
+        public EnemyAct_Base act;
+        public int weight;
+    }
+
+    public enum MonsterRank
+    {
+        Common,
+        Elite,
+        Boss
+    }
+
     [Header("Enemy Setting")]
     [SerializeField] protected int monsterID = 0;
-    [SerializeField] protected EnemyAct_Base[] normalActs;
-    [SerializeField] protected int[] weights;
+    [SerializeField] protected MonsterRank m_rank;
+    [SerializeField] protected Acts[] normalActs;
+    //[SerializeField] protected int[] weights;
     [SerializeField] protected EnemyAct_Base specialAct;
-    private EnemyAct_Base readyAct;
+    protected EnemyAct_Base readyAct;
     [Header("E_Stat Setting")]
     [SerializeField] protected int _fullHealth = 100;
    // [SerializeField] protected int _startingHealth = 100;
@@ -21,6 +36,8 @@ public class Enemy_Base : LivingEntity
     [SerializeField] protected int fix_Inteligent = 1;
     [SerializeField] protected int maxSpGauge = 3;
     protected int curSpGauge = 0;
+
+    public int m_ID { get { return monsterID; } }
 
     private int m_FieldIndex = 0;
     public int monsterFieldIndex  // 디버그용 임시코드
@@ -44,7 +61,7 @@ public class Enemy_Base : LivingEntity
         fullHealth = _fullHealth;
         //startingHealth = _startingHealth;
         regenGuardPoint = _regenGuardPoint;
-        base.Start();
+
         TurnManager.instance.playerTurnEnd += Event_PlayerTurnEnd;
         TurnManager.instance.turnEnd += Event_TurnEnd;
         TurnManager.instance.firstTurn += Event_FirstTurn;
@@ -54,7 +71,6 @@ public class Enemy_Base : LivingEntity
 
     protected override void ReleseTurnAct()
     {
-        base.ReleseTurnAct();
         TurnManager.instance.playerTurnEnd -= Event_PlayerTurnEnd;
         TurnManager.instance.turnEnd -= Event_TurnEnd;
         TurnManager.instance.firstTurn -= Event_FirstTurn;
@@ -62,21 +78,22 @@ public class Enemy_Base : LivingEntity
 
     protected override void Event_PlayerTurnEnd(object _o, EventArgs _e)
     {
-        base.Event_PlayerTurnEnd(_o, _e);
         ResetGuardPoint();
         myAbCond.Affected();
     }
 
     protected override void Event_TurnEnd(object _o, EventArgs _e)
     {
-        base.Event_TurnEnd(_o, _e);
         curSpGauge++;
         ActSetting();
     }
 
     protected override void Event_FirstTurn(object _o, EventArgs _e)
     {
-        base.Event_FirstTurn(_o, _e);
+        ResetHP();
+        ResetGuardPoint();
+        FlucStatReset();
+        CalculateStat();
         ActSetting();
     }
 
@@ -85,11 +102,12 @@ public class Enemy_Base : LivingEntity
         
     }
 
-    public override void OnDamage(int damage)
+    public override bool OnDamage(int damage)
     {
-        base.OnDamage(damage);
+        bool res = base.OnDamage(damage);
         Debug.Log("몬스터(인덱스:" + monsterFieldIndex + ")가 데미지를 입었습니다. :" + damage);
         Debug.Log("몬스터(인덱스:" + monsterFieldIndex + ")의 남은 체력 :" + health);
+        return res;
     }
 
     public override void ChangeCost(int changeV)
@@ -105,7 +123,7 @@ public class Enemy_Base : LivingEntity
         curSpGauge += changeV;
     }
 
-    private void ActSetting()
+    protected virtual void ActSetting()
     {
         bool isSuccess = false;
         if (curSpGauge == maxSpGauge)
@@ -120,17 +138,17 @@ public class Enemy_Base : LivingEntity
             int rand;
             int max = 0;
 
-            for (int i = 0; i < weights.Length; i++)
-                fullWeight += weights[i];
+            for (int i = 0; i <  normalActs.Length; i++)
+                fullWeight += normalActs[i].weight;
 
             rand = UnityEngine.Random.Range(0, fullWeight);
 
-            for(int i = 0; i < weights.Length; i++)
+            for(int i = 0; i < normalActs.Length; i++)
             {
-                max += weights[i];
-                if(rand >= max-weights[i] && rand < max)
+                max += normalActs[i].weight;
+                if(rand >= max-normalActs[i].weight && rand < max)
                 {
-                    readyAct = normalActs[i];
+                    readyAct = normalActs[i].act;
                     isSuccess = true;
                     break;
                 }
@@ -144,11 +162,13 @@ public class Enemy_Base : LivingEntity
 
     public void GetReadyActInfo()
     {
-        Sprite actSpr = readyAct.GetActSprite();
-        int power = -1;
+        int[] powers;
+        int[] repeat;
+        EnemyActType.AffectType[] types;
+        int typeVariationNum;
 
-        readyAct.GetActInfo(out power);
-        myUI.SetActInfo(actSpr, power, readyAct.GetActTypeNumber());
+        readyAct.GetActInfo(out powers, out types,out repeat ,out typeVariationNum);
+        myUI.SetActInfo(readyAct.GetActSprite(), powers, types,repeat,typeVariationNum);
     }
 
     public void Act()

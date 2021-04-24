@@ -59,6 +59,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   p_diceManager: {fileID: 877152192402949925}
   m_number: 6
+  m_spr: {fileID: 1759687786104157367}
 --- !u!1 &534311384380845899
 GameObject:
   m_ObjectHideFlags: 0
@@ -105,6 +106,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -187,6 +189,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -287,7 +290,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aafcc429e4bcef2479a8b7cbedafba35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isGetRes: 0
 --- !u!54 &2054133464905801775
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -395,6 +397,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   p_diceManager: {fileID: 877152192402949925}
   m_number: 4
+  m_spr: {fileID: 8599406501405056752}
 --- !u!1 &3501983003525742616
 GameObject:
   m_ObjectHideFlags: 0
@@ -454,6 +457,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   p_diceManager: {fileID: 877152192402949925}
   m_number: 5
+  m_spr: {fileID: 2322005040391274385}
 --- !u!1 &3883375710992830002
 GameObject:
   m_ObjectHideFlags: 0
@@ -500,6 +504,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -614,6 +619,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -741,6 +747,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   p_diceManager: {fileID: 877152192402949925}
   m_number: 1
+  m_spr: {fileID: 3053614257280890984}
 --- !u!1 &5462094021352029695
 GameObject:
   m_ObjectHideFlags: 0
@@ -832,6 +839,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   p_diceManager: {fileID: 877152192402949925}
   m_number: 3
+  m_spr: {fileID: 8734609462883686246}
 --- !u!1 &7658436517690937643
 GameObject:
   m_ObjectHideFlags: 0
@@ -923,6 +931,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   p_diceManager: {fileID: 877152192402949925}
   m_number: 2
+  m_spr: {fileID: 6256770217195994538}
 --- !u!1 &8805817830222011324
 GameObject:
   m_ObjectHideFlags: 0
@@ -969,6 +978,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -1083,6 +1093,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
