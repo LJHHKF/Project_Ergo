@@ -20,6 +20,10 @@ public class Character : LivingEntity
         fix_sol = CStatManager.instance.solid;
         fix_int = CStatManager.instance.intelligent;
 
+        // 일부 UI (Top UI등)이 게임 시작 후 첫 참조 때 제대로 값을 못 얻어가는 문제가 발생해서 firstTurnEvent에서 꺼냄.
+        FlucStatReset();
+        CalculateStat();
+
         TurnManager.instance.firstTurn += Event_FirstTurn;
         TurnManager.instance.turnStart += Event_TurnStart;
         TurnManager.instance.battleEnd += Event_BattleEnd;
@@ -36,9 +40,6 @@ public class Character : LivingEntity
 
     protected override void Event_FirstTurn(object _o, EventArgs _e)
     {
-        //base.Event_FirstTurn(_o, _e);
-        FlucStatReset();
-        CalculateStat();
         CStatManager.instance.GetInheritedAbCond(ref myAbCond);
         myUI.HpUpdate();
         ResetGuardPoint();
@@ -47,7 +48,6 @@ public class Character : LivingEntity
 
     protected override void Event_TurnStart(object _o, EventArgs _e)
     {
-        base.Event_TurnStart(_o, _e);
         ResetGuardPoint();
         myAbCond.Affected();
     }

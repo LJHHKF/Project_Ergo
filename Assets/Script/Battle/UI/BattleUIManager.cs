@@ -14,6 +14,7 @@ public class BattleUIManager : MonoBehaviour
     [SerializeField] private GameObject card_enlarge;
     [SerializeField] private GameObject cardsListWindow;
     [SerializeField] private CardListManager cardListM;
+    [SerializeField] private GameObject statusDetailArea;
 
     public bool isDiceOn
     {
@@ -30,6 +31,7 @@ public class BattleUIManager : MonoBehaviour
         dice_Result.SetActive(false);
         card_enlarge.SetActive(false);
         cardsListWindow.SetActive(false);
+        statusDetailArea.SetActive(false);
         isDiceOn = false;
         TurnManager.instance.firstTurn += Event_FirstTurn;
         TurnManager.instance.turnStart += Event_TurnStart;
@@ -129,5 +131,10 @@ public class BattleUIManager : MonoBehaviour
     public void BtnTurnEnd()
     {
         TurnManager.instance.OnPlayerTurnEnd();
+    }
+
+    public GameObject GetStatusDetailArea()
+    {
+        return statusDetailArea;
     }
 }

@@ -55,6 +55,7 @@ public class StageManager : MonoBehaviour
         GameMaster.instance.initSaveData_Awake += Event_InitGameData;
         GameMaster.instance.startGame_Awake += Event_GameStart;
         GameMaster.instance.gameStop += Event_GameStop;
+        GameMaster.instance.gameOver += Event_GameOver;
     }
 
     private void OnDestroy()
@@ -62,6 +63,7 @@ public class StageManager : MonoBehaviour
         GameMaster.instance.initSaveData_Awake -= Event_InitGameData;
         GameMaster.instance.startGame_Awake -= Event_GameStart;
         GameMaster.instance.gameStop -= Event_GameStop;
+        GameMaster.instance.gameOver -= Event_GameOver;
     }
 
     private void Event_InitGameData(object _sender, EventArgs _e)
@@ -69,8 +71,6 @@ public class StageManager : MonoBehaviour
         m_curChapter = 1;
         m_curStage = 0;
         curStageTypeIndex = 0;
-
-        LoadManager.instance.LoadFirst(curStageTypeIndex);
 
         key.Clear();
         key.Append($"SaveID({GameMaster.instance.GetSaveID()}).CurrentStage");
@@ -81,6 +81,8 @@ public class StageManager : MonoBehaviour
 
         key.Replace("Chapter", "StageTypeIndex");
         PlayerPrefs.SetInt(key.ToString(), curStageTypeIndex);
+
+        LoadManager.instance.LoadFirst_Init_ToSetting();
     }
 
     private void Event_GameStart(object _sender, EventArgs _e)
@@ -92,10 +94,10 @@ public class StageManager : MonoBehaviour
         key.Replace("Stage", "StageTypeIndex");
         curStageTypeIndex = PlayerPrefs.GetInt(key.ToString());
 
-        LoadManager.instance.LoadFirst(curStageTypeIndex);
-
         key.Replace("StageTypeIndex", "Chapter");
         m_curChapter = PlayerPrefs.GetInt(key.ToString());
+
+        LoadManager.instance.LoadFirst(curStageTypeIndex);
     }
 
     private void Event_GameStop(object _sender, EventArgs _e)
@@ -110,6 +112,20 @@ public class StageManager : MonoBehaviour
 
         key.Replace("Chapter", "StageTypeIndex");
         PlayerPrefs.SetInt(key.ToString(), curStageTypeIndex);
+    }
+
+    private void Event_GameOver(object _sender, EventArgs _e)
+    {
+        key.Clear();
+        key.Append($"SaveID({GameMaster.instance.GetSaveID()}).CurrentStage");
+
+        PlayerPrefs.DeleteKey(key.ToString());
+
+        key.Replace("Stage", "Chapter");
+        PlayerPrefs.DeleteKey(key.ToString());
+
+        key.Replace("Chapter", "StageTypeIndex");
+        PlayerPrefs.DeleteKey(key.ToString());
     }
 
     public void IncreaseCurrentStageNum()

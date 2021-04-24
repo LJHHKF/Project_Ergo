@@ -90,6 +90,19 @@ public class LoadManager : MonoBehaviour
         StageManager.instance.SetNextStage();
     }
 
+    public void LoadFirst_Init_ToSetting()
+    {
+        LoadingSceneManager.LoadScene("StatusSetting");
+    }
+
+    public void LoadFirst_Init()
+    {
+        m_instance.isBattleReady = true;
+        StageManager.instance.SetCurrentStageTypeIndex(0);
+        LoadingSceneManager.LoadScene("Battle");
+        StageManager.instance.SetNextStage();
+    }
+
     public void LoadGameOver()
     {
         ChkAndOnStageEndEvent();
@@ -131,7 +144,7 @@ public class LoadManager : MonoBehaviour
 
     IEnumerator OnDelayedTurnStart()
     {
-        yield return new WaitForSeconds(2.0f);
+        yield return new WaitForSeconds(0.5f);
         TurnManager.OnFirstTurn();
         yield break;
     }

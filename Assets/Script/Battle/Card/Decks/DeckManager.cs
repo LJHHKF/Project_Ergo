@@ -164,21 +164,36 @@ public class DeckManager : MonoBehaviour
         }
     }
 
-    public void DeleteCard_listindex(int _index)
+    public bool DeleteCard_listindex(int _index)
     {
-        list_deck.RemoveAt(_index);
+        if (list_deck.Count > 10)
+        {
+            list_deck.RemoveAt(_index);
+            return true;
+        }
+        else
+            return false;
     }
 
-    public void DeleteCard_CardID(int _id)
+    public bool DeleteCard_CardID(int _id)
     {
-        for(int i = 0; i < list_deck.Count; i++)
+        if(list_deck.Count > 10)
         {
-            int _i = i;
-            if(list_deck[_i].GetComponent<Card_Base>().GetCardID() == _id)
+            for (int i = 0; i < list_deck.Count; i++)
             {
-                list_deck.RemoveAt(_i);
-                break;
+                int _i = i;
+                if (list_deck[_i].GetComponent<Card_Base>().GetCardID() == _id)
+                {
+                    list_deck.RemoveAt(_i);
+                    return true;
+                }
             }
+            return false;
         }
+        else
+        {
+            return false;
+        }
+
     }
 }

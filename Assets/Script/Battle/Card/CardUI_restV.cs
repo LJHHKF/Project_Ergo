@@ -17,14 +17,18 @@ public class CardUI_restV : MonoBehaviour
     private void OnEnable()
     {
         restM.ev_otherSelect += EventOtherSelect;
-        restM.ev_DeleteConfirm += EventDeleteConfirm;
+        
         selectedImg.SetActive(false);
     }
 
     private void OnDisable()
     {
         restM.ev_otherSelect -= EventOtherSelect;
-        restM.ev_DeleteConfirm -= EventDeleteConfirm;
+        if(isSelect)
+        {
+            isSelect = false;
+            restM.ev_DeleteConfirm -= EventDeleteConfirm;
+        }
     }
 
     public void SetIndex(int _index)
@@ -39,6 +43,7 @@ public class CardUI_restV : MonoBehaviour
             selectedImg.SetActive(false);
             isSelect = false;
             restM.UnSetSelected();
+            restM.ev_DeleteConfirm -= EventDeleteConfirm;
         }
         else
         {
@@ -46,6 +51,7 @@ public class CardUI_restV : MonoBehaviour
             selectedImg.SetActive(true);
             isSelect = true;
             restM.SetSelected(m_index);
+            restM.ev_DeleteConfirm += EventDeleteConfirm;
         }
     }
 
@@ -57,11 +63,15 @@ public class CardUI_restV : MonoBehaviour
             isSelect = false;
         }
     }
-    private void EventDeleteConfirm()
+    private bool EventDeleteConfirm()
     {
         if(isSelect)
         {
-            DeckManager.instance.DeleteCard_listindex(m_index); //기존 덱의 0~n의 순서로 인덱스 가져온 리스트의 인덱스이므로, 동일한 인덱스이므로 해당 방식으로 함. 가져오는 방식 변경 시 수정할 것.
+            return DeckManager.instance.DeleteCard_listindex(m_index); //기존 덱의 0~n의 순서로 인덱스 가져온 리스트의 인덱스이므로, 동일한 인덱스이므로 해당 방식으로 함. 가져오는 방식 변경 시 수정할 것.
+        }
+        else
+        {
+            return false;
         }
     }
 

@@ -44,7 +44,7 @@ public class EnemiesManager : MonoBehaviour
     void Start()
     {
         key = $"SaveID({GameMaster.instance.GetSaveID()}).LastMonsterNums";
-        if (!PlayerPrefs.HasKey(key) || PlayerPrefs.GetInt(key) == -1)
+        if (!PlayerPrefs.HasKey(key) || PlayerPrefs.GetInt(key) <= 0)
         {
             int rand = UnityEngine.Random.Range(0, 9);
             int curStageCnt;
@@ -132,13 +132,18 @@ public class EnemiesManager : MonoBehaviour
         if (monsters.Count == 0)
         {
             TurnManager.instance.OnBattleEnd();
-            PlayerPrefs.SetInt(key, -1);
+            PlayerPrefs.DeleteKey(key);
         }
     }
 
     public int GetMaxMonsCnt()
     {
         return monsters.Count;
+    }
+
+    public int GetInitCnt()
+    {
+        return initCnt;
     }
 
     public void AddMultiRTarget_NotOverlaped(ref List<GameObject> o_list, int max)
