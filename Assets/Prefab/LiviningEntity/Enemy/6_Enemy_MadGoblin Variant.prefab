@@ -20,10 +20,11 @@ MonoBehaviour:
     powerRate: 1
     repeatNum: 1
     abcondID: 0
-    abcondPower: 0
+    fixedPower: 0
     isDelayedAbCond: 0
   typeVariationNum: 1
   actSprite: {fileID: 0}
+  actAnimTrigger: Attack1
   actExplain: "\uB9C8\uB974\uC2A4\uC5D0\uAC8C [\uD798]*1 \uB9CC\uD07C\uC758 \uD53C\uD574\uB97C
     \uC785\uD78C\uB2E4."
 --- !u!114 &1812914924614166977
@@ -46,17 +47,18 @@ MonoBehaviour:
     powerRate: 1
     repeatNum: 1
     abcondID: 0
-    abcondPower: 0
+    fixedPower: 0
     isDelayedAbCond: 0
   - type: 1
     affactType: 3
     powerRate: 0.6
     repeatNum: 0
     abcondID: 0
-    abcondPower: 0
+    fixedPower: 0
     isDelayedAbCond: 0
   typeVariationNum: 2
   actSprite: {fileID: 0}
+  actAnimTrigger: Attack1
   actExplain: "\uB9C8\uB974\uC2A4\uC5D0\uAC8C [\uD2B9\uACF5]*1 \uB9CC\uD07C\uC758
     \uD53C\uD574\uB97C \uC785\uD78C\uB2E4. \uC774\uB54C \uD53C\uD574\uAC00 \uBC29\uC5B4\uB3C4\uC5D0
     \uC804\uBD80 \uB9C9\uD790 \uACBD\uC6B0 \uB9C8\uB974\uC2A4\uC5D0\uAC8C [\uD2B9\uACF5]*0.6
@@ -68,7 +70,7 @@ MonoBehaviour:
     powerRate: 0.6
     repeatNum: 1
     abcondID: 0
-    abcondPower: 0
+    fixedPower: 0
     isDelayedAbCond: 0
   isSet_ifHPDamaged: 0
   ifHPDamaged:
@@ -77,7 +79,7 @@ MonoBehaviour:
     powerRate: 0
     repeatNum: 0
     abcondID: 0
-    abcondPower: 0
+    fixedPower: 0
     isDelayedAbCond: 0
 --- !u!114 &4862677906046901059
 MonoBehaviour:
@@ -99,10 +101,11 @@ MonoBehaviour:
     powerRate: 1
     repeatNum: 1
     abcondID: 0
-    abcondPower: 0
+    fixedPower: 0
     isDelayedAbCond: 0
   typeVariationNum: 1
   actSprite: {fileID: 0}
+  actAnimTrigger: 
   actExplain: "[\uB0B4\uAD6C]*1 \uB9CC\uD07C\uC758 \uBC29\uC5B4\uB3C4\uB97C \uD68D\uB4DD\uD55C\uB2E4."
 --- !u!1001 &5457737566148353537
 PrefabInstance:
@@ -111,10 +114,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1679566343251680531, guid: cdda7a158c36ffa46ab94414845dfceb,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -3310547683968581214, guid: 871d6f0aeaf1f1346878691214e5733a,
+        type: 3}
     - target: {fileID: 1989616535422404268, guid: cdda7a158c36ffa46ab94414845dfceb,
         type: 3}
       propertyPath: m_Name
-      value: Enemy_MadGoblin Variant
+      value: 6_Enemy_MadGoblin Variant
       objectReference: {fileID: 0}
     - target: {fileID: 4451541378279184922, guid: cdda7a158c36ffa46ab94414845dfceb,
         type: 3}
@@ -126,6 +135,11 @@ PrefabInstance:
       propertyPath: maxSpGauge
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 4451541378279184922, guid: cdda7a158c36ffa46ab94414845dfceb,
+        type: 3}
+      propertyPath: myAnimator
+      value: 
+      objectReference: {fileID: 3281486447569799515}
     - target: {fileID: 4451541378279184922, guid: cdda7a158c36ffa46ab94414845dfceb,
         type: 3}
       propertyPath: specialAct
@@ -155,6 +169,16 @@ PrefabInstance:
         type: 3}
       propertyPath: normalActs.Array.data[1].weight
       value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 5568184874541642076, guid: cdda7a158c36ffa46ab94414845dfceb,
+        type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.x
+      value: 4.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 5568184874541642076, guid: cdda7a158c36ffa46ab94414845dfceb,
+        type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.y
+      value: 3.2
       objectReference: {fileID: 0}
     - target: {fileID: 5923842503137677575, guid: cdda7a158c36ffa46ab94414845dfceb,
         type: 3}
@@ -211,6 +235,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7365612931804551002, guid: cdda7a158c36ffa46ab94414845dfceb,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 164fccb33d603384c97c676a82cfba11, type: 2}
     - target: {fileID: 8891110068855490525, guid: cdda7a158c36ffa46ab94414845dfceb,
         type: 3}
       propertyPath: m_text
@@ -221,6 +250,12 @@ PrefabInstance:
 --- !u!1 &5773982873909156013 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1989616535422404268, guid: cdda7a158c36ffa46ab94414845dfceb,
+    type: 3}
+  m_PrefabInstance: {fileID: 5457737566148353537}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &3281486447569799515 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 7365612931804551002, guid: cdda7a158c36ffa46ab94414845dfceb,
     type: 3}
   m_PrefabInstance: {fileID: 5457737566148353537}
   m_PrefabAsset: {fileID: 0}

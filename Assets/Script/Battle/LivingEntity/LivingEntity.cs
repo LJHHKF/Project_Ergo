@@ -239,4 +239,9 @@ public class LivingEntity : MonoBehaviour, IDamageable
         health = GetFullHealth();
         myUI.HpUpdate();
     }
+
+    public void SetAnimTrigger(string _name)
+    {
+        myAnimator.SetTrigger(_name);
+    }
 }

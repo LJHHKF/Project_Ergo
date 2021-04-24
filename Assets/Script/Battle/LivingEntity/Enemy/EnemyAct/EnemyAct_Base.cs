@@ -45,6 +45,7 @@ public class EnemyAct_Base : MonoBehaviour
     [SerializeField] protected ActSet[] acts;
     [SerializeField] protected int typeVariationNum = 1;
     [SerializeField] protected Sprite actSprite;
+    [SerializeField] protected string actAnimTrigger;
     [TextArea] public string actExplain;
     protected int[] r_power;
     //[SerializeField] private int abCondID = -1;
@@ -85,6 +86,7 @@ public class EnemyAct_Base : MonoBehaviour
                 }
             }
         }
+        m_Enemy.SetAnimTrigger(actAnimTrigger);
     }
 
     protected virtual void SummonAct()
