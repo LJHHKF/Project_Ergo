@@ -1,19 +1,21 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class RestSceneManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public event Action ev_otherSelect;
+    public event Action ev_DeleteConfirm;
 
-    // Update is called once per frame
-    void Update()
+    [SerializeField] private GameObject cardsListWindow;
+    [SerializeField] private CardListManager listM;
+    [SerializeField] private GameObject selectedCardWindow;
+
+    private void Start()
     {
-        
+        selectedCardWindow.SetActive(false);
+        cardsListWindow.SetActive(false);
     }
 
     public void BtnRest()
@@ -34,8 +36,36 @@ public class RestSceneManager : MonoBehaviour
         LoadManager.instance.LoadNextStage();
     }
 
+    public void OnEventOtherSelect()
+    {
+        ev_otherSelect?.Invoke();
+    }
+
     public void BtnDiscard()
     {
+        cardsListWindow.SetActive(true);
+        listM.InputList_RestV();
+    }
 
+    public void SetSelected(int _index)
+    {
+        if (!selectedCardWindow.activeSelf)
+            selectedCardWindow.SetActive(true);
+        selectedCardWindow.transform.Find("Card_UI").GetComponent<Card_UI>().SetTargetCard(listM.GetInputInfo(_index), false);
+    }
+
+    public void UnSetSelected()
+    {
+        selectedCardWindow.SetActive(false);
+    }
+
+    public void BtnDiscardConfirm()
+    {
+        ev_DeleteConfirm?.Invoke();
+    }
+
+    public void BtnDiscardClose()
+    {
+        cardsListWindow.SetActive(false);
     }
 }
