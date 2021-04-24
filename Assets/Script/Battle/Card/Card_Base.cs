@@ -438,4 +438,9 @@ public class Card_Base : MonoBehaviour, ICard
         _cardImage = gameObject.transform.Find("CardImage").GetComponent<SpriteRenderer>().sprite;
     }
 
+    public string GetCurPlainText()
+    {
+        return text_plain.text;
+    }
+
 }

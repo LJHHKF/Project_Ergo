@@ -35,6 +35,8 @@ MonoBehaviour:
   isOnlyFixed: 0
   isOnlyDiceValue: 0
   isSecondDmgFormula: 0
+  isUseFixRate: 0
+  fixPRate: 0.5
   ab_ID: 0
   isImidiateAbActive: 0
   isOnlyUseSecondFixP: 1
@@ -179,8 +181,8 @@ PrefabInstance:
         type: 3}
       propertyPath: cardText
       value: "\uB2E4\uC74C \uD134\uC5D0 \uC790\uC2E0\uC5D0\uAC8C \uC720\uC9C0\uB418\uB294
-        \uBB34\uC791\uC704 \uBC84\uD504 \uC0C1\uD0DC\uB97C ([\uACE0\uC815\uCE58()
-        + \uC8FC\uC0AC\uC704 \uAC12]*(\uBCC0\uB3D9\uCE58)) \uBC88 \uC911\uCCA9 \uC2DC\uD0A8\uB2E4."
+        \uBB34\uC791\uC704 \uBC84\uD504 \uC0C1\uD0DC\uB97C ([() + \uC8FC\uC0AC\uC704
+        \uAC12]*(\uBCC0\uB3D9\uCE58)) \uBC88 \uC911\uCCA9 \uC2DC\uD0A8\uB2E4."
       objectReference: {fileID: 0}
     - target: {fileID: 1437206776610783508, guid: 13514753735d515478a2178e20010343,
         type: 3}

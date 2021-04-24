@@ -16,6 +16,8 @@ MonoBehaviour:
   isOnlyFixed: 0
   isOnlyDiceValue: 0
   isSecondDmgFormula: 0
+  isUseFixRate: 0
+  fixPRate: 0.5
   isAllAttak: 1
   isTargetOverlapped: 0
   maxTarget: 2
@@ -174,8 +176,8 @@ PrefabInstance:
     - target: {fileID: 1437206776610783508, guid: 13514753735d515478a2178e20010343,
         type: 3}
       propertyPath: cardText
-      value: "\uBAA8\uB4E0 \uC801\uC5D0\uAC8C [\uACE0\uC815\uCE58()] + [\uC8FC\uC0AC\uC704
-        \uAC12]\uB9CC\uD07C\uC758 \uD53C\uD574\uB97C 2\uBC88 \uC785\uD78C\uB2E4."
+      value: "\uBAA8\uB4E0 \uC801\uC5D0\uAC8C [()] + [\uC8FC\uC0AC\uC704 \uAC12]\uB9CC\uD07C\uC758
+        \uD53C\uD574\uB97C 2\uBC88 \uC785\uD78C\uB2E4."
       objectReference: {fileID: 0}
     - target: {fileID: 1437206776610783508, guid: 13514753735d515478a2178e20010343,
         type: 3}

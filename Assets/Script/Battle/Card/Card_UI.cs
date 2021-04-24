@@ -25,13 +25,16 @@ public class Card_UI : MonoBehaviour
 
     private Card_Base target_Card;
 
-    public void SetTargetCard(Card_Base _target)
+    public void SetTargetCard(Card_Base _target, bool _isShop)
     {
         target_Card = _target;
-        InitSetting();
+        if (_isShop)
+            InitSetting_Shop();
+        else
+            InitSetting_inGame();
     }
 
-    private void InitSetting()
+    private void InitSetting_Shop()
     {
         target_Card.CopyUIInfo(out cardID,out cardName ,out cost, out fixP, out flucPRate, out cardImage, out cardOuterImage, out cardText);
         text_cost.text = cost.ToString();
@@ -45,11 +48,27 @@ public class Card_UI : MonoBehaviour
         text_plain.text = sb.ToString();
     }
 
+    private void InitSetting_inGame()
+    {
+        target_Card.CopyUIInfo(out cardID, out cardName, out cost, out fixP, out flucPRate, out cardImage, out cardOuterImage, out cardText);
+        text_cost.text = cost.ToString();
+        text_name.text = cardName;
+        image_card.sprite = cardImage;
+        image_cardOuter.sprite = cardOuterImage;
+
+        text_plain.text = target_Card.GetCurPlainText();
+    }
+
     public void AddToDeckTargetedCard()
     {
         GameObject m_deck = GameObject.FindGameObjectWithTag("CDeck");
         List<GameObject> tempList = new List<GameObject>();
         CardPack.instance.AddCard_Object(cardID, m_deck.transform, ref tempList);
         DeckManager.instance.AddToDeck_NonList(tempList[0]);
+    }
+
+    public void DeleteToDeckTargetedCard()
+    {
+
     }
 }

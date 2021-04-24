@@ -170,6 +170,15 @@ public class BSCManager : MonoBehaviour
         }
     }
 
+    public void GetGraveList(ref List<Card_Base> _cardList)
+    {
+        for(int i = 0; i < list_grave.Count; i++)
+        {
+            int _i = i;
+            _cardList.Add(list_grave[_i].GetComponent<Card_Base>());
+        }
+    }
+
     //IEnumerator DelayedUnActive(GameObject target, float sec)
     //{
     //    yield return new WaitForSeconds(sec);

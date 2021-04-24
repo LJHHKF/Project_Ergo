@@ -28,7 +28,7 @@ public class RewardUIManager : MonoBehaviour
     {
         CardPack.instance.ResetCanList();
         Card_Base m_card = CardPack.instance.GetRandomCard_isntConfirm().GetComponent<Card_Base>();
-        cardUIManager.SetTargetCard(m_card);
+        cardUIManager.SetTargetCard(m_card, true);
         m_onDisable += () => CardPack.instance.TempHadCntUpDown(m_card.GetCardID(), false);
 
         for (int i = 0; i < selectEfs.Length; i++)
