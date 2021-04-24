@@ -63,7 +63,6 @@ public class RewardUIManager : MonoBehaviour
         if (isSelected[1])
             PlayerMoneyManager.instance.AcquiredSoul(soulReward);
 
-
         StartCoroutine(DeleayedNextStage());
     }
 
