@@ -100,27 +100,28 @@ public class Card_Base : MonoBehaviour, ICard
     {
         ChkAndFindBSCardManager();
 
-        if (m_charM == null)
-        {
-            m_charM = GameObject.FindGameObjectWithTag("Player").GetComponent<Character>();
-
-            if (isFixGuard)
-            {
-                r_fixP = fixP + Mathf.RoundToInt(m_charM.solid * 0.5f);
-            }
-            else if (type == CardType.Sword)
-            {
-                r_fixP = fixP + Mathf.RoundToInt(m_charM.strength * 0.5f);
-            }
-            else if (type == CardType.Magic)
-            {
-                r_fixP = fixP + Mathf.RoundToInt(m_charM.intel * 0.5f);
-            }
-        }
+        CalcStatRevision();
 
 
         ChkAndFindBattleUIManger();
         ChkAndFindCostManager();
+    }
+
+    private void CalcStatRevision()
+    {
+        ChkAndFindCharcter();
+        if (isFixGuard)
+        {
+            r_fixP = fixP + Mathf.RoundToInt(m_charM.solid * 0.5f);
+        }
+        else if (type == CardType.Sword)
+        {
+            r_fixP = fixP + Mathf.RoundToInt(m_charM.strength * 0.5f);
+        }
+        else if (type == CardType.Magic)
+        {
+            r_fixP = fixP + Mathf.RoundToInt(m_charM.intel * 0.5f);
+        }
     }
 
     protected virtual void OnEnable()
@@ -275,20 +276,7 @@ public class Card_Base : MonoBehaviour, ICard
 
     public void GetCardUseInfo(out int o_fixP, out float o_flucPRate)
     {
-        ChkAndFindCharcter();
-
-        if (isFixGuard)
-        {
-            r_fixP = fixP + Mathf.RoundToInt(m_charM.solid * 0.5f);
-        }
-        else if (type == CardType.Sword)
-        {
-            r_fixP = fixP + Mathf.RoundToInt(m_charM.strength * 0.5f);
-        }
-        else if (type == CardType.Magic)
-        {
-            r_fixP = fixP + Mathf.RoundToInt(m_charM.intel * 0.5f);
-        }
+        CalcStatRevision();
 
         o_fixP = r_fixP;
         o_flucPRate = flucPRate;
@@ -356,18 +344,7 @@ public class Card_Base : MonoBehaviour, ICard
             m_charM = GameObject.FindGameObjectWithTag("Player").GetComponent<Character>();
         }
 
-        if (isFixGuard)
-        {
-            r_fixP = fixP + Mathf.RoundToInt(m_charM.solid * 0.5f);
-        }
-        else if (type == CardType.Sword)
-        {
-            r_fixP = fixP + Mathf.RoundToInt(m_charM.strength * 0.5f);
-        }
-        else if (type == CardType.Magic)
-        {
-            r_fixP = fixP + Mathf.RoundToInt(m_charM.intel * 0.5f);
-        }
+        CalcStatRevision();
         StringBuilder sb = new StringBuilder(cardText);
         sb.Replace("()", $"({r_fixP})");
         sb.Replace("(변동치)", flucPRate.ToString());
@@ -440,6 +417,29 @@ public class Card_Base : MonoBehaviour, ICard
 
     public string GetCurPlainText()
     {
+        if(m_charM = null)
+        {
+            if (isFixGuard)
+            {
+                r_fixP = fixP + Mathf.RoundToInt(CStatManager.instance.solid * 0.5f);
+            }
+            else if (type == CardType.Sword)
+            {
+                r_fixP = fixP + Mathf.RoundToInt(CStatManager.instance.strength * 0.5f);
+            }
+            else if (type == CardType.Magic)
+            {
+                r_fixP = fixP + Mathf.RoundToInt(CStatManager.instance.intelligent * 0.5f);
+            }
+        }
+        else
+            CalcStatRevision();
+
+        StringBuilder sb = new StringBuilder(cardText);
+        sb.Replace("()", $"({r_fixP})");
+        sb.Replace("(변동치)", flucPRate.ToString());
+        text_plain.text = sb.ToString();
+
         return text_plain.text;
     }
 
