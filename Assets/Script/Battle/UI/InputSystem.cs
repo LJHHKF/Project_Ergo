@@ -37,7 +37,7 @@ public class InputSystem : MonoBehaviour
     private Vector3 mousePosition;
     private Camera myMainCam;
     private float maxDistance = 15f;
-    private ICard selectedCard;
+    private Card_Base selectedCard;
     private bool isSelected = false;
     private Vector2 targetedPos;
     private bool isTempTargeted = false;
@@ -106,11 +106,11 @@ public class InputSystem : MonoBehaviour
                 {
                     if (diceSManager.GetIsReadyToThrow())
                     {
-                        selectedCard = hit.transform.GetComponent<ICard>().Selected();
+                        selectedCard = (Card_Base)hit.transform.GetComponent<ICard>().Selected();
                         if (selectedCard != null)
                         {
                             isSelected = true;
-                            StartCoroutine(MouseHolding(mousePosition));
+                            m_BaUIManager.OnEnlargeCard(selectedCard);
                             line.SetActive(true);
                         }
                     }
@@ -191,6 +191,7 @@ public class InputSystem : MonoBehaviour
                             }
                         }
                     }
+                    m_BaUIManager.OffEnlargeCard();
                     selectedCard.BringUpCard(false);
                     isSelected = false;
                     selectedCard = null;
@@ -215,13 +216,5 @@ public class InputSystem : MonoBehaviour
     public void SetSceneName(string _input)
     {
         SceneName = _input;
-    }
-
-    IEnumerator MouseHolding(Vector2 prevMousePosition)
-    {
-        yield return new WaitForSeconds(1.0f);
-        if ((mousePosition2D - prevMousePosition).magnitude < 5.0f && isSelected)
-            selectedCard.Holded();
-        yield break;
     }
 }

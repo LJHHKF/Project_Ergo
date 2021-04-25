@@ -53,10 +53,14 @@ public class AbCondInfoManager : MonoBehaviour
         return abConditions[id].onePower;
     }
 
-    public void GetAbCond_text(int id, out string name, out string infoText)
+    public string GetAbCond_text(int id)
     {
-        name = m_instance.abConditions[id].name;
-        infoText = m_instance.abConditions[id].infoText;
+        return abConditions[id].infoText;
+    }
+
+    public string GetAbCond_Name(int id)
+    {
+        return abConditions[id].name;
     }
 
     public int GetAbCondListLength()

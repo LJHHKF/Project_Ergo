@@ -34,7 +34,6 @@ public class TurnManager: MonoBehaviour
         }
 
         GameMaster.instance.battleStageEnd += Event_BattleStageEnd;
-        //GameObject.FindGameObjectWithTag("CDeck").GetComponent<DeckManager>().SetTurnManager(this);
 
         start_time = Time.time;
     }
@@ -60,27 +59,6 @@ public class TurnManager: MonoBehaviour
         m_instance = null;
         GameMaster.instance.battleStageEnd -= Event_BattleStageEnd;
     }
-
-
-    //private void Update()
-    //{
-    //    if(!isFirstActived)
-    //    {
-    //        if (Time.time - start_time > 1.0f)
-    //        {
-    //            isFirstActived = true;
-    //            if (firstTurn != null)
-    //            {
-    //                firstTurn();
-    //            }
-    //        }
-    //    }
-    //}
-
-    //public void OnDelayedFirstTurn()
-    //{
-    //    StartCoroutine(DelayedFirstTurn());
-    //}
 
     public static void OnFirstTurn()
     {

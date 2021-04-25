@@ -165,8 +165,8 @@ PrefabInstance:
     - target: {fileID: 1437206776610783508, guid: 13514753735d515478a2178e20010343,
         type: 3}
       propertyPath: cardText
-      value: "([\uACE0\uC815\uCE58() + \uC8FC\uC0AC\uC704 \uAC12]*(\uBCC0\uB3D9\uCE58))
-        \uBC88 \uB9CC\uD07C \uD30C\uC6CC\uC5C5\uC744 \uD68D\uB4DD\uD55C\uB2E4."
+      value: "([() + \uC8FC\uC0AC\uC704 \uAC12]*(\uBCC0\uB3D9\uCE58)) \uBC88 \uB9CC\uD07C
+        \uD30C\uC6CC\uC5C5\uC744 \uD68D\uB4DD\uD55C\uB2E4."
       objectReference: {fileID: 0}
     - target: {fileID: 1437206776610783508, guid: 13514753735d515478a2178e20010343,
         type: 3}

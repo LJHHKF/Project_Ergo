@@ -1,7 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
+using System.Text;
+using UnityEngine.UI;
 
 public class RewardUIManager : MonoBehaviour
 {
@@ -9,32 +10,36 @@ public class RewardUIManager : MonoBehaviour
     [SerializeField] private Card_UI cardUIManager;
 
     [SerializeField] private GameObject[] btns;
-    [SerializeField] private GameObject[] selectEfs;
+    [SerializeField] private Image soulImage;
+    [SerializeField] private Text soulText;
+    [SerializeField] private Image itemImage;
+    [SerializeField] private Text itemText;
     private bool[] isSelected;
-    private bool[] isDiscarded;
+    private int soulReward;
 
-    private event Action m_onDisable;
-    //private bool isAlreadySelected = false;
+    //private event Action m_onDisable;
 
     private void Awake()
     {
-        isSelected = new bool[selectEfs.Length];
-        isDiscarded = new bool[selectEfs.Length];
-        for (int i = 0; i < isSelected.Length; i++)
-            isSelected[i] = false;
+        isSelected = new bool[btns.Length];
     }
 
     private void OnEnable()
     {
         CardPack.instance.ResetCanList();
         Card_Base m_card = CardPack.instance.GetRandomCard_isntConfirm().GetComponent<Card_Base>();
-        cardUIManager.SetTargetCard(m_card);
-        m_onDisable += () => CardPack.instance.TempHadCntUpDown(m_card.GetCardID(), false);
+        cardUIManager.SetTargetCard(m_card, true);
+        //m_onDisable += () => CardPack.instance.TempHadCntUpDown(m_card.GetCardID(), false);
 
-        for (int i = 0; i < selectEfs.Length; i++)
+        StringBuilder m_sb = new StringBuilder();
+        m_sb.Append("소울 보상(가구현)\n");
+        soulReward = EnemiesManager.instance.GetInitCnt() * 100;
+        m_sb.Append(soulReward.ToString());
+        soulText.text = m_sb.ToString();
+
+        for (int i = 0; i < isSelected.Length; i++)
         {
-            selectEfs[i].SetActive(false);
-            isDiscarded[i] = false;
+            isSelected[i] = false;
         }
 
         int rand = UnityEngine.Random.Range(0, 99);
@@ -43,37 +48,22 @@ public class RewardUIManager : MonoBehaviour
         else
         {
             btns[2].SetActive(false);
-            isDiscarded[2] = true;
         }
     }
 
-    private void OnDisable()
-    {
-        if (m_onDisable != null)
-        {
-            m_onDisable();
-        }
-    }
+    //private void OnDisable()
+    //{
+    //        m_onDisable?.Invoke();
+    //}
 
     public void BtnConfirm()
     {
-        if(!isDiscarded[0])
+        if(isSelected[0])
             cardUIManager.AddToDeckTargetedCard();
+        if (isSelected[1])
+            PlayerMoneyManager.instance.AcquiredSoul(soulReward);
 
         StartCoroutine(DeleayedNextStage());
-    }
-
-    public void BtnDiscard()
-    {
-        for(int i = 0; i < isSelected.Length; i++)
-        {
-            if(isSelected[i])
-            {
-                isDiscarded[i] = true;
-                selectEfs[i].SetActive(false);
-                btns[i].SetActive(false);
-            }
-        }
     }
 
     private void BtnSelectClick(int index)
@@ -81,13 +71,39 @@ public class RewardUIManager : MonoBehaviour
         // 0: card, 1 : sout, 2: item
         if (!isSelected[index])
         {
-            selectEfs[index].SetActive(true);
             isSelected[index] = true;
+            switch(index)
+            {
+                case 0:
+                    cardUIManager.SetImagesAlpha(1.0f);
+                    break;
+                case 1:
+                    soulImage.color = new Color(soulImage.color.r, soulImage.color.g, soulImage.color.b, 1.0f);
+                    soulText.color = new Color(soulText.color.r, soulText.color.g, soulText.color.b, 1.0f);
+                    break;
+                case 2:
+                    itemImage.color = new Color(itemImage.color.r, itemImage.color.g, itemImage.color.b, 1.0f);
+                    itemText.color = new Color(itemText.color.r, itemText.color.g, itemText.color.b, 1.0f);
+                    break;
+            }
         }
         else if(isSelected[index])
         {
-            selectEfs[index].SetActive(false);
             isSelected[index] = false;
+            switch (index)
+            {
+                case 0:
+                    cardUIManager.SetImagesAlpha(0.5f);
+                    break;
+                case 1:
+                    soulImage.color = new Color(soulImage.color.r, soulImage.color.g, soulImage.color.b, 0.5f);
+                    soulText.color = new Color(soulText.color.r, soulText.color.g, soulText.color.b, 0.5f);
+                    break;
+                case 2:
+                    itemImage.color = new Color(itemImage.color.r, itemImage.color.g, itemImage.color.b, 0.5f);
+                    itemText.color = new Color(itemText.color.r, itemText.color.g, itemText.color.b, 0.5f);
+                    break;
+            }
         }
     }
 

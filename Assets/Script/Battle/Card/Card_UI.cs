@@ -25,13 +25,16 @@ public class Card_UI : MonoBehaviour
 
     private Card_Base target_Card;
 
-    public void SetTargetCard(Card_Base _target)
+    public void SetTargetCard(Card_Base _target, bool _isShop)
     {
         target_Card = _target;
-        InitSetting();
+        if (_isShop)
+            InitSetting_Shop();
+        else
+            InitSetting_inGame();
     }
 
-    private void InitSetting()
+    private void InitSetting_Shop()
     {
         target_Card.CopyUIInfo(out cardID,out cardName ,out cost, out fixP, out flucPRate, out cardImage, out cardOuterImage, out cardText);
         text_cost.text = cost.ToString();
@@ -45,11 +48,40 @@ public class Card_UI : MonoBehaviour
         text_plain.text = sb.ToString();
     }
 
+    private void InitSetting_inGame()
+    {
+        target_Card.CopyUIInfo(out cardID, out cardName, out cost, out fixP, out flucPRate, out cardImage, out cardOuterImage, out cardText);
+        text_cost.text = cost.ToString();
+        text_name.text = cardName;
+        image_card.sprite = cardImage;
+        image_cardOuter.sprite = cardOuterImage;
+
+        text_plain.text = target_Card.GetCurPlainText();
+    }
+
     public void AddToDeckTargetedCard()
     {
         GameObject m_deck = GameObject.FindGameObjectWithTag("CDeck");
         List<GameObject> tempList = new List<GameObject>();
         CardPack.instance.AddCard_Object(cardID, m_deck.transform, ref tempList);
         DeckManager.instance.AddToDeck_NonList(tempList[0]);
+    }
+
+    public void SetImagesAlpha(float _alpha)
+    {
+        text_cost.color = new Color(text_cost.color.r, text_cost.color.g, text_cost.color.b, _alpha);
+        text_name.color = new Color(text_name.color.r, text_name.color.g, text_name.color.b, _alpha);
+        text_plain.color = new Color(text_plain.color.r, text_plain.color.g, text_plain.color.b, _alpha);
+        image_card.color = new Color(image_card.color.r, image_card.color.g, image_card.color.b, _alpha);
+        image_cardOuter.color = new Color(image_cardOuter.color.r, image_cardOuter.color.g, image_cardOuter.color.b, _alpha);
+    }
+
+    public void UnDoTransparent()
+    {
+        text_cost.color = new Color(text_cost.color.r, text_cost.color.g, text_cost.color.b, 1.0f);
+        text_name.color = new Color(text_name.color.r, text_name.color.g, text_name.color.b, 1.0f);
+        text_plain.color = new Color(text_plain.color.r, text_plain.color.g, text_plain.color.b, 1.0f);
+        image_card.color = new Color(image_card.color.r, image_card.color.g, image_card.color.b, 1.0f);
+        image_cardOuter.color = new Color(image_cardOuter.color.r, image_cardOuter.color.g, image_cardOuter.color.b, 1.0f);
     }
 }

@@ -69,28 +69,29 @@ public class CardPack : MonoBehaviour
         key.Clear();
         for (int i = 0; i < cards.Length; i++)
         {
-            cardIDs[i] = cards[i].card_prefab.GetComponent<ICard>().GetCardID();
+            int _i = i;
+            cardIDs[_i] = cards[i].card_prefab.GetComponent<ICard>().GetCardID();
 
-            if (i == 0)
+            if (_i == 0)
             {
-                key.Append($"SaveID({saveID}).CardID({cardIDs[i]}).HadCnt");
+                key.Append($"SaveID({saveID}).CardID({cardIDs[_i]}).HadCnt");
             }
             else
             {
                 key.Clear();
-                key.Append($"SaveID({saveID}).CardID({cardIDs[i]}).HadCnt");
+                key.Append($"SaveID({saveID}).CardID({cardIDs[_i]}).HadCnt");
             }
 
-            if (PlayerPrefs.HasKey(key.ToString()) == false)
+            if (!PlayerPrefs.HasKey(key.ToString()))
             {
                 card_HadCnt[i] = 0;
-                PlayerPrefs.SetInt(key.ToString(), card_HadCnt[i]);
+                PlayerPrefs.SetInt(key.ToString(), card_HadCnt[_i]);
             }
             else
             {
-                card_HadCnt[i] = PlayerPrefs.GetInt(key.ToString());
+                card_HadCnt[_i] = PlayerPrefs.GetInt(key.ToString());
             }
-            tempHadCnt[i] = 0;
+            tempHadCnt[_i] = 0;
         }
     }
 
@@ -99,13 +100,14 @@ public class CardPack : MonoBehaviour
         key.Clear();
         for(int i = 0; i < cards.Length; i++)
         {
-            if (i == 0)
-                key.Append($"SaveID({saveID}).CardID({cardIDs[i]}).HadCnt");
+            int _i = i;
+            if (_i == 0)
+                key.Append($"SaveID({saveID}).CardID({cardIDs[_i]}).HadCnt");
             else
                 key.Replace($"CardID({cardIDs[i - 1]})", $"CardID({cardIDs[i]})");
 
-            card_HadCnt[i] = 0;
-            PlayerPrefs.SetInt(key.ToString(), card_HadCnt[i]);
+            card_HadCnt[_i] = 0;
+            PlayerPrefs.DeleteKey(key.ToString());
         }
     }
 

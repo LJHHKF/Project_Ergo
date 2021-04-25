@@ -52,8 +52,8 @@ public class UnitUI : MonoBehaviour
 
     public void HpUpdate()
     {
-        float hpCur = livTarget.health;
-        float hpMax = livTarget.GetFullHealth();
+        int hpCur = livTarget.health;
+        int hpMax = livTarget.GetFullHealth();
 
         hp_txt.text = hpCur.ToString() + " / " + hpMax.ToString();
         hpBar_img.fillAmount = hpCur / hpMax;
@@ -166,5 +166,11 @@ public class UnitUI : MonoBehaviour
                 actPower_Text[i].color = new Color(255 / 255, 255 / 255, 255 / 255, 255 / 255);
             }
         }
+    }
+
+    public void GetAbcondIDAndPiled(int _index, out int _id, out int _piled)
+    {
+        _id = ids[_index];
+        _piled = nums_piled[_index];
     }
 }

@@ -11,6 +11,10 @@ public class BattleUIManager : MonoBehaviour
     [SerializeField] private GameObject btn_TurnEnd;
     [SerializeField] private GameObject panel_reward;
     [SerializeField] private GameObject dice_Result;
+    [SerializeField] private GameObject card_enlarge;
+    [SerializeField] private GameObject cardsListWindow;
+    [SerializeField] private CardListManager cardListM;
+    [SerializeField] private GameObject statusDetailArea;
 
     public bool isDiceOn
     {
@@ -25,6 +29,9 @@ public class BattleUIManager : MonoBehaviour
         forDice.SetActive(false);
         panel_reward.SetActive(false);
         dice_Result.SetActive(false);
+        card_enlarge.SetActive(false);
+        cardsListWindow.SetActive(false);
+        statusDetailArea.SetActive(false);
         isDiceOn = false;
         TurnManager.instance.firstTurn += Event_FirstTurn;
         TurnManager.instance.turnStart += Event_TurnStart;
@@ -99,8 +106,35 @@ public class BattleUIManager : MonoBehaviour
         yield break;
     }
 
+    public void OnEnlargeCard(Card_Base _target)
+    {
+        card_enlarge.SetActive(true);
+        card_enlarge.GetComponent<Card_UI>().SetTargetCard(_target, false);
+    }
+
+    public void OffEnlargeCard()
+    {
+        card_enlarge.SetActive(false);
+    }
+
+    public void OnCardListWindow(bool _isDeck)
+    {
+        cardsListWindow.SetActive(true);
+        cardListM.InputList(_isDeck);
+    }
+
+    public void OffCardListWindow()
+    {
+        cardsListWindow.SetActive(false);
+    }
+
     public void BtnTurnEnd()
     {
         TurnManager.instance.OnPlayerTurnEnd();
+    }
+
+    public GameObject GetStatusDetailArea()
+    {
+        return statusDetailArea;
     }
 }
