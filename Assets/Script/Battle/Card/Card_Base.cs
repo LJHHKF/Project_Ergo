@@ -253,8 +253,7 @@ public class Card_Base : MonoBehaviour, ICard
         else
             s_order = renderPriority - 1;
 
-        for (int i = 0; i < m_sprRs.Length; i++)
-            m_sprRs[i].sortingOrder = s_order;
+        MyImgSorting(s_order);
         textCanvas.sortingOrder = s_order;
 
         if (!isSelect)
@@ -331,9 +330,7 @@ public class Card_Base : MonoBehaviour, ICard
         //m_sprRs[0].sortingOrder = renderPriority - 1;
         //for (int i = 0; i < m_sprRs.Length; i++)
         //    m_sprRs[i].sortingOrder = renderPriority -1;
-        textCanvas.sortingOrder = renderPriority;
-        m_sprRs[0].sortingOrder = renderPriority;
-        m_sprRs[1].sortingOrder = renderPriority - 1;
+        MyImgSorting(renderPriority);
         Vector2 tempV = new Vector2(((renderPriority - middle) * x_moveP), y_heightP);
         Quaternion tempQ = Quaternion.Euler(new Vector3(0, 0, (middle - renderPriority) * rotP));
         gameObject.transform.localPosition = tempV;
@@ -349,6 +346,13 @@ public class Card_Base : MonoBehaviour, ICard
         sb.Replace("()", $"({r_fixP})");
         sb.Replace("(변동치)", flucPRate.ToString());
         text_plain.text = sb.ToString();
+    }
+
+    private void MyImgSorting(int _value)
+    {
+        textCanvas.sortingOrder = _value;
+        m_sprRs[0].sortingOrder = _value;
+        m_sprRs[1].sortingOrder = _value - 1;
     }
 
     public bool GetIsNonTarget()

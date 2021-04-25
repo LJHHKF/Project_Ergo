@@ -50,8 +50,6 @@ public class CStatManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-
-        
     }
 
     // Start is called before the first frame update
@@ -188,5 +186,12 @@ public class CStatManager : MonoBehaviour
         strength += _str;
         solid += _solid;
         intelligent += _int;
+    }
+
+    public void SetStatChange_Init(int _endu, int _str, int _solid, int _int)
+    {
+        SetStatChange(_endu, _str, _solid, _int);
+        health = GetCalcFullHealth();
+        SaveStats();
     }
 }

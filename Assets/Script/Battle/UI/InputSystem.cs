@@ -44,8 +44,6 @@ public class InputSystem : MonoBehaviour
     private Vector2 targetColSize;
     private string SceneName;
 
-    [SerializeField] private float holdingDistance = 5.0f;
-
     //[SerializeField] private Canvas m_cardCanvas;
     //private GraphicRaycaster m_GRay;
     //private PointerEventData m_ped;

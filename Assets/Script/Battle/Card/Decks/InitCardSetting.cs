@@ -13,7 +13,7 @@ public class InitCardSetting : MonoBehaviour
     }
 
     [Header("Card Init Set Value")]
-    [SerializeField]private CardPack m_cardPack;
+    [SerializeField] private CardPack m_cardPack;
     [SerializeField] private CardInitInfo[] c_initInfos;
 
 
@@ -31,32 +31,29 @@ public class InitCardSetting : MonoBehaviour
 
     private void Event_InitSaveDataAwake(object _o, EventArgs _e)
     {
-        OnInitCardsSetting(GameMaster.instance.GetSaveID());
+        OnInitCardsSetting();
     }
 
     private void Event_StartGameAwake(object _o, EventArgs _e)
     {
-        CardPackReset(GameMaster.instance.GetSaveID());
+        m_cardPack.SetSaveID(GameMaster.instance.GetSaveID());
+        m_cardPack.CardPack_Start();
     }
 
-    public void OnInitCardsSetting(int saveID)
+    public void OnInitCardsSetting()
     {
-        CardPackReset(saveID);
+        m_cardPack.SetSaveID(GameMaster.instance.GetSaveID());
+        m_cardPack.CardPack_Init();
         for (int i = 0; i < c_initInfos.Length; i++)
         {
-            if (c_initInfos[i].cardHadValue > 0)
+            int _i = i;
+            if (c_initInfos[_i].cardHadValue > 0)
             {
                 for (int j = 0; j < c_initInfos[i].cardHadValue; j++)
                 {
-                    CardPack.instance.AddCard_OnlyHadData(c_initInfos[i].cardID);
+                    CardPack.instance.AddCard_OnlyHadData(c_initInfos[_i].cardID);
                 }
             }
         }
-    }
-
-    public void CardPackReset(int saveID)
-    {
-        m_cardPack.SetSaveID(saveID);
-        m_cardPack.CardPackInit();
     }
 }

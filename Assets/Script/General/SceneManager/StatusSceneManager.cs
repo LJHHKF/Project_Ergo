@@ -47,7 +47,7 @@ public class StatusSceneManager : MonoBehaviour
         }
         else
         {
-            CStatManager.instance.SetStatChange(add_endu, add_str, add_solid, add_int);
+            CStatManager.instance.SetStatChange_Init(add_endu, add_str, add_solid, add_int);
             LoadManager.instance.LoadFirst_Init();
         }
     }
@@ -69,7 +69,7 @@ public class StatusSceneManager : MonoBehaviour
 
     public void OnBtnWarningYes()
     {
-        CStatManager.instance.SetStatChange(add_endu, add_str, add_solid, add_int);
+        CStatManager.instance.SetStatChange_Init(add_endu, add_str, add_solid, add_int);
         LoadManager.instance.LoadFirst_Init();
     }
 

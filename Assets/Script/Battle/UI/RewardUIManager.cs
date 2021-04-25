@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Text;
 using UnityEngine.UI;
+using System;
 
 public class RewardUIManager : MonoBehaviour
 {
     [SerializeField] private int itemOnPer_int = 30; // max 100
     [SerializeField] private Card_UI cardUIManager;
+    private int card_ID;
 
     [SerializeField] private GameObject[] btns;
     [SerializeField] private Image soulImage;
@@ -17,7 +19,7 @@ public class RewardUIManager : MonoBehaviour
     private bool[] isSelected;
     private int soulReward;
 
-    //private event Action m_onDisable;
+    private event Action m_onDisable;
 
     private void Awake()
     {
@@ -29,7 +31,7 @@ public class RewardUIManager : MonoBehaviour
         CardPack.instance.ResetCanList();
         Card_Base m_card = CardPack.instance.GetRandomCard_isntConfirm().GetComponent<Card_Base>();
         cardUIManager.SetTargetCard(m_card, true);
-        //m_onDisable += () => CardPack.instance.TempHadCntUpDown(m_card.GetCardID(), false);
+        m_onDisable += () => CardPack.instance.TempHadCntUpDown(m_card.GetCardID(), false);
 
         StringBuilder m_sb = new StringBuilder();
         m_sb.Append("소울 보상(가구현)\n");
@@ -39,7 +41,8 @@ public class RewardUIManager : MonoBehaviour
 
         for (int i = 0; i < isSelected.Length; i++)
         {
-            isSelected[i] = false;
+            int _i = i;
+            isSelected[_i] = true;
         }
 
         int rand = UnityEngine.Random.Range(0, 99);
@@ -51,10 +54,10 @@ public class RewardUIManager : MonoBehaviour
         }
     }
 
-    //private void OnDisable()
-    //{
-    //        m_onDisable?.Invoke();
-    //}
+    private void OnDisable()
+    {
+        m_onDisable?.Invoke();
+    }
 
     public void BtnConfirm()
     {
