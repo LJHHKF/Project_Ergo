@@ -64,13 +64,13 @@ public class CardPack : MonoBehaviour
         SaveHadCnt();
     }
 
-    public void CardPackInit()
+    public void CardPack_Start()
     {
         key.Clear();
         for (int i = 0; i < cards.Length; i++)
         {
             int _i = i;
-            cardIDs[_i] = cards[i].card_prefab.GetComponent<ICard>().GetCardID();
+            cardIDs[_i] = cards[_i].card_prefab.GetComponent<ICard>().GetCardID();
 
             if (_i == 0)
             {
@@ -84,13 +84,37 @@ public class CardPack : MonoBehaviour
 
             if (!PlayerPrefs.HasKey(key.ToString()))
             {
-                card_HadCnt[i] = 0;
+                card_HadCnt[_i] = 0;
                 PlayerPrefs.SetInt(key.ToString(), card_HadCnt[_i]);
             }
             else
             {
                 card_HadCnt[_i] = PlayerPrefs.GetInt(key.ToString());
             }
+            tempHadCnt[_i] = 0;
+        }
+    }
+
+    public void CardPack_Init()
+    {
+        key.Clear();
+        for (int i = 0; i < cards.Length; i++)
+        {
+            int _i = i;
+            cardIDs[_i] = cards[_i].card_prefab.GetComponent<ICard>().GetCardID();
+
+            if (_i == 0)
+            {
+                key.Append($"SaveID({saveID}).CardID({cardIDs[_i]}).HadCnt");
+            }
+            else
+            {
+                key.Clear();
+                key.Append($"SaveID({saveID}).CardID({cardIDs[_i]}).HadCnt");
+            }
+
+            card_HadCnt[_i] = 0;
+            PlayerPrefs.SetInt(key.ToString(), card_HadCnt[_i]);
             tempHadCnt[_i] = 0;
         }
     }
@@ -217,7 +241,7 @@ public GameObject GetRandomCard_isntConfirm()
                 int id = m_instance.canList[i].card_prefab.GetComponent<ICard>().GetCardID();
                 int index = m_instance.SearchIndexFromID(id);
                 GameObject temp;
-                TempHadCntUpDown(id, true);
+                TempHadCntUpDown_Index(index, true);
                 if (m_instance.card_HadCnt[i] + m_instance.tempHadCnt[i] >= max_DuplicateValue)
                 {
                     temp = canList[i].card_prefab;
@@ -250,6 +274,14 @@ public GameObject GetRandomCard_isntConfirm()
             tempHadCnt[index] += 1;
         else
             tempHadCnt[index] -= 1;
+    }
+
+    private void TempHadCntUpDown_Index(int _index, bool isUp)
+    {
+        if (isUp)
+            tempHadCnt[_index] += 1;
+        else
+            tempHadCnt[_index] -= 1;
     }
 
     public void SetSaveID(int id)

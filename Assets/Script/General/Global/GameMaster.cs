@@ -32,6 +32,8 @@ public class GameMaster : MonoBehaviour
     public event EventHandler stageEnd;
     public event EventHandler battleStageEnd;
 
+    public bool isInit { get; set; }
+
     protected void Awake()
     {
         if(instance != this)
@@ -43,6 +45,8 @@ public class GameMaster : MonoBehaviour
     private void Start()
     {
         gameOver += Event_GameOver;
+
+        isInit = false;
 
         if (isReset)
             PlayerPrefs.DeleteAll();
@@ -96,7 +100,7 @@ public class GameMaster : MonoBehaviour
     public bool OnInitSaveData()
     {
         key = $"SaveID({saveID})";
-
+        isInit = true;
         if (!PlayerPrefs.HasKey(key) || PlayerPrefs.GetInt(key) == 0)
         {
             PlayerPrefs.SetInt(key, 1);

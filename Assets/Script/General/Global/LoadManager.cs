@@ -60,7 +60,7 @@ public class LoadManager : MonoBehaviour
                 LoadingSceneManager.LoadScene("Ev_Trap");
                 break;
         }
-
+        GameMaster.instance.isInit = false;
         StageManager.instance.SetCurrentStageTypeIndex(nextStageTypeIndex);
         StageManager.instance.SetNextStage();
     }

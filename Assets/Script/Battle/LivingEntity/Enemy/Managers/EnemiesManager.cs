@@ -44,7 +44,7 @@ public class EnemiesManager : MonoBehaviour
     void Start()
     {
         key = $"SaveID({GameMaster.instance.GetSaveID()}).LastMonsterNums";
-        if (!PlayerPrefs.HasKey(key) || PlayerPrefs.GetInt(key) <= 0)
+        if (!PlayerPrefs.HasKey(key) || PlayerPrefs.GetInt(key) <= 0 || GameMaster.instance.isInit)
         {
             int rand = UnityEngine.Random.Range(0, 9);
             int curStageCnt;
@@ -118,6 +118,8 @@ public class EnemiesManager : MonoBehaviour
     {
         PlayerPrefs.SetInt(key, initCnt);
     }
+
+    
 
     void RemoveAtMonstersList(GameObject who)
     {
