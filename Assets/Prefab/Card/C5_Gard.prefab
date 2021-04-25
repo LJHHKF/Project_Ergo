@@ -25,6 +25,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 239778855956824244, guid: 13514753735d515478a2178e20010343,
+        type: 3}
+      propertyPath: m_Color.a
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1302848795740026345, guid: 13514753735d515478a2178e20010343,
         type: 3}
       propertyPath: m_LocalScale.x
@@ -130,7 +135,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Sprite
       value: 
+<<<<<<< HEAD
+      objectReference: {fileID: 21300000, guid: b124fe8fbe0130c49970ea31cfc2e7f0,
+=======
       objectReference: {fileID: 21300000, guid: cf8ff3700145dee4fb1ce5284a0d3985,
+>>>>>>> CheckSpace
         type: 3}
     - target: {fileID: 1437206776610783508, guid: 13514753735d515478a2178e20010343,
         type: 3}
