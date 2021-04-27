@@ -34,6 +34,7 @@ public class DeckManager : MonoBehaviour
     {
         GameMaster.instance.initSaveData_Start += Event_InitSaveDataStart;
         GameMaster.instance.startGame_Start += Event_StartGame;
+        GameMaster.instance.gameStop += Event_GameStop;
         TurnManager.instance.firstTurn += Event_FirstTurn;
         TurnManager.instance.turnStart += Event_TurnStart;
     }
@@ -45,6 +46,7 @@ public class DeckManager : MonoBehaviour
         GameMaster.instance.startGame_Start -= Event_StartGame;
         TurnManager.instance.firstTurn -= Event_FirstTurn;
         TurnManager.instance.turnStart -= Event_TurnStart;
+        GameMaster.instance.gameStop -= Event_GameStop;
     }
 
     private void Event_FirstTurn(object _o, EventArgs _e)
@@ -65,6 +67,11 @@ public class DeckManager : MonoBehaviour
     private void Event_StartGame(object _o, EventArgs _e)
     {
         ResetDeck();
+    }
+
+    private void Event_GameStop(object _o, EventArgs _e)
+    {
+        list_deck.Clear();
     }
 
     public void ResetDeck()
