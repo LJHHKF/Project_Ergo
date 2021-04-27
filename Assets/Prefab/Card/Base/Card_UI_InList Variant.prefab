@@ -129,13 +129,33 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4282485229274095499, guid: 7aa7499ca1858334182c032329108daf,
         type: 3}
+      propertyPath: m_PixelPerfect
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4282485229274095499, guid: 7aa7499ca1858334182c032329108daf,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4282485229274095499, guid: 7aa7499ca1858334182c032329108daf,
+        type: 3}
       propertyPath: m_OverrideSorting
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4282485229274095499, guid: 7aa7499ca1858334182c032329108daf,
+        type: 3}
+      propertyPath: m_OverridePixelPerfect
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5447218517063282540, guid: 7aa7499ca1858334182c032329108daf,
         type: 3}
       propertyPath: m_Name
       value: Card_UI_InList Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 7589374964377744505, guid: 7aa7499ca1858334182c032329108daf,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 85.65
       objectReference: {fileID: 0}
     - target: {fileID: 8927916407425587486, guid: 7aa7499ca1858334182c032329108daf,
         type: 3}

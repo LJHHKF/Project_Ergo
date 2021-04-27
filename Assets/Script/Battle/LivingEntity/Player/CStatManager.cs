@@ -58,6 +58,7 @@ public class CStatManager : MonoBehaviour
         GameMaster.instance.initSaveData_Awake += Event_InitSaveDataAwake;
         GameMaster.instance.startGame_Awake += Event_StartGameAwake;
         GameMaster.instance.stageEnd += Event_StageEnd;
+        GameMaster.instance.battleStageEnd += Event_BattleStageEnd;
         GameMaster.instance.gameOver += Event_GameOver;
 
         abcond_list.Capacity = AbCondInfoManager.instance.GetAbCondListLength() + 1;
@@ -69,6 +70,8 @@ public class CStatManager : MonoBehaviour
         GameMaster.instance.initSaveData_Awake -= Event_InitSaveDataAwake;
         GameMaster.instance.startGame_Awake -= Event_StartGameAwake;
         GameMaster.instance.stageEnd -= Event_StageEnd;
+        GameMaster.instance.battleStageEnd -= Event_BattleStageEnd;
+        GameMaster.instance.gameOver -= Event_GameOver;
     }
 
     private void Event_InitSaveDataAwake(object _o, EventArgs _e)
@@ -126,6 +129,11 @@ public class CStatManager : MonoBehaviour
         SaveStats();
     }
 
+    private void Event_BattleStageEnd(object _o , EventArgs _e)
+    {
+        abcond_list.Clear();
+    }
+
     public int GetCalcFullHealth()
     {
         return fullHealth_pure + endurance;
@@ -167,7 +175,7 @@ public class CStatManager : MonoBehaviour
             {
                 _target.AddImdiateAbCondition(abcond_list[i].id, abcond_list[i].piledNum);
             }
-            abcond_list.Clear();
+            //abcond_list.Clear(); //배틀 스테이지 끝날 시 클리어하는게 좋을 듯.
         }
         return;
     }

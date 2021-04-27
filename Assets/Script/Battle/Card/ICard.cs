@@ -4,7 +4,7 @@ public interface ICard
 {
     ICard Selected();
     void Holded();
-    void Dragged(Vector2 mousePos, LineDrawer liner);
+    bool Dragged(Vector2 mousePos, LineDrawer liner);
 
     void Use(int diceValue);
 

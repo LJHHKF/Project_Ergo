@@ -55,7 +55,6 @@ public class Character : LivingEntity
     protected override void Event_BattleEnd(object _o, EventArgs _e)
     {
         CStatManager.instance.HealthPointUpdate(health);
-        myAbCond.SaveCsCurAbCond();
     }
 
     public override void GetGuardPoint(int GetValue)

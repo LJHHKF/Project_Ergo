@@ -37,12 +37,12 @@ public class StatusInfoUI : MonoBehaviour
             StringBuilder m_sb = new StringBuilder();
             m_unitUI.GetAbcondIDAndPiled(abcond_index, out id, out piled);
 
-            m_sb.Append($"{ AbCondInfoManager.instance.GetAbCond_Name(id)} X {piled}");
+            m_sb.Append($"{ AbCondInfoManager.instance.GetAbCond_Name(id)} X {piled + 1}");
             txt_header.text = m_sb.ToString();
 
             m_sb.Clear();
             m_sb.Append(AbCondInfoManager.instance.GetAbCond_text(id));
-            m_sb.Replace("n", piled.ToString());
+            m_sb.Replace("n", (piled+1).ToString());
             txt_body.text = m_sb.ToString();
         }
     }

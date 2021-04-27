@@ -43,6 +43,7 @@ public class InputSystem : MonoBehaviour
     private bool isTempTargeted = false;
     private Vector2 targetColSize;
     private string SceneName;
+    private bool isInEnlargeArea;
 
     //[SerializeField] private Canvas m_cardCanvas;
     //private GraphicRaycaster m_GRay;
@@ -148,18 +149,23 @@ public class InputSystem : MonoBehaviour
 
                         if (isTempTargeted)
                         {
-                            selectedCard.Dragged(targetedPos, m_line);
+                            isInEnlargeArea = selectedCard.Dragged(targetedPos, m_line);
 
                         }
                         else
                         {
-                            selectedCard.Dragged(mousePosition2D, m_line);
+                            isInEnlargeArea = selectedCard.Dragged(mousePosition2D, m_line);
                         }
                     }
                     else
                     {
-                        selectedCard.Dragged(mousePosition2D, m_line);
+                        isInEnlargeArea = selectedCard.Dragged(mousePosition2D, m_line);
                     }
+
+                    if (!isInEnlargeArea)
+                        m_BaUIManager.OffEnlargeCard();
+                    else
+                        m_BaUIManager.OnEnlargeCard(selectedCard);
                 }
             }
             if (Input.GetMouseButtonUp(0))

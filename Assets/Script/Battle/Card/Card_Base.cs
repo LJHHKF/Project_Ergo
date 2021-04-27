@@ -153,19 +153,27 @@ public class Card_Base : MonoBehaviour, ICard
         //카드 정보 넘겨주기
     }
 
-    public virtual void Dragged(Vector2 mousePos, LineDrawer liner)
+    public virtual bool Dragged(Vector2 mousePos, LineDrawer liner)
     {
         //선택된 카드 투명화, 카드 위치 -> 타겟 위치 선 연결 준비
         //타겟 위치는 업데이트에서 받아올 것.
         liner.SetLine_Worlds(gameObject.transform, mousePos);
 
-        if (handHeightPoint < mousePos.y && !ready)
+        if (handHeightPoint < mousePos.y)
         {
-            OnCardAlphaAndReady();
+            if (!ready)
+            {
+                OnCardAlphaAndReady();
+            }
+            return false;
         }
-        else if (handHeightPoint > mousePos.y && ready)
+        else
         {
-            OffCardAlphaAndReady();
+            if (ready)
+            {
+                OffCardAlphaAndReady();
+            }
+            return true;
         }
 
         //Debug.Log(mousePos); //논타겟 카드의 손패와 필드 영역 벗어남 구분하기 위해 y값 확인
