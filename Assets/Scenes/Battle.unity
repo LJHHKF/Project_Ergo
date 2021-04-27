@@ -9019,23 +9019,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2097164264}
     m_Modifications:
-    - target: {fileID: 166521901, guid: cf6f2b24e8e53c0428e9c4347becbe8f, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 905848900, guid: cf6f2b24e8e53c0428e9c4347becbe8f, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1163312679, guid: cf6f2b24e8e53c0428e9c4347becbe8f, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2228973289959646598, guid: cf6f2b24e8e53c0428e9c4347becbe8f,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3556708071288198484, guid: cf6f2b24e8e53c0428e9c4347becbe8f,
         type: 3}
       propertyPath: m_Pivot.x
@@ -9145,16 +9128,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: TopBar
-      objectReference: {fileID: 0}
-    - target: {fileID: 3556708071520045428, guid: cf6f2b24e8e53c0428e9c4347becbe8f,
-        type: 3}
-      propertyPath: m_text
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5126460952784676704, guid: cf6f2b24e8e53c0428e9c4347becbe8f,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cf6f2b24e8e53c0428e9c4347becbe8f, type: 3}
