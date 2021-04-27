@@ -103,6 +103,30 @@ public class CStatManager : MonoBehaviour
         fullHealth_pure = PlayerPrefs.GetInt(key.ToString());
         key.Replace("FullHealth", "Health");
         health = PlayerPrefs.GetInt(key.ToString());
+
+        key.Replace("Health", "Abcond.Length");
+        if(PlayerPrefs.HasKey(key.ToString()))
+        {
+            int _leng = PlayerPrefs.GetInt(key.ToString());
+            abcond_list.Clear();
+            for(int i = 0; i < _leng; i++)
+            {
+                AbCond_Saved _temp;
+                int _i = i;
+                if(_i == 0)
+                {
+                    key.Replace("Length", "1.ID");
+                }
+                else
+                {
+                    key.Replace($"{abcond_list.Count}.PiledNum", $"{abcond_list.Count + 1}.ID");
+                }
+                _temp.id = PlayerPrefs.GetInt(key.ToString());
+                key.Replace("ID", "PiledNum");
+                _temp.piledNum = PlayerPrefs.GetInt(key.ToString());
+                abcond_list.Add(_temp);
+            }
+        }
     }
 
     private void Event_GameOver(object _o, EventArgs _e)
@@ -122,6 +146,8 @@ public class CStatManager : MonoBehaviour
         PlayerPrefs.DeleteKey(key.ToString());
         key.Replace("FullHealth", "Health");
         PlayerPrefs.DeleteKey(key.ToString());
+        key.Replace("Health", "Abcond.Length");
+        PlayerPrefs.DeleteKey(key.ToString());
     }
 
     private void Event_StageEnd(object _o, EventArgs _e)
@@ -131,6 +157,17 @@ public class CStatManager : MonoBehaviour
 
     private void Event_BattleStageEnd(object _o , EventArgs _e)
     {
+        key.Clear();
+        key.Append($"SaveID({GameMaster.instance.GetSaveID()}).CStat.Abcond.Length");
+        PlayerPrefs.DeleteKey(key.ToString());
+        for (int i = 0; i < abcond_list.Count; i++)
+        {
+            int _i = i;
+            key.Replace("Length", $"{_i + 1}.ID");
+            PlayerPrefs.DeleteKey(key.ToString());
+            key.Replace("ID", "PiledNum");
+            PlayerPrefs.DeleteKey(key.ToString());
+        }
         abcond_list.Clear();
     }
 
@@ -186,6 +223,14 @@ public class CStatManager : MonoBehaviour
         temp.id = _id;
         temp.piledNum = _piledNum;
         abcond_list.Add(temp);
+
+        key.Clear();
+        key.Append($"SaveID({GameMaster.instance.GetSaveID()}).CStat.Abcond.Length");
+        PlayerPrefs.SetInt(key.ToString(), abcond_list.Count);
+        key.Replace("Length",$"{abcond_list.Count}.ID");
+        PlayerPrefs.SetInt(key.ToString(), _id);
+        key.Replace("ID", "PiledNum");
+        PlayerPrefs.SetInt(key.ToString(), _piledNum);
     }
 
     public void SetStatChange(int _endu, int _str, int _solid, int _int)

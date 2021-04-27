@@ -23,6 +23,8 @@ public class TurnManager: MonoBehaviour
     public event EventHandler turnEnd;
     public event EventHandler battleEnd;
 
+    private bool isBattleEnded = false;
+
     private bool isFirstActived = false;
     private float start_time = 0;
 
@@ -64,6 +66,7 @@ public class TurnManager: MonoBehaviour
     {
         m_instance.firstTurn?.Invoke(m_instance, EventArgs.Empty);
         m_instance.isFirstActived = true;
+        m_instance.isBattleEnded = false;
     }
 
     public void OnTurnStart()
@@ -85,10 +88,16 @@ public class TurnManager: MonoBehaviour
     public void OnBattleEnd()
     {
         battleEnd?.Invoke(m_instance, EventArgs.Empty);
+        m_instance.isBattleEnded = true;
     }
 
     public bool GetIsFirstActivated()
     {
         return isFirstActived;
+    }
+
+    public bool GetIsBattleEnded()
+    {
+        return isBattleEnded;
     }
 }
