@@ -212,11 +212,12 @@ public class CardPack : MonoBehaviour
     {
         for(int i = 0; i < cards.Length; i++)
         {
-            if(card_HadCnt[i] > 0)
+            int _i = i;
+            if(card_HadCnt[_i] > 0)
             {
-                for(int j = 0; j < card_HadCnt[i]; j++)
+                for(int j = 0; j < card_HadCnt[_i]; j++)
                 {
-                    GameObject go = Instantiate(cards[i].card_prefab, _p);
+                    GameObject go = Instantiate(cards[_i].card_prefab, _p);
                     go.SetActive(false);
                     _out.Add(go);
                 }
@@ -229,26 +230,30 @@ public GameObject GetRandomCard_isntConfirm()
         int fullWeight = 0;
         int max = -1;
         int rand;
-        for(int i = 0; i < canList.Count; i++)
-            fullWeight += canList[i].card_weight;
+        for (int i = 0; i < canList.Count; i++)
+        {
+            int _i = i;
+            fullWeight += canList[_i].card_weight;
+        }
         rand = UnityEngine.Random.Range(0, fullWeight);
 
         for (int i = 0; i < m_instance.canList.Count; i++)
         {
-            max += m_instance.canList[i].card_weight;
-            if(rand >= max - canList[i].card_weight && rand < max)
+            int _i = i;
+            max += m_instance.canList[_i].card_weight;
+            if(rand >= max - canList[_i].card_weight && rand < max)
             {
-                int id = m_instance.canList[i].card_prefab.GetComponent<ICard>().GetCardID();
+                int id = m_instance.canList[_i].card_prefab.GetComponent<ICard>().GetCardID();
                 int index = m_instance.SearchIndexFromID(id);
                 GameObject temp;
                 TempHadCntUpDown_Index(index, true);
-                if (m_instance.card_HadCnt[i] + m_instance.tempHadCnt[i] >= max_DuplicateValue)
+                if (m_instance.card_HadCnt[_i] + m_instance.tempHadCnt[_i] >= max_DuplicateValue)
                 {
-                    temp = canList[i].card_prefab;
-                    canList.RemoveAt(i);
+                    temp = canList[_i].card_prefab;
+                    canList.RemoveAt(_i);
                     return temp;
                 }
-                return canList[i].card_prefab;
+                return canList[_i].card_prefab;
             }
         }
         Debug.LogError("랜덤 카드 값을 가져오는데 실패했습니다.");
@@ -260,9 +265,10 @@ public GameObject GetRandomCard_isntConfirm()
         canList.Clear();
         for(int i = 0; i < card_HadCnt.Length; i++)
         {
-            if(card_HadCnt[i] + tempHadCnt[i] < max_DuplicateValue)
+            int _i = i;
+            if(card_HadCnt[_i] + tempHadCnt[_i] < max_DuplicateValue)
             {
-                canList.Add(m_instance.cards[i]);
+                canList.Add(m_instance.cards[_i]);
             }
         }
     }
@@ -294,11 +300,12 @@ public GameObject GetRandomCard_isntConfirm()
         key.Clear();
         for(int i = 0; i < card_HadCnt.Length; i++)
         {
-            if (i == 0)
-                key.Append($"SaveID({saveID}).CardID({cardIDs[i]}).HadCnt");
+            int _i = i;
+            if (_i == 0)
+                key.Append($"SaveID({saveID}).CardID({cardIDs[_i]}).HadCnt");
             else
-                key.Replace($"CardID({cardIDs[i - 1]})", $"CardID({cardIDs[i]})");
-            PlayerPrefs.SetInt(key.ToString(), card_HadCnt[i]);
+                key.Replace($"CardID({cardIDs[_i - 1]})", $"CardID({cardIDs[_i]})");
+            PlayerPrefs.SetInt(key.ToString(), card_HadCnt[_i]);
         }
     }
 
@@ -311,7 +318,10 @@ public GameObject GetRandomCard_isntConfirm()
     {
         int result = 0;
         for (int i = 0; i < card_HadCnt.Length; i++)
-            result += card_HadCnt[i];
+        {
+            int _i = i;
+            result += card_HadCnt[_i];
+        }
         return result;
     }
 }

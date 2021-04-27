@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class CUF_TargetAttack : CUF_Base
 {
@@ -34,11 +35,18 @@ public class CUF_TargetAttack : CUF_Base
         else
             dmg = fixP + Mathf.RoundToInt(diceValue * flucPRate);
 
-        liv_target.OnDamage(dmg);
+        StartCoroutine(delayedAffect(() => liv_target.OnDamage(dmg)));
     }
 
     public override void ReUse()
     {
         this.Use(dv);
+    }
+
+    IEnumerator delayedAffect(Action _action)
+    {
+        yield return new WaitForSeconds(affectDelay);
+        _action.Invoke();
+        yield break;
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class CUF_MultiRTargetAttack : CUF_Base
 {
@@ -65,12 +66,19 @@ public class CUF_MultiRTargetAttack : CUF_Base
 
         for (int i = 0; i < target_list.Count; i++)
         {
-            target_list[i].GetComponent<LivingEntity>().OnDamage(dmg);
+            StartCoroutine(delayedAffect(() => target_list[i].GetComponent<LivingEntity>().OnDamage(dmg)));
         }
     }
 
     public override void ReUse()
     {
         this.Use(dv);
+    }
+
+    IEnumerator delayedAffect(Action _action)
+    {
+        yield return new WaitForSeconds(affectDelay);
+        _action.Invoke();
+        yield break;
     }
 }

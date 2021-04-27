@@ -11,6 +11,7 @@ public class CUF_Base : MonoBehaviour
     [SerializeField] protected bool isSecondDmgFormula = false;
     [SerializeField] protected bool isUseFixRate = false;
     [SerializeField] protected float fixPRate = 0.5f;
+    [SerializeField] protected float affectDelay = 2.0f;
     protected int fixP = 1;
     protected float flucPRate = 1.0f;
     protected GameObject target;

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class CUF_Guard : CUF_Base
 {
@@ -32,11 +33,17 @@ public class CUF_Guard : CUF_Base
         else
             gv = fixP + Mathf.RoundToInt(diceValue * flucPRate);
 
-
-        liv_target.GetGuardPoint(gv);
+        StartCoroutine(delayedAffect(() => liv_target.GetGuardPoint(gv)));
     }
     public override void ReUse()
     {
         this.Use(dv);
+    }
+
+    IEnumerator delayedAffect(Action _action)
+    {
+        yield return new WaitForSeconds(affectDelay);
+        _action.Invoke();
+        yield break;
     }
 }

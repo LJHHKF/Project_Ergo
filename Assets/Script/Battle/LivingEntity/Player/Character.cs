@@ -6,7 +6,9 @@ using Card;
 
 public class Character : LivingEntity
 {
+    [Header("Character Setting")]
     [SerializeField] private int init_maxCost = 3;
+    [SerializeField] private float card_anim_delayTime = 1.0f;
     //private int _i_maxCost;
     private CostManager m_costM;
 
@@ -84,8 +86,15 @@ public class Character : LivingEntity
 
     public void OnCardUseAnimation(CardType _type)
     {
+        StartCoroutine(DelayAttackAnim(_type));
+    }
+
+    IEnumerator DelayAttackAnim(CardType _type)
+    {
+        yield return new WaitForSeconds(card_anim_delayTime);
         string trigger = $"Attack_{_type}";
         myAnimator.SetTrigger(trigger);
+        yield break;
     }
 
     public override bool OnDamage(int damage)

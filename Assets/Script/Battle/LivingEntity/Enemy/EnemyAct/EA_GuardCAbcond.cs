@@ -24,18 +24,26 @@ public class EA_GuardCAbcond : EnemyAct_Base
     {
         for(int i = 0; i < acts.Length; i++)
         {
-            for(int j = 0; j < acts[i].repeatNum; j++)
+            int _i = i;
+            for(int j = 0; j < acts[_i].repeatNum; j++)
             {
-                if(acts[i].affactType == AffectType.Attack)
+                if(acts[_i].affactType == AffectType.Attack)
                 {
-                    if(target.OnDamage(r_power[i]))
+                    if(target.OnDamage(r_power[_i]))
                         if(ifHPDamaged.isSet)
-                            target.OnAddAbCond(ifHPDamaged.abcondID, ifHPDamaged.abcondPower, ifHPDamaged.isDelayedAbCond);
+                            StartCoroutine(delayedAffect(()=>target.OnAddAbCond(ifHPDamaged.abcondID, ifHPDamaged.abcondPower, ifHPDamaged.isDelayedAbCond)));
                     else
                         if(ifGuarded.isSet)
-                            target.OnAddAbCond(ifGuarded.abcondID, ifGuarded.abcondPower, ifGuarded.isDelayedAbCond);
+                            StartCoroutine(delayedAffect(()=>target.OnAddAbCond(ifGuarded.abcondID, ifGuarded.abcondPower, ifGuarded.isDelayedAbCond)));
                 }
             }
         }
+    }
+
+    IEnumerator delayedAffect(Action _action)
+    {
+        yield return new WaitForSeconds(affectDelay);
+        _action.Invoke();
+        yield break;
     }
 }
