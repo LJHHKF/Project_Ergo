@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class CUF_RandomAbCond : CUF_AbCondition
 {
@@ -52,16 +53,24 @@ public class CUF_RandomAbCond : CUF_AbCondition
         else
             dmg = fixP + Mathf.RoundToInt(diceValue * flucPRate);
 
-        int rand = Random.Range(min_AbID, max_AbID);
+        int rand = UnityEngine.Random.Range(min_AbID, max_AbID);
 
         if (isImidiateAbActive)
-            ab_target.AddImdiateAbCondition(rand, dmg);
+            StartCoroutine(delayedAffect(() => ab_target.AddImdiateAbCondition(rand, dmg)));
         else
-            ab_target.AddDelayedCondition(rand, dmg);
+            StartCoroutine(delayedAffect(() => ab_target.AddDelayedCondition(rand, dmg)));
+        
     }
 
     public override void ReUse()
     {
         Use(dv);
+    }
+
+    IEnumerator delayedAffect(Action _action)
+    {
+        yield return new WaitForSeconds(affectDelay);
+        _action.Invoke();
+        yield break;
     }
 }

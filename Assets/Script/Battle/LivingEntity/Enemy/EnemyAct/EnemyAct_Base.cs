@@ -47,6 +47,7 @@ public class EnemyAct_Base : MonoBehaviour
     [SerializeField] protected int typeVariationNum = 1;
     [SerializeField] protected Sprite actSprite;
     [SerializeField] protected string actAnimTrigger;
+    [SerializeField] protected float affectDelay = 1.0f;
     [TextArea] public string actExplain;
     protected int[] r_power;
     //[SerializeField] private int abCondID = -1;
@@ -67,23 +68,24 @@ public class EnemyAct_Base : MonoBehaviour
     {
         for (int i = 0; i < acts.Length; i++)
         {
+            int _i = i;
             for (int j = 0; j < acts[i].repeatNum; j++)
             {
                 if (acts[i].affactType == AffectType.Attack)
                 {
-                    target.OnDamage(r_power[i]);
+                    StartCoroutine(delayedAffect(()=>target.OnDamage(r_power[_i])));
                 }
                 else if (acts[i].affactType == AffectType.Guard)
                 {
-                    m_Enemy.GetGuardPoint(r_power[i]);
+                    StartCoroutine(delayedAffect(()=>m_Enemy.GetGuardPoint(r_power[_i])));
                 }
                 else if (acts[i].affactType == AffectType.Abcond)
                 {
-                    target.OnAddAbCond(acts[i].abcondID, acts[i].fixedPower, acts[i].isDelayedAbCond);
+                    StartCoroutine(delayedAffect(()=>target.OnAddAbCond(acts[_i].abcondID, acts[_i].fixedPower, acts[_i].isDelayedAbCond)));
                 }
                 else if (acts[i].affactType == AffectType.Summon)
                 {
-                    SummonAct();
+                    StartCoroutine(delayedAffect(()=>SummonAct()));
                 }
             }
         }
@@ -157,4 +159,11 @@ public class EnemyAct_Base : MonoBehaviour
     //    _power = power;
     //    _isAll = isAllTargeted;
     //}
+
+    IEnumerator delayedAffect(Action _action)
+    {
+        yield return new WaitForSeconds(affectDelay);
+        _action.Invoke();
+        yield break;
+    }
 }

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class CUF_AbCondition : CUF_Base
 {
@@ -51,13 +52,22 @@ public class CUF_AbCondition : CUF_Base
             dmg = fixP + Mathf.RoundToInt(diceValue * flucPRate);
 
         if (isImidiateAbActive)
-            ab_target.AddImdiateAbCondition(ab_ID, dmg);
+            StartCoroutine(delayedAffect(() => ab_target.AddImdiateAbCondition(ab_ID, dmg)));
         else
-            ab_target.AddDelayedCondition(ab_ID, dmg);
+            StartCoroutine(delayedAffect(() => ab_target.AddDelayedCondition(ab_ID, dmg)));
+
+        
     }
 
     public override void ReUse()
     {
         this.Use(dv);
+    }
+
+    IEnumerator delayedAffect(Action _action)
+    {
+        yield return new WaitForSeconds(affectDelay);
+        _action.Invoke();
+        yield break;
     }
 }

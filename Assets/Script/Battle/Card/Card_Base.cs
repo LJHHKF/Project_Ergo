@@ -207,12 +207,9 @@ public class Card_Base : MonoBehaviour, ICard
         }
 
         m_costM.cost -= cost;
+        
         use(diceValue);
-
-        if (sub_use != null)
-        {
-            sub_use();
-        }
+        sub_use?.Invoke();
 
         ChkAndFindCharcter();
         m_charM.OnCardUseAnimation(type);
