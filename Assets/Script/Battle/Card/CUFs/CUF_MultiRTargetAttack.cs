@@ -66,7 +66,8 @@ public class CUF_MultiRTargetAttack : CUF_Base
 
         for (int i = 0; i < target_list.Count; i++)
         {
-            StartCoroutine(delayedAffect(() => target_list[i].GetComponent<LivingEntity>().OnDamage(dmg)));
+            int _i = i;
+            StartCoroutine(delayedAffect(() => target_list[_i].GetComponent<LivingEntity>().OnDamage(dmg)));
         }
     }
 

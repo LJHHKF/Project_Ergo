@@ -82,7 +82,6 @@ public class GameMaster : MonoBehaviour
     {
         saveID = _saveID;
         isDoGameStop = false;
-
         if (_isNew)
         {
             key = $"SaveID({saveID})";
@@ -100,22 +99,24 @@ public class GameMaster : MonoBehaviour
     public bool OnInitSaveData()
     {
         key = $"SaveID({saveID})";
-        isInit = true;
         if (!PlayerPrefs.HasKey(key) || PlayerPrefs.GetInt(key) == 0)
         {
             PlayerPrefs.SetInt(key, 1);
             initSaveData_Awake?.Invoke(this, EventArgs.Empty);
             initSaveData_Start?.Invoke(this, EventArgs.Empty);
+            isInit = true;
             return true;
         }
         else
         {
+            isInit = false;
             return false;
         }
     }
 
     public void OnGameOver()
     {
+        isInit = false;
         Debug.LogWarning("게임오버가 되었습니다.");
         m_instance.StartCoroutine(DelayedGameOver());
     }
@@ -126,6 +127,7 @@ public class GameMaster : MonoBehaviour
         {
             gameStop?.Invoke(this, EventArgs.Empty);
             isDoGameStop = true;
+            isInit = false;
         }
     }
 
