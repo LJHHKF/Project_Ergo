@@ -18,6 +18,7 @@ public class DiceManager : MonoBehaviour
     private Quaternion t_rot;
     private bool isSetTargetRot = false;
     private float bottomTime = 0f;
+    [SerializeField] private float chkTimeInterval = 1.0f;
 
     private void OnEnable()
     {
@@ -45,7 +46,7 @@ public class DiceManager : MonoBehaviour
         {
             if (!isSetTargetRot)
             {
-                if (m_rb.velocity.magnitude == 0 && bottomTime + 1.0f <= Time.time)
+                if (m_rb.velocity.magnitude == 0 && bottomTime + chkTimeInterval <= Time.time)
                 {
                     t_rot = Quaternion.Euler(RoundAngles(transform.eulerAngles.x), RoundAngles(transform.eulerAngles.y), RoundAngles(transform.eulerAngles.z));
                     isSetTargetRot = true;
@@ -59,9 +60,9 @@ public class DiceManager : MonoBehaviour
 
         if (isSetTargetRot)
         {
-            if ((bottomTime + 2.0f >= Time.time) && !isRollEnd)
+            if ((bottomTime + chkTimeInterval + 1.0f >= Time.time) && !isRollEnd)
             {
-                if (m_rb.velocity.magnitude == 0 || Time.time > bottomTime + 3.0f)
+                if (m_rb.velocity.magnitude == 0 || Time.time > bottomTime + chkTimeInterval + 2.0f)
                 {
                     m_DsystemManager.SumRollEnd();
                     isRollEnd = true;
