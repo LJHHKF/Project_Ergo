@@ -15,13 +15,18 @@ public class DiceManager : MonoBehaviour
     private bool isBottom = false;
     private float rollPower = 0;
     private float rollMinPowerRate = 0;
+    private Quaternion t_rot;
+    private bool isSetTargetRot = false;
+    private float bottomTime = 0f;
 
     private void OnEnable()
     {
         isRollEnd = false;
         isGetRes = false;
         isBottom = false;
+        isSetTargetRot = false;
         activeTime = Time.time;
+        bottomTime = 0;
     }
 
     private void Start()
@@ -36,12 +41,31 @@ public class DiceManager : MonoBehaviour
         {
             DiceRolled();
         }
-        else if((activeTime + 1.0f <= Time.time) && !isRollEnd)
+        else
         {
-            if (m_rb.velocity.magnitude == 0)
+            if (!isSetTargetRot)
             {
-                m_DsystemManager.SumRollEnd();
-                isRollEnd = true;
+                if (m_rb.velocity.magnitude == 0 && bottomTime + 1.0f <= Time.time)
+                {
+                    t_rot = Quaternion.Euler(RoundAngles(transform.eulerAngles.x), RoundAngles(transform.eulerAngles.y), RoundAngles(transform.eulerAngles.z));
+                    isSetTargetRot = true;
+                }
+            }
+            else if (transform.eulerAngles != t_rot.eulerAngles)
+            {
+                transform.rotation = Quaternion.Slerp(transform.rotation, t_rot, Time.deltaTime * 10);
+            }
+        }
+
+        if (isSetTargetRot)
+        {
+            if ((bottomTime + 2.0f >= Time.time) && !isRollEnd)
+            {
+                if (m_rb.velocity.magnitude == 0 || Time.time > bottomTime + 3.0f)
+                {
+                    m_DsystemManager.SumRollEnd();
+                    isRollEnd = true;
+                }
             }
         }
     }
@@ -50,7 +74,25 @@ public class DiceManager : MonoBehaviour
     {
         if(collision.collider.CompareTag("DiceBox_Bottom"))
         {
+            bottomTime = Time.time;
             isBottom = true;
+        }
+    }
+
+    private float RoundAngles(float _value)
+    {
+        if(_value % 90 < 45)
+        {
+            return 0 + (90 * Mathf.FloorToInt(_value / 90));
+        }
+        else
+        {
+            if(_value == 360)
+            {
+                return 360;
+            }
+            else
+                return 90 + (90 * Mathf.FloorToInt(_value / 90));
         }
     }
 

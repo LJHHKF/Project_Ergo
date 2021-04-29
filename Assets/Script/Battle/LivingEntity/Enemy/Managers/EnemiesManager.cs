@@ -87,8 +87,8 @@ public class EnemiesManager : MonoBehaviour
                 int _i = i;
                 m_sb.Clear();
                 m_sb.Append($"{key}.{_i}");
-                int m_id = PlayerPrefs.GetInt(m_sb.ToString());
-                GameObject mon = Instantiate(BattleStageManager.instance.GetMonster(m_id), gameObject.transform);
+                //int m_id = PlayerPrefs.GetInt(m_sb.ToString());
+                GameObject mon = Instantiate(BattleStageManager.instance.GetMonster(PlayerPrefs.GetInt(m_sb.ToString())), gameObject.transform);
                 mon.transform.position = new Vector2(minX + (x_interval * _i), 0);
                 mon.name = "Enemy_" + mon.name + "_" + _i.ToString("00");
                 Enemy_Base temp = mon.GetComponent<Enemy_Base>();
@@ -119,22 +119,28 @@ public class EnemiesManager : MonoBehaviour
         PlayerPrefs.SetInt(key, initCnt);
     }
 
-    
-
     void RemoveAtMonstersList(GameObject who)
     {
         deleteTime = Time.time;
         for(int i = 0; i < monsters.Count; i++)
         {
-            if (ReferenceEquals(monsters[i], who))
+            int _i = i;
+            if (ReferenceEquals(monsters[_i], who))
             {
-                monsters.RemoveAt(i);
+                monsters.RemoveAt(_i);
             }
         }
         if (monsters.Count == 0)
         {
             TurnManager.instance.OnBattleEnd();
             PlayerPrefs.DeleteKey(key);
+            for(int i = 0; i < initCnt; i++)
+            {
+                int _i = i;
+                m_sb.Clear();
+                m_sb.Append($"{key}.{_i}");
+                PlayerPrefs.DeleteKey(m_sb.ToString());
+            }
         }
     }
 

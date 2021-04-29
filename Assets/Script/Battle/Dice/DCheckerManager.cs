@@ -19,7 +19,7 @@ public class DCheckerManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (gameObject.transform.position.y >= bottomValue)
+        if (gameObject.transform.position.z <= bottomValue)
         {
             gameObject.transform.Translate(0, moveSpeed * Time.deltaTime, 0);
         }
