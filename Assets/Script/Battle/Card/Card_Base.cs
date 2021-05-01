@@ -213,6 +213,7 @@ public class Card_Base : MonoBehaviour, ICard
 
         ChkAndFindCharcter();
         m_charM.OnCardUseAnimation(type);
+        m_charM.AddActionPopUp(cardName);
 
         ChkAndFindBSCardManager();
         m_cardM.MoveToGrave_Hand(gameObject);

@@ -32,6 +32,7 @@ MonoBehaviour:
   typeVariationNum: 2
   actSprite: {fileID: 0}
   actAnimTrigger: Attack1
+  affectDelay: 1
   actExplain: "\uB9C8\uB974\uC2A4\uC5D0\uAC8C [\uD2B9\uACF5]*0.8 \uB9CC\uD07C\uC758
     \uD53C\uD574\uB97C \uC785\uD78C\uB2E4. \uC774\uB54C \uD53C\uD574\uAC00 \uBC29\uC5B4\uB3C4\uC5D0
     \uC804\uBD80 \uB9C9\uD790 \uACBD\uC6B0 \uB9C8\uB974\uC2A4\uC5D0\uAC8C [\uACE8\uC808]\uC744
@@ -40,12 +41,12 @@ MonoBehaviour:
     isSet: 1
     abcondID: 2
     abcondPower: 1
-    isDelayedAbCond: 0
+    isDelayedAbCond: 1
   ifHPDamaged:
     isSet: 1
     abcondID: 1
     abcondPower: 1
-    isDelayedAbCond: 0
+    isDelayedAbCond: 1
 --- !u!114 &4393644903169225195
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -78,6 +79,7 @@ MonoBehaviour:
   typeVariationNum: 2
   actSprite: {fileID: 0}
   actAnimTrigger: Attack2
+  affectDelay: 1
   actExplain: "\uB9C8\uB974\uC2A4\uC5D0\uAC8C [\uD798]*0.8 \uB9CC\uD07C\uC758 \uD53C\uD574\uB97C
     \uC785\uD78C\uB2E4. \uC774\uB54C \uD53C\uD574\uAC00 \uBC29\uC5B4\uB3C4\uC5D0
     \uC804\uBD80 \uB9C9\uD788\uC9C0 \uC54A\uC558\uC744 \uACBD\uC6B0 \uB9C8\uB974\uC2A4\uC5D0\uAC8C
@@ -91,7 +93,7 @@ MonoBehaviour:
     isSet: 1
     abcondID: 2
     abcondPower: 1
-    isDelayedAbCond: 0
+    isDelayedAbCond: 1
 --- !u!114 &5064675939925111333
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -117,6 +119,7 @@ MonoBehaviour:
   typeVariationNum: 1
   actSprite: {fileID: 0}
   actAnimTrigger: Attack1
+  affectDelay: 1
   actExplain: "\uB9C8\uB974\uC2A4\uC5D0\uAC8C [\uD798]*1 \uB9CC\uD07C\uC758 \uD53C\uD574\uB97C
     \uC785\uD78C\uB2E4."
 --- !u!1001 &3625115006001360127

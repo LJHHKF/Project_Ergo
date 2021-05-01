@@ -78,14 +78,17 @@ public class LivingEntity : MonoBehaviour, IDamageable
         bool isDamaged;
         if (GuardPoint > 0)
         {
+            int prevGuardPoint = GuardPoint;
             GuardPoint -= damage;
             if (GuardPoint < 0)
             {
+                myUI.AddPopUpText_GuardedDamage(prevGuardPoint);
                 damage = Mathf.Abs(GuardPoint);
                 GuardPoint = 0;
             }
             else
             {
+                myUI.AddPopUpText_GuardedDamage(damage);
                 damage = 0;
             }
             myUI.GuardUpdate();
@@ -94,6 +97,7 @@ public class LivingEntity : MonoBehaviour, IDamageable
         if (GuardPoint <= 0)
         {
             health -= damage;
+            myUI.AddPopUpText_Damage(damage);
             myUI.HpUpdate();
 
             isDamaged = true;
@@ -113,6 +117,7 @@ public class LivingEntity : MonoBehaviour, IDamageable
     public virtual void OnPenDamage(int damage)
     {
         health -= damage;
+        myUI.AddPopUpText_Damage(damage);
         myUI.HpUpdate();
         onHPDamage.Invoke();
 
@@ -153,6 +158,7 @@ public class LivingEntity : MonoBehaviour, IDamageable
     public virtual void GetGuardPoint(int GetValue)
     {
         GuardPoint += GetValue;
+        myUI.AddPopUpText_GetGuardPoint(GetValue);
         myUI.GuardUpdate();
     }
 

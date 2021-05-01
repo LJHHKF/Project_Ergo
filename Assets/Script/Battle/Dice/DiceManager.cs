@@ -82,18 +82,20 @@ public class DiceManager : MonoBehaviour
 
     private float RoundAngles(float _value)
     {
+        _value %= 360;
         if(_value % 90 < 45)
         {
-            return 0 + (90 * Mathf.FloorToInt(_value / 90));
+            if (_value > 0)
+                return 0 + (90 * Mathf.FloorToInt(_value / 90));
+            else
+                return 0 + (90 * Mathf.CeilToInt(_value / 90));
         }
         else
         {
-            if(_value == 360)
-            {
-                return 360;
-            }
-            else
+            if (_value > 0)
                 return 90 + (90 * Mathf.FloorToInt(_value / 90));
+            else
+                return 90 + (90 * Mathf.CeilToInt(_value / 90));
         }
     }
 

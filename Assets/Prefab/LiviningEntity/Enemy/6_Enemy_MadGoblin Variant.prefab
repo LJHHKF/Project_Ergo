@@ -25,6 +25,7 @@ MonoBehaviour:
   typeVariationNum: 1
   actSprite: {fileID: 0}
   actAnimTrigger: Attack1
+  affectDelay: 1
   actExplain: "\uB9C8\uB974\uC2A4\uC5D0\uAC8C [\uD798]*1 \uB9CC\uD07C\uC758 \uD53C\uD574\uB97C
     \uC785\uD78C\uB2E4."
 --- !u!114 &1812914924614166977
@@ -59,6 +60,7 @@ MonoBehaviour:
   typeVariationNum: 2
   actSprite: {fileID: 0}
   actAnimTrigger: Attack1
+  affectDelay: 1
   actExplain: "\uB9C8\uB974\uC2A4\uC5D0\uAC8C [\uD2B9\uACF5]*1 \uB9CC\uD07C\uC758
     \uD53C\uD574\uB97C \uC785\uD78C\uB2E4. \uC774\uB54C \uD53C\uD574\uAC00 \uBC29\uC5B4\uB3C4\uC5D0
     \uC804\uBD80 \uB9C9\uD790 \uACBD\uC6B0 \uB9C8\uB974\uC2A4\uC5D0\uAC8C [\uD2B9\uACF5]*0.6
@@ -71,7 +73,7 @@ MonoBehaviour:
     repeatNum: 1
     abcondID: 0
     fixedPower: 0
-    isDelayedAbCond: 0
+    isDelayedAbCond: 1
   isSet_ifHPDamaged: 0
   ifHPDamaged:
     type: 0
@@ -106,6 +108,7 @@ MonoBehaviour:
   typeVariationNum: 1
   actSprite: {fileID: 0}
   actAnimTrigger: 
+  affectDelay: 1
   actExplain: "[\uB0B4\uAD6C]*1 \uB9CC\uD07C\uC758 \uBC29\uC5B4\uB3C4\uB97C \uD68D\uB4DD\uD55C\uB2E4."
 --- !u!1001 &5457737566148353537
 PrefabInstance:

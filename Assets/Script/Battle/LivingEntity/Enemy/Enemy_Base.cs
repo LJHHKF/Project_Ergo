@@ -189,6 +189,7 @@ public class Enemy_Base : LivingEntity
     public void Act()
     {
         readyAct.Act();
+        myUI.AddPopUpText_ActionName(readyAct.GetActName());
         Debug.Log("몬스터(인덱스:" + monsterFieldIndex + ")가 행동했습니다.");
     }
 }

@@ -1203,6 +1203,7 @@ MonoBehaviour:
   myAbCond: {fileID: 3232138570298613568}
   myAnimator: {fileID: 8685841536669828620}
   init_maxCost: 3
+  card_anim_delayTime: 1
 --- !u!114 &3232138570298613568
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2314,6 +2315,17 @@ MonoBehaviour:
   - {fileID: 3232138570284230498}
   - {fileID: 3232138569534414760}
   - {fileID: 3232138570731496219}
+  popUpText_Prefab: {fileID: 5960358604202126975, guid: 1b710bc6decfba04596b5c0eccf2be4c,
+    type: 3}
+  upSpeed: 1
+  endTime: 3
+  interval_pop: 0.5
+  color_Damage: {r: 1, g: 0, b: 0, a: 1}
+  color_GuardedDamage: {r: 0.47058824, g: 0.47058824, b: 1, a: 1}
+  color_GetGuardPoint: {r: 0, g: 0, b: 1, a: 1}
+  color_Buff: {r: 0, g: 1, b: 0, a: 1}
+  color_Debuff: {r: 0.7058824, g: 0, b: 1, a: 1}
+  color_ActionName: {r: 1, g: 1, b: 1, a: 1}
   livTarget: {fileID: 3232138570298613571}
   abcondTarget: {fileID: 3232138570298613568}
 --- !u!1 &3232138571042010818

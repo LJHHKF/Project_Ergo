@@ -50,10 +50,11 @@ public class AbCondition : MonoBehaviour
 
         for (int i = 0; i < list_conditions.Count; i++)
         {
-            if (list_conditions[i].ID == id)
+            int _i = i;
+            if (list_conditions[_i].ID == id)
             {
                 isBeing = true;
-                list_conditions[i].IncreaseP(piledN);
+                list_conditions[_i].IncreaseP(piledN);
                 break;
             }
         }
@@ -76,11 +77,12 @@ public class AbCondition : MonoBehaviour
 
         for (int i = 0; i < list_conditions.Count; i++)
         {
-            if (list_conditions[i].ID == id)
+            int _i = i;
+            if (list_conditions[_i].ID == id)
             {
                 isBeing = true;
-                list_conditions[i].IncreaseP(piledN);
-                Affected(i);
+                list_conditions[_i].IncreaseP(piledN);
+                Affected(_i);
                 break;
             }
         }
@@ -107,36 +109,32 @@ public class AbCondition : MonoBehaviour
 
         for (int i = 0; i < list_delayed.Count; i++)
         {
-            if (list_delayed[i].ID == id)
+            int _i = i;
+            if (list_delayed[_i].ID == id)
             {
                 isBeing = true;
-                list_delayed[i].IncreaseP(piledN);
+                list_delayed[_i].IncreaseP(piledN);
+                if (list_delayed[_i].ID <= 4)
+                    myUI.AddPopUpText_Debuff($"(D){AbCondInfoManager.instance.GetAbCond_Name(list_delayed[_i].ID)}", list_delayed[_i].piledNum);
+                else
+                    myUI.AddPopUpText_Buff($"(D){AbCondInfoManager.instance.GetAbCond_Name(list_delayed[_i].ID)}", list_delayed[_i].piledNum);
                 break;
             }
         }
 
         if (!isBeing)
         {
-            AbCond temp = new AbCond(id, /*AbCondInfoManager.instance.GetAbCond_Img(id),*/ piledN, AbCondInfoManager.instance.GetAbCond_OnePower(id));
-            //temp.ID = id;
-            //temp.Icon = abCondInfoM.GetAbCond_Img(id);
-            //temp.piledNum = piledN;
-            //temp.onePower = abCondInfoM.GetAbCond_OnePower(id);
+            AbCond temp = new AbCond(id, piledN, AbCondInfoManager.instance.GetAbCond_OnePower(id));
+
+            if (id <= 4)
+                myUI.AddPopUpText_Debuff($"(D){AbCondInfoManager.instance.GetAbCond_Name(id)}", piledN);
+            else
+                myUI.AddPopUpText_Buff($"(D){AbCondInfoManager.instance.GetAbCond_Name(id)}", piledN);
 
             list_delayed.Add(temp);
         }
 
         myUI.AbConditionsUpdate();
-    }
-
-    public void Affected_FirstTurn()
-    {
-        if (list_delayed.Count > 0)
-            D_Affected();
-        for(int i = 0; i < list_conditions.Count; i++)
-        {
-            
-        }
     }
 
     public void Affected() //자신에 걸린 모든 효과 발동
@@ -145,13 +143,14 @@ public class AbCondition : MonoBehaviour
             D_Affected();
         for(int i = 0; i < list_conditions.Count; i++)
         {
-            if (list_conditions[i].piledNum <= 0)
+            int _i = i;
+            if (list_conditions[_i].piledNum <= 0)
             {
-                Affected(i);
-                list_conditions.RemoveAt(i);
+                Affected(_i);
+                list_conditions.RemoveAt(_i);
                 continue;
             }
-            Affected(i); // 순서 바꿔서 코드 줄이려 하지 말 것. 이유 있음.
+            Affected(_i); // 순서 바꿔서 코드 줄이려 하지 말 것. 이유 있음.
         }
         myUI.AbConditionsUpdate();
     }
@@ -165,6 +164,14 @@ public class AbCondition : MonoBehaviour
 
         Debug.Log("상태이상 발동, ID(" + _id + "), 중첩수(" + list_conditions[listIndex].piledNum + ")");
 
+        if (list_conditions[listIndex].piledNum != 0)
+        {
+            if (_id <= 4)
+                myUI.AddPopUpText_Debuff(AbCondInfoManager.instance.GetAbCond_Name(_id), list_conditions[listIndex].piledNum);
+            else
+                myUI.AddPopUpText_Buff(AbCondInfoManager.instance.GetAbCond_Name(_id), list_conditions[listIndex].piledNum);
+        }
+        
         switch(_id)
         {
             case 0: // 중독
@@ -208,8 +215,9 @@ public class AbCondition : MonoBehaviour
     {
         for (int i = 0; i < list_delayed.Count; i++)
         {
-            Debug.Log("상태이상 축적 이동, ID(" + list_delayed[i].ID + "), 중첩수(" + list_delayed[i].piledNum + ")");
-            AddAbCondition(list_delayed[i].ID, list_delayed[i].piledNum);
+            int _i = i;
+            Debug.Log($"상태이상 축적 이동, ID({list_delayed[_i].ID}) ,중첩수({list_delayed[_i].piledNum})");
+            AddAbCondition(list_delayed[_i].ID, list_delayed[_i].piledNum);
         }
         list_delayed.Clear();
     }
@@ -286,15 +294,5 @@ public class AbCondition : MonoBehaviour
         }
         else
             return 0;
-    }
-
-    public void SaveCsCurAbCond()
-    {
-        if (list_conditions.Count > 0)
-            for (int i = 0; i < list_conditions.Count; i++)
-                CStatManager.instance.SetInheriteAbCond(list_conditions[i].ID, list_conditions[i].piledNum);
-        if(list_delayed.Count > 0)
-            for(int i = 0; i < list_delayed.Count; i++)
-                CStatManager.instance.SetInheriteAbCond(list_delayed[i].ID, list_delayed[i].piledNum);
     }
 }
