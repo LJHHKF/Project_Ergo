@@ -95,7 +95,7 @@ public class DiceManager : MonoBehaviour
             if (_value > 0)
                 return 90 + (90 * Mathf.FloorToInt(_value / 90));
             else
-                return 90 + (90 * Mathf.CeilToInt(_value / 90));
+                return -90 + (90 * Mathf.CeilToInt(_value / 90));
         }
     }
 
