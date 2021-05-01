@@ -404,7 +404,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!114 &1227235156263641348
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -452,6 +452,17 @@ MonoBehaviour:
   - {fileID: 6096723952003264523}
   - {fileID: 6062004529244041871}
   - {fileID: 8549836789780530206}
+  popUpText_Prefab: {fileID: 5960358604202126975, guid: 1b710bc6decfba04596b5c0eccf2be4c,
+    type: 3}
+  upSpeed: 1
+  endTime: 3
+  interval_pop: 0.5
+  color_Damage: {r: 1, g: 0, b: 0, a: 1}
+  color_GuardedDamage: {r: 0.47058824, g: 0.47058824, b: 1, a: 1}
+  color_GetGuardPoint: {r: 0, g: 0, b: 1, a: 1}
+  color_Buff: {r: 0, g: 1, b: 0, a: 1}
+  color_Debuff: {r: 0.7058824, g: 0, b: 1, a: 1}
+  color_ActionName: {r: 1, g: 1, b: 1, a: 1}
   livTarget: {fileID: 4451541378279184922}
   abcondTarget: {fileID: 3804837206480057224}
 --- !u!1 &1088331542640742632

@@ -108,4 +108,9 @@ public class Character : LivingEntity
         myAnimator.SetTrigger("Hit");
         base.OnPenDamage(damage);
     }
+
+    public void AddActionPopUp(string _name)
+    {
+        myUI.AddPopUpText_ActionName(_name);
+    }
 }
