@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using System;
 
@@ -70,7 +69,7 @@ public class InputSystem : MonoBehaviour
         //m_ped = new PointerEventData(null);
     }
 
-    private void Event_BattleStageStart(object sender, EventArgs _e)
+    private void Event_BattleStageStart()
     {
         myMainCam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         line = GameObject.FindGameObjectWithTag("Line");

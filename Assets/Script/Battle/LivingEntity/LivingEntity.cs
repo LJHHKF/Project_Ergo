@@ -55,22 +55,22 @@ public class LivingEntity : MonoBehaviour, IDamageable
         //TurnManager.instance.firstTurn -= Event_FirstTurn;
     }
 
-    protected virtual void Event_FirstTurn(object _o, EventArgs _e)
+    protected virtual void Event_FirstTurn()
     {
         //HpAndGuardReset();
         //FlucStatReset();
         //CalculateStat();
     }
 
-    protected virtual void Event_PlayerTurnEnd(object _o, EventArgs _e)
+    protected virtual void Event_PlayerTurnEnd()
     { }
 
-    protected virtual void Event_TurnEnd(object _o, EventArgs _e)
+    protected virtual void Event_TurnEnd()
     { }
-    protected virtual void Event_TurnStart(object _o, EventArgs _e)
+    protected virtual void Event_TurnStart()
     {}
 
-    protected virtual void Event_BattleEnd(object _o, EventArgs _e)
+    protected virtual void Event_BattleEnd()
     {}
 
     public virtual bool OnDamage(int damage)
@@ -102,7 +102,10 @@ public class LivingEntity : MonoBehaviour, IDamageable
             myUI.HpUpdate();
 
             isDamaged = true;
-            onHPDamage?.Invoke();
+            if (onHPDamage != null)
+            {
+                onHPDamage.Invoke();
+            }
         }
         else
             isDamaged = false;
@@ -183,7 +186,10 @@ public class LivingEntity : MonoBehaviour, IDamageable
 
     public virtual void Die()
     {
-        onDeath?.Invoke();
+        if (onDeath != null)
+        {
+             onDeath.Invoke();
+        }
         dead = true;
     }
 
@@ -249,6 +255,7 @@ public class LivingEntity : MonoBehaviour, IDamageable
 
     public void SetAnimTrigger(string _name)
     {
-        myAnimator.SetTrigger(_name);
+        if (_name.Length > 1)
+            myAnimator.SetTrigger(_name);
     }
 }

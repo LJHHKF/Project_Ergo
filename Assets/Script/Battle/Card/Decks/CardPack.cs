@@ -54,12 +54,12 @@ public class CardPack : MonoBehaviour
         GameMaster.instance.gameStop += Event_GameStop;
     }
 
-    private void Event_GameOver(object _o, EventArgs e)
+    private void Event_GameOver()
     {
         CardPackClear();
     }
 
-    private void Event_GameStop(object _o, EventArgs e)
+    private void Event_GameStop()
     {
         SaveHadCnt();
     }

@@ -110,12 +110,12 @@ public class EnemiesManager : MonoBehaviour
         m_instance = null;
     }
 
-    private void Event_PlayerTurnEnd(object _o, EventArgs _e)
+    private void Event_PlayerTurnEnd()
     {
         StartCoroutine(StartMonsterActsControl());
     }
 
-    private void Event_GameStop(object _o, EventArgs _e)
+    private void Event_GameStop()
     {
         PlayerPrefs.SetInt(key, initCnt);
     }
@@ -245,8 +245,8 @@ public class EnemiesManager : MonoBehaviour
         }
         for(int i = 0; i < monsters.Count; i++)
         {
+            int _i = i;
             Enemy_Base temp = monsters[i].GetComponent<Enemy_Base>();
-            Debug.Log("행동 대기:" + time_interval + "초");
             yield return new WaitForSeconds(time_interval);
             temp.Act();
         }

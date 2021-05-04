@@ -79,19 +79,19 @@ public class Enemy_Base : LivingEntity
         TurnManager.instance.firstTurn -= Event_FirstTurn;
     }
 
-    protected override void Event_PlayerTurnEnd(object _o, EventArgs _e)
+    protected override void Event_PlayerTurnEnd()
     {
         ResetGuardPoint();
         myAbCond.Affected();
     }
 
-    protected override void Event_TurnEnd(object _o, EventArgs _e)
+    protected override void Event_TurnEnd()
     {
         curSpGauge++;
         ActSetting();
     }
 
-    protected override void Event_FirstTurn(object _o, EventArgs _e)
+    protected override void Event_FirstTurn()
     {
         ResetHP();
         ResetGuardPoint();
@@ -108,8 +108,6 @@ public class Enemy_Base : LivingEntity
     public override bool OnDamage(int damage)
     {
         bool res = base.OnDamage(damage);
-        Debug.Log("몬스터(인덱스:" + monsterFieldIndex + ")가 데미지를 입었습니다. :" + damage);
-        Debug.Log("몬스터(인덱스:" + monsterFieldIndex + ")의 남은 체력 :" + health);
         return res;
     }
 
@@ -190,6 +188,5 @@ public class Enemy_Base : LivingEntity
     {
         readyAct.Act();
         myUI.AddPopUpText_ActionName(readyAct.GetActName());
-        Debug.Log("몬스터(인덱스:" + monsterFieldIndex + ")가 행동했습니다.");
     }
 }

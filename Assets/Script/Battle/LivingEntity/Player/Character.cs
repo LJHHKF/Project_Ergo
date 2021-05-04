@@ -40,7 +40,7 @@ public class Character : LivingEntity
         TurnManager.instance.battleEnd -= Event_BattleEnd;
     }
 
-    protected override void Event_FirstTurn(object _o, EventArgs _e)
+    protected override void Event_FirstTurn()
     {
         CStatManager.instance.GetInheritedAbCond(ref myAbCond);
         myUI.HpUpdate();
@@ -48,13 +48,13 @@ public class Character : LivingEntity
         InitMaxCostSetting();
     }
 
-    protected override void Event_TurnStart(object _o, EventArgs _e)
+    protected override void Event_TurnStart()
     {
         ResetGuardPoint();
         myAbCond.Affected();
     }
 
-    protected override void Event_BattleEnd(object _o, EventArgs _e)
+    protected override void Event_BattleEnd()
     {
         CStatManager.instance.HealthPointUpdate(health);
     }
@@ -62,8 +62,6 @@ public class Character : LivingEntity
     public override void GetGuardPoint(int GetValue)
     {
         base.GetGuardPoint(GetValue);
-        Debug.Log("플레이어가 가드 포인트를 획득했습니다. 획득치:" + GetValue);
-        Debug.Log("플레이어의 현재 가드 포인트치:" + GuardPoint);
     }
 
     public override void ChangeCost(int changeV)

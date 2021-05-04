@@ -17,11 +17,11 @@ public class TurnManager: MonoBehaviour
     private static TurnManager m_instance;
 
     // On 함수들의 참조 개수에 주의. 참조가 1개가 아니면 문제.
-    public event EventHandler firstTurn;
-    public event EventHandler turnStart;
-    public event EventHandler playerTurnEnd;
-    public event EventHandler turnEnd;
-    public event EventHandler battleEnd;
+    public event Action firstTurn;
+    public event Action turnStart;
+    public event Action playerTurnEnd;
+    public event Action turnEnd;
+    public event Action battleEnd;
 
     private bool isBattleEnded = false;
 
@@ -40,20 +40,20 @@ public class TurnManager: MonoBehaviour
         start_time = Time.time;
     }
 
-    private void Event_BattleStageEnd(object sender, EventArgs e)
+    private void Event_BattleStageEnd()
     {
         isFirstActived = false;
 
         //foreach(Delegate d in firstTurn.GetInvocationList())
-        //    firstTurn -= (EventHandler)d;
+        //    firstTurn -= (Action)d;
         //foreach (Delegate d in turnStart.GetInvocationList())
-        //    turnStart -= (EventHandler)d;
+        //    turnStart -= (Action)d;
         //foreach (Delegate d in playerTurnEnd.GetInvocationList())
-        //    playerTurnEnd -= (EventHandler)d;
+        //    playerTurnEnd -= (Action)d;
         //foreach (Delegate d in turnEnd.GetInvocationList())
-        //    turnEnd -= (EventHandler)d;
+        //    turnEnd -= (Action)d;
         //foreach (Delegate d in battleEnd.GetInvocationList())
-        //    battleEnd -= (EventHandler)d;
+        //    battleEnd -= (Action)d;
     }
 
     private void OnDestroy()
@@ -62,32 +62,47 @@ public class TurnManager: MonoBehaviour
         GameMaster.instance.battleStageEnd -= Event_BattleStageEnd;
     }
 
-    public static void OnFirstTurn()
+    public void OnFirstTurn()
     {
-        m_instance.firstTurn?.Invoke(m_instance, EventArgs.Empty);
+        if (firstTurn != null)
+        {
+            m_instance.firstTurn.Invoke();
+        }
         m_instance.isFirstActived = true;
         m_instance.isBattleEnded = false;
     }
 
     public void OnTurnStart()
     {
-        turnStart?.Invoke(m_instance, EventArgs.Empty);
+        if (turnStart != null)
+        {
+            turnStart.Invoke();
+        }
     }
 
     public void OnPlayerTurnEnd() // UI Btn에 연결되어 있음. 참조 0이라도 상관x.
     {
-         playerTurnEnd?.Invoke(m_instance, EventArgs.Empty);
+        if (playerTurnEnd != null)
+        {
+            playerTurnEnd.Invoke();
+        }
     }
 
     public void OnTurnEnd()
     {
-        turnEnd?.Invoke(m_instance, EventArgs.Empty);
+        if (turnEnd != null)
+        {
+            turnEnd.Invoke();
+        }
         OnTurnStart();
     }
 
     public void OnBattleEnd()
     {
-        battleEnd?.Invoke(m_instance, EventArgs.Empty);
+        if (battleEnd != null)
+        {
+            battleEnd.Invoke();
+        }
         m_instance.isBattleEnded = true;
     }
 

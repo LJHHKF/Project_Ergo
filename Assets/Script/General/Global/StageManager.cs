@@ -66,7 +66,7 @@ public class StageManager : MonoBehaviour
         GameMaster.instance.gameOver -= Event_GameOver;
     }
 
-    private void Event_InitGameData(object _sender, EventArgs _e)
+    private void Event_InitGameData()
     {
         m_curChapter = 1;
         m_curStage = 0;
@@ -85,7 +85,7 @@ public class StageManager : MonoBehaviour
         LoadManager.instance.LoadFirst_Init_ToSetting();
     }
 
-    private void Event_GameStart(object _sender, EventArgs _e)
+    private void Event_GameStart()
     {
         key.Clear();
         key.Append($"SaveID({GameMaster.instance.GetSaveID()}).CurrentStage");
@@ -100,7 +100,7 @@ public class StageManager : MonoBehaviour
         LoadManager.instance.LoadFirst(curStageTypeIndex);
     }
 
-    private void Event_GameStop(object _sender, EventArgs _e)
+    private void Event_GameStop()
     {
         key.Clear();
         key.Append($"SaveID({GameMaster.instance.GetSaveID()}).CurrentStage");
@@ -114,7 +114,7 @@ public class StageManager : MonoBehaviour
         PlayerPrefs.SetInt(key.ToString(), curStageTypeIndex);
     }
 
-    private void Event_GameOver(object _sender, EventArgs _e)
+    private void Event_GameOver()
     {
         key.Clear();
         key.Append($"SaveID({GameMaster.instance.GetSaveID()}).CurrentStage");

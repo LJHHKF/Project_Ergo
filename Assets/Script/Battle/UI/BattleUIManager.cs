@@ -49,22 +49,22 @@ public class BattleUIManager : MonoBehaviour
         TurnManager.instance.battleEnd -= Event_BattleEnd;
     }
 
-    private void Event_FirstTurn(object _o, EventArgs _e)
+    private void Event_FirstTurn()
     {
         btn_TurnEnd.SetActive(true);
     }
 
-    private void Event_TurnStart(object _o, EventArgs _e)
+    private void Event_TurnStart()
     {
         btn_TurnEnd.SetActive(true);
     }
 
-    private void Event_PlayerTurnEnd(object _o, EventArgs _e)
+    private void Event_PlayerTurnEnd()
     {
         btn_TurnEnd.SetActive(false);
     }
 
-    private void Event_BattleEnd(object _o, EventArgs _e)
+    private void Event_BattleEnd()
     {
         btn_TurnEnd.SetActive(false);
         panel_reward.SetActive(true);
