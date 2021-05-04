@@ -40,7 +40,7 @@ public class Character : LivingEntity
         TurnManager.instance.battleEnd -= Event_BattleEnd;
     }
 
-    protected override void Event_FirstTurn(object _o, EventArgs _e)
+    protected override void Event_FirstTurn()
     {
         CStatManager.instance.GetInheritedAbCond(ref myAbCond);
         myUI.HpUpdate();
@@ -48,13 +48,13 @@ public class Character : LivingEntity
         InitMaxCostSetting();
     }
 
-    protected override void Event_TurnStart(object _o, EventArgs _e)
+    protected override void Event_TurnStart()
     {
         ResetGuardPoint();
         myAbCond.Affected();
     }
 
-    protected override void Event_BattleEnd(object _o, EventArgs _e)
+    protected override void Event_BattleEnd()
     {
         CStatManager.instance.HealthPointUpdate(health);
     }

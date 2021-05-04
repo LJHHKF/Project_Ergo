@@ -79,19 +79,19 @@ public class Enemy_Base : LivingEntity
         TurnManager.instance.firstTurn -= Event_FirstTurn;
     }
 
-    protected override void Event_PlayerTurnEnd(object _o, EventArgs _e)
+    protected override void Event_PlayerTurnEnd()
     {
         ResetGuardPoint();
         myAbCond.Affected();
     }
 
-    protected override void Event_TurnEnd(object _o, EventArgs _e)
+    protected override void Event_TurnEnd()
     {
         curSpGauge++;
         ActSetting();
     }
 
-    protected override void Event_FirstTurn(object _o, EventArgs _e)
+    protected override void Event_FirstTurn()
     {
         ResetHP();
         ResetGuardPoint();

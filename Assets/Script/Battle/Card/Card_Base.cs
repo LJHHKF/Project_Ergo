@@ -96,7 +96,7 @@ public class Card_Base : MonoBehaviour, ICard
         GameMaster.instance.battleStageStart += Event_BattleStageStart;
     }
 
-    private void Event_BattleStageStart(object _o, EventArgs _e)
+    private void Event_BattleStageStart()
     {
         ChkAndFindBSCardManager();
 

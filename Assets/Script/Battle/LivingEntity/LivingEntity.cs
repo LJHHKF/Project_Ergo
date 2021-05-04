@@ -55,22 +55,22 @@ public class LivingEntity : MonoBehaviour, IDamageable
         //TurnManager.instance.firstTurn -= Event_FirstTurn;
     }
 
-    protected virtual void Event_FirstTurn(object _o, EventArgs _e)
+    protected virtual void Event_FirstTurn()
     {
         //HpAndGuardReset();
         //FlucStatReset();
         //CalculateStat();
     }
 
-    protected virtual void Event_PlayerTurnEnd(object _o, EventArgs _e)
+    protected virtual void Event_PlayerTurnEnd()
     { }
 
-    protected virtual void Event_TurnEnd(object _o, EventArgs _e)
+    protected virtual void Event_TurnEnd()
     { }
-    protected virtual void Event_TurnStart(object _o, EventArgs _e)
+    protected virtual void Event_TurnStart()
     {}
 
-    protected virtual void Event_BattleEnd(object _o, EventArgs _e)
+    protected virtual void Event_BattleEnd()
     {}
 
     public virtual bool OnDamage(int damage)

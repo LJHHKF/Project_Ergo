@@ -29,12 +29,12 @@ public class InitCardSetting : MonoBehaviour
         GameMaster.instance.startGame_Awake -= Event_StartGameAwake;
     }
 
-    private void Event_InitSaveDataAwake(object _o, EventArgs _e)
+    private void Event_InitSaveDataAwake()
     {
         OnInitCardsSetting();
     }
 
-    private void Event_StartGameAwake(object _o, EventArgs _e)
+    private void Event_StartGameAwake()
     {
         m_cardPack.SetSaveID(GameMaster.instance.GetSaveID());
         m_cardPack.CardPack_Start();

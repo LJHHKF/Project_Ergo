@@ -110,12 +110,12 @@ public class EnemiesManager : MonoBehaviour
         m_instance = null;
     }
 
-    private void Event_PlayerTurnEnd(object _o, EventArgs _e)
+    private void Event_PlayerTurnEnd()
     {
         StartCoroutine(StartMonsterActsControl());
     }
 
-    private void Event_GameStop(object _o, EventArgs _e)
+    private void Event_GameStop()
     {
         PlayerPrefs.SetInt(key, initCnt);
     }

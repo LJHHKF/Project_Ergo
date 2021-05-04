@@ -41,7 +41,7 @@ public class TopHpText : MonoBehaviour
             TurnManager.instance.firstTurn -= firstTurnEvent;
     }
 
-    private void firstTurnEvent(object _o, EventArgs _e)
+    private void firstTurnEvent()
     {
         UpdateText();
     }

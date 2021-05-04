@@ -70,7 +70,7 @@ public class InputSystem : MonoBehaviour
         //m_ped = new PointerEventData(null);
     }
 
-    private void Event_BattleStageStart(object sender, EventArgs _e)
+    private void Event_BattleStageStart()
     {
         myMainCam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         line = GameObject.FindGameObjectWithTag("Line");
