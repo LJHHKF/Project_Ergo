@@ -27,6 +27,8 @@ public class TrapSceneManager : MonoBehaviour
     [Header("Object Registration")]
     [SerializeField] private Text nameField;
     [SerializeField] private Text desciptionField;
+    [SerializeField] private GameObject bg_object;
+    private Image bg;
 
     [Header("Trap Info Setting")]
     [SerializeField] private Trap[] traps;
@@ -36,6 +38,7 @@ public class TrapSceneManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        bg = bg_object.GetComponent<Image>();
         string key = $"SaveID({GameMaster.instance.GetSaveID()}).LastTrap";
         if (!PlayerPrefs.HasKey(key) || PlayerPrefs.GetInt(key) <= -1)
         {
@@ -54,6 +57,7 @@ public class TrapSceneManager : MonoBehaviour
                 {
                     nameField.text = traps[i].name;
                     desciptionField.text = traps[i].description;
+                    bg.sprite = traps[i].sprite;
                     trap_index = i;
                     PlayerPrefs.SetInt(key, i);
                     break;

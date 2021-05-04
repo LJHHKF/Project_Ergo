@@ -20,6 +20,7 @@ public class EnemiesManager : MonoBehaviour
     private static EnemiesManager m_instance;
 
     [SerializeField] private float minX;
+    [SerializeField] private float y_Init = 0;
     [SerializeField] private float x_interval = 1.0f;
     [SerializeField] private float time_interval = 1.0f;
 
@@ -66,7 +67,7 @@ public class EnemiesManager : MonoBehaviour
             for (int i = 0; i < curStageCnt; i++)
             {
                 GameObject mon = Instantiate(BattleStageManager.instance.GetMonster(), gameObject.transform);
-                mon.transform.position = new Vector2(minX + (x_interval * i), 0);
+                mon.transform.position = new Vector2(minX + (x_interval * i), y_Init);
                 mon.name = "Enemy_" + mon.name + "_" + i.ToString("00");
                 Enemy_Base temp = mon.GetComponent<Enemy_Base>();
                 temp.monsterFieldIndex = i;
@@ -89,7 +90,7 @@ public class EnemiesManager : MonoBehaviour
                 m_sb.Append($"{key}.{_i}");
                 //int m_id = PlayerPrefs.GetInt(m_sb.ToString());
                 GameObject mon = Instantiate(BattleStageManager.instance.GetMonster(PlayerPrefs.GetInt(m_sb.ToString())), gameObject.transform);
-                mon.transform.position = new Vector2(minX + (x_interval * _i), 0);
+                mon.transform.position = new Vector2(minX + (x_interval * _i), y_Init);
                 mon.name = "Enemy_" + mon.name + "_" + _i.ToString("00");
                 Enemy_Base temp = mon.GetComponent<Enemy_Base>();
                 temp.monsterFieldIndex = _i;
@@ -231,7 +232,7 @@ public class EnemiesManager : MonoBehaviour
         int j = monsters.Count - 1;
         for (int i = 0; i < monsters.Count; i--)
         {
-            monsters[i].transform.position = new Vector2(minX + (x_interval * j--), 0);
+            monsters[i].transform.position = new Vector2(minX + (x_interval * j--), y_Init);
         }
     }
 
