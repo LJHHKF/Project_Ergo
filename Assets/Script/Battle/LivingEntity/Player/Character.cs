@@ -62,8 +62,6 @@ public class Character : LivingEntity
     public override void GetGuardPoint(int GetValue)
     {
         base.GetGuardPoint(GetValue);
-        Debug.Log("플레이어가 가드 포인트를 획득했습니다. 획득치:" + GetValue);
-        Debug.Log("플레이어의 현재 가드 포인트치:" + GuardPoint);
     }
 
     public override void ChangeCost(int changeV)

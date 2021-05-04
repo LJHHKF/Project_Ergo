@@ -86,13 +86,25 @@ public class GameMaster : MonoBehaviour
         {
             key = $"SaveID({saveID})";
             PlayerPrefs.SetInt(key, 1);
-            initSaveData_Awake?.Invoke();
-            initSaveData_Start?.Invoke();
+            if (initSaveData_Awake != null)
+            {
+                    initSaveData_Awake.Invoke();
+            }
+            if (initSaveData_Start != null)
+            {
+                    initSaveData_Start.Invoke();
+            }
         }
         else if (!OnInitSaveData())
         {
-            startGame_Awake?.Invoke();
-            startGame_Start?.Invoke();
+            if (startGame_Awake != null)
+            {
+                    startGame_Awake.Invoke();
+            }
+            if (startGame_Start != null)
+            {
+                    startGame_Start.Invoke();
+            }
         }
     }
 
@@ -102,8 +114,14 @@ public class GameMaster : MonoBehaviour
         if (!PlayerPrefs.HasKey(key) || PlayerPrefs.GetInt(key) == 0)
         {
             PlayerPrefs.SetInt(key, 1);
-            initSaveData_Awake?.Invoke();
-            initSaveData_Start?.Invoke();
+            if (initSaveData_Awake != null)
+            {
+                    initSaveData_Awake.Invoke();
+            }
+            if (initSaveData_Start != null)
+            {
+                    initSaveData_Start.Invoke();
+            }
             isInit = true;
             return true;
         }
@@ -128,9 +146,9 @@ public class GameMaster : MonoBehaviour
             if (gameStop != null)
             {
                 gameStop.Invoke();
-                isDoGameStop = true;
-                isInit = false;
             }
+            isDoGameStop = true;
+            isInit = false;
         }
     }
 
@@ -154,7 +172,7 @@ public class GameMaster : MonoBehaviour
     {
         if (battleStageEnd != null)
         {
-            battleStageEnd?.Invoke();
+            battleStageEnd.Invoke();
         }
         OnStageEnd();
     }

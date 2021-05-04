@@ -108,8 +108,6 @@ public class Enemy_Base : LivingEntity
     public override bool OnDamage(int damage)
     {
         bool res = base.OnDamage(damage);
-        Debug.Log("몬스터(인덱스:" + monsterFieldIndex + ")가 데미지를 입었습니다. :" + damage);
-        Debug.Log("몬스터(인덱스:" + monsterFieldIndex + ")의 남은 체력 :" + health);
         return res;
     }
 
@@ -190,6 +188,5 @@ public class Enemy_Base : LivingEntity
     {
         readyAct.Act();
         myUI.AddPopUpText_ActionName(readyAct.GetActName());
-        Debug.Log("몬스터(인덱스:" + monsterFieldIndex + ")가 행동했습니다.");
     }
 }

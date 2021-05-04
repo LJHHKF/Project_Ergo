@@ -162,8 +162,6 @@ public class AbCondition : MonoBehaviour
 
         list_conditions[listIndex].DecreseP(1);
 
-        Debug.Log("상태이상 발동, ID(" + _id + "), 중첩수(" + list_conditions[listIndex].piledNum + ")");
-
         if (list_conditions[listIndex].piledNum != 0)
         {
             if (_id <= 4)
@@ -216,7 +214,6 @@ public class AbCondition : MonoBehaviour
         for (int i = 0; i < list_delayed.Count; i++)
         {
             int _i = i;
-            Debug.Log($"상태이상 축적 이동, ID({list_delayed[_i].ID}) ,중첩수({list_delayed[_i].piledNum})");
             AddAbCondition(list_delayed[_i].ID, list_delayed[_i].piledNum);
         }
         list_delayed.Clear();

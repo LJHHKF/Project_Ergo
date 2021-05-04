@@ -115,6 +115,9 @@ public class PlayerMoneyManager : MonoBehaviour
 
     private void OnSoulChanged()
     {
-        soulChanged?.Invoke();
+        if (soulChanged != null)
+        {
+             soulChanged.Invoke();
+        }
     }
 }

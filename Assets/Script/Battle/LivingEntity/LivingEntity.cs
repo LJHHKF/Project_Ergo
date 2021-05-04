@@ -102,7 +102,10 @@ public class LivingEntity : MonoBehaviour, IDamageable
             myUI.HpUpdate();
 
             isDamaged = true;
-            onHPDamage?.Invoke();
+            if (onHPDamage != null)
+            {
+                onHPDamage.Invoke();
+            }
         }
         else
             isDamaged = false;
@@ -183,7 +186,10 @@ public class LivingEntity : MonoBehaviour, IDamageable
 
     public virtual void Die()
     {
-        onDeath?.Invoke();
+        if (onDeath != null)
+        {
+             onDeath.Invoke();
+        }
         dead = true;
     }
 
@@ -249,6 +255,7 @@ public class LivingEntity : MonoBehaviour, IDamageable
 
     public void SetAnimTrigger(string _name)
     {
-        myAnimator.SetTrigger(_name);
+        if (_name.Length > 1)
+            myAnimator.SetTrigger(_name);
     }
 }
