@@ -83,6 +83,7 @@ public class LivingEntity : MonoBehaviour, IDamageable
             if (GuardPoint < 0)
             {
                 myUI.AddPopUpText_GuardedDamage(prevGuardPoint);
+                myUI.GuardBreakAnim();
                 damage = Mathf.Abs(GuardPoint);
                 GuardPoint = 0;
             }
@@ -159,6 +160,7 @@ public class LivingEntity : MonoBehaviour, IDamageable
     {
         GuardPoint += GetValue;
         myUI.AddPopUpText_GetGuardPoint(GetValue);
+        myUI.GuardGainAnim();
         myUI.GuardUpdate();
     }
 
