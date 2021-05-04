@@ -145,7 +145,7 @@ public class LoadManager : MonoBehaviour
     IEnumerator OnDelayedTurnStart()
     {
         yield return new WaitForSeconds(0.5f);
-        TurnManager.OnFirstTurn();
+        TurnManager.instance.OnFirstTurn();
         yield break;
     }
 
