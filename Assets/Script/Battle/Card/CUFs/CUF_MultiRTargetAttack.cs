@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 using System;
 
 public class CUF_MultiRTargetAttack : CUF_Base
@@ -25,7 +24,7 @@ public class CUF_MultiRTargetAttack : CUF_Base
     {
         base.Start();
 
-        myCard.use.AddListener(Use);
+        myCard.use += this.Use;
     }
 
     public override void Use(int diceValue)
@@ -77,7 +76,7 @@ public class CUF_MultiRTargetAttack : CUF_Base
         this.Use(dv);
     }
 
-    IEnumerator delayedAffect(UnityAction _action)
+    IEnumerator delayedAffect(Action _action)
     {
         yield return new WaitForSeconds(affectDelay);
         _action.Invoke();

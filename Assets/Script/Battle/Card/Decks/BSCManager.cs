@@ -23,33 +23,33 @@ public class BSCManager : MonoBehaviour
         list_grave.Capacity = (CardPack.instance.GetCardsLength() * 3) + 1;
         DeckManager.instance.SetBSCManager(this);
 
-        TurnManager.instance.battleEnd.AddListener(Event_BattleEnd);
-        TurnManager.instance.playerTurnEnd.AddListener(Event_PlayerTurnEnd);
+        TurnManager.instance.battleEnd += Event_BattleEnd;
+        TurnManager.instance.playerTurnEnd += Event_PlayerTurnEnd;
 
-        GameMaster.instance.gameStop.AddListener(Event_GameStop);
+        GameMaster.instance.gameStop += Event_GameStop;
     }
 
     private void OnDestroy()
     {
-        TurnManager.instance.battleEnd.RemoveListener(Event_BattleEnd);
-        TurnManager.instance.playerTurnEnd.RemoveListener(Event_PlayerTurnEnd);
+        TurnManager.instance.battleEnd -= Event_BattleEnd;
+        TurnManager.instance.playerTurnEnd -= Event_PlayerTurnEnd;
 
-        GameMaster.instance.gameStop.RemoveListener(Event_GameStop);
+        GameMaster.instance.gameStop -= Event_GameStop;
     }
 
-    private void Event_BattleEnd()
+    private void Event_BattleEnd(object _o, EventArgs e)
     {
         CleanUpCards();
     }
 
-    private void Event_PlayerTurnEnd()
+    private void Event_PlayerTurnEnd(object _o, EventArgs e)
     {
         ClearHandToGrave();
         //UndoHandsTaransparency();
         //SortingHand(0);
     }
 
-    private void Event_GameStop()
+    private void Event_GameStop(object _o, EventArgs e)
     {
         CleanUpCards();
     }

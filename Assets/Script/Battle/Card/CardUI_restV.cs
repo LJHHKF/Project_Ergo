@@ -16,14 +16,14 @@ public class CardUI_restV : MonoBehaviour
 
     private void OnEnable()
     {
-        restM.ev_otherSelect.AddListener(EventOtherSelect);
+        restM.ev_otherSelect += EventOtherSelect;
         
         selectedImg.SetActive(false);
     }
 
     private void OnDisable()
     {
-        restM.ev_otherSelect.RemoveListener(EventOtherSelect);
+        restM.ev_otherSelect -= EventOtherSelect;
         if(isSelect)
         {
             isSelect = false;

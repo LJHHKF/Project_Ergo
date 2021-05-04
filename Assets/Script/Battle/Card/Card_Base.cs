@@ -6,7 +6,6 @@ using UnityEngine.UI;
 using System;
 using System.Text;
 using Card;
-using UnityEngine.Events;
 
 namespace Card
 {
@@ -56,8 +55,9 @@ public class Card_Base : MonoBehaviour, ICard
     protected CostManager m_costM;
     protected Character m_charM;
 
-    public UnityEvent<int> use;
-    public UnityEvent sub_use;
+    public delegate void UseHandler(int dicevalue);
+    public event UseHandler use;
+    public event Action sub_use;
     //protected int d_Value;
 
     public Vector2 m_Position
@@ -93,22 +93,10 @@ public class Card_Base : MonoBehaviour, ICard
         text_name.text = cardName;
         ready = false;
 
-        
+        GameMaster.instance.battleStageStart += Event_BattleStageStart;
     }
 
-    protected virtual void OnEnable()
-    {
-        GameMaster.instance.battleStageStart.AddListener(Event_BattleStageStart);
-        m_Collider.enabled = true;
-        UndoTransparency();
-    }
-
-    protected virtual void OnDisable()
-    {
-        GameMaster.instance.battleStageEnd.RemoveListener(Event_BattleStageStart);
-    }
-
-    private void Event_BattleStageStart()
+    private void Event_BattleStageStart(object _o, EventArgs _e)
     {
         ChkAndFindBSCardManager();
 
@@ -134,6 +122,12 @@ public class Card_Base : MonoBehaviour, ICard
         {
             r_fixP = fixP + Mathf.RoundToInt(m_charM.intel * 0.5f);
         }
+    }
+
+    protected virtual void OnEnable()
+    {
+        m_Collider.enabled = true;
+        UndoTransparency();
     }
 
 
@@ -214,7 +208,7 @@ public class Card_Base : MonoBehaviour, ICard
 
         m_costM.cost -= cost;
         
-        use.Invoke(diceValue);
+        use(diceValue);
         sub_use?.Invoke();
 
         ChkAndFindCharcter();

@@ -11,12 +11,12 @@ public class TopSoulText : MonoBehaviour
     {
         m_text = gameObject.GetComponent<TextMeshProUGUI>();
         UpdateText();
-        PlayerMoneyManager.instance.soulChanged.AddListener(UpdateText);
+        PlayerMoneyManager.instance.soulChanged += UpdateText;
     }
 
     private void OnDisable()
     {
-        PlayerMoneyManager.instance.soulChanged.RemoveListener(UpdateText);
+        PlayerMoneyManager.instance.soulChanged -= UpdateText;
     }
 
     private void UpdateText()

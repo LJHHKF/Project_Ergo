@@ -65,33 +65,33 @@ public class Enemy_Base : LivingEntity
         regenGuardPoint = _regenGuardPoint;
         r_maxSpGauge = maxSpGauge;
 
-        TurnManager.instance.playerTurnEnd.AddListener(Event_PlayerTurnEnd);
-        TurnManager.instance.turnEnd.AddListener(Event_TurnEnd);
-        TurnManager.instance.firstTurn.AddListener(Event_FirstTurn);
+        TurnManager.instance.playerTurnEnd += Event_PlayerTurnEnd;
+        TurnManager.instance.turnEnd += Event_TurnEnd;
+        TurnManager.instance.firstTurn += Event_FirstTurn;
 
-        onDeath.AddListener(() => StartCoroutine(DelayedDestroy(1.0f)));
+        onDeath += () => StartCoroutine(DelayedDestroy(1.0f));
     }
 
     protected override void ReleseTurnAct()
     {
-        TurnManager.instance.playerTurnEnd.RemoveListener(Event_PlayerTurnEnd);
-        TurnManager.instance.turnEnd.RemoveListener(Event_TurnEnd);
-        TurnManager.instance.firstTurn.RemoveListener(Event_FirstTurn);
+        TurnManager.instance.playerTurnEnd -= Event_PlayerTurnEnd;
+        TurnManager.instance.turnEnd -= Event_TurnEnd;
+        TurnManager.instance.firstTurn -= Event_FirstTurn;
     }
 
-    protected override void Event_PlayerTurnEnd()
+    protected override void Event_PlayerTurnEnd(object _o, EventArgs _e)
     {
         ResetGuardPoint();
         myAbCond.Affected();
     }
 
-    protected override void Event_TurnEnd()
+    protected override void Event_TurnEnd(object _o, EventArgs _e)
     {
         curSpGauge++;
         ActSetting();
     }
 
-    protected override void Event_FirstTurn()
+    protected override void Event_FirstTurn(object _o, EventArgs _e)
     {
         ResetHP();
         ResetGuardPoint();

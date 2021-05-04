@@ -33,38 +33,38 @@ public class BattleUIManager : MonoBehaviour
         cardsListWindow.SetActive(false);
         statusDetailArea.SetActive(false);
         isDiceOn = false;
-        TurnManager.instance.firstTurn.AddListener(Event_FirstTurn);
-        TurnManager.instance.turnStart.AddListener(Event_TurnStart);
-        TurnManager.instance.playerTurnEnd.AddListener(Event_PlayerTurnEnd);
-        TurnManager.instance.battleEnd.AddListener(Event_BattleEnd);
+        TurnManager.instance.firstTurn += Event_FirstTurn;
+        TurnManager.instance.turnStart += Event_TurnStart;
+        TurnManager.instance.playerTurnEnd += Event_PlayerTurnEnd;
+        TurnManager.instance.battleEnd += Event_BattleEnd;
 
         GameMaster.instance.OnBattleStageStart();
     }
 
     private void OnDestroy()
     {
-        TurnManager.instance.firstTurn.RemoveListener(Event_FirstTurn);
-        TurnManager.instance.turnStart.RemoveListener(Event_TurnStart);
-        TurnManager.instance.playerTurnEnd.RemoveListener(Event_PlayerTurnEnd);
-        TurnManager.instance.battleEnd.RemoveListener(Event_BattleEnd);
+        TurnManager.instance.firstTurn -= Event_FirstTurn;
+        TurnManager.instance.turnStart -= Event_TurnStart;
+        TurnManager.instance.playerTurnEnd -= Event_PlayerTurnEnd;
+        TurnManager.instance.battleEnd -= Event_BattleEnd;
     }
 
-    private void Event_FirstTurn()
+    private void Event_FirstTurn(object _o, EventArgs _e)
     {
         btn_TurnEnd.SetActive(true);
     }
 
-    private void Event_TurnStart()
+    private void Event_TurnStart(object _o, EventArgs _e)
     {
         btn_TurnEnd.SetActive(true);
     }
 
-    private void Event_PlayerTurnEnd()
+    private void Event_PlayerTurnEnd(object _o, EventArgs _e)
     {
         btn_TurnEnd.SetActive(false);
     }
 
-    private void Event_BattleEnd()
+    private void Event_BattleEnd(object _o, EventArgs _e)
     {
         btn_TurnEnd.SetActive(false);
         panel_reward.SetActive(true);

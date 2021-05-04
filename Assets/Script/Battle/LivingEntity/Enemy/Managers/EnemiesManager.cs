@@ -71,7 +71,7 @@ public class EnemiesManager : MonoBehaviour
                 mon.name = "Enemy_" + mon.name + "_" + i.ToString("00");
                 Enemy_Base temp = mon.GetComponent<Enemy_Base>();
                 temp.monsterFieldIndex = i;
-                temp.onDeath.AddListener(() => RemoveAtMonstersList(mon));
+                temp.onDeath += () => RemoveAtMonstersList(mon);
                 monsters.Add(mon);
 
                 int _i = i; //델리게이트 연관 등서 i값을 제대로 못 받는 경우가 있어서 습관적 추가
@@ -94,28 +94,28 @@ public class EnemiesManager : MonoBehaviour
                 mon.name = "Enemy_" + mon.name + "_" + _i.ToString("00");
                 Enemy_Base temp = mon.GetComponent<Enemy_Base>();
                 temp.monsterFieldIndex = _i;
-                temp.onDeath.AddListener(() => RemoveAtMonstersList(mon));
+                temp.onDeath += () => RemoveAtMonstersList(mon);
                 monsters.Add(mon);
             }
         }
         initCnt = monsters.Count;
-        TurnManager.instance.playerTurnEnd.AddListener(Event_PlayerTurnEnd);
-        GameMaster.instance.gameStop.AddListener(Event_GameStop);
+        TurnManager.instance.playerTurnEnd += Event_PlayerTurnEnd;
+        GameMaster.instance.gameStop += Event_GameStop;
     }
 
     private void OnDestroy()
     {
-        TurnManager.instance.playerTurnEnd.RemoveListener(Event_PlayerTurnEnd);
-        GameMaster.instance.gameStop.RemoveListener(Event_GameStop);
+        TurnManager.instance.playerTurnEnd -= Event_PlayerTurnEnd;
+        GameMaster.instance.gameStop -= Event_GameStop;
         m_instance = null;
     }
 
-    private void Event_PlayerTurnEnd()
+    private void Event_PlayerTurnEnd(object _o, EventArgs _e)
     {
         StartCoroutine(StartMonsterActsControl());
     }
 
-    private void Event_GameStop()
+    private void Event_GameStop(object _o, EventArgs _e)
     {
         PlayerPrefs.SetInt(key, initCnt);
     }
@@ -221,7 +221,7 @@ public class EnemiesManager : MonoBehaviour
             mon.name = "Enemy_" + mon.name + "_s_" + i.ToString("00");
             Enemy_Base temp = mon.GetComponent<Enemy_Base>();
             temp.monsterFieldIndex = i;
-            temp.onDeath.AddListener(() => RemoveAtMonstersList(mon));
+            temp.onDeath += () => RemoveAtMonstersList(mon);
             monsters.Add(mon);
         }
         ReSortMonsters();

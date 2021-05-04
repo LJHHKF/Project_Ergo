@@ -21,8 +21,8 @@ public class TopHpText : MonoBehaviour
         if (SceneManager.GetActiveScene().name == "Battle")
         {
             m_char = GameObject.FindGameObjectWithTag("Player").GetComponent<Character>();
-            m_char.onHPDamage.AddListener(UpdateText);
-            TurnManager.instance.firstTurn.AddListener(firstTurnEvent);
+            m_char.onHPDamage += UpdateText;
+            TurnManager.instance.firstTurn += firstTurnEvent;
             isEventAdded = true;
         }
         else
@@ -38,10 +38,10 @@ public class TopHpText : MonoBehaviour
     private void OnDisable()
     {
         if(isEventAdded)
-            TurnManager.instance.firstTurn.RemoveListener(firstTurnEvent);
+            TurnManager.instance.firstTurn -= firstTurnEvent;
     }
 
-    private void firstTurnEvent()
+    private void firstTurnEvent(object _o, EventArgs _e)
     {
         UpdateText();
     }

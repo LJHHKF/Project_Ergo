@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 using EnemyActType;
 using System;
 using System.Text;
@@ -161,7 +160,7 @@ public class EnemyAct_Base : MonoBehaviour
     //    _isAll = isAllTargeted;
     //}
 
-    IEnumerator delayedAffect(UnityAction _action)
+    IEnumerator delayedAffect(Action _action)
     {
         yield return new WaitForSeconds(affectDelay);
         _action.Invoke();

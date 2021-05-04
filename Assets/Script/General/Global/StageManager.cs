@@ -52,21 +52,21 @@ public class StageManager : MonoBehaviour
 
     private void Start()
     {
-        GameMaster.instance.initSaveData_Awake.AddListener(Event_InitGameData);
-        GameMaster.instance.startGame_Awake.AddListener(Event_GameStart);
-        GameMaster.instance.gameStop.AddListener(Event_GameStop);
-        GameMaster.instance.gameOver.AddListener(Event_GameOver);
+        GameMaster.instance.initSaveData_Awake += Event_InitGameData;
+        GameMaster.instance.startGame_Awake += Event_GameStart;
+        GameMaster.instance.gameStop += Event_GameStop;
+        GameMaster.instance.gameOver += Event_GameOver;
     }
 
     private void OnDestroy()
     {
-        GameMaster.instance.initSaveData_Awake.RemoveListener(Event_InitGameData);
-        GameMaster.instance.startGame_Awake.RemoveListener(Event_GameStart);
-        GameMaster.instance.gameStop.RemoveListener(Event_GameStop);
-        GameMaster.instance.gameOver.RemoveListener(Event_GameOver);
+        GameMaster.instance.initSaveData_Awake -= Event_InitGameData;
+        GameMaster.instance.startGame_Awake -= Event_GameStart;
+        GameMaster.instance.gameStop -= Event_GameStop;
+        GameMaster.instance.gameOver -= Event_GameOver;
     }
 
-    private void Event_InitGameData()
+    private void Event_InitGameData(object _sender, EventArgs _e)
     {
         m_curChapter = 1;
         m_curStage = 0;
@@ -85,7 +85,7 @@ public class StageManager : MonoBehaviour
         LoadManager.instance.LoadFirst_Init_ToSetting();
     }
 
-    private void Event_GameStart()
+    private void Event_GameStart(object _sender, EventArgs _e)
     {
         key.Clear();
         key.Append($"SaveID({GameMaster.instance.GetSaveID()}).CurrentStage");
@@ -100,7 +100,7 @@ public class StageManager : MonoBehaviour
         LoadManager.instance.LoadFirst(curStageTypeIndex);
     }
 
-    private void Event_GameStop()
+    private void Event_GameStop(object _sender, EventArgs _e)
     {
         key.Clear();
         key.Append($"SaveID({GameMaster.instance.GetSaveID()}).CurrentStage");
@@ -114,7 +114,7 @@ public class StageManager : MonoBehaviour
         PlayerPrefs.SetInt(key.ToString(), curStageTypeIndex);
     }
 
-    private void Event_GameOver()
+    private void Event_GameOver(object _sender, EventArgs _e)
     {
         key.Clear();
         key.Append($"SaveID({GameMaster.instance.GetSaveID()}).CurrentStage");

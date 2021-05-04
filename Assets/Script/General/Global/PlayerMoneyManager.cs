@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 using System;
 
 public class PlayerMoneyManager : MonoBehaviour
@@ -18,7 +17,7 @@ public class PlayerMoneyManager : MonoBehaviour
     }
 
     public int soul { get; private set; }
-    public UnityEvent soulChanged;
+    public event Action soulChanged;
     private int saveID;
     private string key;
 
@@ -33,23 +32,23 @@ public class PlayerMoneyManager : MonoBehaviour
     // Start is called before the first frame update
     void OnEnable()
     {
-        GameMaster.instance.startGame_Start.AddListener(Ev_StartGame_Start);
-        GameMaster.instance.initSaveData_Start.AddListener(Ev_InitGame_Start);
-        GameMaster.instance.stageEnd.AddListener(Ev_StageEnd);
-        GameMaster.instance.gameStop.AddListener(Ev_GameStop);
-        GameMaster.instance.gameOver.AddListener(Ev_GameOver);
+        GameMaster.instance.startGame_Start += Ev_StartGame_Start;
+        GameMaster.instance.initSaveData_Start += Ev_InitGame_Start;
+        GameMaster.instance.stageEnd += Ev_StageEnd;
+        GameMaster.instance.gameStop += Ev_GameStop;
+        GameMaster.instance.gameOver += Ev_GameOver;
     }
 
     private void OnDisable()
     {
-        GameMaster.instance.startGame_Start.RemoveListener(Ev_StartGame_Start);
-        GameMaster.instance.initSaveData_Start.RemoveListener(Ev_InitGame_Start);
-        GameMaster.instance.stageEnd.RemoveListener(Ev_StageEnd);
-        GameMaster.instance.gameStop.RemoveListener(Ev_GameStop);
-        GameMaster.instance.gameOver.RemoveListener(Ev_GameOver);
+        GameMaster.instance.startGame_Start -= Ev_StartGame_Start;
+        GameMaster.instance.initSaveData_Start -= Ev_InitGame_Start;
+        GameMaster.instance.stageEnd -= Ev_StageEnd;
+        GameMaster.instance.gameStop -= Ev_GameStop;
+        GameMaster.instance.gameOver -= Ev_GameOver;
     }
 
-    private void Ev_StartGame_Start()
+    private void Ev_StartGame_Start(object _o, EventArgs _e)
     {
         //saveID = GameMaster.instance.GetSaveID();
         //key = $"SaveID({saveID}).Soul";
@@ -62,24 +61,24 @@ public class PlayerMoneyManager : MonoBehaviour
             soul = PlayerPrefs.GetInt(key);
     }
 
-    private void Ev_InitGame_Start()
+    private void Ev_InitGame_Start(object _o, EventArgs _e)
     {
         soul = 0;
         SoulSave();
     }
 
-    private void Ev_GameStop()
+    private void Ev_GameStop(object _o, EventArgs _e)
     {
         if (soul >= 0)
             SoulSave();
     }
 
-    private void Ev_GameOver()
+    private void Ev_GameOver(object _o, EventArgs _e)
     {
         PlayerPrefs.DeleteKey(key);
     }
 
-    private void Ev_StageEnd()
+    private void Ev_StageEnd(object _o, EventArgs _e)
     {
         SoulSave();
     }

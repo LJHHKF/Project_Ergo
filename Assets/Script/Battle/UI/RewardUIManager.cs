@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 using System.Text;
 using UnityEngine.UI;
 using System;
@@ -20,7 +19,7 @@ public class RewardUIManager : MonoBehaviour
     private bool[] isSelected;
     private int soulReward;
 
-    private UnityEvent m_onDisable;
+    private event Action m_onDisable;
 
     private void Awake()
     {
@@ -32,7 +31,7 @@ public class RewardUIManager : MonoBehaviour
         CardPack.instance.ResetCanList();
         Card_Base m_card = CardPack.instance.GetRandomCard_isntConfirm().GetComponent<Card_Base>();
         cardUIManager.SetTargetCard(m_card, true);
-        m_onDisable.AddListener(() => CardPack.instance.TempHadCntUpDown(m_card.GetCardID(), false));
+        m_onDisable += () => CardPack.instance.TempHadCntUpDown(m_card.GetCardID(), false);
 
         StringBuilder m_sb = new StringBuilder();
         m_sb.Append("소울 보상(가구현)\n");
