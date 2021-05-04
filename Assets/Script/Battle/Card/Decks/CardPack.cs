@@ -50,16 +50,16 @@ public class CardPack : MonoBehaviour
 
     private void Start()
     {
-        GameMaster.instance.gameOver += Event_GameOver;
-        GameMaster.instance.gameStop += Event_GameStop;
+        GameMaster.instance.gameOver.AddListener(Event_GameOver);
+        GameMaster.instance.gameStop.AddListener(Event_GameStop);
     }
 
-    private void Event_GameOver(object _o, EventArgs e)
+    private void Event_GameOver()
     {
         CardPackClear();
     }
 
-    private void Event_GameStop(object _o, EventArgs e)
+    private void Event_GameStop()
     {
         SaveHadCnt();
     }

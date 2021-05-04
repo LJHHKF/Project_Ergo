@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System;
 using UnityEngine;
+using UnityEngine.Events;
 
 
 //<레트로 유니티 게임 프로그래밍 에센스> 2권 참고하여 기본 제작 후 기능 추가
@@ -27,8 +28,8 @@ public class LivingEntity : MonoBehaviour, IDamageable
     public int intel { get; protected set; }
 
     public bool dead { get; protected set; }
-    public event Action onDeath;
-    public event Action onHPDamage;
+    public UnityEvent onDeath;
+    public UnityEvent onHPDamage;
 
     [Header("Ref Setting")]
     [SerializeField] protected UnitUI myUI;
@@ -55,22 +56,22 @@ public class LivingEntity : MonoBehaviour, IDamageable
         //TurnManager.instance.firstTurn -= Event_FirstTurn;
     }
 
-    protected virtual void Event_FirstTurn(object _o, EventArgs _e)
+    protected virtual void Event_FirstTurn()
     {
         //HpAndGuardReset();
         //FlucStatReset();
         //CalculateStat();
     }
 
-    protected virtual void Event_PlayerTurnEnd(object _o, EventArgs _e)
+    protected virtual void Event_PlayerTurnEnd()
     { }
 
-    protected virtual void Event_TurnEnd(object _o, EventArgs _e)
+    protected virtual void Event_TurnEnd()
     { }
-    protected virtual void Event_TurnStart(object _o, EventArgs _e)
+    protected virtual void Event_TurnStart()
     {}
 
-    protected virtual void Event_BattleEnd(object _o, EventArgs _e)
+    protected virtual void Event_BattleEnd()
     {}
 
     public virtual bool OnDamage(int damage)

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class TurnManager: MonoBehaviour
 {
@@ -17,11 +18,11 @@ public class TurnManager: MonoBehaviour
     private static TurnManager m_instance;
 
     // On 함수들의 참조 개수에 주의. 참조가 1개가 아니면 문제.
-    public event EventHandler firstTurn;
-    public event EventHandler turnStart;
-    public event EventHandler playerTurnEnd;
-    public event EventHandler turnEnd;
-    public event EventHandler battleEnd;
+    public UnityEvent firstTurn;
+    public UnityEvent turnStart;
+    public UnityEvent playerTurnEnd;
+    public UnityEvent turnEnd;
+    public UnityEvent battleEnd;
 
     private bool isBattleEnded = false;
 
@@ -35,12 +36,12 @@ public class TurnManager: MonoBehaviour
             Destroy(gameObject);
         }
 
-        GameMaster.instance.battleStageEnd += Event_BattleStageEnd;
+        GameMaster.instance.battleStageEnd.AddListener(Event_BattleStageEnd);
 
         start_time = Time.time;
     }
 
-    private void Event_BattleStageEnd(object sender, EventArgs e)
+    private void Event_BattleStageEnd()
     {
         isFirstActived = false;
 
@@ -59,35 +60,35 @@ public class TurnManager: MonoBehaviour
     private void OnDestroy()
     {
         m_instance = null;
-        GameMaster.instance.battleStageEnd -= Event_BattleStageEnd;
+        GameMaster.instance.battleStageEnd.RemoveListener(Event_BattleStageEnd);
     }
 
     public static void OnFirstTurn()
     {
-        m_instance.firstTurn?.Invoke(m_instance, EventArgs.Empty);
+        m_instance.firstTurn?.Invoke();
         m_instance.isFirstActived = true;
         m_instance.isBattleEnded = false;
     }
 
     public void OnTurnStart()
     {
-        turnStart?.Invoke(m_instance, EventArgs.Empty);
+        turnStart?.Invoke();
     }
 
     public void OnPlayerTurnEnd() // UI Btn에 연결되어 있음. 참조 0이라도 상관x.
     {
-         playerTurnEnd?.Invoke(m_instance, EventArgs.Empty);
+         playerTurnEnd?.Invoke();
     }
 
     public void OnTurnEnd()
     {
-        turnEnd?.Invoke(m_instance, EventArgs.Empty);
+        turnEnd?.Invoke();
         OnTurnStart();
     }
 
     public void OnBattleEnd()
     {
-        battleEnd?.Invoke(m_instance, EventArgs.Empty);
+        battleEnd?.Invoke();
         m_instance.isBattleEnded = true;
     }
 

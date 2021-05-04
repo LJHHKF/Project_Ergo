@@ -1,12 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using System;
 using UnityEngine.UI;
 
 public class RestSceneManager : MonoBehaviour
 {
-    public event Action ev_otherSelect;
+    public UnityEvent ev_otherSelect;
     public event Func<bool> ev_DeleteConfirm;
 
     [SerializeField] private GameObject cardsListWindow;

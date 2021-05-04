@@ -21,11 +21,11 @@ public class CUF_Repeat : MonoBehaviour
         if (isUseFixP || isUseFlucP)
         {
             myCard.GetCardUseInfo(out fixP, out flucPRate);
-            myCard.use += GetDVAndUse;
+            myCard.use.AddListener(GetDVAndUse);
         }
         else
         {
-            myCard.sub_use += () => StartCoroutine(DelayedUse(maxNum));
+            myCard.sub_use.AddListener(() => StartCoroutine(DelayedUse(maxNum)));
         }
     }
 

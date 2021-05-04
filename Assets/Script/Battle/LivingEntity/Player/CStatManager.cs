@@ -55,11 +55,11 @@ public class CStatManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        GameMaster.instance.initSaveData_Awake += Event_InitSaveDataAwake;
-        GameMaster.instance.startGame_Awake += Event_StartGameAwake;
-        GameMaster.instance.stageEnd += Event_StageEnd;
-        GameMaster.instance.battleStageEnd += Event_BattleStageEnd;
-        GameMaster.instance.gameOver += Event_GameOver;
+        GameMaster.instance.initSaveData_Awake.AddListener(Event_InitSaveDataAwake);
+        GameMaster.instance.startGame_Awake.AddListener(Event_StartGameAwake);
+        GameMaster.instance.stageEnd.AddListener(Event_StageEnd);
+        GameMaster.instance.battleStageEnd.AddListener(Event_BattleStageEnd);
+        GameMaster.instance.gameOver.AddListener(Event_GameOver);
 
         abcond_list.Capacity = AbCondInfoManager.instance.GetAbCondListLength() + 1;
     }
@@ -67,14 +67,14 @@ public class CStatManager : MonoBehaviour
     private void OnDestroy()
     {
         m_instance = null;
-        GameMaster.instance.initSaveData_Awake -= Event_InitSaveDataAwake;
-        GameMaster.instance.startGame_Awake -= Event_StartGameAwake;
-        GameMaster.instance.stageEnd -= Event_StageEnd;
-        GameMaster.instance.battleStageEnd -= Event_BattleStageEnd;
-        GameMaster.instance.gameOver -= Event_GameOver;
+        GameMaster.instance.initSaveData_Awake.RemoveListener(Event_InitSaveDataAwake);
+        GameMaster.instance.startGame_Awake.RemoveListener(Event_StartGameAwake);
+        GameMaster.instance.stageEnd.RemoveListener(Event_StageEnd);
+        GameMaster.instance.battleStageEnd.RemoveListener(Event_BattleStageEnd);
+        GameMaster.instance.gameOver.RemoveListener(Event_GameOver);
     }
 
-    private void Event_InitSaveDataAwake(object _o, EventArgs _e)
+    private void Event_InitSaveDataAwake()
     {
         endurance = init_Endurance;
         strength = init_Strength;
@@ -86,7 +86,7 @@ public class CStatManager : MonoBehaviour
         SaveStats();
     }
 
-    private void Event_StartGameAwake(object _o, EventArgs _e)
+    private void Event_StartGameAwake()
     {
         int saveID = GameMaster.instance.GetSaveID();
         key.Clear();
@@ -129,7 +129,7 @@ public class CStatManager : MonoBehaviour
         }
     }
 
-    private void Event_GameOver(object _o, EventArgs _e)
+    private void Event_GameOver()
     {
         int saveID = GameMaster.instance.GetSaveID();
         key.Clear();
@@ -150,12 +150,12 @@ public class CStatManager : MonoBehaviour
         PlayerPrefs.DeleteKey(key.ToString());
     }
 
-    private void Event_StageEnd(object _o, EventArgs _e)
+    private void Event_StageEnd()
     {
         SaveStats();
     }
 
-    private void Event_BattleStageEnd(object _o , EventArgs _e)
+    private void Event_BattleStageEnd()
     {
         key.Clear();
         key.Append($"SaveID({GameMaster.instance.GetSaveID()}).CStat.Abcond.Length");

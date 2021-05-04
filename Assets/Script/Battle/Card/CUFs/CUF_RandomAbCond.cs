@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using System;
 
 public class CUF_RandomAbCond : CUF_AbCondition
@@ -67,7 +68,7 @@ public class CUF_RandomAbCond : CUF_AbCondition
         Use(dv);
     }
 
-    IEnumerator delayedAffect(Action _action)
+    IEnumerator delayedAffect(UnityAction _action)
     {
         yield return new WaitForSeconds(affectDelay);
         _action.Invoke();

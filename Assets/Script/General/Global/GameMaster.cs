@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using System;
 
 public class GameMaster : MonoBehaviour
@@ -22,15 +23,15 @@ public class GameMaster : MonoBehaviour
     [SerializeField] private bool isReset = false;
     private bool isDoGameStop = false;
 
-    public event EventHandler startGame_Awake;
-    public event EventHandler startGame_Start;
-    public event EventHandler initSaveData_Awake;
-    public event EventHandler initSaveData_Start;
-    public event EventHandler gameOver;
-    public event EventHandler gameStop;
-    public event EventHandler battleStageStart;
-    public event EventHandler stageEnd;
-    public event EventHandler battleStageEnd;
+    public UnityEvent startGame_Awake;
+    public UnityEvent startGame_Start;
+    public UnityEvent initSaveData_Awake;
+    public UnityEvent initSaveData_Start;
+    public UnityEvent gameOver;
+    public UnityEvent gameStop;
+    public UnityEvent battleStageStart;
+    public UnityEvent stageEnd;
+    public UnityEvent battleStageEnd;
 
     public bool isInit { get; set; }
 
@@ -44,7 +45,7 @@ public class GameMaster : MonoBehaviour
 
     private void Start()
     {
-        gameOver += Event_GameOver;
+        gameOver.AddListener(Event_GameOver);
 
         isInit = false;
 
@@ -52,7 +53,7 @@ public class GameMaster : MonoBehaviour
             PlayerPrefs.DeleteAll();
     }
 
-    private void Event_GameOver(object _o, EventArgs _e)
+    private void Event_GameOver()
     {
         key = $"SaveID({saveID})";
         PlayerPrefs.DeleteKey(key);
@@ -86,13 +87,13 @@ public class GameMaster : MonoBehaviour
         {
             key = $"SaveID({saveID})";
             PlayerPrefs.SetInt(key, 1);
-            initSaveData_Awake?.Invoke(this, EventArgs.Empty);
-            initSaveData_Start?.Invoke(this, EventArgs.Empty);
+            initSaveData_Awake?.Invoke();
+            initSaveData_Start?.Invoke();
         }
         else if (!OnInitSaveData())
         {
-            startGame_Awake?.Invoke(this, EventArgs.Empty);
-            startGame_Start?.Invoke(this, EventArgs.Empty);
+            startGame_Awake?.Invoke();
+            startGame_Start?.Invoke();
         }
     }
 
@@ -102,8 +103,8 @@ public class GameMaster : MonoBehaviour
         if (!PlayerPrefs.HasKey(key) || PlayerPrefs.GetInt(key) == 0)
         {
             PlayerPrefs.SetInt(key, 1);
-            initSaveData_Awake?.Invoke(this, EventArgs.Empty);
-            initSaveData_Start?.Invoke(this, EventArgs.Empty);
+            initSaveData_Awake?.Invoke();
+            initSaveData_Start?.Invoke();
             isInit = true;
             return true;
         }
@@ -125,7 +126,7 @@ public class GameMaster : MonoBehaviour
     {
         if (!isDoGameStop)
         {
-            gameStop?.Invoke(this, EventArgs.Empty);
+            gameStop?.Invoke();
             isDoGameStop = true;
             isInit = false;
         }
@@ -133,17 +134,17 @@ public class GameMaster : MonoBehaviour
 
     public void OnBattleStageStart()
     {
-        battleStageStart?.Invoke(this, EventArgs.Empty);
+        battleStageStart?.Invoke();
     }
 
     public void OnStageEnd()
     {
-        stageEnd?.Invoke(this, EventArgs.Empty);
+        stageEnd?.Invoke();
     }
 
     public void OnBattleStageEnd()
     {
-        battleStageEnd?.Invoke(this, EventArgs.Empty);
+        battleStageEnd?.Invoke();
         OnStageEnd();
     }
 
@@ -151,7 +152,7 @@ public class GameMaster : MonoBehaviour
     IEnumerator DelayedGameOver()
     {
         yield return new WaitForSeconds(end_DelayTime);
-        gameOver?.Invoke(this, EventArgs.Empty);
+        gameOver?.Invoke();
         yield break;
     }
 

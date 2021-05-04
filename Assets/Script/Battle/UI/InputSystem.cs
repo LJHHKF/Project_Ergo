@@ -63,14 +63,14 @@ public class InputSystem : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        GameMaster.instance.battleStageStart += Event_BattleStageStart;
+        GameMaster.instance.battleStageStart.AddListener(Event_BattleStageStart);
         //TurnManager.instance.firstTurn += Event_BattleStageStart;
 
         //m_GRay = m_cardCanvas.GetComponent<GraphicRaycaster>();
         //m_ped = new PointerEventData(null);
     }
 
-    private void Event_BattleStageStart(object sender, EventArgs _e)
+    private void Event_BattleStageStart()
     {
         myMainCam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         line = GameObject.FindGameObjectWithTag("Line");
@@ -82,7 +82,7 @@ public class InputSystem : MonoBehaviour
 
     private void OnDestroy()
     {
-        GameMaster.instance.battleStageStart -= Event_BattleStageStart;
+        GameMaster.instance.battleStageStart.RemoveListener(Event_BattleStageStart);
     }
 
     // Update is called once per frame

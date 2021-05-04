@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using EnemyActType;
 using System;
 
@@ -108,7 +109,7 @@ public class EA_GuardCAddAct : EnemyAct_Base
         }
     }
 
-    IEnumerator delayedAffect(Action _action)
+    IEnumerator delayedAffect(UnityAction _action)
     {
         yield return new WaitForSeconds(affectDelay);
         _action.Invoke();

@@ -26,21 +26,21 @@ public class Character : LivingEntity
         FlucStatReset();
         CalculateStat();
 
-        TurnManager.instance.firstTurn += Event_FirstTurn;
-        TurnManager.instance.turnStart += Event_TurnStart;
-        TurnManager.instance.battleEnd += Event_BattleEnd;
+        TurnManager.instance.firstTurn.AddListener(Event_FirstTurn);
+        TurnManager.instance.turnStart.AddListener(Event_TurnStart);
+        TurnManager.instance.battleEnd.AddListener(Event_BattleEnd);
 
-        onDeath += () => CStatManager.instance.HealthPointUpdate(health); // 게임오버 체크는 여기 들어가서 함.
+        onDeath.AddListener(() => CStatManager.instance.HealthPointUpdate(health)); // 게임오버 체크는 여기 들어가서 함.
     }
 
     protected override void ReleseTurnAct()
     {
-        TurnManager.instance.firstTurn -= Event_FirstTurn;
-        TurnManager.instance.turnStart -= Event_TurnStart;
-        TurnManager.instance.battleEnd -= Event_BattleEnd;
+        TurnManager.instance.firstTurn.RemoveListener(Event_FirstTurn);
+        TurnManager.instance.turnStart.RemoveListener(Event_TurnStart);
+        TurnManager.instance.battleEnd.RemoveListener(Event_BattleEnd);
     }
 
-    protected override void Event_FirstTurn(object _o, EventArgs _e)
+    protected override void Event_FirstTurn()
     {
         CStatManager.instance.GetInheritedAbCond(ref myAbCond);
         myUI.HpUpdate();
@@ -48,13 +48,13 @@ public class Character : LivingEntity
         InitMaxCostSetting();
     }
 
-    protected override void Event_TurnStart(object _o, EventArgs _e)
+    protected override void Event_TurnStart()
     {
         ResetGuardPoint();
         myAbCond.Affected();
     }
 
-    protected override void Event_BattleEnd(object _o, EventArgs _e)
+    protected override void Event_BattleEnd()
     {
         CStatManager.instance.HealthPointUpdate(health);
     }

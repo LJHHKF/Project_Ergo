@@ -32,44 +32,44 @@ public class DeckManager : MonoBehaviour
 
     private void Start()
     {
-        GameMaster.instance.initSaveData_Start += Event_InitSaveDataStart;
-        GameMaster.instance.startGame_Start += Event_StartGame;
-        GameMaster.instance.gameStop += Event_GameStop;
-        TurnManager.instance.firstTurn += Event_FirstTurn;
-        TurnManager.instance.turnStart += Event_TurnStart;
+        GameMaster.instance.initSaveData_Start.AddListener(Event_InitSaveDataStart);
+        GameMaster.instance.startGame_Start.AddListener(Event_StartGame);
+        GameMaster.instance.gameStop.AddListener(Event_GameStop);
+        TurnManager.instance.firstTurn.AddListener(Event_FirstTurn);
+        TurnManager.instance.turnStart.AddListener(Event_TurnStart);
     }
 
     private void OnDestroy()
     {
         m_instance = null;
-        GameMaster.instance.initSaveData_Start -= Event_InitSaveDataStart;
-        GameMaster.instance.startGame_Start -= Event_StartGame;
-        TurnManager.instance.firstTurn -= Event_FirstTurn;
-        TurnManager.instance.turnStart -= Event_TurnStart;
-        GameMaster.instance.gameStop -= Event_GameStop;
+        GameMaster.instance.initSaveData_Start.AddListener(Event_InitSaveDataStart);
+        GameMaster.instance.startGame_Start.AddListener(Event_StartGame);
+        TurnManager.instance.firstTurn.AddListener(Event_FirstTurn);
+        TurnManager.instance.turnStart.AddListener(Event_TurnStart);
+        GameMaster.instance.gameStop.AddListener(Event_GameStop);
     }
 
-    private void Event_FirstTurn(object _o, EventArgs _e)
+    private void Event_FirstTurn()
     {
         PullingInDeck_DrawSet();
     }
 
-    private void Event_TurnStart(object _o, EventArgs _e)
+    private void Event_TurnStart()
     {
         PullingInDeck_DrawSet();
     }
 
-    private void Event_InitSaveDataStart(object _o, EventArgs e)
+    private void Event_InitSaveDataStart()
     {
         ResetDeck();
     }
 
-    private void Event_StartGame(object _o, EventArgs _e)
+    private void Event_StartGame()
     {
         ResetDeck();
     }
 
-    private void Event_GameStop(object _o, EventArgs _e)
+    private void Event_GameStop()
     {
         list_deck.Clear();
     }
