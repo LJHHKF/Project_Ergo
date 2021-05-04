@@ -577,12 +577,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nameField: {fileID: 1849221964}
   desciptionField: {fileID: 2088618577}
+  bg_object: {fileID: 751156585}
   traps:
   - name: "\uD654\uC0B4 \uD568\uC815"
     damage: 10
     description: "\uD654\uC0B4 \uD568\uC815\uC5D0 \uAC78\uB838\uC2B5\uB2C8\uB2E4.
       \uCCB4\uB825\uC774 10 \uAC10\uC18C\uD569\uB2C8\uB2E4."
-    sprite: {fileID: 0}
+    sprite: {fileID: 21300000, guid: 72c38a41f0c19c54aad72fd1972be85d, type: 3}
     weight: 30
     hadAddAbcond: 0
   - name: "\uB099\uC11D \uD568\uC815"
@@ -590,7 +591,7 @@ MonoBehaviour:
     description: "\uB099\uC11D \uD568\uC815\uC5D0 \uAC78\uB838\uC2B5\uB2C8\uB2E4.
       \uCCB4\uB825\uC774 5 \uAC10\uC18C\uD558\uBA70, \uACE8\uC808\uC774 2\uC911\uCCA9
       \uCD94\uAC00\uB418\uC5C8\uC2B5\uB2C8\uB2E4."
-    sprite: {fileID: 0}
+    sprite: {fileID: 21300000, guid: e6bff04e11860b84297d352bb2dadae4, type: 3}
     weight: 30
     hadAddAbcond: 1
   - name: "\uB3C5\uB2AA \uD568\uC815"

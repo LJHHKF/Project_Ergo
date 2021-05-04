@@ -30,7 +30,7 @@ MonoBehaviour:
     fixedPower: 0
     isDelayedAbCond: 0
   typeVariationNum: 2
-  actSprite: {fileID: 0}
+  actSprite: {fileID: 21300000, guid: 4b8d94d3ebbfb8042814debc2dbf1bc7, type: 3}
   actAnimTrigger: 
   affectDelay: 1
   actExplain: "\uB9C8\uB974\uC2A4\uC5D0\uAC8C [\uD2B9\uACF5]*0.8 \uB9CC\uD07C\uC758
@@ -70,7 +70,7 @@ MonoBehaviour:
     fixedPower: 0
     isDelayedAbCond: 0
   typeVariationNum: 1
-  actSprite: {fileID: 0}
+  actSprite: {fileID: 21300000, guid: 4b8d94d3ebbfb8042814debc2dbf1bc7, type: 3}
   actAnimTrigger: 
   affectDelay: 1
   actExplain: "\uB9C8\uB974\uC2A4\uC5D0\uAC8C [\uD798]*1 \uB9CC\uD07C\uC758 \uD53C\uD574\uB97C
@@ -105,7 +105,7 @@ MonoBehaviour:
     fixedPower: 0
     isDelayedAbCond: 0
   typeVariationNum: 2
-  actSprite: {fileID: 0}
+  actSprite: {fileID: 21300000, guid: 4b8d94d3ebbfb8042814debc2dbf1bc7, type: 3}
   actAnimTrigger: 
   affectDelay: 1
   actExplain: "\uB9C8\uB974\uC2A4\uC5D0\uAC8C [\uD798]*0.8 \uB9CC\uD07C\uC758 \uD53C\uD574\uB97C
@@ -152,7 +152,7 @@ MonoBehaviour:
     fixedPower: 0
     isDelayedAbCond: 0
   typeVariationNum: 2
-  actSprite: {fileID: 0}
+  actSprite: {fileID: 21300000, guid: 4b8d94d3ebbfb8042814debc2dbf1bc7, type: 3}
   actAnimTrigger: 
   affectDelay: 1
   actExplain: "\uB9C8\uB974\uC2A4\uC5D0\uAC8C [\uD798]*0.6 \uB9CC\uD07C\uC758 \uD53C\uD574\uB97C
