@@ -103,14 +103,17 @@ public class InputSystem : MonoBehaviour
                 //if (results.Count != 0)
                 if (hit)
                 {
-                    if (diceSManager.GetIsReadyToThrow())
+                    if (hit.collider.tag == "Card")
                     {
-                        selectedCard = (Card_Base)hit.transform.GetComponent<ICard>().Selected();
-                        if (selectedCard != null)
+                        if (diceSManager.GetIsReadyToThrow())
                         {
-                            isSelected = true;
-                            m_BaUIManager.OnEnlargeCard(selectedCard);
-                            line.SetActive(true);
+                            selectedCard = (Card_Base)hit.transform.GetComponent<ICard>().Selected();
+                            if (selectedCard != null)
+                            {
+                                isSelected = true;
+                                m_BaUIManager.OnEnlargeCard(selectedCard);
+                                line.SetActive(true);
+                            }
                         }
                     }
                 }
