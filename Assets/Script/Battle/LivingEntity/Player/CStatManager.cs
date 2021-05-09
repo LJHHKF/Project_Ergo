@@ -247,4 +247,21 @@ public class CStatManager : MonoBehaviour
         health = GetCalcFullHealth();
         SaveStats();
     }
+
+    public int GetInitEndurance()
+    {
+        return init_Endurance;
+    }
+    public int GetInitStrength()
+    {
+        return init_Strength;
+    }
+    public int GetInitSolid()
+    {
+        return init_Solid;
+    }
+    public int GetInitInteligent()
+    {
+        return init_Intelligent;
+    }
 }

@@ -43,10 +43,10 @@ public class TopHpText : MonoBehaviour
 
     private void firstTurnEvent()
     {
-        UpdateText();
+        UpdateText(0);
     }
 
-    private void UpdateText()
+    private void UpdateText(int _dummy)
     {
         cur = m_char.health;
         max = m_char.GetFullHealth();
