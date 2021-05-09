@@ -31,6 +31,8 @@ public class Character : LivingEntity
         TurnManager.instance.battleEnd += Event_BattleEnd;
 
         onDeath += () => CStatManager.instance.HealthPointUpdate(health); // 게임오버 체크는 여기 들어가서 함.
+        onHPDamage += hpDmgEvent;
+        StoryTurningManager.instance.battleDamage = 0;
     }
 
     protected override void ReleseTurnAct()
@@ -110,5 +112,10 @@ public class Character : LivingEntity
     public void AddActionPopUp(string _name)
     {
         myUI.AddPopUpText_ActionName(_name);
+    }
+
+    private void hpDmgEvent(int _value)
+    {
+        StoryTurningManager.instance.battleDamage += _value;
     }
 }

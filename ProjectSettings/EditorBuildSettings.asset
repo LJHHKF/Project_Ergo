@@ -32,4 +32,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/StatusSetting.unity
     guid: 2984fa9ae7739454d9f5ca646460c061
+  - enabled: 1
+    path: Assets/Scenes/AutoStatusScene.unity
+    guid: 7d8c5a469600a6646ab9662f7894d291
+  - enabled: 1
+    path: Assets/Scenes/StoryScene.unity
+    guid: ea0633551d143e74180a65f2708cd6eb
   m_configObjects: {}

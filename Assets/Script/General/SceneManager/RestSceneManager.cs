@@ -20,6 +20,8 @@ public class RestSceneManager : MonoBehaviour
         selectedCardWindow.SetActive(false);
         cardsListWindow.SetActive(false);
         warningWindow.SetActive(false);
+
+        StoryTurningManager.instance.SetRestStage(true);
     }
 
     public void BtnRest()
@@ -36,8 +38,8 @@ public class RestSceneManager : MonoBehaviour
         {
             CStatManager.instance.HealthPointUpdate(CStatManager.instance.health + restoreValue);
         }
-
-        LoadManager.instance.LoadNextStage();
+        StoryTurningManager.instance.isRest_Rest = true;
+        LoadManager.instance.LoadStoryScene();
     }
 
     public void OnEventOtherSelect()
@@ -77,7 +79,8 @@ public class RestSceneManager : MonoBehaviour
             }
             else
             {
-                LoadManager.instance.LoadNextStage();
+                StoryTurningManager.instance.isRest_CDelete = true;
+                LoadManager.instance.LoadStoryScene();
             }
         }
         else

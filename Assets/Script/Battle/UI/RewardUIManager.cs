@@ -131,7 +131,7 @@ public class RewardUIManager : MonoBehaviour
     IEnumerator DeleayedNextStage()
     {
         yield return new WaitForSeconds(1.0f);
-        LoadManager.instance.LoadNextStage();
+        LoadManager.instance.LoadStoryScene();
         yield break;
     }
 }

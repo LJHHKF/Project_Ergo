@@ -92,7 +92,7 @@ public class LoadManager : MonoBehaviour
 
     public void LoadFirst_Init_ToSetting()
     {
-        LoadingSceneManager.LoadScene("StatusSetting");
+        LoadingSceneManager.LoadScene("AutoStatusScene");
     }
 
     public void LoadFirst_Init()
@@ -101,6 +101,11 @@ public class LoadManager : MonoBehaviour
         StageManager.instance.SetCurrentStageTypeIndex(0);
         LoadingSceneManager.LoadScene("Battle");
         StageManager.instance.SetNextStage();
+    }
+
+    public void LoadStoryScene()
+    {
+        LoadingSceneManager.LoadScene("StoryScene");
     }
 
     public void LoadGameOver()

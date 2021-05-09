@@ -1,42 +1,24 @@
-ï»¿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using System;
 using System.Text;
 
-public class TrapSceneManager : MonoBehaviour
+public class AutoStatusSceneManager : MonoBehaviour
 {
-    [Serializable]
-    private struct Trap
-    {
-        public string name;
-        public int damage;
-        [TextArea]public string description;
-        public Sprite sprite;
-        public int weight;
-        public bool hadAddAbcond;
-    }
+    [Header("Object Registaration")]
+    [SerializeField] private Text t_body;
 
-    [Serializable]
-    private struct AbCond_Trap
-    {
-        public int match_index;
-        public int abcond_ID;
-        public int damage;
-    }
-    [Header("Object Registration")]
-    [SerializeField] private Text nameField;
-    [SerializeField] private Text desciptionField;
-    [SerializeField] private SpriteRenderer bg;
-    //private Image bg;
+    [Header("Status Setting")]
+    [SerializeField] private int max_init_statCnt = 12;
+    private int p_endu = 0;
+    private int p_str = 0;
+    private int p_solid = 0;
+    private int p_int = 0;
 
-    [Header("Trap Info Setting")]
+    [Header("Text Setting")]
     [SerializeField] private float textUpSecond = 0.1f;
-    [SerializeField] private Trap[] traps;
-    [SerializeField] private AbCond_Trap[] traps_abcond;
-    private int trap_index;
-
+    [SerializeField] [TextArea] private string plainText;
     private StringBuilder fullText = new StringBuilder();
     private StringBuilder curText = new StringBuilder();
     private StringBuilder tempText = new StringBuilder();
@@ -49,51 +31,43 @@ public class TrapSceneManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //bg = bg_object.GetComponent<Image>();
+        for(int i = 0; i < max_init_statCnt; i++)
+        {
+            int rand = Random.Range(0, 3);
+            switch(rand)
+            {
+                case 0:
+                    p_endu += 1;
+                    break;
+                case 1:
+                    p_str += 1;
+                    break;
+                case 2:
+                    p_solid += 1;
+                    break;
+                case 3:
+                    p_int += 1;
+                    break;
+            }
+        }
         fullText.Clear();
+        fullText.Append(plainText);
+        fullText.AppendLine($"\nÃ¼·Â: {CStatManager.instance.GetInitEndurance() + p_endu} Èû: {CStatManager.instance.GetInitStrength() + p_str} ³»±¸: {CStatManager.instance.GetInitSolid() + p_solid} ¸¶·Â: {CStatManager.instance.GetInitInteligent() + p_int}");
+
         curText.Clear();
         tempText.Clear();
         tempText_end.Clear();
-        string key = $"SaveID({GameMaster.instance.GetSaveID()}).LastTrap";
-        if (!PlayerPrefs.HasKey(key) || PlayerPrefs.GetInt(key) <= -1)
-        {
-            int full_weight = 0;
-            for (int i = 0; i < traps.Length; i++)
-            {
-                full_weight += traps[i].weight;
-            }
-
-            int rand = UnityEngine.Random.Range(0, full_weight - 1);
-            full_weight = 0;
-            for (int i = 0; i < traps.Length; i++)
-            {
-                full_weight += traps[i].weight;
-                if (rand >= full_weight - traps[i].weight && rand < full_weight)
-                {
-                    nameField.text = traps[i].name;
-                    fullText.Append(traps[i].description);
-                    bg.sprite = traps[i].sprite;
-                    trap_index = i;
-                    PlayerPrefs.SetInt(key, i);
-                    break;
-                }
-            }
-        }
-        else
-        {
-            trap_index = PlayerPrefs.GetInt(key);
-            nameField.text = traps[trap_index].name;
-            fullText.Append(traps[trap_index].description);
-        }
+        StoryTurningManager.instance.isTutorial = true;
     }
 
-    private void Update()
+    // Update is called once per frame
+    void Update()
     {
         if (!isTextEnded)
         {
-            if (Input.GetMouseButtonDown(0))
+            if(Input.GetMouseButtonDown(0))
             {
-                desciptionField.text = fullText.ToString();
+                t_body.text = fullText.ToString();
                 isTextEnded = true;
             }
             else if (cnt_text < fullText.Length)
@@ -133,7 +107,7 @@ public class TrapSceneManager : MonoBehaviour
                                 curText.Append(tempText_end.ToString());
                                 tempText.Clear();
                                 tempText_end.Clear();
-                                desciptionField.text = curText.ToString();
+                                t_body.text = curText.ToString();
                                 cnt_time = 0;
                             }
                         }
@@ -142,16 +116,16 @@ public class TrapSceneManager : MonoBehaviour
                     {
                         if (cnt_TextEffectStart > 0)
                         {
-                            curText.Insert(cnt_text - 1, tempText.ToString());
+                            curText.Insert(cnt_text-1, tempText.ToString());
                             tempText.Clear();
-                            desciptionField.text = curText.ToString();
+                            t_body.text = curText.ToString();
                             cnt_time = 0;
                         }
                         else
                         {
                             curText.Append(tempText.ToString());
                             tempText.Clear();
-                            desciptionField.text = curText.ToString();
+                            t_body.text = curText.ToString();
                             cnt_time = 0;
                         }
                     }
@@ -164,26 +138,10 @@ public class TrapSceneManager : MonoBehaviour
         }
         else
         {
-            if (Input.GetMouseButtonDown(0))
+            if(Input.GetMouseButtonDown(0))
             {
-                if (traps[trap_index].hadAddAbcond)
-                {
-                    for (int i = 0; i < traps_abcond.Length; i++)
-                    {
-                        if (traps_abcond[i].match_index == trap_index)
-                        {
-                            CStatManager.instance.SetInheriteAbCond(traps_abcond[i].abcond_ID, traps_abcond[i].damage);
-                            break;
-                        }
-                    }
-                }
-                CStatManager.instance.HealthPointUpdate(CStatManager.instance.health - traps[trap_index].damage);
-
-                string key = $"SaveID({GameMaster.instance.GetSaveID()}).LastTrap";
-                PlayerPrefs.DeleteKey(key.ToString());
-
-                if (CStatManager.instance.health > 0)
-                    LoadManager.instance.LoadNextStage();
+                CStatManager.instance.SetStatChange_Init(p_endu, p_str, p_solid, p_int);
+                LoadManager.instance.LoadStoryScene();
             }
         }
     }
