@@ -186,4 +186,9 @@ public class StageManager : MonoBehaviour
     {
         curStageTypeIndex = _input;
     }
+
+    public int GetCurrentStageTypeIndex()
+    {
+        return curStageTypeIndex;
+    }
 }

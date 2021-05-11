@@ -7,6 +7,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 715711608834430513, guid: 7aa7499ca1858334182c032329108daf,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 60.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 715711608834430513, guid: 7aa7499ca1858334182c032329108daf,
+        type: 3}
+      propertyPath: m_fontSizeBase
+      value: 50
+      objectReference: {fileID: 0}
     - target: {fileID: 3275227364995626302, guid: 7aa7499ca1858334182c032329108daf,
         type: 3}
       propertyPath: m_Pivot.x
@@ -147,10 +157,60 @@ PrefabInstance:
       propertyPath: m_OverridePixelPerfect
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4513835612989011455, guid: 7aa7499ca1858334182c032329108daf,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 85.65
+      objectReference: {fileID: 0}
+    - target: {fileID: 4513835612989011455, guid: 7aa7499ca1858334182c032329108daf,
+        type: 3}
+      propertyPath: m_fontSizeMax
+      value: 120
+      objectReference: {fileID: 0}
+    - target: {fileID: 4513835612989011455, guid: 7aa7499ca1858334182c032329108daf,
+        type: 3}
+      propertyPath: m_fontSizeMin
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 4513835612989011455, guid: 7aa7499ca1858334182c032329108daf,
+        type: 3}
+      propertyPath: m_fontSizeBase
+      value: 80
+      objectReference: {fileID: 0}
+    - target: {fileID: 4513835612989011455, guid: 7aa7499ca1858334182c032329108daf,
+        type: 3}
+      propertyPath: m_enableAutoSizing
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5447218517063282540, guid: 7aa7499ca1858334182c032329108daf,
         type: 3}
       propertyPath: m_Name
       value: Card_UI_InList Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 7583440336934029607, guid: 7aa7499ca1858334182c032329108daf,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 87
+      objectReference: {fileID: 0}
+    - target: {fileID: 7583440336934029607, guid: 7aa7499ca1858334182c032329108daf,
+        type: 3}
+      propertyPath: m_fontSizeMax
+      value: 120
+      objectReference: {fileID: 0}
+    - target: {fileID: 7583440336934029607, guid: 7aa7499ca1858334182c032329108daf,
+        type: 3}
+      propertyPath: m_fontSizeMin
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 7583440336934029607, guid: 7aa7499ca1858334182c032329108daf,
+        type: 3}
+      propertyPath: m_fontSizeBase
+      value: 80
+      objectReference: {fileID: 0}
+    - target: {fileID: 7583440336934029607, guid: 7aa7499ca1858334182c032329108daf,
+        type: 3}
+      propertyPath: m_enableAutoSizing
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7589374964377744505, guid: 7aa7499ca1858334182c032329108daf,
         type: 3}

@@ -90,6 +90,16 @@ public class LoadManager : MonoBehaviour
         StageManager.instance.SetNextStage();
     }
 
+    public void ChangeNextStage(int _index)
+    {
+        nextStageTypeIndex = _index;
+    }
+
+    public void ChangeNextStage_InitStart()
+    {
+        LoadFirst(nextStageTypeIndex);
+    }
+
     public void LoadFirst_Init_ToSetting()
     {
         LoadingSceneManager.LoadScene("AutoStatusScene");
