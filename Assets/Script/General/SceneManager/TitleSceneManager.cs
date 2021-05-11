@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class TitleSceneManager : MonoBehaviour
 {
@@ -20,7 +21,7 @@ public class TitleSceneManager : MonoBehaviour
     IEnumerator DelayedNextScene()
     {
         yield return new WaitForSeconds(delayTime);
-        LoadingSceneManager.LoadScene("Entrance");
+        SceneManager.LoadScene("Entrance");
         yield break;
     }
 }

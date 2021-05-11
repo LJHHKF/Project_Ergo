@@ -325,7 +325,8 @@ public class Card_Base : MonoBehaviour, ICard
     {
         if(m_charM == null)
         {
-            m_charM = GameObject.FindGameObjectWithTag("Player").GetComponent<Character>();
+            if(StageManager.instance.GetCurrentStageTypeIndex() == 0)
+                m_charM = GameObject.FindGameObjectWithTag("Player").GetComponent<Character>();
         }
     }
 
