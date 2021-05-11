@@ -53,7 +53,6 @@ public class CUF_Repeat : MonoBehaviour
         int cnt = 1;
         while(cnt < maxNum)
         {
-            Debug.Log(cnt + "회 반복 사용중, 대기시간:" + timeInterval + "초");
             yield return new WaitForSeconds(timeInterval);
             repeatTarget.ReUse();
             cnt++;

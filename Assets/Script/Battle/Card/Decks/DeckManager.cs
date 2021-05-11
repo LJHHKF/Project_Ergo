@@ -49,27 +49,27 @@ public class DeckManager : MonoBehaviour
         GameMaster.instance.gameStop -= Event_GameStop;
     }
 
-    private void Event_FirstTurn(object _o, EventArgs _e)
+    private void Event_FirstTurn()
     {
         PullingInDeck_DrawSet();
     }
 
-    private void Event_TurnStart(object _o, EventArgs _e)
+    private void Event_TurnStart()
     {
         PullingInDeck_DrawSet();
     }
 
-    private void Event_InitSaveDataStart(object _o, EventArgs e)
+    private void Event_InitSaveDataStart()
     {
         ResetDeck();
     }
 
-    private void Event_StartGame(object _o, EventArgs _e)
+    private void Event_StartGame()
     {
         ResetDeck();
     }
 
-    private void Event_GameStop(object _o, EventArgs _e)
+    private void Event_GameStop()
     {
         list_deck.Clear();
     }

@@ -74,7 +74,7 @@ public class CStatManager : MonoBehaviour
         GameMaster.instance.gameOver -= Event_GameOver;
     }
 
-    private void Event_InitSaveDataAwake(object _o, EventArgs _e)
+    private void Event_InitSaveDataAwake()
     {
         endurance = init_Endurance;
         strength = init_Strength;
@@ -86,7 +86,7 @@ public class CStatManager : MonoBehaviour
         SaveStats();
     }
 
-    private void Event_StartGameAwake(object _o, EventArgs _e)
+    private void Event_StartGameAwake()
     {
         int saveID = GameMaster.instance.GetSaveID();
         key.Clear();
@@ -129,7 +129,7 @@ public class CStatManager : MonoBehaviour
         }
     }
 
-    private void Event_GameOver(object _o, EventArgs _e)
+    private void Event_GameOver()
     {
         int saveID = GameMaster.instance.GetSaveID();
         key.Clear();
@@ -150,12 +150,12 @@ public class CStatManager : MonoBehaviour
         PlayerPrefs.DeleteKey(key.ToString());
     }
 
-    private void Event_StageEnd(object _o, EventArgs _e)
+    private void Event_StageEnd()
     {
         SaveStats();
     }
 
-    private void Event_BattleStageEnd(object _o , EventArgs _e)
+    private void Event_BattleStageEnd()
     {
         key.Clear();
         key.Append($"SaveID({GameMaster.instance.GetSaveID()}).CStat.Abcond.Length");
@@ -246,5 +246,22 @@ public class CStatManager : MonoBehaviour
         SetStatChange(_endu, _str, _solid, _int);
         health = GetCalcFullHealth();
         SaveStats();
+    }
+
+    public int GetInitEndurance()
+    {
+        return init_Endurance;
+    }
+    public int GetInitStrength()
+    {
+        return init_Strength;
+    }
+    public int GetInitSolid()
+    {
+        return init_Solid;
+    }
+    public int GetInitInteligent()
+    {
+        return init_Intelligent;
     }
 }

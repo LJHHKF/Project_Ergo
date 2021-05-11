@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using System;
 
@@ -70,7 +69,7 @@ public class InputSystem : MonoBehaviour
         //m_ped = new PointerEventData(null);
     }
 
-    private void Event_BattleStageStart(object sender, EventArgs _e)
+    private void Event_BattleStageStart()
     {
         myMainCam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         line = GameObject.FindGameObjectWithTag("Line");
@@ -103,14 +102,17 @@ public class InputSystem : MonoBehaviour
                 //if (results.Count != 0)
                 if (hit)
                 {
-                    if (diceSManager.GetIsReadyToThrow())
+                    if (hit.collider.tag == "Card")
                     {
-                        selectedCard = (Card_Base)hit.transform.GetComponent<ICard>().Selected();
-                        if (selectedCard != null)
+                        if (diceSManager.GetIsReadyToThrow())
                         {
-                            isSelected = true;
-                            m_BaUIManager.OnEnlargeCard(selectedCard);
-                            line.SetActive(true);
+                            selectedCard = (Card_Base)hit.transform.GetComponent<ICard>().Selected();
+                            if (selectedCard != null)
+                            {
+                                isSelected = true;
+                                m_BaUIManager.OnEnlargeCard(selectedCard);
+                                line.SetActive(true);
+                            }
                         }
                     }
                 }

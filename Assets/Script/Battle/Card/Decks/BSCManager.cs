@@ -37,19 +37,19 @@ public class BSCManager : MonoBehaviour
         GameMaster.instance.gameStop -= Event_GameStop;
     }
 
-    private void Event_BattleEnd(object _o, EventArgs e)
+    private void Event_BattleEnd()
     {
         CleanUpCards();
     }
 
-    private void Event_PlayerTurnEnd(object _o, EventArgs e)
+    private void Event_PlayerTurnEnd()
     {
         ClearHandToGrave();
         //UndoHandsTaransparency();
         //SortingHand(0);
     }
 
-    private void Event_GameStop(object _o, EventArgs e)
+    private void Event_GameStop()
     {
         CleanUpCards();
     }

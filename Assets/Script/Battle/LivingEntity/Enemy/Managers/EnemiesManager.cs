@@ -6,8 +6,6 @@ using System.Text;
 
 public class EnemiesManager : MonoBehaviour
 {
-    //[SerializeField] private int initAmount; // 스테이지 관리자를 만든 후엔 이 부분은 거기서 얻어올 것.
-
     public static EnemiesManager instance
     {
         get
@@ -48,37 +46,83 @@ public class EnemiesManager : MonoBehaviour
         if (!PlayerPrefs.HasKey(key) || PlayerPrefs.GetInt(key) <= 0 || GameMaster.instance.isInit)
         {
             int rand = UnityEngine.Random.Range(0, 9);
-            int curStageCnt;
 
             if (StageManager.instance.curStage % 5 == 0)
             {
-                curStageCnt = 1;
+                GameObject mon = Instantiate(BattleStageManager.instance.GetMonster(), gameObject.transform);
+                mon.transform.position = new Vector2(minX, y_Init);
+                mon.name = "Enemy_" + mon.name + "_0";
+                Enemy_Base temp = mon.GetComponent<Enemy_Base>();
+                temp.monsterFieldIndex = 0;
+                temp.onDeath += () => RemoveAtMonstersList(mon);
+                monsters.Add(mon);
+
+                m_sb.Clear();
+                m_sb.Append($"{key}.0");
+                PlayerPrefs.SetInt(m_sb.ToString(), temp.m_ID);
+
+                if(StageManager.instance.curStage / 5 < 3) // or != 3
+                {
+                    StoryTurningManager.instance.SetEliteStage(true);
+                    switch(temp.m_ID)
+                    {
+                        case 1:
+                            StoryTurningManager.instance.SetElite_Aries();
+                            break;
+                        case 4:
+                            StoryTurningManager.instance.SetElite_Creta();
+                            break;
+                        case 7:
+                            StoryTurningManager.instance.SetElite_JunkGoblin();
+                            break;
+                    }
+                }
+                else
+                {
+                    StoryTurningManager.instance.SetBossStage(true);
+                    switch (temp.m_ID)
+                    {
+                        case 2:
+                            StoryTurningManager.instance.SetBoss_Aries();
+                            break;
+                        case 5:
+                            StoryTurningManager.instance.SetBoss_Creta();
+                            break;
+                        case 8:
+                            StoryTurningManager.instance.SetBoss_JunkGoblin();
+                            break;
+                    }
+                }
             }
             else
             {
+                int curStageCnt;
+
                 if (rand < 3)
                     curStageCnt = 1;
                 else if (rand < 8)
                     curStageCnt = 2;
                 else //if (rand < 10)
                     curStageCnt = 3;
+
+
+                for (int i = 0; i < curStageCnt; i++)
+                {
+                    int _i = i; //델리게이트 연관 등서 i값을 제대로 못 받는 경우가 있어서 습관적 추가
+                    GameObject mon = Instantiate(BattleStageManager.instance.GetMonster(), gameObject.transform);
+                    mon.transform.position = new Vector2(minX + (x_interval * _i), y_Init);
+                    mon.name = "Enemy_" + mon.name + "_" + _i.ToString("00");
+                    Enemy_Base temp = mon.GetComponent<Enemy_Base>();
+                    temp.monsterFieldIndex = _i;
+                    temp.onDeath += () => RemoveAtMonstersList(mon);
+                    monsters.Add(mon);
+
+                    m_sb.Clear();
+                    m_sb.Append($"{key}.{_i}");
+                    PlayerPrefs.SetInt(m_sb.ToString(), temp.m_ID);
+                }
             }
 
-            for (int i = 0; i < curStageCnt; i++)
-            {
-                GameObject mon = Instantiate(BattleStageManager.instance.GetMonster(), gameObject.transform);
-                mon.transform.position = new Vector2(minX + (x_interval * i), y_Init);
-                mon.name = "Enemy_" + mon.name + "_" + i.ToString("00");
-                Enemy_Base temp = mon.GetComponent<Enemy_Base>();
-                temp.monsterFieldIndex = i;
-                temp.onDeath += () => RemoveAtMonstersList(mon);
-                monsters.Add(mon);
-
-                int _i = i; //델리게이트 연관 등서 i값을 제대로 못 받는 경우가 있어서 습관적 추가
-                m_sb.Clear();
-                m_sb.Append($"{key}.{_i}");
-                PlayerPrefs.SetInt(m_sb.ToString(), temp.m_ID);
-            }
             PlayerPrefs.SetInt(key, monsters.Count);
         }
         else
@@ -110,14 +154,19 @@ public class EnemiesManager : MonoBehaviour
         m_instance = null;
     }
 
-    private void Event_PlayerTurnEnd(object _o, EventArgs _e)
+    private void Event_PlayerTurnEnd()
     {
         StartCoroutine(StartMonsterActsControl());
     }
 
-    private void Event_GameStop(object _o, EventArgs _e)
+    private void Event_GameStop()
     {
         PlayerPrefs.SetInt(key, initCnt);
+    }
+
+    private void SpawnMonster()
+    {
+
     }
 
     void RemoveAtMonstersList(GameObject who)
@@ -245,8 +294,8 @@ public class EnemiesManager : MonoBehaviour
         }
         for(int i = 0; i < monsters.Count; i++)
         {
+            int _i = i;
             Enemy_Base temp = monsters[i].GetComponent<Enemy_Base>();
-            Debug.Log("행동 대기:" + time_interval + "초");
             yield return new WaitForSeconds(time_interval);
             temp.Act();
         }

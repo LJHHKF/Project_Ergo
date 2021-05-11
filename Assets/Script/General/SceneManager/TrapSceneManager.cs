@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
+using System.Text;
 
 public class TrapSceneManager : MonoBehaviour
 {
@@ -27,18 +28,32 @@ public class TrapSceneManager : MonoBehaviour
     [Header("Object Registration")]
     [SerializeField] private Text nameField;
     [SerializeField] private Text desciptionField;
-    [SerializeField] private GameObject bg_object;
-    private Image bg;
+    [SerializeField] private SpriteRenderer bg;
+    //private Image bg;
 
     [Header("Trap Info Setting")]
+    [SerializeField] private float textUpSecond = 0.1f;
     [SerializeField] private Trap[] traps;
     [SerializeField] private AbCond_Trap[] traps_abcond;
     private int trap_index;
 
+    private StringBuilder fullText = new StringBuilder();
+    private StringBuilder curText = new StringBuilder();
+    private StringBuilder tempText = new StringBuilder();
+    private StringBuilder tempText_end = new StringBuilder();
+    private int cnt_TextEffectStart = 0;
+    private bool isTextEnded = false;
+    private int cnt_text = 0;
+    private float cnt_time = 0;
+
     // Start is called before the first frame update
     void Start()
     {
-        bg = bg_object.GetComponent<Image>();
+        //bg = bg_object.GetComponent<Image>();
+        fullText.Clear();
+        curText.Clear();
+        tempText.Clear();
+        tempText_end.Clear();
         string key = $"SaveID({GameMaster.instance.GetSaveID()}).LastTrap";
         if (!PlayerPrefs.HasKey(key) || PlayerPrefs.GetInt(key) <= -1)
         {
@@ -53,10 +68,10 @@ public class TrapSceneManager : MonoBehaviour
             for (int i = 0; i < traps.Length; i++)
             {
                 full_weight += traps[i].weight;
-                if (traps[i].weight >= full_weight - traps[i].weight && traps[i].weight < full_weight)
+                if (rand >= full_weight - traps[i].weight && rand < full_weight)
                 {
                     nameField.text = traps[i].name;
-                    desciptionField.text = traps[i].description;
+                    fullText.Append(traps[i].description);
                     bg.sprite = traps[i].sprite;
                     trap_index = i;
                     PlayerPrefs.SetInt(key, i);
@@ -68,29 +83,108 @@ public class TrapSceneManager : MonoBehaviour
         {
             trap_index = PlayerPrefs.GetInt(key);
             nameField.text = traps[trap_index].name;
-            desciptionField.text = traps[trap_index].description;
+            fullText.Append(traps[trap_index].description);
         }
     }
 
-    public void BtnConfirm()
+    private void Update()
     {
-        if (traps[trap_index].hadAddAbcond)
+        if (!isTextEnded)
         {
-            for (int i = 0; i < traps_abcond.Length; i++)
+            if (Input.GetMouseButtonDown(0))
             {
-                if (traps_abcond[i].match_index == trap_index)
+                desciptionField.text = fullText.ToString();
+                isTextEnded = true;
+            }
+            else if (cnt_text < fullText.Length)
+            {
+                cnt_time += Time.deltaTime;
+                if (cnt_time / textUpSecond >= 1)
                 {
-                    CStatManager.instance.SetInheriteAbCond(traps_abcond[i].abcond_ID, traps_abcond[i].damage);
-                    break;
+                    tempText.Append(fullText.ToString(cnt_text++, 1));
+                    if (tempText.ToString(0, 1) == "<")
+                    {
+                        if (tempText.ToString(tempText.Length - 1, 1) == ">")
+                        {
+                            if (cnt_TextEffectStart > 0)
+                            {
+                                cnt_TextEffectStart -= 1;
+                                tempText.Clear();
+                            }
+                            else
+                            {
+                                if (tempText.Length > 5)
+                                {
+                                    if (tempText.ToString(1, 5) == "color")
+                                        tempText_end.Append("</color>");
+                                    else
+                                    {
+                                        tempText_end.Append(tempText.ToString());
+                                        tempText_end.Insert(1, "/");
+                                    }
+                                }
+                                else
+                                {
+                                    tempText_end.Append(tempText.ToString());
+                                    tempText_end.Insert(1, "/");
+                                }
+                                cnt_TextEffectStart += 1;
+                                curText.Append(tempText.ToString());
+                                curText.Append(tempText_end.ToString());
+                                tempText.Clear();
+                                tempText_end.Clear();
+                                desciptionField.text = curText.ToString();
+                                cnt_time = 0;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (cnt_TextEffectStart > 0)
+                        {
+                            curText.Insert(cnt_text - 1, tempText.ToString());
+                            tempText.Clear();
+                            desciptionField.text = curText.ToString();
+                            cnt_time = 0;
+                        }
+                        else
+                        {
+                            curText.Append(tempText.ToString());
+                            tempText.Clear();
+                            desciptionField.text = curText.ToString();
+                            cnt_time = 0;
+                        }
+                    }
                 }
             }
+            else
+            {
+                isTextEnded = true;
+            }
         }
-        CStatManager.instance.HealthPointUpdate(CStatManager.instance.health - traps[trap_index].damage);
+        else
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                if (traps[trap_index].hadAddAbcond)
+                {
+                    for (int i = 0; i < traps_abcond.Length; i++)
+                    {
+                        if (traps_abcond[i].match_index == trap_index)
+                        {
+                            CStatManager.instance.SetInheriteAbCond(traps_abcond[i].abcond_ID, traps_abcond[i].damage);
+                            break;
+                        }
+                    }
+                }
+                CStatManager.instance.HealthPointUpdate(CStatManager.instance.health - traps[trap_index].damage);
 
-        string key = $"SaveID({GameMaster.instance.GetSaveID()}).LastTrap";
-        PlayerPrefs.DeleteKey(key.ToString());
+                string key = $"SaveID({GameMaster.instance.GetSaveID()}).LastTrap";
+                PlayerPrefs.DeleteKey(key.ToString());
 
-        if (CStatManager.instance.health > 0)
-            LoadManager.instance.LoadNextStage();
+                if (CStatManager.instance.health > 0)
+                    LoadManager.instance.LoadNextStage();
+            }
+        }
     }
 }

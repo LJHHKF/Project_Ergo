@@ -41,12 +41,12 @@ public class TopHpText : MonoBehaviour
             TurnManager.instance.firstTurn -= firstTurnEvent;
     }
 
-    private void firstTurnEvent(object _o, EventArgs _e)
+    private void firstTurnEvent()
     {
-        UpdateText();
+        UpdateText(0);
     }
 
-    private void UpdateText()
+    private void UpdateText(int _dummy)
     {
         cur = m_char.health;
         max = m_char.GetFullHealth();

@@ -28,7 +28,7 @@ public class LivingEntity : MonoBehaviour, IDamageable
 
     public bool dead { get; protected set; }
     public event Action onDeath;
-    public event Action onHPDamage;
+    public event Action<int> onHPDamage;
 
     [Header("Ref Setting")]
     [SerializeField] protected UnitUI myUI;
@@ -55,22 +55,22 @@ public class LivingEntity : MonoBehaviour, IDamageable
         //TurnManager.instance.firstTurn -= Event_FirstTurn;
     }
 
-    protected virtual void Event_FirstTurn(object _o, EventArgs _e)
+    protected virtual void Event_FirstTurn()
     {
         //HpAndGuardReset();
         //FlucStatReset();
         //CalculateStat();
     }
 
-    protected virtual void Event_PlayerTurnEnd(object _o, EventArgs _e)
+    protected virtual void Event_PlayerTurnEnd()
     { }
 
-    protected virtual void Event_TurnEnd(object _o, EventArgs _e)
+    protected virtual void Event_TurnEnd()
     { }
-    protected virtual void Event_TurnStart(object _o, EventArgs _e)
+    protected virtual void Event_TurnStart()
     {}
 
-    protected virtual void Event_BattleEnd(object _o, EventArgs _e)
+    protected virtual void Event_BattleEnd()
     {}
 
     public virtual bool OnDamage(int damage)
@@ -83,6 +83,7 @@ public class LivingEntity : MonoBehaviour, IDamageable
             if (GuardPoint < 0)
             {
                 myUI.AddPopUpText_GuardedDamage(prevGuardPoint);
+                myUI.GuardBreakAnim();
                 damage = Mathf.Abs(GuardPoint);
                 GuardPoint = 0;
             }
@@ -101,7 +102,10 @@ public class LivingEntity : MonoBehaviour, IDamageable
             myUI.HpUpdate();
 
             isDamaged = true;
-            onHPDamage?.Invoke();
+            if (onHPDamage != null)
+            {
+                onHPDamage.Invoke(damage);
+            }
         }
         else
             isDamaged = false;
@@ -119,7 +123,7 @@ public class LivingEntity : MonoBehaviour, IDamageable
         health -= damage;
         myUI.AddPopUpText_Damage(damage);
         myUI.HpUpdate();
-        onHPDamage.Invoke();
+        onHPDamage.Invoke(damage);
 
         if (health <= 0 && !dead)
         {
@@ -159,6 +163,7 @@ public class LivingEntity : MonoBehaviour, IDamageable
     {
         GuardPoint += GetValue;
         myUI.AddPopUpText_GetGuardPoint(GetValue);
+        myUI.GuardGainAnim();
         myUI.GuardUpdate();
     }
 
@@ -181,7 +186,10 @@ public class LivingEntity : MonoBehaviour, IDamageable
 
     public virtual void Die()
     {
-        onDeath?.Invoke();
+        if (onDeath != null)
+        {
+             onDeath.Invoke();
+        }
         dead = true;
     }
 
@@ -247,6 +255,7 @@ public class LivingEntity : MonoBehaviour, IDamageable
 
     public void SetAnimTrigger(string _name)
     {
-        myAnimator.SetTrigger(_name);
+        if (_name.Length > 1)
+            myAnimator.SetTrigger(_name);
     }
 }
