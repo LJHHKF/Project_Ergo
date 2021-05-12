@@ -19,6 +19,7 @@ public class StorySceneManager : MonoBehaviour
     private bool isTextEnded = false;
     private int cnt_text = 0;
     private float cnt_time = 0;
+    private bool isPointerIn = false;
 
     [Header("Text Setting_Special")]
     [SerializeField] [TextArea] private string txt_Tuto;
@@ -191,15 +192,18 @@ public class StorySceneManager : MonoBehaviour
         }
         else
         {
-            if (Input.GetMouseButtonDown(0))
+            if (!isPointerIn)
             {
-                if (StoryTurningManager.instance.isTutorial)
+                if (Input.GetMouseButtonDown(0))
                 {
-                    StoryTurningManager.instance.isTutorial = false;
-                    LoadManager.instance.LoadFirst_Init();
+                    if (StoryTurningManager.instance.isTutorial)
+                    {
+                        StoryTurningManager.instance.isTutorial = false;
+                        LoadManager.instance.LoadFirst_Init();
+                    }
+                    else
+                        LoadManager.instance.LoadNextStage();
                 }
-                else
-                    LoadManager.instance.LoadNextStage();
             }
         }
     }
@@ -212,5 +216,30 @@ public class StorySceneManager : MonoBehaviour
             fullText.Append(txt_Battle_Welldone);
         else
             fullText.Append(txt_Battle_HardWin);
+    }
+
+    public void PointerIn()
+    {
+        isPointerIn = true;
+    }
+    public void PointerOut()
+    {
+        isPointerIn = false;
+    }
+    public void PointerClicked(string _SceneName)
+    {
+        if (_SceneName == "Battle")
+            LoadManager.instance.ChangeNextStage(0);
+        else if (_SceneName == "Ev_Shop")
+            LoadManager.instance.ChangeNextStage(1);
+        else if (_SceneName == "Ev_Rest")
+            LoadManager.instance.ChangeNextStage(2);
+        else if (_SceneName == "Ev_Trap")
+            LoadManager.instance.ChangeNextStage(3);
+
+        if (StoryTurningManager.instance.isTutorial)
+            LoadManager.instance.ChangeNextStage_InitStart();
+        else
+            LoadManager.instance.LoadNextStage();
     }
 }

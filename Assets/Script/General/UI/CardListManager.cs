@@ -25,25 +25,23 @@ public class CardListManager : MonoBehaviour
     void Awake()
     {
         m_scroll = gameObject.GetComponent<ScrollRect>();
-        y_height = m_scroll.content.rect.height;
     }
 
     private void CreateSpaces(int _inputMax)
     {
         while(_inputMax > list_spaces.Count)
-        {
+       {
             x_cnt = list_spaces.Count % x_cnt_max;
             y_cnt = list_spaces.Count / x_cnt_max;
-
             if (y_height < -(y_cnt * y_padding))
             {
-                y_height = -(y_cnt * y_padding) + 400;
-                //t_content.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, y_height);
-                m_scroll.content.sizeDelta = new Vector2(m_scroll.content.sizeDelta.x, y_height);
+                y_height = -(y_cnt * y_padding) + 400f;
+                m_scroll.content.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, y_height);
+                //m_scroll.content.sizeDelta = new Vector2(content.sizeDelta.x, y_height);
+                    //new Vector2(m_scroll.content.sizeDelta.x, y_height);
             }
-
-            GameObject temp = Instantiate(card_UI_Prefab, m_scroll.content.transform);
-            temp.transform.localPosition = new Vector3(x_cnt * x_padding, y_cnt * y_padding);
+            GameObject temp = Instantiate(card_UI_Prefab, m_scroll.content);
+            temp.transform.localPosition = new Vector3(x_cnt * x_padding, y_cnt * y_padding, 1);
             list_spaces.Add(temp);
             temp.SetActive(false);
         }

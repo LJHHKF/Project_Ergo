@@ -1251,8 +1251,8 @@ MonoBehaviour:
   - {fileID: 2672451415407953963, guid: 1186e24fcffd1814286e46c25e9c63ba, type: 3}
   - {fileID: 8440027325771580739, guid: 4c9fabe8b5f4b5244897d7c3a1849f0c, type: 3}
   - {fileID: 5773982873909156013, guid: 82b6b9756705ec144a8c7fe38137fb84, type: 3}
-  - {fileID: 6578364910450022217, guid: 3d3d847e50fdd46459d831e47e331a75, type: 3}
-  - {fileID: 4930178910651182555, guid: 8dea228d17f85c94ba6cdb512dfc44e8, type: 3}
+  - {fileID: 4924250386437676564, guid: 3bcbc24f53626d843ae1620267c66cf1, type: 3}
+  - {fileID: 5948387506242416735, guid: dbf4b6b3f1154e1449faa30066c0373e, type: 3}
   c1_stages:
   - monsters:
     - m_index: 0
