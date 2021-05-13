@@ -170,12 +170,11 @@ public class Enemy_Base : LivingEntity
     public void GetReadyActInfo()
     {
         int[] powers;
-        int[] repeat;
         EnemyActType.AffectType[] types;
         int typeVariationNum;
 
-        readyAct.GetActInfo(out powers, out types,out repeat ,out typeVariationNum);
-        myUI.SetActInfo(readyAct.GetActSprite(), powers, types,repeat,typeVariationNum);
+        readyAct.GetActInfo(out powers, out types,out typeVariationNum);
+        myUI.SetActInfo(readyAct.GetActSprite(), powers, types,typeVariationNum);
     }
 
     public void GetReadyActText(ref Text _head, ref Text _body)

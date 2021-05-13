@@ -130,7 +130,7 @@ public class UnitUI : MonoBehaviour
         }
     }
 
-    public void SetActInfo(Sprite _actSprite, int[] _powers, EnemyActType.AffectType[] _actTypes,int[] _repeat ,int _ActVariationNum)
+    public void SetActInfo(Sprite _actSprite, int[] _powers, EnemyActType.AffectType[] _actTypes,int _ActVariationNum)
     {
         for (int i = 0; i < actPower_Text.Length; i++)
             actPower_Text[i].gameObject.SetActive(false);
@@ -147,10 +147,6 @@ public class UnitUI : MonoBehaviour
         for (int i = 0; i < max; i++)
         {
             sb.Append(_powers[i].ToString());
-            if (_repeat[i] > 1)
-            {
-                sb.Append(" *" + _repeat[i].ToString());
-            }
 
             actPower_Text[i].gameObject.SetActive(true);
             actPower_Text[i].text = sb.ToString();
