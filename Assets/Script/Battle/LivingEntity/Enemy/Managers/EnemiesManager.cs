@@ -210,16 +210,18 @@ public class EnemiesManager : MonoBehaviour
         bool isSuccess;
         for(int i = 0; i < max; i++)
         {
+            int _i = i;
             isSuccess = false;
             while(!isSuccess)
             {
-                rands[i] = UnityEngine.Random.Range(0, monsters.Count);
+                rands[_i] = UnityEngine.Random.Range(0, monsters.Count);
                 bool isS2 = true;
                 for(int j = 0; j < i+1; j++)
                 {
-                    if (i != j)
+                    int _j = j;
+                    if (_i != _j)
                     {
-                        if (rands[i] == rands[j])
+                        if (rands[_i] == rands[_j])
                         {
                             isS2 = false;
                         }
@@ -230,7 +232,7 @@ public class EnemiesManager : MonoBehaviour
                     isSuccess = true;
                 }
             }
-            o_list.Add(monsters[rands[i]]);
+            o_list.Add(monsters[rands[_i]]);
         }
     }
 
@@ -247,7 +249,8 @@ public class EnemiesManager : MonoBehaviour
     {
         for (int i = 0; i < monsters.Count; i++)
         {
-            o_list.Add(monsters[i]);
+            int _i = i;
+            o_list.Add(monsters[_i]);
         }
     }
 
@@ -255,7 +258,8 @@ public class EnemiesManager : MonoBehaviour
     {
         for (int i = 0; i < monsters.Count; i++)
         {
-            Enemy_Base temp = monsters[i].GetComponent<Enemy_Base>();
+            int _i = i;
+            Enemy_Base temp = monsters[_i].GetComponent<Enemy_Base>();
             if (temp.m_ID == _id)
                 return true;
         }
@@ -266,10 +270,11 @@ public class EnemiesManager : MonoBehaviour
     {
         for(int i = 0; i < _max; i++)
         {
+            int _i = i;
             GameObject mon = Instantiate(BattleStageManager.instance.GetMonster(_id), gameObject.transform);
-            mon.name = "Enemy_" + mon.name + "_s_" + i.ToString("00");
+            mon.name = "Enemy_" + mon.name + "_s_" + _i.ToString("00");
             Enemy_Base temp = mon.GetComponent<Enemy_Base>();
-            temp.monsterFieldIndex = i;
+            temp.monsterFieldIndex = _i;
             temp.onDeath += () => RemoveAtMonstersList(mon);
             monsters.Add(mon);
         }
@@ -281,7 +286,8 @@ public class EnemiesManager : MonoBehaviour
         int j = monsters.Count - 1;
         for (int i = 0; i < monsters.Count; i--)
         {
-            monsters[i].transform.position = new Vector2(minX + (x_interval * j--), y_Init);
+            int _i = i;
+            monsters[_i].transform.position = new Vector2(minX + (x_interval * j--), y_Init);
         }
     }
 
@@ -295,7 +301,7 @@ public class EnemiesManager : MonoBehaviour
         for(int i = 0; i < monsters.Count; i++)
         {
             int _i = i;
-            Enemy_Base temp = monsters[i].GetComponent<Enemy_Base>();
+            Enemy_Base temp = monsters[_i].GetComponent<Enemy_Base>();
             yield return new WaitForSeconds(time_interval);
             temp.Act();
         }

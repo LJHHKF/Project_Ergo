@@ -33,7 +33,6 @@ public class EnemyAct_Base : MonoBehaviour
         public ActType type;
         public AffectType affactType;
         public float powerRate;
-        public int repeatNum;
         public int abcondID;
         public int fixedPower;
         public bool isDelayedAbCond;
@@ -69,24 +68,21 @@ public class EnemyAct_Base : MonoBehaviour
         for (int i = 0; i < acts.Length; i++)
         {
             int _i = i;
-            for (int j = 0; j < acts[i].repeatNum; j++)
+            if (acts[_i].affactType == AffectType.Attack)
             {
-                if (acts[i].affactType == AffectType.Attack)
-                {
-                    StartCoroutine(delayedAffect(()=>target.OnDamage(r_power[_i])));
-                }
-                else if (acts[i].affactType == AffectType.Guard)
-                {
-                    StartCoroutine(delayedAffect(()=>m_Enemy.GetGuardPoint(r_power[_i])));
-                }
-                else if (acts[i].affactType == AffectType.Abcond)
-                {
-                    StartCoroutine(delayedAffect(()=>target.OnAddAbCond(acts[_i].abcondID, acts[_i].fixedPower, acts[_i].isDelayedAbCond)));
-                }
-                else if (acts[i].affactType == AffectType.Summon)
-                {
-                    StartCoroutine(delayedAffect(()=>SummonAct()));
-                }
+                StartCoroutine(delayedAffect(()=>target.OnDamage(r_power[_i])));
+            }
+            else if (acts[_i].affactType == AffectType.Guard)
+            {
+                StartCoroutine(delayedAffect(()=>m_Enemy.GetGuardPoint(r_power[_i])));
+            }
+            else if (acts[_i].affactType == AffectType.Abcond)
+            {
+                StartCoroutine(delayedAffect(()=>target.OnAddAbCond(acts[_i].abcondID, acts[_i].fixedPower, acts[_i].isDelayedAbCond)));
+            }
+            else if (acts[_i].affactType == AffectType.Summon)
+            {
+                StartCoroutine(delayedAffect(()=>SummonAct()));
             }
         }
         m_Enemy.SetAnimTrigger(actAnimTrigger);
@@ -103,14 +99,13 @@ public class EnemyAct_Base : MonoBehaviour
         return actSprite;
     }
 
-    public void GetActInfo(out int[] powers, out AffectType[] types,out int[] _repeatNum,out int typeVariNum)
+    public void GetActInfo(out int[] powers, out AffectType[] types, out int typeVariNum)
     {
         AffectType[] _out = new AffectType[acts.Length];
         int[] _out2 = new int[acts.Length];
         for (int i = 0; i < acts.Length; i++)
         {
             _out[i] = acts[i].affactType;
-            _out2[i] = acts[i].repeatNum;
 
             if (acts[i].affactType == AffectType.Abcond || acts[i].affactType == AffectType.CondAbcond_Info || acts[i].affactType == AffectType.Summon)
             {
@@ -136,7 +131,6 @@ public class EnemyAct_Base : MonoBehaviour
         powers = r_power;
         types = _out;
         typeVariNum = typeVariationNum;
-        _repeatNum = _out2;
     }
 
     public string GetActPlainText()

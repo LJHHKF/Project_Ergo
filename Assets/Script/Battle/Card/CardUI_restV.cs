@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 public class CardUI_restV : MonoBehaviour
 {
@@ -40,6 +39,7 @@ public class CardUI_restV : MonoBehaviour
 
     private void Update()
     {
+        //왠지 UI 버튼도 안되고, EventSystem으로 포인터도 인식 못함. 원인을 도저히 추적 못하겠어서 단순한 방식으로 변경.
         if (delay <= 0)
         {
             if (Input.GetMouseButton(0))
@@ -65,7 +65,6 @@ public class CardUI_restV : MonoBehaviour
 
     public void BTNClicked()
     {
-        Debug.Log("calling");
         if (!isSelect)
         {
             restM.OnEventOtherSelect();
