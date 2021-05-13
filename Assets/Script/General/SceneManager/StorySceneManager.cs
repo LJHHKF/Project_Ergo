@@ -194,7 +194,7 @@ public class StorySceneManager : MonoBehaviour
         {
             if (!isPointerIn)
             {
-                if (Input.GetMouseButtonUp(0))
+                if (Input.GetMouseButtonDown(0))
                 {
                     if (StoryTurningManager.instance.isTutorial)
                     {
