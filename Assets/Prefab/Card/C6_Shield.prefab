@@ -18,6 +18,7 @@ MonoBehaviour:
   isSecondDmgFormula: 1
   isUseFixRate: 0
   fixPRate: 0.5
+  affectDelay: 2
 --- !u!1001 &6033248376237319925
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -145,7 +146,7 @@ PrefabInstance:
     - target: {fileID: 1437206776610783508, guid: 13514753735d515478a2178e20010343,
         type: 3}
       propertyPath: type
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1437206776610783508, guid: 13514753735d515478a2178e20010343,
         type: 3}

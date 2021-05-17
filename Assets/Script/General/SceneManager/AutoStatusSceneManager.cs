@@ -140,6 +140,7 @@ public class AutoStatusSceneManager : MonoBehaviour
         {
             if(Input.GetMouseButtonDown(0))
             {
+                SoundEfManager.instance.SetSoundEffect(mySoundEffect.SoundEf.storyEnd);
                 CStatManager.instance.SetStatChange_Init(p_endu, p_str, p_solid, p_int);
                 LoadManager.instance.LoadStoryScene();
             }

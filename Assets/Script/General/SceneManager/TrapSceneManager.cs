@@ -31,6 +31,7 @@ public class TrapSceneManager : MonoBehaviour
     [SerializeField] private SpriteRenderer bg;
     //private Image bg;
 
+    // 0: 화살, 1: 낙석, 2: 독늪, 3: 저주
     [Header("Trap Info Setting")]
     [SerializeField] private float textUpSecond = 0.1f;
     [SerializeField] private Trap[] traps;
@@ -75,6 +76,10 @@ public class TrapSceneManager : MonoBehaviour
                     bg.sprite = traps[i].sprite;
                     trap_index = i;
                     PlayerPrefs.SetInt(key, i);
+                    if (i == 0)
+                        BGMManager.instance.EFfectBGM_trap(0);
+                    else if (i == 1)
+                        BGMManager.instance.EFfectBGM_trap(1);
                     break;
                 }
             }

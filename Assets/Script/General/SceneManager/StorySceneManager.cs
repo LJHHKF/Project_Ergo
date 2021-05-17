@@ -196,6 +196,7 @@ public class StorySceneManager : MonoBehaviour
             {
                 if (Input.GetMouseButtonDown(0))
                 {
+                    SoundEfManager.instance.SetSoundEffect(mySoundEffect.SoundEf.storyEnd);
                     if (StoryTurningManager.instance.isTutorial)
                     {
                         StoryTurningManager.instance.isTutorial = false;
@@ -236,6 +237,8 @@ public class StorySceneManager : MonoBehaviour
             LoadManager.instance.ChangeNextStage(2);
         else if (_SceneName == "Ev_Trap")
             LoadManager.instance.ChangeNextStage(3);
+
+        SoundEfManager.instance.SetSoundEffect(mySoundEffect.SoundEf.storyEnd);
 
         if (StoryTurningManager.instance.isTutorial)
             LoadManager.instance.ChangeNextStage_InitStart();

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using UnityEngine.UI;
+using mySoundEffect;
 
 public class Enemy_Base : LivingEntity
 {
@@ -22,6 +23,7 @@ public class Enemy_Base : LivingEntity
 
     [Header("Enemy Setting")]
     [SerializeField] protected int monsterID = 0;
+    [SerializeField] protected SoundEf soundType;
     [SerializeField] protected MonsterRank m_rank;
     [SerializeField] protected Acts[] normalActs;
     //[SerializeField] protected int[] weights;
@@ -107,8 +109,15 @@ public class Enemy_Base : LivingEntity
 
     public override bool OnDamage(int damage)
     {
+        SoundEfManager.instance.SetSoundEffect(soundType);
         bool res = base.OnDamage(damage);
         return res;
+    }
+
+    public override void OnPenDamage(int damage)
+    {
+        SoundEfManager.instance.SetSoundEffect(soundType);
+        base.OnPenDamage(damage);
     }
 
     public override void ChangeCost(int changeV)
@@ -187,5 +196,11 @@ public class Enemy_Base : LivingEntity
     {
         readyAct.Act();
         myUI.AddPopUpText_ActionName(readyAct.GetActName());
+    }
+
+    public override void Die()
+    {
+        SoundEfManager.instance.SetSoundEffect(SoundEf.monsterDead);
+        base.Die();
     }
 }

@@ -8,6 +8,7 @@ public class SettingBTN : MonoBehaviour
 
     public void BTN_Setting()
     {
+        SoundEfManager.instance.SetSoundEffect(mySoundEffect.SoundEf.ui_touch);
         settingWindow.SetActive(true);
     }
 }

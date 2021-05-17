@@ -145,7 +145,9 @@ public class LivingEntity : MonoBehaviour, IDamageable
         {
             return;
         }
-        
+
+        SoundEfManager.instance.SetSoundEffect(mySoundEffect.SoundEf.heal);
+
         if(health + restoreValue >= (fullHealth + endurance))
         {
             restoreValue = (fullHealth + endurance) - health;

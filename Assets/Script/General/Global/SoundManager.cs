@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class SoundManager : MonoBehaviour
 {
@@ -16,9 +17,23 @@ public class SoundManager : MonoBehaviour
     }
 
     //private float m_master;
-    public float masterVolume { get; set; }
+    public float masterVolume
+    {
+        get
+        {
+            return masterVolume;
+        }
+        set
+        {
+            if(value >= 0.0 && value <= 1.0)
+                masterVolume = value;
+            if (ev_soundChange != null)
+                ev_soundChange.Invoke();
+        }
+    }
 
     private string key;
+    public event Action ev_soundChange;
 
     private void Awake()
     {

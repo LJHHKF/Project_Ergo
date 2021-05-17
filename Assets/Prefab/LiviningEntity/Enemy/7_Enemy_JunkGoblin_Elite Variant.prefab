@@ -16,6 +16,7 @@ MonoBehaviour:
   myAbCond: {fileID: 7712279498385058608}
   myAnimator: {fileID: 4178518018370949090}
   monsterID: 7
+  soundType: 13
   m_rank: 1
   normalActs:
   - act: {fileID: -6551774290171867943}

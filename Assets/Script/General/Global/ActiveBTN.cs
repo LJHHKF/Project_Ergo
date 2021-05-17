@@ -8,7 +8,8 @@ public class ActiveBTN : MonoBehaviour
 
     public void ActiveBTNClick()
     {
-        if(activeTarget.activeSelf)
+        SoundEfManager.instance.SetSoundEffect(mySoundEffect.SoundEf.ui_touch);
+        if (activeTarget.activeSelf)
         {
             activeTarget.SetActive(false);
         }

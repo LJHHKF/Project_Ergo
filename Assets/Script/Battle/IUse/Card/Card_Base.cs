@@ -12,7 +12,8 @@ namespace Card
     public enum CardType
     {
         Sword,
-        Magic
+        Magic_attack,
+        Magic_other
     }
 }
 
@@ -118,7 +119,7 @@ public class Card_Base : MonoBehaviour, ICard
         {
             r_fixP = fixP + Mathf.RoundToInt(m_charM.strength * 0.5f);
         }
-        else if (type == CardType.Magic)
+        else if (type == CardType.Magic_attack || type == CardType.Magic_other)
         {
             r_fixP = fixP + Mathf.RoundToInt(m_charM.intel * 0.5f);
         }
@@ -215,6 +216,17 @@ public class Card_Base : MonoBehaviour, ICard
         {
             sub_use.Invoke();
         }
+
+        if (cardID == 2)
+            SoundEfManager.instance.SetSoundEffect(mySoundEffect.SoundEf.card_OverKill);
+        else if (cardID == 4)
+            SoundEfManager.instance.SetSoundEffect(mySoundEffect.SoundEf.card_ManaStorm);
+        else if (type == CardType.Sword)
+            SoundEfManager.instance.SetSoundEffect(mySoundEffect.SoundEf.card_magic_attack);
+        else if (type == CardType.Magic_attack)
+            SoundEfManager.instance.SetSoundEffect(mySoundEffect.SoundEf.card_magic_attack);
+        else if (type == CardType.Magic_other)
+            SoundEfManager.instance.SetSoundEffect(mySoundEffect.SoundEf.card_magic_other);
 
         ChkAndFindCharcter();
         m_charM.OnCardUseAnimation(type);
@@ -444,7 +456,7 @@ public class Card_Base : MonoBehaviour, ICard
             {
                 r_fixP = fixP + Mathf.RoundToInt(CStatManager.instance.strength * 0.5f);
             }
-            else if (type == CardType.Magic)
+            else if (type == CardType.Magic_attack || type == CardType.Magic_other)
             {
                 r_fixP = fixP + Mathf.RoundToInt(CStatManager.instance.intelligent * 0.5f);
             }

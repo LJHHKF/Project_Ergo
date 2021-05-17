@@ -130,6 +130,7 @@ public class BattleUIManager : MonoBehaviour
 
     public void BtnTurnEnd()
     {
+        SoundEfManager.instance.SetSoundEffect(mySoundEffect.SoundEf.ui_touch);
         TurnManager.instance.OnPlayerTurnEnd();
     }
 

@@ -175,6 +175,7 @@ public class DeckManager : MonoBehaviour
     {
         if (list_deck.Count > 10)
         {
+            SoundEfManager.instance.SetSoundEffect(mySoundEffect.SoundEf.discard_card);
             list_deck.RemoveAt(_index);
             return true;
         }
