@@ -17,93 +17,84 @@ public class EA_GuardCAddAct : EnemyAct_Base
         for (int i = 0; i < acts.Length; i++)
         {
             int _i = i;
-            for (int j = 0; j < acts[_i].repeatNum; j++)
+            if (acts[_i].affactType == AffectType.Attack)
             {
-                if (acts[_i].affactType == AffectType.Attack)
-                {
-                    if (target.OnDamage(r_power[_i]))
-                        if (isSet_ifHPDamaged)
+                if (target.OnDamage(r_power[_i]))
+                    if (isSet_ifHPDamaged)
+                    {
+                        int _power = 0;
+
+                        if (ifHPDamaged.affactType == AffectType.Abcond)
                         {
-                            int _power = 0;
-
-                            if (ifHPDamaged.affactType == AffectType.Abcond)
-                            {
-                                _power = ifHPDamaged.fixedPower;
-                            }
-                            else
-                            {
-                                if (ifHPDamaged.type == ActType.NormalAttack)
-                                {
-                                    _power = Mathf.RoundToInt(m_Enemy.strength * ifHPDamaged.powerRate);
-                                }
-                                else if (acts[_i].type == ActType.SpecialAttack)
-                                {
-                                    _power = Mathf.RoundToInt(m_Enemy.intel * ifHPDamaged.powerRate);
-                                }
-                                else if (acts[_i].type == ActType.Guard)
-                                {
-                                    _power = Mathf.RoundToInt(m_Enemy.solid * ifHPDamaged.powerRate);
-                                }
-                            }
-
-                            for (int k = 0; k < ifHPDamaged.repeatNum; i++)
-                            {
-                                if (ifHPDamaged.affactType == AffectType.Attack)
-                                {
-                                    StartCoroutine(delayedAffect(()=>target.OnDamage(_power)));
-                                }
-                                else if (ifHPDamaged.affactType == AffectType.Guard)
-                                {
-                                    StartCoroutine(delayedAffect(()=>m_Enemy.GetGuardPoint(_power)));
-                                }
-                                else if (ifHPDamaged.affactType == AffectType.Abcond)
-                                {
-                                    StartCoroutine(delayedAffect(()=>target.OnAddAbCond(ifHPDamaged.abcondID, ifHPDamaged.fixedPower, ifHPDamaged.isDelayedAbCond)));
-                                }
-                            }
+                            _power = ifHPDamaged.fixedPower;
                         }
                         else
-                        if (isSet_ifGuarded)
                         {
-                            int _power = 0;
-
-                            if (ifGuarded.affactType == AffectType.Abcond)
+                            if (ifHPDamaged.type == ActType.NormalAttack)
                             {
-                                _power = ifGuarded.fixedPower;
+                                _power = Mathf.RoundToInt(m_Enemy.strength * ifHPDamaged.powerRate);
                             }
-                            else
+                            else if (acts[_i].type == ActType.SpecialAttack)
                             {
-                                if (ifGuarded.type == ActType.NormalAttack)
-                                {
-                                    _power = Mathf.RoundToInt(m_Enemy.strength * ifGuarded.powerRate);
-                                }
-                                else if (acts[_i].type == ActType.SpecialAttack)
-                                {
-                                    _power = Mathf.RoundToInt(m_Enemy.intel * ifGuarded.powerRate);
-                                }
-                                else if (acts[_i].type == ActType.Guard)
-                                {
-                                    _power = Mathf.RoundToInt(m_Enemy.solid * ifGuarded.powerRate);
-                                }
+                                _power = Mathf.RoundToInt(m_Enemy.intel * ifHPDamaged.powerRate);
                             }
-
-                            for (int k = 0; k < ifGuarded.repeatNum; i++)
+                            else if (acts[_i].type == ActType.Guard)
                             {
-                                if (ifGuarded.affactType == AffectType.Attack)
-                                {
-                                    StartCoroutine(delayedAffect(()=>target.OnDamage(_power)));
-                                }
-                                else if (ifGuarded.affactType == AffectType.Guard)
-                                {
-                                    StartCoroutine(delayedAffect(()=>m_Enemy.GetGuardPoint(_power)));
-                                }
-                                else if (ifGuarded.affactType == AffectType.Abcond)
-                                {
-                                    StartCoroutine(delayedAffect(()=>target.OnAddAbCond(ifHPDamaged.abcondID, ifHPDamaged.fixedPower, ifHPDamaged.isDelayedAbCond)));
-                                }
+                                _power = Mathf.RoundToInt(m_Enemy.solid * ifHPDamaged.powerRate);
                             }
                         }
-                }
+
+                        if (ifHPDamaged.affactType == AffectType.Attack)
+                        {
+                            StartCoroutine(delayedAffect(()=>target.OnDamage(_power)));
+                        }
+                        else if (ifHPDamaged.affactType == AffectType.Guard)
+                        {
+                            StartCoroutine(delayedAffect(()=>m_Enemy.GetGuardPoint(_power)));
+                        }
+                        else if (ifHPDamaged.affactType == AffectType.Abcond)
+                        {
+                            StartCoroutine(delayedAffect(()=>target.OnAddAbCond(ifHPDamaged.abcondID, ifHPDamaged.fixedPower, ifHPDamaged.isDelayedAbCond)));
+                        }
+                    }
+                    else
+                    if (isSet_ifGuarded)
+                    {
+                        int _power = 0;
+
+                        if (ifGuarded.affactType == AffectType.Abcond)
+                        {
+                            _power = ifGuarded.fixedPower;
+                        }
+                        else
+                        {
+                            if (ifGuarded.type == ActType.NormalAttack)
+                            {
+                                _power = Mathf.RoundToInt(m_Enemy.strength * ifGuarded.powerRate);
+                            }
+                            else if (acts[_i].type == ActType.SpecialAttack)
+                            {
+                                _power = Mathf.RoundToInt(m_Enemy.intel * ifGuarded.powerRate);
+                            }
+                            else if (acts[_i].type == ActType.Guard)
+                            {
+                                _power = Mathf.RoundToInt(m_Enemy.solid * ifGuarded.powerRate);
+                            }
+                        }
+
+                        if (ifGuarded.affactType == AffectType.Attack)
+                        {
+                            StartCoroutine(delayedAffect(()=>target.OnDamage(_power)));
+                        }
+                        else if (ifGuarded.affactType == AffectType.Guard)
+                        {
+                            StartCoroutine(delayedAffect(()=>m_Enemy.GetGuardPoint(_power)));
+                        }
+                        else if (ifGuarded.affactType == AffectType.Abcond)
+                        {
+                            StartCoroutine(delayedAffect(()=>target.OnAddAbCond(ifHPDamaged.abcondID, ifHPDamaged.fixedPower, ifHPDamaged.isDelayedAbCond)));
+                        }
+                    }
             }
         }
     }
