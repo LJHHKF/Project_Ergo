@@ -35,6 +35,7 @@ public class UnitUI : MonoBehaviour
     [SerializeField] private Color color_Buff;
     [SerializeField] private Color color_Debuff;
     [SerializeField] private Color color_ActionName;
+    [SerializeField] private Color color_RestoreHealth;
     private List<GameObject> list_pop = new List<GameObject>();
     private int cnt_popUpActive = 0;
 
@@ -297,6 +298,14 @@ public class UnitUI : MonoBehaviour
         TextMeshProUGUI _t = CreatePopUpText();
         _t.text = _name;
         _t.color = color_ActionName;
+        AddPopUpList(_t.gameObject);
+    }
+
+    public void AddPopUpText_RestoreHealth(int _value)
+    {
+        TextMeshProUGUI _t = CreatePopUpText();
+        _t.text = _value.ToString();
+        _t.color = color_RestoreHealth;
         AddPopUpList(_t.gameObject);
     }
 

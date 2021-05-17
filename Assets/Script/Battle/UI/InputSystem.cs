@@ -37,6 +37,8 @@ public class InputSystem : MonoBehaviour
     private Camera myMainCam;
     private float maxDistance = 15f;
     private Card_Base selectedCard;
+    private IItem selectedItem;
+    private int useTypeNum = -1;
     private bool isSelected = false;
     private Vector2 targetedPos;
     private bool isTempTargeted = false;
@@ -94,7 +96,6 @@ public class InputSystem : MonoBehaviour
                 SetMousePosition();
 
                 RaycastHit2D hit = Physics2D.Raycast(mousePosition, transform.forward, maxDistance);
-                Debug.DrawRay(mousePosition, transform.forward * 10, Color.red, 0.3f);
 
                 //List<RaycastResult> results = new List<RaycastResult>();
                 //m_GRay.Raycast(m_ped, results);
@@ -109,6 +110,7 @@ public class InputSystem : MonoBehaviour
                             selectedCard = (Card_Base)hit.transform.GetComponent<ICard>().Selected();
                             if (selectedCard != null)
                             {
+                                useTypeNum = 0;
                                 isSelected = true;
                                 m_BaUIManager.OnEnlargeCard(selectedCard);
                                 line.SetActive(true);
@@ -117,90 +119,109 @@ public class InputSystem : MonoBehaviour
                     }
                 }
             }
-            else if (Input.GetMouseButton(0))
+            if (Input.GetMouseButton(0))
             {
                 if (isSelected)
                 {
                     SetMousePosition();
 
-                    if (!selectedCard.GetIsNonTarget())
+                    if (useTypeNum == 0)
                     {
-                        RaycastHit2D hit = Physics2D.Raycast(mousePosition, transform.forward, maxDistance);
-                        Debug.DrawRay(mousePosition, transform.forward * 10, Color.red, 0.3f);
-
-                        if (hit)
+                        if (!selectedCard.GetIsNonTarget())
                         {
-                            if (hit.transform.gameObject.tag == "Enemy")
-                            {
-                                targetedPos = hit.transform.position;
-                                targetColSize = hit.transform.GetComponent<Collider2D>().bounds.size;
-                                targetColSize = targetColSize / 2;
-                                isTempTargeted = true;
-                            }
-                        }
-
-                        if (mousePosition.x < targetedPos.x - targetColSize.x
-                            || mousePosition.x > targetedPos.x + targetColSize.x
-                            || mousePosition.y < targetedPos.y - targetColSize.y
-                            || mousePosition.y > targetedPos.y + targetColSize.y)
-                        {
-                            isTempTargeted = false;
-                            targetedPos = Vector2.zero;
-                            targetColSize = Vector2.zero;
-                        }
-
-                        if (isTempTargeted)
-                        {
-                            isInEnlargeArea = selectedCard.Dragged(targetedPos, m_line);
-
+                            Target_Use_Hold_Method();
                         }
                         else
                         {
                             isInEnlargeArea = selectedCard.Dragged(mousePosition2D, m_line);
                         }
-                    }
-                    else
-                    {
-                        isInEnlargeArea = selectedCard.Dragged(mousePosition2D, m_line);
-                    }
 
-                    if (!isInEnlargeArea)
-                        m_BaUIManager.OffEnlargeCard();
-                    else
-                        m_BaUIManager.OnEnlargeCard(selectedCard);
+                        if (!isInEnlargeArea)
+                            m_BaUIManager.OffEnlargeCard();
+                        else
+                            m_BaUIManager.OnEnlargeCard(selectedCard);
+                    }
+                    else if (useTypeNum == 1)
+                    {
+                        if (!selectedItem.GetIsNonTarget())
+                        {
+                            Target_Use_Hold_Method();
+                        }
+                        else
+                        {
+                            isInEnlargeArea = selectedItem.Dragged(mousePosition2D, m_line);
+                        }
+                    }
                 }
             }
             if (Input.GetMouseButtonUp(0))
             {
                 if (isSelected)
                 {
-                    if (selectedCard.GetIsNonTarget())
+                    switch (useTypeNum)
                     {
-                        if (selectedCard.GetReady())
-                        {
-                            selectedCard.SetTarget(null);
-                            diceSManager.activatedCard = selectedCard;
-                        }
-                    }
-                    else
-                    {
-                        SetMousePosition();
-
-                        RaycastHit2D hit = Physics2D.Raycast(mousePosition, transform.forward, maxDistance);
-                        Debug.DrawRay(mousePosition, transform.forward * 10, Color.red, 0.3f);
-                        if (hit)
-                        {
-                            if (hit.collider.CompareTag("Enemy"))
+                        case 0:
+                            if (selectedCard.GetIsNonTarget())
                             {
-                                selectedCard.SetTarget(hit.transform.gameObject);
-                                diceSManager.activatedCard = selectedCard;
+                                if (selectedCard.GetReady())
+                                {
+                                    selectedCard.SetTarget(null);
+                                    diceSManager.activatedCard = selectedCard;
+                                }
                             }
-                        }
+                            else
+                            {
+                                SetMousePosition();
+
+                                RaycastHit2D hit = Physics2D.Raycast(mousePosition, transform.forward, maxDistance);
+                                if (hit)
+                                {
+                                    if (hit.collider.CompareTag("Enemy"))
+                                    {
+                                        selectedCard.SetTarget(hit.transform.gameObject);
+                                        diceSManager.activatedCard = selectedCard;
+                                    }
+                                }
+                            }
+                            m_BaUIManager.OffEnlargeCard();
+                            selectedCard.BringUpCard(false);
+                            selectedCard = null;
+                            break;
+                        case 1:
+                            if (selectedItem.GetIsNonTarget())
+                            {
+                                if (selectedItem.GetReady())
+                                {
+                                    selectedItem.SetTarget(null);
+                                    //selectedItem.Use(0); // Card도, Item도, SetTarget 안에 Use가 있음.
+                                }
+                                else
+                                {
+                                    selectedItem.UnSetSelected();
+                                }
+                            }
+                            else
+                            {
+                                SetMousePosition();
+
+                                RaycastHit2D hit = Physics2D.Raycast(mousePosition, transform.forward, maxDistance);
+                                if (hit)
+                                {
+                                    if (hit.collider.CompareTag("Enemy"))
+                                    {
+                                        selectedItem.SetTarget(hit.transform.gameObject);
+                                    }
+                                    else
+                                        selectedItem.UnSetSelected();
+                                }
+                                else
+                                    selectedItem.UnSetSelected();
+                            }
+                            selectedItem = null;
+                            break;
                     }
-                    m_BaUIManager.OffEnlargeCard();
-                    selectedCard.BringUpCard(false);
                     isSelected = false;
-                    selectedCard = null;
+                    useTypeNum = -1;
                     line.SetActive(false);
 
                     isTempTargeted = false;
@@ -222,5 +243,65 @@ public class InputSystem : MonoBehaviour
     public void SetSceneName(string _input)
     {
         SceneName = _input;
+    }
+
+    public void SetItem(IItem _item)
+    {
+        selectedItem = _item;
+        isSelected = true;
+        useTypeNum = 1;
+        line.SetActive(true);
+    }
+
+    private void Target_Use_Hold_Method()
+    {
+        RaycastHit2D hit = Physics2D.Raycast(mousePosition, transform.forward, maxDistance);
+
+        if (hit)
+        {
+            if (hit.transform.gameObject.tag == "Enemy")
+            {
+                targetedPos = hit.transform.position;
+                targetColSize = hit.transform.GetComponent<Collider2D>().bounds.size;
+                targetColSize = targetColSize / 2;
+                isTempTargeted = true;
+            }
+        }
+
+        if (mousePosition.x < targetedPos.x - targetColSize.x
+            || mousePosition.x > targetedPos.x + targetColSize.x
+            || mousePosition.y < targetedPos.y - targetColSize.y
+            || mousePosition.y > targetedPos.y + targetColSize.y)
+        {
+            isTempTargeted = false;
+            targetedPos = Vector2.zero;
+            targetColSize = Vector2.zero;
+        }
+
+        if (isTempTargeted)
+        {
+            switch (useTypeNum)
+            {
+                case 0:
+                    isInEnlargeArea = selectedCard.Dragged(targetedPos, m_line);
+                    break;
+                case 1:
+                    isInEnlargeArea = selectedItem.Dragged(targetedPos, m_line);
+                    break;
+            }
+            
+        }
+        else
+        {
+            switch (useTypeNum)
+            {
+                case 0:
+                    isInEnlargeArea = selectedCard.Dragged(mousePosition2D, m_line);
+                    break;
+                case 1:
+                    isInEnlargeArea = selectedItem.Dragged(mousePosition2D, m_line);
+                    break;
+            }
+        }
     }
 }

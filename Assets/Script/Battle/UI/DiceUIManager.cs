@@ -82,7 +82,6 @@ public class DiceUIManager : MonoBehaviour
         if(CheckCP())
         {
             float rand = Random.Range(0, 9);
-            Debug.Log(rand);
             if(rand <= 2f) //0, 1, 2
             {
                 m_DiceManager.OnSixDice();

@@ -45,8 +45,7 @@ public class CostManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        TurnManager.instance.firstTurn += Event_TurnStart
-            ;
+        TurnManager.instance.firstTurn += Event_TurnStart;
         TurnManager.instance.turnStart += Event_TurnStart;
 
         for (int i = 0; i < etherImgs.Length; i++)

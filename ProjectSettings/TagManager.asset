@@ -19,6 +19,8 @@ TagManager:
   - InfoM
   - DiceBox_Bottom
   - GameMaster
+  - Dice
+  - ItemDelete
   layers:
   - Default
   - TransparentFX

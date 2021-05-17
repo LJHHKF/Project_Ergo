@@ -60,9 +60,9 @@ public class DiceManager : MonoBehaviour
 
         if (isSetTargetRot)
         {
-            if ((bottomTime + chkTimeInterval + 1.0f >= Time.time) && !isRollEnd)
+            if ((bottomTime + chkTimeInterval + 1.5f >= Time.time) && !isRollEnd)
             {
-                if (m_rb.velocity.magnitude == 0 || Time.time > bottomTime + chkTimeInterval + 2.0f)
+                if (m_rb.velocity.magnitude == 0 || Time.time > bottomTime + chkTimeInterval + 2.5f)
                 {
                     m_DsystemManager.SumRollEnd();
                     isRollEnd = true;
@@ -77,6 +77,18 @@ public class DiceManager : MonoBehaviour
         {
             bottomTime = Time.time;
             isBottom = true;
+        }
+        if(collision.collider.CompareTag("Dice"))
+        {
+            Vector3 vv = Vector3.zero;
+            foreach(ContactPoint contact in collision.contacts)
+            {
+                vv += contact.point;
+            }
+            vv /= collision.contacts.Length;
+            vv = transform.position - vv;
+
+            m_rb.AddForce(vv * 2f);
         }
     }
 

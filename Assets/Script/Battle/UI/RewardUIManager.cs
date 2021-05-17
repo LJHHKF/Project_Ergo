@@ -31,7 +31,7 @@ public class RewardUIManager : MonoBehaviour
         CardPack.instance.ResetCanList();
         Card_Base m_card = CardPack.instance.GetRandomCard_isntConfirm().GetComponent<Card_Base>();
         cardUIManager.SetTargetCard(m_card, true);
-        m_onDisable += () => CardPack.instance.TempHadCntUpDown(m_card.GetCardID(), false);
+        m_onDisable += () => CardPack.instance.TempHadCntUpDown(m_card.GetID(), false);
 
         StringBuilder m_sb = new StringBuilder();
         m_sb.Append("소울 보상(가구현)\n");
@@ -47,10 +47,24 @@ public class RewardUIManager : MonoBehaviour
 
         int rand = UnityEngine.Random.Range(0, 99);
         if (rand < itemOnPer_int)
-            btns[2].SetActive(true);
+        {
+            if (ItemSlot.instance.GetCanAdd())
+            {
+                btns[2].SetActive(true);
+                IItem temp = ItemSlot.instance.SetRewardItem_ready();
+                itemImage.sprite = temp.GetItemImg();
+                itemText.text = temp.GetItemText();
+            }
+            else
+            {
+                btns[2].SetActive(false);
+                isSelected[2] = false;
+            }
+        }
         else
         {
             btns[2].SetActive(false);
+            isSelected[2] = false;
         }
     }
 
@@ -68,6 +82,11 @@ public class RewardUIManager : MonoBehaviour
             cardUIManager.AddToDeckTargetedCard();
         if (isSelected[1])
             PlayerMoneyManager.instance.AcquiredSoul(soulReward);
+
+        if (isSelected[2])
+            ItemSlot.instance.SetRewardItem_confirm();
+        else
+            ItemSlot.instance.UnSetRewardItem();
 
         StartCoroutine(DeleayedNextStage());
     }
