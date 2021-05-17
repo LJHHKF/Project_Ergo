@@ -15,6 +15,7 @@ public class ItemDeleteBTN : MonoBehaviour
 
     public void BTNClicked()
     {
+        SoundEfManager.instance.SetSoundEffect(mySoundEffect.SoundEf.ui_touch);
         if (isSelected)
         {
             isSelected = false;

@@ -19,6 +19,7 @@ public class ShopSceneManager : MonoBehaviour
 
     public void BtnConfirm()
     {
+        SoundEfManager.instance.SetSoundEffect(mySoundEffect.SoundEf.ui_touch);
         LoadManager.instance.LoadStoryScene();
     }
 }

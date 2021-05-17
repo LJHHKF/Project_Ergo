@@ -22,6 +22,7 @@ public class SettingWindowM : MonoBehaviour
 
     public void BTN_GameEnd()
     {
+        SoundEfManager.instance.SetSoundEffect(mySoundEffect.SoundEf.ui_touch);
         if (SceneManager.GetActiveScene().name == "Battle")
         {
             if (TurnManager.instance.GetIsBattleEnded())
@@ -43,7 +44,8 @@ public class SettingWindowM : MonoBehaviour
 
     public void BTN_ToTitle()
     {
-        if(SceneManager.GetActiveScene().name == "Battle")
+        SoundEfManager.instance.SetSoundEffect(mySoundEffect.SoundEf.ui_touch);
+        if (SceneManager.GetActiveScene().name == "Battle")
         {
             if (TurnManager.instance.GetIsBattleEnded())
             {
@@ -58,11 +60,13 @@ public class SettingWindowM : MonoBehaviour
 
     public void BTN_Close()
     {
+        SoundEfManager.instance.SetSoundEffect(mySoundEffect.SoundEf.ui_touch);
         gameObject.SetActive(false);
     }
 
     public void BTN_SubClose()
     {
+        SoundEfManager.instance.SetSoundEffect(mySoundEffect.SoundEf.ui_touch);
         warningWindow.SetActive(false);
     }
 }

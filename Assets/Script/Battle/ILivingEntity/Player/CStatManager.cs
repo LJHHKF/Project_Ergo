@@ -201,6 +201,7 @@ public class CStatManager : MonoBehaviour
         if(health <= 0)
         {
             LoadManager.instance.LoadGameOver();
+            BGMManager.instance.EffectBGM_dead();
         }
     }
 

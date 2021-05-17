@@ -26,6 +26,7 @@ public class RestSceneManager : MonoBehaviour
 
     public void BtnRest()
     {
+        SoundEfManager.instance.SetSoundEffect(mySoundEffect.SoundEf.ui_touch);
         int fullHealth = CStatManager.instance.fullHealth_pure + CStatManager.instance.endurance;
         int restoreValue = Mathf.RoundToInt(fullHealth * 0.3f);
             
@@ -52,6 +53,7 @@ public class RestSceneManager : MonoBehaviour
 
     public void BtnDiscard()
     {
+        SoundEfManager.instance.SetSoundEffect(mySoundEffect.SoundEf.ui_touch);
         cardsListWindow.SetActive(true);
         listM.InputList_RestV();
     }
@@ -70,6 +72,7 @@ public class RestSceneManager : MonoBehaviour
 
     public void BtnDiscardConfirm()
     {
+        SoundEfManager.instance.SetSoundEffect(mySoundEffect.SoundEf.ui_touch);
         if (ev_DeleteConfirm != null)
         {
             if (!ev_DeleteConfirm.Invoke())
@@ -92,11 +95,13 @@ public class RestSceneManager : MonoBehaviour
 
     public void BtnDiscardClose()
     {
+        SoundEfManager.instance.SetSoundEffect(mySoundEffect.SoundEf.ui_touch);
         cardsListWindow.SetActive(false);
     }
 
     public void BtnWarningClose()
     {
+        SoundEfManager.instance.SetSoundEffect(mySoundEffect.SoundEf.ui_touch);
         warningWindow.SetActive(false);
     }
 

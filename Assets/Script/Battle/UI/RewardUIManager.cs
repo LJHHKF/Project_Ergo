@@ -39,6 +39,8 @@ public class RewardUIManager : MonoBehaviour
         m_sb.Append(soulReward.ToString());
         soulText.text = m_sb.ToString();
 
+        BGMManager.instance.EffectBGM_BatlleWin();
+
         for (int i = 0; i < isSelected.Length; i++)
         {
             int _i = i;
@@ -78,7 +80,8 @@ public class RewardUIManager : MonoBehaviour
 
     public void BtnConfirm()
     {
-        if(isSelected[0])
+        SoundEfManager.instance.SetSoundEffect(mySoundEffect.SoundEf.ui_touch);
+        if (isSelected[0])
             cardUIManager.AddToDeckTargetedCard();
         if (isSelected[1])
             PlayerMoneyManager.instance.AcquiredSoul(soulReward);
@@ -93,6 +96,7 @@ public class RewardUIManager : MonoBehaviour
 
     private void BtnSelectClick(int index)
     {
+        SoundEfManager.instance.SetSoundEffect(mySoundEffect.SoundEf.ui_touch);
         // 0: card, 1 : sout, 2: item
         if (!isSelected[index])
         {

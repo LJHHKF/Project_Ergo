@@ -47,6 +47,7 @@ public class ItemBTN : MonoBehaviour
     {
         if (isSet)
         {
+            SoundEfManager.instance.SetSoundEffect(mySoundEffect.SoundEf.ui_touch);
             if (deleteBTN.GetSelected())
             {
                 ItemSlot.instance.DeleteItem(index);

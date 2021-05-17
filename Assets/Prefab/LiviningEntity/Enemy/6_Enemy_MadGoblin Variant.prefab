@@ -18,7 +18,6 @@ MonoBehaviour:
   - type: 0
     affactType: 0
     powerRate: 1
-    repeatNum: 1
     abcondID: 0
     fixedPower: 0
     isDelayedAbCond: 0
@@ -46,14 +45,12 @@ MonoBehaviour:
   - type: 1
     affactType: 0
     powerRate: 1
-    repeatNum: 1
     abcondID: 0
     fixedPower: 0
     isDelayedAbCond: 0
   - type: 1
     affactType: 3
     powerRate: 0.6
-    repeatNum: 0
     abcondID: 0
     fixedPower: 0
     isDelayedAbCond: 0
@@ -70,7 +67,6 @@ MonoBehaviour:
     type: 1
     affactType: 0
     powerRate: 0.6
-    repeatNum: 1
     abcondID: 0
     fixedPower: 0
     isDelayedAbCond: 1
@@ -79,7 +75,6 @@ MonoBehaviour:
     type: 0
     affactType: 0
     powerRate: 0
-    repeatNum: 0
     abcondID: 0
     fixedPower: 0
     isDelayedAbCond: 0
@@ -101,7 +96,6 @@ MonoBehaviour:
   - type: 2
     affactType: 1
     powerRate: 1
-    repeatNum: 1
     abcondID: 0
     fixedPower: 0
     isDelayedAbCond: 0
@@ -132,6 +126,11 @@ PrefabInstance:
         type: 3}
       propertyPath: monsterID
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4451541378279184922, guid: cdda7a158c36ffa46ab94414845dfceb,
+        type: 3}
+      propertyPath: soundType
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 4451541378279184922, guid: cdda7a158c36ffa46ab94414845dfceb,
         type: 3}

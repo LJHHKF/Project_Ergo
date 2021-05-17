@@ -94,12 +94,14 @@ public class Character : LivingEntity
 
     public override bool OnDamage(int damage)
     {
+        SoundEfManager.instance.SetSoundEffect(mySoundEffect.SoundEf.playerHit);
         myAnimator.SetTrigger("Hit");
         return base.OnDamage(damage);
     }
 
     public override void OnPenDamage(int damage)
     {
+        SoundEfManager.instance.SetSoundEffect(mySoundEffect.SoundEf.playerHit);
         myAnimator.SetTrigger("Hit");
         base.OnPenDamage(damage);
     }

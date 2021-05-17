@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using myBGM;
 
 public class LoadManager : MonoBehaviour
 {
@@ -46,18 +47,22 @@ public class LoadManager : MonoBehaviour
                 m_instance.isBattleReady = true;
                 StageManager.instance.IncreaseCurrentStageNum();
                 LoadingSceneManager.LoadScene("Battle");
+                BGMManager.instance.BGMChange(BGMList.battle);
                 break;
             case 1:
                 StageManager.instance.IncreaseCurrentStageNum();
                 LoadingSceneManager.LoadScene("Ev_Shop");
+                BGMManager.instance.BGMChange(BGMList.shop);
                 break;
             case 2:
                 StageManager.instance.IncreaseCurrentStageNum();
                 LoadingSceneManager.LoadScene("Ev_Rest");
+                BGMManager.instance.BGMChange(BGMList.rest);
                 break;
             case 3:
                 StageManager.instance.IncreaseCurrentStageNum();
                 LoadingSceneManager.LoadScene("Ev_Trap");
+                BGMManager.instance.BGMChange(BGMList.battle);
                 break;
         }
         GameMaster.instance.isInit = false;
@@ -73,18 +78,22 @@ public class LoadManager : MonoBehaviour
                 m_instance.isBattleReady = true;
                 StageManager.instance.SetCurrentStageTypeIndex(0);
                 LoadingSceneManager.LoadScene("Battle");
+                BGMManager.instance.BGMChange(BGMList.battle);
                 break;
             case 1:
                 LoadingSceneManager.LoadScene("Ev_Shop");
                 StageManager.instance.SetCurrentStageTypeIndex(1);
+                BGMManager.instance.BGMChange(BGMList.shop);
                 break;
             case 2:
                 LoadingSceneManager.LoadScene("Ev_Rest");
                 StageManager.instance.SetCurrentStageTypeIndex(2);
+                BGMManager.instance.BGMChange(BGMList.rest);
                 break;
             case 3:
                 LoadingSceneManager.LoadScene("Ev_Trap");
                 StageManager.instance.SetCurrentStageTypeIndex(3);
+                BGMManager.instance.BGMChange(BGMList.battle);
                 break;
         }
         StageManager.instance.SetNextStage();
@@ -103,6 +112,7 @@ public class LoadManager : MonoBehaviour
     public void LoadFirst_Init_ToSetting()
     {
         LoadingSceneManager.LoadScene("AutoStatusScene");
+        BGMManager.instance.BGMChange(BGMList.story);
     }
 
     public void LoadFirst_Init()
@@ -110,12 +120,14 @@ public class LoadManager : MonoBehaviour
         m_instance.isBattleReady = true;
         StageManager.instance.SetCurrentStageTypeIndex(0);
         LoadingSceneManager.LoadScene("Battle");
+        BGMManager.instance.BGMChange(BGMList.battle);
         StageManager.instance.SetNextStage();
     }
 
     public void LoadStoryScene()
     {
         LoadingSceneManager.LoadScene("StoryScene");
+        BGMManager.instance.BGMChange(BGMList.story);
     }
 
     public void LoadGameOver()
@@ -133,6 +145,7 @@ public class LoadManager : MonoBehaviour
 
         GameMaster.instance.OnGameStop();
         LoadingSceneManager.LoadScene("Entrance");
+        BGMManager.instance.BGMChange(BGMList.entrance);
     }
 
     private void ChkAndOnStageEndEvent()

@@ -41,7 +41,8 @@ public class StatusSceneManager : MonoBehaviour
 
     public void OnBtnApply()
     {
-        if(cur_remain > 0)
+        SoundEfManager.instance.SetSoundEffect(mySoundEffect.SoundEf.ui_touch);
+        if (cur_remain > 0)
         {
             warningWindow.SetActive(true);
         }
@@ -54,6 +55,7 @@ public class StatusSceneManager : MonoBehaviour
 
     public void OnBtnRevert()
     {
+        SoundEfManager.instance.SetSoundEffect(mySoundEffect.SoundEf.ui_touch);
         cur_remain = max_remain;
         add_endu = 0;
         add_str = 0;
@@ -69,18 +71,21 @@ public class StatusSceneManager : MonoBehaviour
 
     public void OnBtnWarningYes()
     {
+        SoundEfManager.instance.SetSoundEffect(mySoundEffect.SoundEf.ui_touch);
         CStatManager.instance.SetStatChange_Init(add_endu, add_str, add_solid, add_int);
         LoadManager.instance.LoadFirst_Init();
     }
 
     public void OnBtnWarningNo()
     {
+        SoundEfManager.instance.SetSoundEffect(mySoundEffect.SoundEf.ui_touch);
         warningWindow.SetActive(false);
     }
 
     public void OnBtnEnduranceUp()
     {
-        if(cur_remain > 0)
+        SoundEfManager.instance.SetSoundEffect(mySoundEffect.SoundEf.ui_touch);
+        if (cur_remain > 0)
         {
             cur_remain -= 1;
             add_endu += 1;
@@ -97,7 +102,8 @@ public class StatusSceneManager : MonoBehaviour
 
     public void OnBtnStrengthUp()
     {
-        if(cur_remain > 0)
+        SoundEfManager.instance.SetSoundEffect(mySoundEffect.SoundEf.ui_touch);
+        if (cur_remain > 0)
         {
             cur_remain -= 1;
             add_str += 1;
@@ -114,7 +120,8 @@ public class StatusSceneManager : MonoBehaviour
 
     public void OnBtnSolidUp()
     {
-        if(cur_remain > 0)
+        SoundEfManager.instance.SetSoundEffect(mySoundEffect.SoundEf.ui_touch);
+        if (cur_remain > 0)
         {
             cur_remain -= 1;
             add_solid += 1;
@@ -131,7 +138,8 @@ public class StatusSceneManager : MonoBehaviour
 
     public void OnBtnIntUp()
     {
-        if(cur_remain > 0)
+        SoundEfManager.instance.SetSoundEffect(mySoundEffect.SoundEf.ui_touch);
+        if (cur_remain > 0)
         {
             cur_remain -= 1;
             add_int += 1;

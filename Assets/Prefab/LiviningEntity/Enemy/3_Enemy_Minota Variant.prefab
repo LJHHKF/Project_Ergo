@@ -18,14 +18,12 @@ MonoBehaviour:
   - type: 1
     affactType: 0
     powerRate: 0.8
-    repeatNum: 1
     abcondID: 0
     fixedPower: 0
     isDelayedAbCond: 0
   - type: 1
     affactType: 4
     powerRate: 0
-    repeatNum: 0
     abcondID: 0
     fixedPower: 0
     isDelayedAbCond: 0
@@ -65,7 +63,6 @@ MonoBehaviour:
   - type: 0
     affactType: 0
     powerRate: 1
-    repeatNum: 1
     abcondID: 0
     fixedPower: 0
     isDelayedAbCond: 0
@@ -97,6 +94,11 @@ PrefabInstance:
         type: 3}
       propertyPath: monsterID
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4451541378279184922, guid: cdda7a158c36ffa46ab94414845dfceb,
+        type: 3}
+      propertyPath: soundType
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 4451541378279184922, guid: cdda7a158c36ffa46ab94414845dfceb,
         type: 3}
