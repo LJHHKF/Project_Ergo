@@ -16,17 +16,17 @@ public class SoundManager : MonoBehaviour
         }
     }
 
-    //private float m_master;
+    private float m_master;
     public float masterVolume
     {
         get
         {
-            return masterVolume;
+            return m_master;
         }
         set
         {
             if(value >= 0.0 && value <= 1.0)
-                masterVolume = value;
+                m_master = value;
             if (ev_soundChange != null)
                 ev_soundChange.Invoke();
         }
@@ -40,14 +40,9 @@ public class SoundManager : MonoBehaviour
         if(instance != this)
         {
             Destroy(gameObject);
-        }    
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
+        }
         key = "SoundSetting.MasterVolume";
-        if(PlayerPrefs.HasKey(key))
+        if (PlayerPrefs.HasKey(key))
         {
             masterVolume = PlayerPrefs.GetFloat(key);
         }

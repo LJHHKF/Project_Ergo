@@ -7,7 +7,7 @@ public class VolumeController : MonoBehaviour
 {
     private AudioSource m_audio;
     // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
         m_audio = gameObject.GetComponent<AudioSource>();
     }
