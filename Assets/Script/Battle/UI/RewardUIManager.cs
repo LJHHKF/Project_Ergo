@@ -35,7 +35,7 @@ public class RewardUIManager : MonoBehaviour
 
         StringBuilder m_sb = new StringBuilder();
         m_sb.Append("소울 보상(가구현)\n");
-        soulReward = EnemiesManager.instance.GetInitCnt() * 100;
+        soulReward = EnemiesManager.instance.stageSoul;
         m_sb.Append(soulReward.ToString());
         soulText.text = m_sb.ToString();
 

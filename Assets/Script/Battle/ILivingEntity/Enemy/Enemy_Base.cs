@@ -25,8 +25,8 @@ public class Enemy_Base : LivingEntity
     [SerializeField] protected int monsterID = 0;
     [SerializeField] protected SoundEf soundType;
     [SerializeField] protected MonsterRank m_rank;
+    [SerializeField] protected int dropSoul = 5;
     [SerializeField] protected Acts[] normalActs;
-    //[SerializeField] protected int[] weights;
     [SerializeField] protected EnemyAct_Base specialAct;
     protected EnemyAct_Base readyAct;
     [Header("E_Stat Setting")]
@@ -54,6 +54,8 @@ public class Enemy_Base : LivingEntity
             m_FieldIndex = value;
         }
     }
+
+    public int DropSoul { get { return dropSoul; } }
 
     protected override void Start()
     {
