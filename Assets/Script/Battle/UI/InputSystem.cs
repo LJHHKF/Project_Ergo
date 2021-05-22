@@ -53,6 +53,11 @@ public class InputSystem : MonoBehaviour
     private DiceSystemManager diceSManager;
     private BattleUIManager m_BaUIManager;
 
+    private float item_delete_left;
+    private float item_delete_right;
+    private float item_delete_top;
+    private float item_delete_down;
+
     private void Awake()
     {
         if (instance != this)
@@ -197,25 +202,45 @@ public class InputSystem : MonoBehaviour
                                 }
                                 else
                                 {
-                                    selectedItem.UnSetSelected();
+                                    Vector3 mousePos_cam = Input.mousePosition;
+
+                                    Debug.Log(mousePos_cam);
+
+                                    if(mousePos_cam.x >= item_delete_left
+                                        && mousePos_cam.x <= item_delete_right
+                                        && mousePos_cam.y >= item_delete_down
+                                        && mousePos_cam.y <= item_delete_top)
+                                        ItemSlot.instance.DeleteItem(selectedItem.GetSlotIndex());
+                                    else
+                                        selectedItem.UnSetSelected();
                                 }
                             }
                             else
                             {
-                                SetMousePosition();
-
-                                RaycastHit2D hit = Physics2D.Raycast(mousePosition, transform.forward, maxDistance);
-                                if (hit)
+                                Vector3 mousePos_cam = Input.mousePosition;
+                                Debug.Log(mousePos_cam);
+                                if (mousePos_cam.x >= item_delete_left
+                                    && mousePos_cam.x <= item_delete_right
+                                    && mousePos_cam.y >= item_delete_down
+                                    && mousePos_cam.y <= item_delete_top)
+                                    ItemSlot.instance.DeleteItem(selectedItem.GetSlotIndex());
+                                else
                                 {
-                                    if (hit.collider.CompareTag("Enemy"))
+                                    SetMousePosition();
+
+                                    RaycastHit2D hit = Physics2D.Raycast(mousePosition, transform.forward, maxDistance);
+                                    if (hit)
                                     {
-                                        selectedItem.SetTarget(hit.transform.gameObject);
+                                        if (hit.collider.CompareTag("Enemy"))
+                                        {
+                                            selectedItem.SetTarget(hit.transform.gameObject);
+                                        }
+                                        else
+                                            selectedItem.UnSetSelected();
                                     }
                                     else
                                         selectedItem.UnSetSelected();
                                 }
-                                else
-                                    selectedItem.UnSetSelected();
                             }
                             selectedItem = null;
                             break;
@@ -303,5 +328,15 @@ public class InputSystem : MonoBehaviour
                     break;
             }
         }
+    }
+
+    public void SetDeleteBTNPos(float left, float right, float top, float down)
+    {
+        item_delete_left = left;
+        item_delete_right = right;
+        item_delete_top = top;
+        item_delete_down = down;
+
+        Debug.Log($"left: {left}, right: {right}, top: {top}, down: {down}");
     }
 }

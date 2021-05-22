@@ -89,6 +89,11 @@ public abstract class Item_Base : MonoBehaviour, IItem
         slotIndex = _index;
     }
 
+    public int GetSlotIndex()
+    {
+        return slotIndex;
+    }
+
     public bool Dragged(Vector2 mousePos, LineDrawer liner)
     {
         liner.SetLine_Canvas(btn_transform, mousePos);

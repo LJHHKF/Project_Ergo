@@ -4,28 +4,19 @@ using UnityEngine;
 
 public class ItemDeleteBTN : MonoBehaviour
 {
-    [SerializeField] private GameObject selectEf;
     private bool isSelected = false;
+
+    [SerializeField] private Transform t_left;
+    [SerializeField] private Transform t_right;
+    [SerializeField] private Transform t_top;
+    [SerializeField] private Transform t_down;
+
 
     private void Start()
     {
         isSelected = false;
-        selectEf.SetActive(false);
-    }
 
-    public void BTNClicked()
-    {
-        SoundEfManager.instance.SetSoundEffect(mySoundEffect.SoundEf.ui_touch);
-        if (isSelected)
-        {
-            isSelected = false;
-            selectEf.SetActive(false);
-        }
-        else
-        {
-            isSelected = true;
-            selectEf.SetActive(true);
-        }
+        InputSystem.instance.SetDeleteBTNPos(t_left.position.x, t_right.position.x, t_top.position.y, t_down.position.y);
     }
 
     public bool GetSelected()

@@ -48,13 +48,13 @@ public class ItemBTN : MonoBehaviour
         if (isSet)
         {
             SoundEfManager.instance.SetSoundEffect(mySoundEffect.SoundEf.ui_touch);
-            if (deleteBTN.GetSelected())
-            {
-                ItemSlot.instance.DeleteItem(index);
-                deleteBTN.BTNClicked();
-            }
-            else
-                ItemSlot.instance.ItemSelected(index, gameObject.transform);
+            //if (deleteBTN.GetSelected())
+            //{
+            //    ItemSlot.instance.DeleteItem(index);
+            //    deleteBTN.BTNClicked();
+            //}
+            //else
+            ItemSlot.instance.ItemSelected(index, gameObject.transform);
         }
     }
 }

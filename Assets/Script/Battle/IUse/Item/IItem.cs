@@ -10,6 +10,8 @@ public interface IItem : IUse
 
     void SetSlotIndex(int _index);
 
+    int GetSlotIndex();
+
     void DestroySelf();
 
     void UnSetSelected();
