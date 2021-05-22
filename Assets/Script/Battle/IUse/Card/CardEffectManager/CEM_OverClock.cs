@@ -8,7 +8,8 @@ public class CEM_OverClock : ICardEffectM
 
     private void OnEnable()
     {
-        SetChar();
+        if (StageManager.instance.GetCurrentStageTypeIndex() == 0)
+            StartCoroutine(DelayedInvoke(SetChar));
     }
 
     private void SetChar()

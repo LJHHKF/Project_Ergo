@@ -203,9 +203,6 @@ public class InputSystem : MonoBehaviour
                                 else
                                 {
                                     Vector3 mousePos_cam = Input.mousePosition;
-
-                                    Debug.Log(mousePos_cam);
-
                                     if(mousePos_cam.x >= item_delete_left
                                         && mousePos_cam.x <= item_delete_right
                                         && mousePos_cam.y >= item_delete_down
@@ -218,7 +215,6 @@ public class InputSystem : MonoBehaviour
                             else
                             {
                                 Vector3 mousePos_cam = Input.mousePosition;
-                                Debug.Log(mousePos_cam);
                                 if (mousePos_cam.x >= item_delete_left
                                     && mousePos_cam.x <= item_delete_right
                                     && mousePos_cam.y >= item_delete_down
@@ -336,7 +332,5 @@ public class InputSystem : MonoBehaviour
         item_delete_right = right;
         item_delete_top = top;
         item_delete_down = down;
-
-        Debug.Log($"left: {left}, right: {right}, top: {top}, down: {down}");
     }
 }

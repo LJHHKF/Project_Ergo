@@ -213,17 +213,6 @@ public class Card_Base : MonoBehaviour, ICard
         use?.Invoke(diceValue); 
         sub_use?.Invoke();
 
-        if (cardID == 2)
-            SoundEfManager.instance.SetSoundEffect(mySoundEffect.SoundEf.card_OverKill);
-        else if (cardID == 4)
-            SoundEfManager.instance.SetSoundEffect(mySoundEffect.SoundEf.card_ManaStorm);
-        else if (type == CardType.Sword)
-            SoundEfManager.instance.SetSoundEffect(mySoundEffect.SoundEf.card_magic_attack);
-        else if (type == CardType.Magic_attack)
-            SoundEfManager.instance.SetSoundEffect(mySoundEffect.SoundEf.card_magic_attack);
-        else if (type == CardType.Magic_other)
-            SoundEfManager.instance.SetSoundEffect(mySoundEffect.SoundEf.card_magic_other);
-
         ChkAndFindCharcter();
         m_charM.OnCardUseAnimation(type);
         m_charM.AddActionPopUp(cardName);
@@ -469,5 +458,16 @@ public class Card_Base : MonoBehaviour, ICard
     public void OnEffect()
     {
         effectM?.OnEffect();
+
+        if (cardID == 2)
+            SoundEfManager.instance.SetSoundEffect(mySoundEffect.SoundEf.card_OverKill);
+        else if (cardID == 4)
+            SoundEfManager.instance.SetSoundEffect(mySoundEffect.SoundEf.card_ManaStorm);
+        else if (type == CardType.Sword)
+            SoundEfManager.instance.SetSoundEffect(mySoundEffect.SoundEf.card_magic_attack);
+        else if (type == CardType.Magic_attack)
+            SoundEfManager.instance.SetSoundEffect(mySoundEffect.SoundEf.card_magic_attack);
+        else if (type == CardType.Magic_other)
+            SoundEfManager.instance.SetSoundEffect(mySoundEffect.SoundEf.card_magic_other);
     }
 }
