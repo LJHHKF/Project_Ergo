@@ -38,6 +38,9 @@ public class Enemy_Base : LivingEntity
     [SerializeField] protected int fix_Solid = 1;
     [SerializeField] protected int fix_Inteligent = 1;
     [SerializeField] protected int maxSpGauge = 3;
+    [Header("Card Effect Setting")]
+    [SerializeField] protected GameObject Hit_HitAndRun;
+    [SerializeField] protected GameObject Hit_HalfSwording;
     protected int curSpGauge = 0;
     protected int r_maxSpGauge;
 
@@ -73,6 +76,9 @@ public class Enemy_Base : LivingEntity
         TurnManager.instance.firstTurn += Event_FirstTurn;
 
         onDeath += () => StartCoroutine(DelayedDestroy(1.0f));
+
+        Hit_HitAndRun.SetActive(false);
+        Hit_HalfSwording.SetActive(false);
     }
 
     protected override void ReleseTurnAct()
@@ -207,5 +213,23 @@ public class Enemy_Base : LivingEntity
     {
         SoundEfManager.instance.SetSoundEffect(SoundEf.monsterDead);
         base.Die();
+    }
+
+    public void OnHit_HitAndRun()
+    {
+        if (!Hit_HitAndRun.activeSelf)
+        {
+            Hit_HitAndRun.SetActive(true);
+            StartCoroutine(DeleyedUnActive(Hit_HitAndRun));
+        }
+    }
+
+    public void OnHit_HalfSwording()
+    {
+        if (!Hit_HalfSwording.activeSelf)
+        {
+            Hit_HalfSwording.SetActive(true);
+            StartCoroutine(DeleyedUnActive(Hit_HalfSwording));
+        }
     }
 }

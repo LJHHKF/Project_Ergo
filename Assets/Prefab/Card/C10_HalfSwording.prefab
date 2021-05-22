@@ -1,5 +1,17 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &4524974134732965989
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4068030463375509341}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1bc3a330b6952e647af4e7f7e83c9325, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &4798483920045106640
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18,6 +30,7 @@ MonoBehaviour:
   isSecondDmgFormula: 0
   isUseFixRate: 0
   fixPRate: 0.5
+  affectDelay: 2
   ab_ID: 2
   isImidiateAbActive: 1
   isOnlyUseSecondFixP: 0
@@ -41,6 +54,7 @@ MonoBehaviour:
   isSecondDmgFormula: 0
   isUseFixRate: 1
   fixPRate: 0.5
+  affectDelay: 2
 --- !u!1001 &3053486953976736663
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -92,7 +106,7 @@ PrefabInstance:
     - target: {fileID: 1302848796289772746, guid: 13514753735d515478a2178e20010343,
         type: 3}
       propertyPath: m_Name
-      value: C10_PommelStrike Variant
+      value: C10_HalfSwording
       objectReference: {fileID: 0}
     - target: {fileID: 1302848796289772747, guid: 13514753735d515478a2178e20010343,
         type: 3}
@@ -172,8 +186,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1437206776610783508, guid: 13514753735d515478a2178e20010343,
         type: 3}
+      propertyPath: effectM
+      value: 
+      objectReference: {fileID: 4524974134732965989}
+    - target: {fileID: 1437206776610783508, guid: 13514753735d515478a2178e20010343,
+        type: 3}
       propertyPath: cardName
-      value: "\uD3FC\uBA5C\uCC0D\uAE30"
+      value: "\uD558\uD504\uC18C\uB529"
       objectReference: {fileID: 0}
     - target: {fileID: 1437206776610783508, guid: 13514753735d515478a2178e20010343,
         type: 3}

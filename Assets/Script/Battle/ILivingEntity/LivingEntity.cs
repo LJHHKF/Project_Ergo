@@ -263,4 +263,11 @@ public class LivingEntity : MonoBehaviour, IDamageable
         if (_name.Length > 1)
             myAnimator.SetTrigger(_name);
     }
+
+    protected IEnumerator DeleyedUnActive(GameObject go)
+    {
+        yield return new WaitForSeconds(1.0f);
+        go.SetActive(false);
+        yield break;
+    }
 }

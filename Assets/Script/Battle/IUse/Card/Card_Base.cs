@@ -27,6 +27,7 @@ public class Card_Base : MonoBehaviour, ICard
     [SerializeField] protected float flucPRate = 1.0f;
     [SerializeField] protected bool isNonTarget = false;
     [SerializeField] protected bool isFixGuard = false;
+    [SerializeField] protected ICardEffectM effectM;
     [SerializeField] protected CardType type;
     [TextArea]
     [SerializeField] protected string cardText;
@@ -56,9 +57,10 @@ public class Card_Base : MonoBehaviour, ICard
     protected CostManager m_costM;
     protected Character m_charM;
 
-    public delegate void UseHandler(int dicevalue);
-    public event UseHandler use;
+    //public delegate void UseHandler(int dicevalue);
+    public event Action<int> use;
     public event Action sub_use;
+    public event Action<GameObject> ev_setTarget;
     //protected int d_Value;
 
     public Vector2 m_Position
@@ -210,6 +212,7 @@ public class Card_Base : MonoBehaviour, ICard
         m_costM.cost -= cost;
         use?.Invoke(diceValue); 
         sub_use?.Invoke();
+        effectM?.OnEffect();
 
         if (cardID == 2)
             SoundEfManager.instance.SetSoundEffect(mySoundEffect.SoundEf.card_OverKill);
@@ -254,12 +257,10 @@ public class Card_Base : MonoBehaviour, ICard
 
 
         ChkAndFindBattleUIManger();
-
         battleUIManager.OnDiceSysetm();
-
         ChkAndFindBSCardManager();
-
         m_cardM.DoHandsTransparency();
+        ev_setTarget?.Invoke(target);
     }
 
     public void BringUpCard(bool isSelect)
