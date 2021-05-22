@@ -307,6 +307,7 @@ public class EnemiesManager : MonoBehaviour
             yield return new WaitForSeconds(time_interval);
             temp.Act();
         }
+        yield return new WaitForSeconds(time_interval);
         TurnManager.instance.OnTurnEnd();
         yield break;
     }

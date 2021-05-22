@@ -89,12 +89,12 @@ public class LivingEntity : MonoBehaviour, IDamageable
             else
             {
                 myUI.AddPopUpText_GuardedDamage(damage);
+                myUI.GuardUpdate();
                 damage = 0;
             }
-            myUI.GuardUpdate();
         }
 
-        if (GuardPoint <= 0)
+        if (damage > 0)
         {
             health -= damage;
             myUI.AddPopUpText_Damage(damage);
