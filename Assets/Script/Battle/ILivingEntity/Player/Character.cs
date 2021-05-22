@@ -87,7 +87,11 @@ public class Character : LivingEntity
     IEnumerator DelayAttackAnim(CardType _type)
     {
         yield return new WaitForSeconds(card_anim_delayTime);
-        string trigger = $"Attack_{_type}";
+        string trigger;
+        if(_type == CardType.Magic_other || _type == CardType.Magic_attack)
+            trigger = "Attack_Magic";
+        else
+            trigger = $"Attack_{_type}";
         myAnimator.SetTrigger(trigger);
         yield break;
     }

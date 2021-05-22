@@ -23,7 +23,7 @@ MonoBehaviour:
     isDelayedAbCond: 0
   typeVariationNum: 1
   actSprite: {fileID: 21300000, guid: 8eec89ff13716714a880ea005fb83efc, type: 3}
-  actAnimTrigger: 
+  actAnimTrigger: Guard
   affectDelay: 1
   actExplain: "[\uB0B4\uAD6C]*1 \uB9CC\uD07C\uC758 \uBC29\uC5B4\uB3C4\uB97C \uD68D\uB4DD\uD55C\uB2E4."
 --- !u!114 &4481523573367778654
@@ -124,6 +124,11 @@ PrefabInstance:
         type: 3}
       propertyPath: soundType
       value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 4451541378279184922, guid: cdda7a158c36ffa46ab94414845dfceb,
+        type: 3}
+      propertyPath: hadHitAnim
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4451541378279184922, guid: cdda7a158c36ffa46ab94414845dfceb,
         type: 3}

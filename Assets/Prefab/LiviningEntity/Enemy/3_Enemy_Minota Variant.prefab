@@ -107,6 +107,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4451541378279184922, guid: cdda7a158c36ffa46ab94414845dfceb,
         type: 3}
+      propertyPath: hadHitAnim
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4451541378279184922, guid: cdda7a158c36ffa46ab94414845dfceb,
+        type: 3}
       propertyPath: maxSpGauge
       value: 4
       objectReference: {fileID: 0}

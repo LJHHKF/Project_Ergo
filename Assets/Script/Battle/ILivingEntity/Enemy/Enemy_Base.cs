@@ -26,6 +26,7 @@ public class Enemy_Base : LivingEntity
     [SerializeField] protected SoundEf soundType;
     [SerializeField] protected MonsterRank m_rank;
     [SerializeField] protected int dropSoul = 5;
+    [SerializeField] protected bool hadHitAnim = false;
     [SerializeField] protected Acts[] normalActs;
     [SerializeField] protected EnemyAct_Base specialAct;
     protected EnemyAct_Base readyAct;
@@ -110,6 +111,8 @@ public class Enemy_Base : LivingEntity
     public override bool OnDamage(int damage)
     {
         SoundEfManager.instance.SetSoundEffect(soundType);
+        if(hadHitAnim)
+            myAnimator.SetTrigger("Hit");
         bool res = base.OnDamage(damage);
         return res;
     }
@@ -117,6 +120,8 @@ public class Enemy_Base : LivingEntity
     public override void OnPenDamage(int damage)
     {
         SoundEfManager.instance.SetSoundEffect(soundType);
+        if(hadHitAnim)
+            myAnimator.SetTrigger("Hit");
         base.OnPenDamage(damage);
     }
 
