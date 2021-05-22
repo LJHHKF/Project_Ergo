@@ -152,7 +152,7 @@ public class StageManager : MonoBehaviour
         {
             if (m_curStage < chapter1Weight.Length)
             {
-                int fullWeight = chapter1Weight[m_curStage+1].battleWeight + chapter1Weight[m_curStage+1].evWeight; //
+                int fullWeight = chapter1Weight[m_curStage + 1].battleWeight + chapter1Weight[m_curStage + 1].evWeight; //
                 int rand = UnityEngine.Random.Range(0, fullWeight - 1);
 
                 if (rand < chapter1Weight[m_curStage].battleWeight)
@@ -176,7 +176,10 @@ public class StageManager : MonoBehaviour
                 }
             }
             else
+            {
                 nextStageTypeIndex = -1;
+                StoryTurningManager.instance.isChapterEnd_1 = true;
+            }
         }
 
         LoadManager.instance.SetNextStageTypeIndex(nextStageTypeIndex);

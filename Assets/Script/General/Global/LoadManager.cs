@@ -144,6 +144,16 @@ public class LoadManager : MonoBehaviour
         ChkAndOnStageEndEvent();
 
         GameMaster.instance.OnGameStop();
+        ReturnLobby_private();
+    }
+
+    public void ReturnLobby_GameOver()
+    {
+        ReturnLobby_private();
+    }
+
+    private void ReturnLobby_private()
+    {
         LoadingSceneManager.LoadScene("Entrance");
         BGMManager.instance.BGMChange(BGMList.entrance);
     }

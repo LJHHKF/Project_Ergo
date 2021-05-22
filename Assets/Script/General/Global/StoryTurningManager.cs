@@ -35,6 +35,11 @@ public class StoryTurningManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        ResetTriggers();
+    }
+
+    public void ResetTriggers()
+    {
         isTutorial = false;
         battleDamage = 0;
         isEliteStage = false;
@@ -43,7 +48,6 @@ public class StoryTurningManager : MonoBehaviour
         index_Boss = -1;
         isChapterEnd_1 = false;
     }
-
     public void SetShopStage(bool _value)
     {
         isShopStage = _value;
