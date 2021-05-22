@@ -86,25 +86,13 @@ public class GameMaster : MonoBehaviour
         {
             key = $"SaveID({saveID})";
             PlayerPrefs.SetInt(key, 1);
-            if (initSaveData_Awake != null)
-            {
-                    initSaveData_Awake.Invoke();
-            }
-            if (initSaveData_Start != null)
-            {
-                    initSaveData_Start.Invoke();
-            }
+            initSaveData_Awake?.Invoke();
+            initSaveData_Start?.Invoke();
         }
         else if (!OnInitSaveData())
         {
-            if (startGame_Awake != null)
-            {
-                    startGame_Awake.Invoke();
-            }
-            if (startGame_Start != null)
-            {
-                    startGame_Start.Invoke();
-            }
+            startGame_Awake?.Invoke();
+            startGame_Start?.Invoke();
         }
     }
 
@@ -114,14 +102,8 @@ public class GameMaster : MonoBehaviour
         if (!PlayerPrefs.HasKey(key) || PlayerPrefs.GetInt(key) == 0)
         {
             PlayerPrefs.SetInt(key, 1);
-            if (initSaveData_Awake != null)
-            {
-                    initSaveData_Awake.Invoke();
-            }
-            if (initSaveData_Start != null)
-            {
-                    initSaveData_Start.Invoke();
-            }
+            initSaveData_Awake?.Invoke();
+            initSaveData_Start?.Invoke();
             isInit = true;
             return true;
         }
@@ -143,10 +125,7 @@ public class GameMaster : MonoBehaviour
     {
         if (!isDoGameStop)
         {
-            if (gameStop != null)
-            {
-                gameStop.Invoke();
-            }
+            gameStop?.Invoke();
             isDoGameStop = true;
             isInit = false;
         }
@@ -154,26 +133,17 @@ public class GameMaster : MonoBehaviour
 
     public void OnBattleStageStart()
     {
-        if (battleStageStart != null)
-        {
-            battleStageStart.Invoke();
-        }
+        battleStageStart?.Invoke();
     }
 
     public void OnStageEnd()
     {
-        if (stageEnd != null)
-        {
-            stageEnd.Invoke();
-        }
+        stageEnd?.Invoke();
     }
 
     public void OnBattleStageEnd()
     {
-        if (battleStageEnd != null)
-        {
-            battleStageEnd.Invoke();
-        }
+        battleStageEnd?.Invoke();
         OnStageEnd();
     }
 
@@ -181,10 +151,7 @@ public class GameMaster : MonoBehaviour
     IEnumerator DelayedGameOver()
     {
         yield return new WaitForSeconds(end_DelayTime);
-        if (gameOver != null)
-        {
-            gameOver.Invoke();
-        }
+        gameOver?.Invoke();
         yield break;
     }
 

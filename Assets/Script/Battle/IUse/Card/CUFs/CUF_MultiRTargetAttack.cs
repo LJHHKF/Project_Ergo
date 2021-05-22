@@ -75,11 +75,4 @@ public class CUF_MultiRTargetAttack : CUF_Base
     {
         this.Use(dv);
     }
-
-    IEnumerator delayedAffect(Action _action)
-    {
-        yield return new WaitForSeconds(affectDelay);
-        _action.Invoke();
-        yield break;
-    }
 }

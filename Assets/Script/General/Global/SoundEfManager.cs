@@ -190,36 +190,55 @@ public class SoundEfManager : MonoBehaviour
         void Exe()
         {
             if (t_list.Count == 0)
-                t_list.Add(Instantiate(t_go.prefab, gameObject.transform));
-
-            for (int i = 0; i < t_list.Count; i++)
+                Create();
+            else
             {
-                int _i = i;
-                if (!t_list[_i].activeSelf)
+                bool isSucess = false;
+                for (int i = 0; i < t_list.Count; i++)
                 {
-                    t_list[_i].SetActive(true);
-                    StartCoroutine(DelayedUnActive(t_list[_i], t_go.playTime));
-                    delayTime += t_go.queudDelay;
-                    break;
+                    int _i = i;
+                    if (!t_list[_i].activeSelf)
+                    {
+                        t_list[_i].SetActive(true);
+                        StartCoroutine(DelayedUnActive(t_list[_i], t_go.playTime));
+                        delayTime += t_go.queudDelay;
+                        isSucess = true;
+                        break;
+                    }
                 }
+                if (!isSucess)
+                    Create();
             }
         }
 
         void Exe_Instant()
         {
             if (t_list.Count == 0)
-                t_list.Add(Instantiate(t_go.prefab, gameObject.transform));
-
-            for (int i = 0; i < t_list.Count; i++)
+                Create();
+            else
             {
-                int _i = i;
-                if (!t_list[_i].activeSelf)
+                bool isSucess = false;
+                for (int i = 0; i < t_list.Count; i++)
                 {
-                    t_list[_i].SetActive(true);
-                    StartCoroutine(DelayedUnActive(t_list[_i], t_go.playTime));
-                    break;
+                    int _i = i;
+                    if (!t_list[_i].activeSelf)
+                    {
+                        t_list[_i].SetActive(true);
+                        StartCoroutine(DelayedUnActive(t_list[_i], t_go.playTime));
+                        isSucess = true;
+                        break;
+                    }
                 }
+                if (!isSucess)
+                    Create();
             }
+        }
+
+        void Create()
+        {
+            GameObject _go = Instantiate(t_go.prefab, gameObject.transform);
+            t_list.Add(_go);
+            StartCoroutine(DelayedUnActive(_go, t_go.playTime));
         }
     }
 

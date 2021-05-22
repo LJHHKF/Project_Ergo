@@ -25,19 +25,22 @@ public class Enemy_Base : LivingEntity
     [SerializeField] protected int monsterID = 0;
     [SerializeField] protected SoundEf soundType;
     [SerializeField] protected MonsterRank m_rank;
+    [SerializeField] protected int dropSoul = 5;
+    [SerializeField] protected bool hadHitAnim = false;
     [SerializeField] protected Acts[] normalActs;
-    //[SerializeField] protected int[] weights;
     [SerializeField] protected EnemyAct_Base specialAct;
     protected EnemyAct_Base readyAct;
     [Header("E_Stat Setting")]
     [SerializeField] protected int _fullHealth = 100;
    // [SerializeField] protected int _startingHealth = 100;
-    [SerializeField] protected int _regenGuardPoint = 0;
     [SerializeField] protected int fix_Endurance = 1;
     [SerializeField] protected int fix_Strength = 1;
     [SerializeField] protected int fix_Solid = 1;
     [SerializeField] protected int fix_Inteligent = 1;
     [SerializeField] protected int maxSpGauge = 3;
+    [Header("Card Effect Setting")]
+    [SerializeField] protected GameObject Hit_HitAndRun;
+    [SerializeField] protected GameObject Hit_HalfSwording;
     protected int curSpGauge = 0;
     protected int r_maxSpGauge;
 
@@ -56,6 +59,8 @@ public class Enemy_Base : LivingEntity
         }
     }
 
+    public int DropSoul { get { return dropSoul; } }
+
     protected override void Start()
     {
         fix_endu = fix_Endurance;
@@ -64,7 +69,6 @@ public class Enemy_Base : LivingEntity
         fix_int = fix_Inteligent;
         fullHealth = _fullHealth;
         //startingHealth = _startingHealth;
-        regenGuardPoint = _regenGuardPoint;
         r_maxSpGauge = maxSpGauge;
 
         TurnManager.instance.playerTurnEnd += Event_PlayerTurnEnd;
@@ -72,6 +76,9 @@ public class Enemy_Base : LivingEntity
         TurnManager.instance.firstTurn += Event_FirstTurn;
 
         onDeath += () => StartCoroutine(DelayedDestroy(1.0f));
+
+        Hit_HitAndRun.SetActive(false);
+        Hit_HalfSwording.SetActive(false);
     }
 
     protected override void ReleseTurnAct()
@@ -110,6 +117,8 @@ public class Enemy_Base : LivingEntity
     public override bool OnDamage(int damage)
     {
         SoundEfManager.instance.SetSoundEffect(soundType);
+        if(hadHitAnim)
+            myAnimator.SetTrigger("Hit");
         bool res = base.OnDamage(damage);
         return res;
     }
@@ -117,6 +126,8 @@ public class Enemy_Base : LivingEntity
     public override void OnPenDamage(int damage)
     {
         SoundEfManager.instance.SetSoundEffect(soundType);
+        if(hadHitAnim)
+            myAnimator.SetTrigger("Hit");
         base.OnPenDamage(damage);
     }
 
@@ -202,5 +213,23 @@ public class Enemy_Base : LivingEntity
     {
         SoundEfManager.instance.SetSoundEffect(SoundEf.monsterDead);
         base.Die();
+    }
+
+    public void OnHit_HitAndRun()
+    {
+        if (!Hit_HitAndRun.activeSelf)
+        {
+            Hit_HitAndRun.SetActive(true);
+            StartCoroutine(DeleyedUnActive(Hit_HitAndRun));
+        }
+    }
+
+    public void OnHit_HalfSwording()
+    {
+        if (!Hit_HalfSwording.activeSelf)
+        {
+            Hit_HalfSwording.SetActive(true);
+            StartCoroutine(DeleyedUnActive(Hit_HalfSwording));
+        }
     }
 }

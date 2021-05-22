@@ -30,6 +30,8 @@ public class EnemiesManager : MonoBehaviour
     private string key;
     private StringBuilder m_sb = new StringBuilder(30);
 
+    public int stageSoul { get; private set; }
+
     private void Awake()
     {
         monsters.Capacity = monsterMaxCnt;
@@ -43,6 +45,7 @@ public class EnemiesManager : MonoBehaviour
     void Start()
     {
         key = $"SaveID({GameMaster.instance.GetSaveID()}).LastMonsterNums";
+        stageSoul = 0;
         if (!PlayerPrefs.HasKey(key) || PlayerPrefs.GetInt(key) <= 0 || GameMaster.instance.isInit)
         {
             int rand = UnityEngine.Random.Range(0, 9);
@@ -54,6 +57,7 @@ public class EnemiesManager : MonoBehaviour
                 mon.name = "Enemy_" + mon.name + "_0";
                 Enemy_Base temp = mon.GetComponent<Enemy_Base>();
                 temp.monsterFieldIndex = 0;
+                stageSoul += temp.DropSoul;
                 temp.onDeath += () => RemoveAtMonstersList(mon);
                 monsters.Add(mon);
 
@@ -114,6 +118,7 @@ public class EnemiesManager : MonoBehaviour
                     mon.name = "Enemy_" + mon.name + "_" + _i.ToString("00");
                     Enemy_Base temp = mon.GetComponent<Enemy_Base>();
                     temp.monsterFieldIndex = _i;
+                    stageSoul += temp.DropSoul;
                     temp.onDeath += () => RemoveAtMonstersList(mon);
                     monsters.Add(mon);
 
@@ -138,6 +143,7 @@ public class EnemiesManager : MonoBehaviour
                 mon.name = "Enemy_" + mon.name + "_" + _i.ToString("00");
                 Enemy_Base temp = mon.GetComponent<Enemy_Base>();
                 temp.monsterFieldIndex = _i;
+                stageSoul += temp.DropSoul;
                 temp.onDeath += () => RemoveAtMonstersList(mon);
                 monsters.Add(mon);
             }
@@ -270,6 +276,7 @@ public class EnemiesManager : MonoBehaviour
             mon.name = "Enemy_" + mon.name + "_s_" + _i.ToString("00");
             Enemy_Base temp = mon.GetComponent<Enemy_Base>();
             temp.monsterFieldIndex = _i;
+            stageSoul += temp.DropSoul;
             temp.onDeath += () => RemoveAtMonstersList(mon);
             monsters.Add(mon);
         }
@@ -300,6 +307,7 @@ public class EnemiesManager : MonoBehaviour
             yield return new WaitForSeconds(time_interval);
             temp.Act();
         }
+        yield return new WaitForSeconds(time_interval);
         TurnManager.instance.OnTurnEnd();
         yield break;
     }

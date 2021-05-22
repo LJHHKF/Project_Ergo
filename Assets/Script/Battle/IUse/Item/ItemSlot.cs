@@ -180,10 +180,7 @@ public class ItemSlot : MonoBehaviour
         GameObject temp = item_list[_index];
         item_list.RemoveAt(_index);
         Destroy(temp);
-        if (ev_listDelete != null)
-        {
-            ev_listDelete.Invoke();
-        }
+        ev_listDelete?.Invoke();
     }
 
     public IItem SetRewardItem_ready()
