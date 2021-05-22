@@ -32,7 +32,6 @@ public class Enemy_Base : LivingEntity
     [Header("E_Stat Setting")]
     [SerializeField] protected int _fullHealth = 100;
    // [SerializeField] protected int _startingHealth = 100;
-    [SerializeField] protected int _regenGuardPoint = 0;
     [SerializeField] protected int fix_Endurance = 1;
     [SerializeField] protected int fix_Strength = 1;
     [SerializeField] protected int fix_Solid = 1;
@@ -64,7 +63,6 @@ public class Enemy_Base : LivingEntity
         fix_int = fix_Inteligent;
         fullHealth = _fullHealth;
         //startingHealth = _startingHealth;
-        regenGuardPoint = _regenGuardPoint;
         r_maxSpGauge = maxSpGauge;
 
         TurnManager.instance.playerTurnEnd += Event_PlayerTurnEnd;

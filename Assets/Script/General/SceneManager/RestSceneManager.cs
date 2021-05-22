@@ -45,10 +45,7 @@ public class RestSceneManager : MonoBehaviour
 
     public void OnEventOtherSelect()
     {
-        if (ev_otherSelect != null)
-        {
-            ev_otherSelect.Invoke();
-        }
+        ev_otherSelect?.Invoke();
     }
 
     public void BtnDiscard()

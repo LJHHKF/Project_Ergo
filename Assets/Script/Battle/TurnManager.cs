@@ -64,45 +64,30 @@ public class TurnManager: MonoBehaviour
 
     public void OnFirstTurn()
     {
-        if (firstTurn != null)
-        {
-            m_instance.firstTurn.Invoke();
-        }
+        m_instance.firstTurn?.Invoke();
         m_instance.isFirstActived = true;
         m_instance.isBattleEnded = false;
     }
 
     public void OnTurnStart()
     {
-        if (turnStart != null)
-        {
-            turnStart.Invoke();
-        }
+        turnStart?.Invoke();
     }
 
     public void OnPlayerTurnEnd() // UI Btn에 연결되어 있음. 참조 0이라도 상관x.
     {
-        if (playerTurnEnd != null)
-        {
-            playerTurnEnd.Invoke();
-        }
+        playerTurnEnd?.Invoke();
     }
 
     public void OnTurnEnd()
     {
-        if (turnEnd != null)
-        {
-            turnEnd.Invoke();
-        }
+        turnEnd?.Invoke();
         OnTurnStart();
     }
 
     public void OnBattleEnd()
     {
-        if (battleEnd != null)
-        {
-            battleEnd.Invoke();
-        }
+        battleEnd?.Invoke();
         m_instance.isBattleEnded = true;
     }
 

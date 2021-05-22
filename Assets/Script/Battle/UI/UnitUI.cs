@@ -63,6 +63,7 @@ public class UnitUI : MonoBehaviour
             pileds_txt[i] = icons_condition[i].transform.Find("PiledNumText").GetComponent<TextMeshProUGUI>();
             icons_condition[i].gameObject.SetActive(false);
         }
+        guard_img_obj.SetActive(false);
         guard_gainAnim.SetActive(false);
         guard_breakAnim.SetActive(false);
     }
@@ -322,7 +323,11 @@ public class UnitUI : MonoBehaviour
         guard_breakAnim.SetActive(true);
         guard_img_obj.SetActive(false);
         StartCoroutine(DelayedUnActive(guard_breakAnim, 1.0f));
-        StartCoroutine(DelayedActive(guard_img_obj, 1.0f));
+    }
+
+    public void UnActiveGuardImg()
+    {
+        guard_img_obj.SetActive(false);
     }
 
     IEnumerator DelayedUnActive(GameObject _t, float _sec)

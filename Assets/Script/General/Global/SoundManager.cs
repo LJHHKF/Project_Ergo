@@ -27,8 +27,7 @@ public class SoundManager : MonoBehaviour
         {
             if(value >= 0.0 && value <= 1.0)
                 m_master = value;
-            if (ev_soundChange != null)
-                ev_soundChange.Invoke();
+            ev_soundChange?.Invoke();
         }
     }
 

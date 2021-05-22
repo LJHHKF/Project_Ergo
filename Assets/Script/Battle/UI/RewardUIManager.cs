@@ -72,10 +72,7 @@ public class RewardUIManager : MonoBehaviour
 
     private void OnDisable()
     {
-        if (m_onDisable != null)
-        {
-            m_onDisable.Invoke();
-        }
+        m_onDisable?.Invoke();
     }
 
     public void BtnConfirm()

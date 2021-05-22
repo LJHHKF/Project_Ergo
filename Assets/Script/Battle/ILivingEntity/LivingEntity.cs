@@ -10,7 +10,6 @@ public class LivingEntity : MonoBehaviour, IDamageable
     //public int startingHealth { get; protected set; }
     public int fullHealth { get; protected set; }
     public int health { get; protected set; }
-    public int regenGuardPoint { get; protected set; }
     public int GuardPoint { get; protected set; }
     //[Header("Stat Setting")]
     protected int fix_endu = 1;
@@ -102,10 +101,7 @@ public class LivingEntity : MonoBehaviour, IDamageable
             myUI.HpUpdate();
 
             isDamaged = true;
-            if (onHPDamage != null)
-            {
-                onHPDamage.Invoke(damage);
-            }
+            onHPDamage?.Invoke(damage);
         }
         else
             isDamaged = false;
@@ -123,7 +119,7 @@ public class LivingEntity : MonoBehaviour, IDamageable
         health -= damage;
         myUI.AddPopUpText_Damage(damage);
         myUI.HpUpdate();
-        onHPDamage.Invoke(damage);
+        onHPDamage?.Invoke(damage);
 
         if (health <= 0 && !dead)
         {
@@ -187,8 +183,8 @@ public class LivingEntity : MonoBehaviour, IDamageable
 
     public void ResetGuardPoint()
     {
-        GuardPoint = regenGuardPoint;
-        myUI.GuardUpdate();
+        GuardPoint = 0;
+        myUI.UnActiveGuardImg();
     }
 
     public virtual void ChangeCost(int changeV)
@@ -198,10 +194,7 @@ public class LivingEntity : MonoBehaviour, IDamageable
 
     public virtual void Die()
     {
-        if (onDeath != null)
-        {
-             onDeath.Invoke();
-        }
+        onDeath?.Invoke();
         dead = true;
     }
 
