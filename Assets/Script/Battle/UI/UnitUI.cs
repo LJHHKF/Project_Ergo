@@ -312,10 +312,12 @@ public class UnitUI : MonoBehaviour
 
     public void GuardGainAnim()
     {
-        guard_gainAnim.SetActive(true);
-        guard_img_obj.SetActive(false);
-        StartCoroutine(DelayedUnActive(guard_gainAnim, 1.0f));
-        StartCoroutine(DelayedActive(guard_img_obj, 1.0f));
+        if (!guard_img_obj.activeSelf)
+        {
+            guard_gainAnim.SetActive(true);
+            StartCoroutine(DelayedUnActive(guard_gainAnim, 1.0f));
+            StartCoroutine(DelayedActive(guard_img_obj, 1.0f));
+        }
     }
 
     public void GuardBreakAnim()
