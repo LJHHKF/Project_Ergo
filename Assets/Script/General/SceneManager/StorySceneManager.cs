@@ -239,6 +239,7 @@ public class StorySceneManager : MonoBehaviour
             LoadManager.instance.ChangeNextStage(3);
 
         SoundEfManager.instance.SetSoundEffect(mySoundEffect.SoundEf.storyEnd);
+        StoryTurningManager.instance.ResetTriggers();
 
         if (StoryTurningManager.instance.isTutorial)
             LoadManager.instance.ChangeNextStage_InitStart();
