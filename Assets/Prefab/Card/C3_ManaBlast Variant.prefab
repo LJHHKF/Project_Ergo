@@ -30,7 +30,7 @@ MonoBehaviour:
   isSecondDmgFormula: 0
   isUseFixRate: 0
   fixPRate: 0.5
-  affectDelay: 2
+  affectDelay: 2.3
   isAllAttak: 0
   isTargetOverlapped: 1
   maxTarget: 2

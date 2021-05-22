@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class CUF_Base : MonoBehaviour
 {
@@ -33,5 +34,13 @@ public class CUF_Base : MonoBehaviour
     public virtual void ReUse()
     {
 
+    }
+
+    protected IEnumerator delayedAffect(Action _action)
+    {
+        yield return new WaitForSeconds(affectDelay);
+        _action.Invoke();
+        myCard.OnEffect();
+        yield break;
     }
 }

@@ -212,7 +212,6 @@ public class Card_Base : MonoBehaviour, ICard
         m_costM.cost -= cost;
         use?.Invoke(diceValue); 
         sub_use?.Invoke();
-        effectM?.OnEffect();
 
         if (cardID == 2)
             SoundEfManager.instance.SetSoundEffect(mySoundEffect.SoundEf.card_OverKill);
@@ -467,4 +466,8 @@ public class Card_Base : MonoBehaviour, ICard
         return text_plain.text;
     }
 
+    public void OnEffect()
+    {
+        effectM?.OnEffect();
+    }
 }
