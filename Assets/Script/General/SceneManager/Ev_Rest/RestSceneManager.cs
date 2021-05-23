@@ -22,6 +22,8 @@ public class RestSceneManager : MonoBehaviour
         warningWindow.SetActive(false);
 
         StoryTurningManager.instance.SetRestStage(true);
+
+        GameMaster.instance.OnStageStart();
     }
 
     public void BtnRest()

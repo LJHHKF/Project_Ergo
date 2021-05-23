@@ -79,7 +79,7 @@ public class RewardUIManager : MonoBehaviour
     {
         SoundEfManager.instance.SetSoundEffect(mySoundEffect.SoundEf.ui_touch);
         if (isSelected[0])
-            cardUIManager.AddToDeckTargetedCard();
+            cardUIManager.AddToCardPackTargetedCard();
         if (isSelected[1])
             PlayerMoneyManager.instance.AcquiredSoul(soulReward);
 
@@ -151,6 +151,7 @@ public class RewardUIManager : MonoBehaviour
     IEnumerator DeleayedNextStage()
     {
         yield return new WaitForSeconds(1.0f);
+        GameMaster.instance.OnBattleStageEnd();
         LoadManager.instance.LoadStoryScene();
         yield break;
     }

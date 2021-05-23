@@ -64,6 +64,11 @@ public abstract class Item_Base : MonoBehaviour, IItem
         return img;
     }
 
+    public string GetItemName()
+    {
+        return itemName;
+    }
+
     public string GetItemText()
     {
         return itemText;
@@ -109,11 +114,6 @@ public abstract class Item_Base : MonoBehaviour, IItem
             ready = false;
             return true;
         }
-    }
-
-    public void DestroySelf()
-    {
-        Destroy(gameObject);
     }
 
     public void SetBtnPos(Transform t_btn)

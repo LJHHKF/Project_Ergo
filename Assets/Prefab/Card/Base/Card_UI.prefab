@@ -68,8 +68,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\uAC00\uB4DC"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 6ba1f7badb4d9b94a9ea0d11c428f698, type: 2}
-  m_sharedMaterial: {fileID: -3873287342670192768, guid: 6ba1f7badb4d9b94a9ea0d11c428f698,
+  m_fontAsset: {fileID: 11400000, guid: 40673a88a5ea5ca42bbd4ac6286fb5fd, type: 2}
+  m_sharedMaterial: {fileID: 1983480228908136859, guid: 40673a88a5ea5ca42bbd4ac6286fb5fd,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -94,11 +94,11 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 32
+  m_fontSize: 75.15
   m_fontSizeBase: 100
   m_fontWeight: 400
   m_enableAutoSizing: 1
-  m_fontSizeMin: 20
+  m_fontSizeMin: 10
   m_fontSizeMax: 120
   m_fontStyle: 0
   m_HorizontalAlignment: 2
@@ -423,8 +423,8 @@ MonoBehaviour:
   m_text: "(\uACE0\uC815\uCE58()) + (\uC8FC\uC0AC\uC704 \uAC12) \uB9CC\uD07C\uC758
     \uBC29\uC5B4\uB3C4\uB97C \uD68D\uB4DD\uD55C\uB2E4."
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 6ba1f7badb4d9b94a9ea0d11c428f698, type: 2}
-  m_sharedMaterial: {fileID: -3873287342670192768, guid: 6ba1f7badb4d9b94a9ea0d11c428f698,
+  m_fontAsset: {fileID: 11400000, guid: 40673a88a5ea5ca42bbd4ac6286fb5fd, type: 2}
+  m_sharedMaterial: {fileID: 1983480228908136859, guid: 40673a88a5ea5ca42bbd4ac6286fb5fd,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -449,11 +449,11 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 20.35
+  m_fontSize: 93.9
   m_fontSizeBase: 80
   m_fontWeight: 400
   m_enableAutoSizing: 1
-  m_fontSizeMin: 20
+  m_fontSizeMin: 10
   m_fontSizeMax: 120
   m_fontStyle: 0
   m_HorizontalAlignment: 1
@@ -787,11 +787,11 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 31.5
+  m_fontSize: 106.3
   m_fontSizeBase: 100
   m_fontWeight: 400
   m_enableAutoSizing: 1
-  m_fontSizeMin: 20
+  m_fontSizeMin: 10
   m_fontSizeMax: 120
   m_fontStyle: 0
   m_HorizontalAlignment: 2

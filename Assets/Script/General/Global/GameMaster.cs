@@ -28,11 +28,13 @@ public class GameMaster : MonoBehaviour
     public event Action initSaveData_Start;
     public event Action gameOver;
     public event Action gameStop;
+    public event Action stageStart;
     public event Action battleStageStart;
     public event Action stageEnd;
     public event Action battleStageEnd;
 
     public bool isInit { get; set; }
+    private bool isBattleEndChk = false;
 
     protected void Awake()
     {
@@ -131,9 +133,17 @@ public class GameMaster : MonoBehaviour
         }
     }
 
+    public void OnStageStart()
+    {
+        stageStart?.Invoke();
+    }
+
     public void OnBattleStageStart()
     {
         battleStageStart?.Invoke();
+        OnStageStart();
+
+        isBattleEndChk = false;
     }
 
     public void OnStageEnd()
@@ -143,8 +153,12 @@ public class GameMaster : MonoBehaviour
 
     public void OnBattleStageEnd()
     {
-        battleStageEnd?.Invoke();
-        OnStageEnd();
+        if (!isBattleEndChk)
+        {
+            isBattleEndChk = false;
+            battleStageEnd?.Invoke();
+            OnStageEnd();
+        }
     }
 
 

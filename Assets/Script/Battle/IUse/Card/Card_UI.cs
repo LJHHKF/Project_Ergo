@@ -34,6 +34,11 @@ public class Card_UI : MonoBehaviour
             InitSetting_inGame();
     }
 
+    public Card_Base GetTargetCard()
+    {
+        return target_Card;
+    }
+
     private void InitSetting_Shop()
     {
         target_Card.CopyUIInfo(out cardID,out cardName ,out cost, out fixP, out flucPRate, out cardImage, out cardOuterImage, out cardText);
@@ -68,6 +73,11 @@ public class Card_UI : MonoBehaviour
             DeckManager.instance.AddToDeck_NonList(tempList[0]);
     }
 
+    public void AddToCardPackTargetedCard()
+    {
+        CardPack.instance.AddCard_OnlyHadData(cardID);
+    }
+
     public void SetImagesAlpha(float _alpha)
     {
         text_cost.color = new Color(text_cost.color.r, text_cost.color.g, text_cost.color.b, _alpha);
@@ -84,5 +94,20 @@ public class Card_UI : MonoBehaviour
         text_plain.color = new Color(text_plain.color.r, text_plain.color.g, text_plain.color.b, 1.0f);
         image_card.color = new Color(image_card.color.r, image_card.color.g, image_card.color.b, 1.0f);
         image_cardOuter.color = new Color(image_cardOuter.color.r, image_cardOuter.color.g, image_cardOuter.color.b, 1.0f);
+    }
+
+    public string GetCardName()
+    {
+        return cardName;
+    }
+
+    public string GetCardText()
+    {
+        return cardText;
+    }
+
+    public int GetCardID()
+    {
+        return cardID;
     }
 }

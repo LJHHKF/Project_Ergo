@@ -90,6 +90,8 @@ public class TrapSceneManager : MonoBehaviour
             nameField.text = traps[trap_index].name;
             fullText.Append(traps[trap_index].description);
         }
+
+        GameMaster.instance.OnStageStart();
     }
 
     private void Update()

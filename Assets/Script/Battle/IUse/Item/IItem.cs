@@ -6,13 +6,13 @@ public interface IItem : IUse
 {
     Sprite GetItemImg();
 
+    string GetItemName();
+
     string GetItemText();
 
     void SetSlotIndex(int _index);
 
     int GetSlotIndex();
-
-    void DestroySelf();
 
     void UnSetSelected();
 
