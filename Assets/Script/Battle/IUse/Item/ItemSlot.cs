@@ -18,14 +18,14 @@ public class ItemSlot : MonoBehaviour
     }
 
     [SerializeField] private int slot_max = 4;
-    [SerializeField] private float use_min_X = 100;
+    private float use_min_X = 100;
 
     private List<GameObject> item_list = new List<GameObject>();
     private GameObject rewardItem = null;
     private StringBuilder m_sb = new StringBuilder();
     private string key;
 
-    public event Action ev_listDelete;
+    public event Action ev_listChange;
 
     private void Awake()
     {
@@ -156,6 +156,7 @@ public class ItemSlot : MonoBehaviour
             GameObject temp = Instantiate(ItemInfoManager.instance.GetItem(_id), gameObject.transform);
             temp.GetComponent<IItem>().SetSlotIndex(item_list.Count); // add 후면 -1을 해줘야 해서 이 때 바로 함.
             item_list.Add(temp);
+            ev_listChange?.Invoke();
         }
     }
 
@@ -179,8 +180,8 @@ public class ItemSlot : MonoBehaviour
     {
         GameObject temp = item_list[_index];
         item_list.RemoveAt(_index);
-        Destroy(temp);
-        ev_listDelete?.Invoke();
+        DestroyImmediate(temp, true);
+        ev_listChange?.Invoke();
     }
 
     public IItem SetRewardItem_ready()
@@ -199,5 +200,11 @@ public class ItemSlot : MonoBehaviour
     {
         rewardItem.GetComponent<IItem>().SetSlotIndex(item_list.Count);
         item_list.Add(rewardItem);
+    }
+
+
+    public void SetUseMinX(float value)
+    {
+        use_min_X = value;
     }
 }

@@ -21,12 +21,12 @@ public class ItemBTN : MonoBehaviour
 
     private void OnEnable()
     {
-        ItemSlot.instance.ev_listDelete += ImageSetting; // Enable, Disable 관리가 안전. Disable 상태에서 Destroy 안 불린다고 함.
+        ItemSlot.instance.ev_listChange += ImageSetting; // Enable, Disable 관리가 안전. Disable 상태에서 Destroy 안 불린다고 함.
     }
 
     private void OnDisable()
     {
-        ItemSlot.instance.ev_listDelete -= ImageSetting;
+        ItemSlot.instance.ev_listChange -= ImageSetting;
     }
 
     private void ImageSetting()

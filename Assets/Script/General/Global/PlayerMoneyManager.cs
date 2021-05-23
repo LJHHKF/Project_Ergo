@@ -50,8 +50,8 @@ public class PlayerMoneyManager : MonoBehaviour
 
     private void Ev_StartGame_Start()
     {
-        //saveID = GameMaster.instance.GetSaveID();
-        //key = $"SaveID({saveID}).Soul";
+        saveID = GameMaster.instance.GetSaveID();
+        key = $"SaveID({saveID}).Soul";
         if (!PlayerPrefs.HasKey(key))
         {
             soul = 0;
