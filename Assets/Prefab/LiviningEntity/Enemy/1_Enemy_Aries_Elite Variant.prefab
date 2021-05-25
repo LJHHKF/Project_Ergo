@@ -23,7 +23,7 @@ MonoBehaviour:
     isDelayedAbCond: 0
   typeVariationNum: 1
   actSprite: {fileID: 21300000, guid: 8eec89ff13716714a880ea005fb83efc, type: 3}
-  actAnimTrigger: 
+  actAnimTrigger: Guard
   affectDelay: 1
   actExplain: "[\uB0B4\uAD6C]*1 \uB9CC\uD07C\uC758 \uBC29\uC5B4\uB3C4\uB97C \uD68D\uB4DD\uD55C\uB2E4."
 --- !u!114 &2908472214375837278
@@ -55,7 +55,7 @@ MonoBehaviour:
     isDelayedAbCond: 1
   typeVariationNum: 1
   actSprite: {fileID: 21300000, guid: 38535e1ea1a134f43b0047e16ed8979b, type: 3}
-  actAnimTrigger: 
+  actAnimTrigger: Special
   affectDelay: 1
   actExplain: "[\uD2B9\uACF5]*1 \uB9CC\uD07C\uC758 \uBC29\uC5B4\uB3C4\uB97C \uD68D\uB4DD\uD55C
     \uD6C4 \uB2E4\uC74C\uD134 \uC790\uC2E0\uC5D0\uAC8C [\uD30C\uC6CC\uC5C5]\uC744
@@ -83,7 +83,7 @@ MonoBehaviour:
     isDelayedAbCond: 0
   typeVariationNum: 1
   actSprite: {fileID: 21300000, guid: 4b8d94d3ebbfb8042814debc2dbf1bc7, type: 3}
-  actAnimTrigger: 
+  actAnimTrigger: Attack
   affectDelay: 1
   actExplain: "\uB9C8\uB974\uC2A4\uC5D0\uAC8C [\uD798]*1 \uB9CC\uD07C\uC758 \uD53C\uD574\uB97C
     \uC785\uD78C\uB2E4."
@@ -116,7 +116,7 @@ MonoBehaviour:
     isDelayedAbCond: 0
   typeVariationNum: 2
   actSprite: {fileID: 21300000, guid: 4b8d94d3ebbfb8042814debc2dbf1bc7, type: 3}
-  actAnimTrigger: 
+  actAnimTrigger: Attack
   affectDelay: 1
   actExplain: "\uB9C8\uB974\uC2A4\uC5D0\uAC8C [\uD798]*0.6 \uB9CC\uD07C\uC758 \uD53C\uD574\uB97C
     \uC785\uD78C \uD6C4 [\uB0B4\uAD6C]*0.6 \uB9CC\uD07C\uC758 \uBC29\uC5B4\uB3C4\uB97C
@@ -128,6 +128,12 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1679566343251680531, guid: cdda7a158c36ffa46ab94414845dfceb,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -2510397786758807884, guid: 831594cff4d8e0840927bc9d07ea6edb,
+        type: 3}
     - target: {fileID: 1989616535422404268, guid: cdda7a158c36ffa46ab94414845dfceb,
         type: 3}
       propertyPath: m_Name
@@ -193,6 +199,16 @@ PrefabInstance:
       propertyPath: normalActs.Array.data[1].weight
       value: 30
       objectReference: {fileID: 0}
+    - target: {fileID: 5568184874541642076, guid: cdda7a158c36ffa46ab94414845dfceb,
+        type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.x
+      value: 5.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5568184874541642076, guid: cdda7a158c36ffa46ab94414845dfceb,
+        type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.y
+      value: 3.4
+      objectReference: {fileID: 0}
     - target: {fileID: 5923842503137677575, guid: cdda7a158c36ffa46ab94414845dfceb,
         type: 3}
       propertyPath: m_RootOrder
@@ -246,6 +262,16 @@ PrefabInstance:
     - target: {fileID: 5923842503137677575, guid: cdda7a158c36ffa46ab94414845dfceb,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7365612931804551002, guid: cdda7a158c36ffa46ab94414845dfceb,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 0ee75c75ab5e8f5438e03b0b0f2982bc, type: 2}
+    - target: {fileID: 7377568073109789775, guid: cdda7a158c36ffa46ab94414845dfceb,
+        type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8891110068855490525, guid: cdda7a158c36ffa46ab94414845dfceb,
