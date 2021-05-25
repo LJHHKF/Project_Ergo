@@ -21,6 +21,8 @@ TagManager:
   - GameMaster
   - Dice
   - ItemDelete
+  - GlobalCardEffect
+  - ItemSlot
   layers:
   - Default
   - TransparentFX

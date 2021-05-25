@@ -10,12 +10,17 @@ PrefabInstance:
     - target: {fileID: 1316377401732371494, guid: c245a0f1c5dbcb541ac823e4e1f0f263,
         type: 3}
       propertyPath: m_Name
-      value: Enemy_Aries_Boss Variant Variant
+      value: 2_Enemy_Aries_Boss Variant Variant
       objectReference: {fileID: 0}
     - target: {fileID: 3755776394983639184, guid: c245a0f1c5dbcb541ac823e4e1f0f263,
         type: 3}
       propertyPath: m_rank
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3755776394983639184, guid: c245a0f1c5dbcb541ac823e4e1f0f263,
+        type: 3}
+      propertyPath: dropSoul
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 3755776394983639184, guid: c245a0f1c5dbcb541ac823e4e1f0f263,
         type: 3}

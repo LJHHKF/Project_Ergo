@@ -18,9 +18,22 @@ MonoBehaviour:
   isSecondDmgFormula: 0
   isUseFixRate: 0
   fixPRate: 0.5
+  affectDelay: 2
   isAllAttak: 1
   isTargetOverlapped: 0
   maxTarget: 2
+--- !u!114 &8726233062282987222
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 544564083075854681}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 351c10f24f7509f49aad5af241254785, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &8908497854644117812
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -168,6 +181,11 @@ PrefabInstance:
       propertyPath: cardID
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 1437206776610783508, guid: 13514753735d515478a2178e20010343,
+        type: 3}
+      propertyPath: effectM
+      value: 
+      objectReference: {fileID: 8726233062282987222}
     - target: {fileID: 1437206776610783508, guid: 13514753735d515478a2178e20010343,
         type: 3}
       propertyPath: cardName

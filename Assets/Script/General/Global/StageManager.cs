@@ -150,9 +150,9 @@ public class StageManager : MonoBehaviour
         nextStageTypeIndex = -1;
         if(m_curChapter == 1)
         {
-            if (m_curStage < chapter1Weight.Length)
+            if (m_curStage < chapter1Weight.Length -1) // 15까지 계산이 끝나고나면, 16부터는 게임 오버이므로 계산 필요 없음.
             {
-                int fullWeight = chapter1Weight[m_curStage+1].battleWeight + chapter1Weight[m_curStage+1].evWeight; //
+                int fullWeight = chapter1Weight[m_curStage + 1].battleWeight + chapter1Weight[m_curStage + 1].evWeight; //
                 int rand = UnityEngine.Random.Range(0, fullWeight - 1);
 
                 if (rand < chapter1Weight[m_curStage].battleWeight)
@@ -176,7 +176,10 @@ public class StageManager : MonoBehaviour
                 }
             }
             else
+            {
                 nextStageTypeIndex = -1;
+                StoryTurningManager.instance.isChapterEnd_1 = true;
+            }
         }
 
         LoadManager.instance.SetNextStageTypeIndex(nextStageTypeIndex);

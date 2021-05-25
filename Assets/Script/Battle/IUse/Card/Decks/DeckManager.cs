@@ -32,9 +32,10 @@ public class DeckManager : MonoBehaviour
 
     private void Start()
     {
-        GameMaster.instance.initSaveData_Start += Event_InitSaveDataStart;
-        GameMaster.instance.startGame_Start += Event_StartGame;
-        GameMaster.instance.gameStop += Event_GameStop;
+        //GameMaster.instance.initSaveData_Start += Event_InitSaveDataStart;
+        //GameMaster.instance.startGame_Start += Event_StartGame;
+        //GameMaster.instance.gameStop += Event_GameStop;
+        ResetDeck();
         TurnManager.instance.firstTurn += Event_FirstTurn;
         TurnManager.instance.turnStart += Event_TurnStart;
     }
@@ -42,11 +43,12 @@ public class DeckManager : MonoBehaviour
     private void OnDestroy()
     {
         m_instance = null;
-        GameMaster.instance.initSaveData_Start -= Event_InitSaveDataStart;
-        GameMaster.instance.startGame_Start -= Event_StartGame;
+        //GameMaster.instance.initSaveData_Start -= Event_InitSaveDataStart;
+        //GameMaster.instance.startGame_Start -= Event_StartGame;
+        //GameMaster.instance.gameStop -= Event_GameStop;
         TurnManager.instance.firstTurn -= Event_FirstTurn;
         TurnManager.instance.turnStart -= Event_TurnStart;
-        GameMaster.instance.gameStop -= Event_GameStop;
+        
     }
 
     private void Event_FirstTurn()
@@ -176,6 +178,7 @@ public class DeckManager : MonoBehaviour
         if (list_deck.Count > 10)
         {
             SoundEfManager.instance.SetSoundEffect(mySoundEffect.SoundEf.discard_card);
+            CardPack.instance.DeleteCard_hadData(list_deck[_index].GetComponent<ICard>().GetID());
             list_deck.RemoveAt(_index);
             return true;
         }
@@ -192,6 +195,8 @@ public class DeckManager : MonoBehaviour
                 int _i = i;
                 if (list_deck[_i].GetComponent<Card_Base>().GetID() == _id)
                 {
+                    SoundEfManager.instance.SetSoundEffect(mySoundEffect.SoundEf.discard_card);
+                    CardPack.instance.DeleteCard_hadData(list_deck[_i].GetComponent<ICard>().GetID());
                     list_deck.RemoveAt(_i);
                     return true;
                 }

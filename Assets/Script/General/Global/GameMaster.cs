@@ -28,11 +28,13 @@ public class GameMaster : MonoBehaviour
     public event Action initSaveData_Start;
     public event Action gameOver;
     public event Action gameStop;
+    public event Action stageStart;
     public event Action battleStageStart;
     public event Action stageEnd;
     public event Action battleStageEnd;
 
     public bool isInit { get; set; }
+    private bool isBattleEndChk = false;
 
     protected void Awake()
     {
@@ -86,25 +88,13 @@ public class GameMaster : MonoBehaviour
         {
             key = $"SaveID({saveID})";
             PlayerPrefs.SetInt(key, 1);
-            if (initSaveData_Awake != null)
-            {
-                    initSaveData_Awake.Invoke();
-            }
-            if (initSaveData_Start != null)
-            {
-                    initSaveData_Start.Invoke();
-            }
+            initSaveData_Awake?.Invoke();
+            initSaveData_Start?.Invoke();
         }
         else if (!OnInitSaveData())
         {
-            if (startGame_Awake != null)
-            {
-                    startGame_Awake.Invoke();
-            }
-            if (startGame_Start != null)
-            {
-                    startGame_Start.Invoke();
-            }
+            startGame_Awake?.Invoke();
+            startGame_Start?.Invoke();
         }
     }
 
@@ -114,14 +104,8 @@ public class GameMaster : MonoBehaviour
         if (!PlayerPrefs.HasKey(key) || PlayerPrefs.GetInt(key) == 0)
         {
             PlayerPrefs.SetInt(key, 1);
-            if (initSaveData_Awake != null)
-            {
-                    initSaveData_Awake.Invoke();
-            }
-            if (initSaveData_Start != null)
-            {
-                    initSaveData_Start.Invoke();
-            }
+            initSaveData_Awake?.Invoke();
+            initSaveData_Start?.Invoke();
             isInit = true;
             return true;
         }
@@ -143,48 +127,45 @@ public class GameMaster : MonoBehaviour
     {
         if (!isDoGameStop)
         {
-            if (gameStop != null)
-            {
-                gameStop.Invoke();
-            }
+            gameStop?.Invoke();
             isDoGameStop = true;
             isInit = false;
         }
     }
 
+    public void OnStageStart()
+    {
+        stageStart?.Invoke();
+    }
+
     public void OnBattleStageStart()
     {
-        if (battleStageStart != null)
-        {
-            battleStageStart.Invoke();
-        }
+        battleStageStart?.Invoke();
+        OnStageStart();
+
+        isBattleEndChk = false;
     }
 
     public void OnStageEnd()
     {
-        if (stageEnd != null)
-        {
-            stageEnd.Invoke();
-        }
+        stageEnd?.Invoke();
     }
 
     public void OnBattleStageEnd()
     {
-        if (battleStageEnd != null)
+        if (!isBattleEndChk)
         {
-            battleStageEnd.Invoke();
+            isBattleEndChk = false;
+            battleStageEnd?.Invoke();
+            OnStageEnd();
         }
-        OnStageEnd();
     }
 
 
     IEnumerator DelayedGameOver()
     {
         yield return new WaitForSeconds(end_DelayTime);
-        if (gameOver != null)
-        {
-            gameOver.Invoke();
-        }
+        gameOver?.Invoke();
         yield break;
     }
 

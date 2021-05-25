@@ -39,29 +39,26 @@ public class CardPack : MonoBehaviour
 
     private void Awake()
     {
+        if (instance != this)
+            Destroy(gameObject);
+
         canList.Capacity = cards.Length + 1;
         cardIDs = new int[cards.Length];
         card_HadCnt = new int[cards.Length];
         tempHadCnt = new int[cards.Length];
-
-        if (instance != this)
-            Destroy(gameObject);
+        TempHadCntReset();
     }
 
-    private void Start()
+    private void OnEnable()
     {
-        GameMaster.instance.gameOver += Event_GameOver;
-        GameMaster.instance.gameStop += Event_GameStop;
+        GameMaster.instance.gameOver += CardPackClear;
+        GameMaster.instance.gameStop += SaveHadCnt;
     }
 
-    private void Event_GameOver()
+    private void OnDisable()
     {
-        CardPackClear();
-    }
-
-    private void Event_GameStop()
-    {
-        SaveHadCnt();
+        GameMaster.instance.gameOver -= CardPackClear;
+        GameMaster.instance.gameStop -= SaveHadCnt;
     }
 
     public void CardPack_Start()
@@ -153,10 +150,32 @@ public class CardPack : MonoBehaviour
         if (card_HadCnt[index] < max_DuplicateValue)
         {
             card_HadCnt[index] += 1;
+            SaveHadCnt();
         }
         else
         {
             Debug.Log($"소지 카드수가 이미 {max_DuplicateValue}을 넘었습니다.");
+        }
+    }
+
+    public void DeleteCard_hadData(int c_id)
+    {
+        int index = SearchIndexFromID(c_id);
+
+        if (index == -1)
+        {
+            Debug.LogError("추가할 카드의 아이디와 일치하는 카드를 발견하지 못함");
+            return;
+        }
+
+        if(card_HadCnt[index] <= 0)
+        {
+            Debug.Log("삭제하려는 카드를 소지하고 있지 않습니다.");
+        }
+        else
+        {
+            card_HadCnt[index] -= 1;
+            SaveHadCnt();
         }
     }
 
@@ -198,6 +217,7 @@ public class CardPack : MonoBehaviour
         if (card_HadCnt[index] < max_DuplicateValue)
         {
             card_HadCnt[index] += 1;
+            SaveHadCnt();
             GameObject go = Instantiate(cards[index].card_prefab, _p);
             go.SetActive(false);
             _out.Add(go);
@@ -282,6 +302,15 @@ public GameObject GetRandomCard_isntConfirm()
             tempHadCnt[index] -= 1;
     }
 
+    public void TempHadCntReset()
+    {
+        for(int i = 0; i < tempHadCnt.Length; i++)
+        {
+            int _i = i;
+            tempHadCnt[_i] = 0;
+        }
+    }
+
     private void TempHadCntUpDown_Index(int _index, bool isUp)
     {
         if (isUp)
@@ -295,7 +324,7 @@ public GameObject GetRandomCard_isntConfirm()
         saveID = id;
     }
 
-    private void SaveHadCnt()
+    public void SaveHadCnt()
     {
         key.Clear();
         for(int i = 0; i < card_HadCnt.Length; i++)
@@ -323,5 +352,18 @@ public GameObject GetRandomCard_isntConfirm()
             result += card_HadCnt[_i];
         }
         return result;
+    }
+    public int GetCardHadCnt_ID(int c_id, bool _sumTempCnt)
+    {
+        int index = SearchIndexFromID(c_id);
+        int result = card_HadCnt[index];
+        if (_sumTempCnt)
+            result += tempHadCnt[index];
+        return result;
+    }
+
+    public int GetMaxDuplicateNum()
+    {
+        return max_DuplicateValue;
     }
 }

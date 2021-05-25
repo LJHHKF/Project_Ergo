@@ -53,6 +53,11 @@ public class InputSystem : MonoBehaviour
     private DiceSystemManager diceSManager;
     private BattleUIManager m_BaUIManager;
 
+    private float item_delete_left;
+    private float item_delete_right;
+    private float item_delete_top;
+    private float item_delete_down;
+
     private void Awake()
     {
         if (instance != this)
@@ -65,6 +70,7 @@ public class InputSystem : MonoBehaviour
     void Start()
     {
         GameMaster.instance.battleStageStart += Event_BattleStageStart;
+        GameMaster.instance.stageStart += Event_StageStart;
         //TurnManager.instance.firstTurn += Event_BattleStageStart;
 
         //m_GRay = m_cardCanvas.GetComponent<GraphicRaycaster>();
@@ -73,12 +79,19 @@ public class InputSystem : MonoBehaviour
 
     private void Event_BattleStageStart()
     {
+        //line = GameObject.FindGameObjectWithTag("Line");
+        //m_line = line.GetComponent<LineDrawer>();
+        //line.SetActive(false);
+        diceSManager = GameObject.FindGameObjectWithTag("DiceBox").GetComponent<DiceSystemManager>();
+        m_BaUIManager = GameObject.FindGameObjectWithTag("UIManager").GetComponent<BattleUIManager>();
+    }
+
+    private void Event_StageStart()
+    {
         myMainCam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         line = GameObject.FindGameObjectWithTag("Line");
         m_line = line.GetComponent<LineDrawer>();
         line.SetActive(false);
-        diceSManager = GameObject.FindGameObjectWithTag("DiceBox").GetComponent<DiceSystemManager>();
-        m_BaUIManager = GameObject.FindGameObjectWithTag("UIManager").GetComponent<BattleUIManager>();
     }
 
     private void OnDestroy()
@@ -197,29 +210,98 @@ public class InputSystem : MonoBehaviour
                                 }
                                 else
                                 {
-                                    selectedItem.UnSetSelected();
+                                    Vector3 mousePos_cam = Input.mousePosition;
+                                    if(mousePos_cam.x >= item_delete_left
+                                        && mousePos_cam.x <= item_delete_right
+                                        && mousePos_cam.y >= item_delete_down
+                                        && mousePos_cam.y <= item_delete_top)
+                                        ItemSlot.instance.DeleteItem(selectedItem.GetSlotIndex());
+                                    else
+                                        selectedItem.UnSetSelected();
                                 }
                             }
                             else
                             {
-                                SetMousePosition();
-
-                                RaycastHit2D hit = Physics2D.Raycast(mousePosition, transform.forward, maxDistance);
-                                if (hit)
+                                Vector3 mousePos_cam = Input.mousePosition;
+                                if (mousePos_cam.x >= item_delete_left
+                                    && mousePos_cam.x <= item_delete_right
+                                    && mousePos_cam.y >= item_delete_down
+                                    && mousePos_cam.y <= item_delete_top)
+                                    ItemSlot.instance.DeleteItem(selectedItem.GetSlotIndex());
+                                else
                                 {
-                                    if (hit.collider.CompareTag("Enemy"))
+                                    SetMousePosition();
+
+                                    RaycastHit2D hit = Physics2D.Raycast(mousePosition, transform.forward, maxDistance);
+                                    if (hit)
                                     {
-                                        selectedItem.SetTarget(hit.transform.gameObject);
+                                        if (hit.collider.CompareTag("Enemy"))
+                                        {
+                                            selectedItem.SetTarget(hit.transform.gameObject);
+                                        }
+                                        else
+                                            selectedItem.UnSetSelected();
                                     }
                                     else
                                         selectedItem.UnSetSelected();
                                 }
-                                else
-                                    selectedItem.UnSetSelected();
                             }
                             selectedItem = null;
                             break;
                     }
+                    isSelected = false;
+                    useTypeNum = -1;
+                    line.SetActive(false);
+
+                    isTempTargeted = false;
+                    targetedPos = Vector2.zero;
+                    targetColSize = Vector2.zero;
+                }
+            }
+        }
+        else if(SceneName == "Ev_Shop")
+        {
+            if (Input.GetMouseButton(0))
+            {
+                if (isSelected)
+                {
+                    SetMousePosition();
+                    if (useTypeNum == 1)
+                    {
+ 
+                        isInEnlargeArea = selectedItem.Dragged(mousePosition2D, m_line);
+                    }
+                }
+            }
+            if (Input.GetMouseButtonUp(0))
+            {
+                if (isSelected)
+                {
+                    if (selectedItem.GetIsNonTarget())
+                    {
+                        Vector3 mousePos_cam = Input.mousePosition;
+                        if (mousePos_cam.x >= item_delete_left
+                            && mousePos_cam.x <= item_delete_right
+                            && mousePos_cam.y >= item_delete_down
+                            && mousePos_cam.y <= item_delete_top)
+                            ItemSlot.instance.DeleteItem(selectedItem.GetSlotIndex());
+                        else
+                            selectedItem.UnSetSelected();
+                    }
+                    else
+                    {
+                        Vector3 mousePos_cam = Input.mousePosition;
+                        if (mousePos_cam.x >= item_delete_left
+                            && mousePos_cam.x <= item_delete_right
+                            && mousePos_cam.y >= item_delete_down
+                            && mousePos_cam.y <= item_delete_top)
+                            ItemSlot.instance.DeleteItem(selectedItem.GetSlotIndex());
+                        else
+                        {
+                            selectedItem.UnSetSelected();
+                        }
+                    }
+                    selectedItem = null;
                     isSelected = false;
                     useTypeNum = -1;
                     line.SetActive(false);
@@ -252,7 +334,6 @@ public class InputSystem : MonoBehaviour
         useTypeNum = 1;
         line.SetActive(true);
     }
-
     private void Target_Use_Hold_Method()
     {
         RaycastHit2D hit = Physics2D.Raycast(mousePosition, transform.forward, maxDistance);
@@ -303,5 +384,13 @@ public class InputSystem : MonoBehaviour
                     break;
             }
         }
+    }
+
+    public void SetDeleteBTNPos(float left, float right, float top, float down)
+    {
+        item_delete_left = left;
+        item_delete_right = right;
+        item_delete_top = top;
+        item_delete_down = down;
     }
 }

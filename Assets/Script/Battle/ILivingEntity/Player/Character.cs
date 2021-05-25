@@ -9,6 +9,11 @@ public class Character : LivingEntity
     [Header("Character Setting")]
     [SerializeField] private int init_maxCost = 3;
     [SerializeField] private float card_anim_delayTime = 1.0f;
+
+    [Header("Card Effect Setting")]
+    [SerializeField] private GameObject OverClockEffect;
+    [SerializeField] private GameObject ShieldEffect;
+    [SerializeField] private GameObject ManaBlastEffect;
     //private int _i_maxCost;
     private CostManager m_costM;
 
@@ -33,6 +38,10 @@ public class Character : LivingEntity
         onDeath += () => CStatManager.instance.HealthPointUpdate(health); // 게임오버 체크는 여기 들어가서 함.
         onHPDamage += hpDmgEvent;
         StoryTurningManager.instance.battleDamage = 0;
+
+        OverClockEffect.SetActive(false);
+        ShieldEffect.SetActive(false);
+        ManaBlastEffect.SetActive(false);
     }
 
     protected override void ReleseTurnAct()
@@ -87,7 +96,11 @@ public class Character : LivingEntity
     IEnumerator DelayAttackAnim(CardType _type)
     {
         yield return new WaitForSeconds(card_anim_delayTime);
-        string trigger = $"Attack_{_type}";
+        string trigger;
+        if(_type == CardType.Magic_other || _type == CardType.Magic_attack)
+            trigger = "Attack_Magic";
+        else
+            trigger = $"Attack_{_type}";
         myAnimator.SetTrigger(trigger);
         yield break;
     }
@@ -114,5 +127,32 @@ public class Character : LivingEntity
     private void hpDmgEvent(int _value)
     {
         StoryTurningManager.instance.battleDamage += _value;
+    }
+
+    public void OnOverClockEffect()
+    {
+        if (!OverClockEffect.activeSelf)
+        {
+            OverClockEffect.SetActive(true);
+            StartCoroutine(DeleyedUnActive(OverClockEffect));
+        }
+    }
+
+    public void OnShieldEffect()
+    {
+        if (!ShieldEffect.activeSelf)
+        {
+            ShieldEffect.SetActive(true);
+            StartCoroutine(DeleyedUnActive(ShieldEffect));
+        }
+    }
+
+    public void OnManaBlastEffect()
+    {
+        if (!ManaBlastEffect.activeSelf)
+        {
+            ManaBlastEffect.SetActive(true);
+            StartCoroutine(DeleyedUnActive(ManaBlastEffect));
+        }
     }
 }

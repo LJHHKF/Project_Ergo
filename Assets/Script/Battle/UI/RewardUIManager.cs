@@ -35,7 +35,7 @@ public class RewardUIManager : MonoBehaviour
 
         StringBuilder m_sb = new StringBuilder();
         m_sb.Append("소울 보상(가구현)\n");
-        soulReward = EnemiesManager.instance.GetInitCnt() * 100;
+        soulReward = EnemiesManager.instance.stageSoul;
         m_sb.Append(soulReward.ToString());
         soulText.text = m_sb.ToString();
 
@@ -72,17 +72,14 @@ public class RewardUIManager : MonoBehaviour
 
     private void OnDisable()
     {
-        if (m_onDisable != null)
-        {
-            m_onDisable.Invoke();
-        }
+        m_onDisable?.Invoke();
     }
 
     public void BtnConfirm()
     {
         SoundEfManager.instance.SetSoundEffect(mySoundEffect.SoundEf.ui_touch);
         if (isSelected[0])
-            cardUIManager.AddToDeckTargetedCard();
+            cardUIManager.AddToCardPackTargetedCard();
         if (isSelected[1])
             PlayerMoneyManager.instance.AcquiredSoul(soulReward);
 
@@ -154,6 +151,7 @@ public class RewardUIManager : MonoBehaviour
     IEnumerator DeleayedNextStage()
     {
         yield return new WaitForSeconds(1.0f);
+        GameMaster.instance.OnBattleStageEnd();
         LoadManager.instance.LoadStoryScene();
         yield break;
     }

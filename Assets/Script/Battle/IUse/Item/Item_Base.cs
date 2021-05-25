@@ -64,6 +64,11 @@ public abstract class Item_Base : MonoBehaviour, IItem
         return img;
     }
 
+    public string GetItemName()
+    {
+        return itemName;
+    }
+
     public string GetItemText()
     {
         return itemText;
@@ -89,6 +94,11 @@ public abstract class Item_Base : MonoBehaviour, IItem
         slotIndex = _index;
     }
 
+    public int GetSlotIndex()
+    {
+        return slotIndex;
+    }
+
     public bool Dragged(Vector2 mousePos, LineDrawer liner)
     {
         liner.SetLine_Canvas(btn_transform, mousePos);
@@ -104,11 +114,6 @@ public abstract class Item_Base : MonoBehaviour, IItem
             ready = false;
             return true;
         }
-    }
-
-    public void DestroySelf()
-    {
-        Destroy(gameObject);
     }
 
     public void SetBtnPos(Transform t_btn)

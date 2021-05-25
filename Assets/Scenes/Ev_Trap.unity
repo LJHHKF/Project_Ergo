@@ -228,7 +228,7 @@ PrefabInstance:
     - target: {fileID: 3556708071288198484, guid: cf6f2b24e8e53c0428e9c4347becbe8f,
         type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3556708071288198484, guid: cf6f2b24e8e53c0428e9c4347becbe8f,
         type: 3}
@@ -503,7 +503,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1783847288}
   - component: {fileID: 1783847287}
-  - component: {fileID: 1783847286}
   - component: {fileID: 1783847289}
   m_Layer: 0
   m_Name: Main Camera
@@ -512,14 +511,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &1783847286
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1783847285}
-  m_Enabled: 1
 --- !u!20 &1783847287
 Camera:
   m_ObjectHideFlags: 0
@@ -649,7 +640,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: fc9d5eb08b25210449c22a2387b8b1a9, type: 3}
     m_FontSize: 100
     m_FontStyle: 0
     m_BestFit: 0
@@ -709,7 +700,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: fc9d5eb08b25210449c22a2387b8b1a9, type: 3}
     m_FontSize: 60
     m_FontStyle: 0
     m_BestFit: 0
