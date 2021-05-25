@@ -48,5 +48,5 @@ MonoBehaviour:
   itemPower: 10
   isNonTarget: 1
   type: 1
-  img: {fileID: 21300000, guid: 50ec34023199b834db108bcf78706098, type: 3}
+  img: {fileID: 21300000, guid: 771d3deeda8b6b343a7f74ab3c1a3832, type: 3}
   itemText: "\uCE90\uB9AD\uD130\uC758 \uD604\uC7AC HP 10 \uD68C\uBCF5"
