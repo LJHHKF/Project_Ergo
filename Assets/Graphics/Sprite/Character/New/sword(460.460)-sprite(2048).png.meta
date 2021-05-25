@@ -1,22 +1,37 @@
 fileFormatVersion: 2
-guid: ac76e8258ca57534ca7c52f610658d4f
+guid: 3fb671b749407a54db43842897d1f71e
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -6508278774341708746
-    second: Minota_idle(540.360)_0
+      213: 6140497971690114455
+    second: sword(460.460)-sprite(2048)_0
   - first:
-      213: -2792014981961274956
-    second: Minota_idle(540.360)_1
+      213: 8476818837129283815
+    second: sword(460.460)-sprite(2048)_1
   - first:
-      213: -4201569806704798846
-    second: Minota_idle(540.360)_2
+      213: 882091434120567629
+    second: sword(460.460)-sprite(2048)_2
   - first:
-      213: -3894824018141224951
-    second: Minota_idle(540.360)_3
+      213: -6557966933305584689
+    second: sword(460.460)-sprite(2048)_3
   - first:
-      213: -6646885042751562393
-    second: Minota_idle(540.360)_4
+      213: -3281091766874769397
+    second: sword(460.460)-sprite(2048)_4
+  - first:
+      213: 3689444788827093998
+    second: sword(460.460)-sprite(2048)_5
+  - first:
+      213: -4415850569470446813
+    second: sword(460.460)-sprite(2048)_6
+  - first:
+      213: 5360240910242650742
+    second: sword(460.460)-sprite(2048)_7
+  - first:
+      213: -101085228383856689
+    second: sword(460.460)-sprite(2048)_8
+  - first:
+      213: -7459199501115901149
+    second: sword(460.460)-sprite(2048)_9
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -63,7 +78,7 @@ TextureImporter:
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spriteGenerateFallbackPhysicsShape: 0
+  spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
   alphaIsTransparency: 1
   spriteTessellationDetail: -1
@@ -130,13 +145,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Minota_idle(540.360)_0
+      name: sword(460.460)-sprite(2048)_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 1688
-        width: 540
-        height: 360
+        y: 1588
+        width: 460
+        height: 460
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -144,20 +159,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 634d524efe2fda5a0800000000000000
-      internalID: -6508278774341708746
+      spriteID: 79d889a1f5e673550800000000000000
+      internalID: 6140497971690114455
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Minota_idle(540.360)_1
+      name: sword(460.460)-sprite(2048)_1
       rect:
         serializedVersion: 2
-        x: 540
-        y: 1688
-        width: 540
-        height: 360
+        x: 460
+        y: 1588
+        width: 460
+        height: 460
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -165,20 +180,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4b921a8aa25c049d0800000000000000
-      internalID: -2792014981961274956
+      spriteID: 7e84e6cf1d5b3a570800000000000000
+      internalID: 8476818837129283815
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Minota_idle(540.360)_2
+      name: sword(460.460)-sprite(2048)_2
       rect:
         serializedVersion: 2
-        x: 1080
-        y: 1688
-        width: 540
-        height: 360
+        x: 920
+        y: 1588
+        width: 460
+        height: 460
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -186,20 +201,41 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2839a5c858601b5c0800000000000000
-      internalID: -4201569806704798846
+      spriteID: d4bdb2e5c71dd3c00800000000000000
+      internalID: 882091434120567629
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Minota_idle(540.360)_3
+      name: sword(460.460)-sprite(2048)_3
+      rect:
+        serializedVersion: 2
+        x: 1380
+        y: 1588
+        width: 460
+        height: 460
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fc3109bd1db6df4a0800000000000000
+      internalID: -6557966933305584689
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sword(460.460)-sprite(2048)_4
       rect:
         serializedVersion: 2
         x: 0
-        y: 1328
-        width: 540
-        height: 360
+        y: 1128
+        width: 460
+        height: 460
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -207,20 +243,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9006800f03ec2f9c0800000000000000
-      internalID: -3894824018141224951
+      spriteID: b0878f70c683772d0800000000000000
+      internalID: -3281091766874769397
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Minota_idle(540.360)_4
+      name: sword(460.460)-sprite(2048)_5
       rect:
         serializedVersion: 2
-        x: 540
-        y: 1328
-        width: 540
-        height: 360
+        x: 460
+        y: 1128
+        width: 460
+        height: 460
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -228,8 +264,92 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 76d9fe3354581c3a0800000000000000
-      internalID: -6646885042751562393
+      spriteID: eeb7478ec7a833330800000000000000
+      internalID: 3689444788827093998
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sword(460.460)-sprite(2048)_6
+      rect:
+        serializedVersion: 2
+        x: 920
+        y: 1128
+        width: 460
+        height: 460
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 323f181ad4fb7b2c0800000000000000
+      internalID: -4415850569470446813
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sword(460.460)-sprite(2048)_7
+      rect:
+        serializedVersion: 2
+        x: 1380
+        y: 1128
+        width: 460
+        height: 460
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 67a978545b6636a40800000000000000
+      internalID: 5360240910242650742
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sword(460.460)-sprite(2048)_8
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 668
+        width: 460
+        height: 460
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fc71426358fd89ef0800000000000000
+      internalID: -101085228383856689
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sword(460.460)-sprite(2048)_9
+      rect:
+        serializedVersion: 2
+        x: 460
+        y: 668
+        width: 460
+        height: 460
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 32b373303999b7890800000000000000
+      internalID: -7459199501115901149
       vertices: []
       indices: 
       edges: []

@@ -1,22 +1,31 @@
 fileFormatVersion: 2
-guid: 76d7e06bc4ef4b54f94af9f8eae07143
+guid: a21cdc223e8df5042a87746cea77292c
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -3315095897092277869
-    second: Ct_Maruse_Hit(460.460)_0
+      213: 6803987472489610680
+    second: dead(460.460)-sprite(2048)_0
   - first:
-      213: -2471273278857223551
-    second: Ct_Maruse_Hit(460.460)_1
+      213: 1305658593327998841
+    second: dead(460.460)-sprite(2048)_1
   - first:
-      213: 934587470454958796
-    second: Ct_Maruse_Hit(460.460)_2
+      213: 4385836326385183053
+    second: dead(460.460)-sprite(2048)_2
   - first:
-      213: -2445068435936122486
-    second: Ct_Maruse_Hit(460.460)_3
+      213: -7593154724400776498
+    second: dead(460.460)-sprite(2048)_3
   - first:
-      213: 2351519461220453992
-    second: Ct_Maruse_Hit(460.460)_4
+      213: 6766934108809614966
+    second: dead(460.460)-sprite(2048)_4
+  - first:
+      213: -1610245271222831514
+    second: dead(460.460)-sprite(2048)_5
+  - first:
+      213: 5035524476497121022
+    second: dead(460.460)-sprite(2048)_6
+  - first:
+      213: 7595242546824299773
+    second: dead(460.460)-sprite(2048)_7
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -38,6 +47,7 @@ TextureImporter:
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
+  vTOnly: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -62,16 +72,19 @@ TextureImporter:
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spriteGenerateFallbackPhysicsShape: 0
+  spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
   alphaIsTransparency: 1
   spriteTessellationDetail: -1
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
+  ignorePngGamma: 0
   applyGammaDecoding: 0
   platformSettings:
   - serializedVersion: 3
@@ -126,7 +139,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Ct_Maruse_Hit(460.460)_0
+      name: dead(460.460)-sprite(2048)_0
       rect:
         serializedVersion: 2
         x: 0
@@ -140,14 +153,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 399b57188d96ef1d0800000000000000
-      internalID: -3315095897092277869
+      spriteID: 8bd73f1ae8e9c6e50800000000000000
+      internalID: 6803987472489610680
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ct_Maruse_Hit(460.460)_1
+      name: dead(460.460)-sprite(2048)_1
       rect:
         serializedVersion: 2
         x: 460
@@ -161,14 +174,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 182ecc6db0644bdd0800000000000000
-      internalID: -2471273278857223551
+      spriteID: 977604da291ae1210800000000000000
+      internalID: 1305658593327998841
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ct_Maruse_Hit(460.460)_2
+      name: dead(460.460)-sprite(2048)_2
       rect:
         serializedVersion: 2
         x: 920
@@ -182,14 +195,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ccaaffb4a5258fc00800000000000000
-      internalID: 934587470454958796
+      spriteID: d496135d6ee9ddc30800000000000000
+      internalID: 4385836326385183053
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ct_Maruse_Hit(460.460)_3
+      name: dead(460.460)-sprite(2048)_3
       rect:
         serializedVersion: 2
         x: 1380
@@ -203,14 +216,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a89e188463f511ed0800000000000000
-      internalID: -2445068435936122486
+      spriteID: eca33872202bf9690800000000000000
+      internalID: -7593154724400776498
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ct_Maruse_Hit(460.460)_4
+      name: dead(460.460)-sprite(2048)_4
       rect:
         serializedVersion: 2
         x: 0
@@ -224,8 +237,71 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 86e8678bd7642a020800000000000000
-      internalID: 2351519461220453992
+      spriteID: 676521e18baf8ed50800000000000000
+      internalID: 6766934108809614966
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dead(460.460)-sprite(2048)_5
+      rect:
+        serializedVersion: 2
+        x: 460
+        y: 1128
+        width: 460
+        height: 460
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 666b28f057247a9e0800000000000000
+      internalID: -1610245271222831514
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dead(460.460)-sprite(2048)_6
+      rect:
+        serializedVersion: 2
+        x: 920
+        y: 1128
+        width: 460
+        height: 460
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: efe456ff4d6c1e540800000000000000
+      internalID: 5035524476497121022
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dead(460.460)-sprite(2048)_7
+      rect:
+        serializedVersion: 2
+        x: 1380
+        y: 1128
+        width: 460
+        height: 460
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: df44562ead8b76960800000000000000
+      internalID: 7595242546824299773
       vertices: []
       indices: 
       edges: []

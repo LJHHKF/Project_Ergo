@@ -1,22 +1,19 @@
 fileFormatVersion: 2
-guid: febb50070395ec34096a4b905b0bd00a
+guid: 518b651a9cea9cf4294dd3aad68df0a6
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 6105918962116538743
-    second: Ct_Maruse_idle_0
+      213: 2810359319358003771
+    second: Minota_attack1(540.360)_sprite(2048)_0
   - first:
-      213: 6430238518433013803
-    second: Ct_Maruse_idle_1
+      213: -6078823430284397466
+    second: Minota_attack1(540.360)_sprite(2048)_1
   - first:
-      213: 9151889029254763599
-    second: Ct_Maruse_idle_2
+      213: -3109770144740486752
+    second: Minota_attack1(540.360)_sprite(2048)_2
   - first:
-      213: 7186286403839705097
-    second: Ct_Maruse_idle_3
-  - first:
-      213: -8411180009580719928
-    second: Ct_Maruse_idle_4
+      213: 638084236857120646
+    second: Minota_attack1(540.360)_sprite(2048)_3
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -38,6 +35,7 @@ TextureImporter:
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
+  vTOnly: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -62,16 +60,19 @@ TextureImporter:
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spriteGenerateFallbackPhysicsShape: 0
+  spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
   alphaIsTransparency: 1
   spriteTessellationDetail: -1
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
+  ignorePngGamma: 0
   applyGammaDecoding: 0
   platformSettings:
   - serializedVersion: 3
@@ -126,13 +127,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Ct_Maruse_idle_0
+      name: Minota_attack1(540.360)_sprite(2048)_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 1588
-        width: 460
-        height: 460
+        y: 1688
+        width: 540
+        height: 360
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -140,20 +141,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 771374c02f49cb450800000000000000
-      internalID: 6105918962116538743
+      spriteID: b3ada8939e6600720800000000000000
+      internalID: 2810359319358003771
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ct_Maruse_idle_1
+      name: Minota_attack1(540.360)_sprite(2048)_1
       rect:
         serializedVersion: 2
-        x: 460
-        y: 1588
-        width: 460
-        height: 460
+        x: 540
+        y: 1688
+        width: 540
+        height: 360
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -161,20 +162,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b20eb381ddbcc3950800000000000000
-      internalID: 6430238518433013803
+      spriteID: 664b3911c4ea3aba0800000000000000
+      internalID: -6078823430284397466
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ct_Maruse_idle_2
+      name: Minota_attack1(540.360)_sprite(2048)_2
       rect:
         serializedVersion: 2
-        x: 920
-        y: 1588
-        width: 460
-        height: 460
+        x: 1080
+        y: 1688
+        width: 540
+        height: 360
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -182,41 +183,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f445684559a020f70800000000000000
-      internalID: 9151889029254763599
+      spriteID: 0a1d0a59780e7d4d0800000000000000
+      internalID: -3109770144740486752
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ct_Maruse_idle_3
-      rect:
-        serializedVersion: 2
-        x: 1380
-        y: 1588
-        width: 460
-        height: 460
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 900c513e861dab360800000000000000
-      internalID: 7186286403839705097
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Ct_Maruse_idle_4
+      name: Minota_attack1(540.360)_sprite(2048)_3
       rect:
         serializedVersion: 2
         x: 0
-        y: 1128
-        width: 460
-        height: 460
+        y: 1328
+        width: 540
+        height: 360
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -224,8 +204,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8c0131b785c754b80800000000000000
-      internalID: -8411180009580719928
+      spriteID: 68715a29b3eead800800000000000000
+      internalID: 638084236857120646
       vertices: []
       indices: 
       edges: []

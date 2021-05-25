@@ -1130,7 +1130,7 @@ SpriteRenderer:
   m_SortingLayerID: 1595593363
   m_SortingLayer: -1
   m_SortingOrder: 0
-  m_Sprite: {fileID: 6105918962116538743, guid: febb50070395ec34096a4b905b0bd00a,
+  m_Sprite: {fileID: -1893817474927308669, guid: 85d3c5f9b265edb43a57cbf175c27192,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 1
@@ -2330,6 +2330,7 @@ MonoBehaviour:
   color_Buff: {r: 0, g: 1, b: 0, a: 1}
   color_Debuff: {r: 0.7058824, g: 0, b: 1, a: 1}
   color_ActionName: {r: 1, g: 1, b: 1, a: 1}
+  color_RestoreHealth: {r: 0, g: 0, b: 0, a: 0}
   livTarget: {fileID: 3232138570298613571}
   abcondTarget: {fileID: 3232138570298613568}
 --- !u!1 &3232138571042010818
