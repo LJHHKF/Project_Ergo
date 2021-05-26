@@ -96,7 +96,8 @@ public class Enemy_Base : LivingEntity
 
     protected override void Event_TurnEnd()
     {
-        curSpGauge++;
+        if(specialAct != null)
+            curSpGauge++;
         ActSetting();
     }
 
@@ -153,7 +154,7 @@ public class Enemy_Base : LivingEntity
     protected virtual void ActSetting()
     {
         bool isSuccess = false;
-        if (curSpGauge >= r_maxSpGauge)
+        if (curSpGauge >= r_maxSpGauge && specialAct != null)
         {
             readyAct = specialAct;
             isSuccess = true;

@@ -32,6 +32,9 @@ public class EnemiesManager : MonoBehaviour
 
     public int stageSoul { get; private set; }
 
+    private float m_list_min_x = 2000;
+    private float m_list_max_x = -2000;
+
     private void Awake()
     {
         monsters.Capacity = monsterMaxCnt;
@@ -54,6 +57,8 @@ public class EnemiesManager : MonoBehaviour
             {
                 GameObject mon = Instantiate(BattleStageManager.instance.GetMonster(), gameObject.transform);
                 mon.transform.position = new Vector2(minX, y_Init);
+                m_list_min_x = minX;
+                m_list_max_x = minX;
                 mon.name = "Enemy_" + mon.name + "_0";
                 Enemy_Base temp = mon.GetComponent<Enemy_Base>();
                 temp.monsterFieldIndex = 0;
@@ -115,6 +120,10 @@ public class EnemiesManager : MonoBehaviour
                     int _i = i; //델리게이트 연관 등서 i값을 제대로 못 받는 경우가 있어서 습관적 추가
                     GameObject mon = Instantiate(BattleStageManager.instance.GetMonster(), gameObject.transform);
                     mon.transform.position = new Vector2(minX + (x_interval * _i), y_Init);
+                    if (m_list_min_x > mon.transform.position.x)
+                        m_list_min_x = mon.transform.position.x;
+                    if (m_list_max_x < mon.transform.position.x)
+                        m_list_max_x = mon.transform.position.x;
                     mon.name = "Enemy_" + mon.name + "_" + _i.ToString("00");
                     Enemy_Base temp = mon.GetComponent<Enemy_Base>();
                     temp.monsterFieldIndex = _i;
@@ -140,6 +149,10 @@ public class EnemiesManager : MonoBehaviour
                 //int m_id = PlayerPrefs.GetInt(m_sb.ToString());
                 GameObject mon = Instantiate(BattleStageManager.instance.GetMonster(PlayerPrefs.GetInt(m_sb.ToString())), gameObject.transform);
                 mon.transform.position = new Vector2(minX + (x_interval * _i), y_Init);
+                if (m_list_min_x > mon.transform.position.x)
+                    m_list_min_x = mon.transform.position.x;
+                if (m_list_max_x < mon.transform.position.x)
+                    m_list_max_x = mon.transform.position.x;
                 mon.name = "Enemy_" + mon.name + "_" + _i.ToString("00");
                 Enemy_Base temp = mon.GetComponent<Enemy_Base>();
                 temp.monsterFieldIndex = _i;
@@ -286,11 +299,22 @@ public class EnemiesManager : MonoBehaviour
     private void ReSortMonsters()
     {
         int j = monsters.Count - 1;
+        m_list_min_x = 2000;
+        m_list_max_x = -2000;
         for (int i = 0; i < monsters.Count; i--)
         {
             int _i = i;
             monsters[_i].transform.position = new Vector2(minX + (x_interval * j--), y_Init);
+            if (m_list_min_x > monsters[_i].transform.position.x)
+                m_list_min_x = monsters[_i].transform.position.x;
+            if (m_list_max_x < monsters[_i].transform.position.x)
+                m_list_max_x = monsters[_i].transform.position.x;
         }
+    }
+
+    public float GetMonterListMiddle_x()
+    {
+        return (m_list_max_x - m_list_min_x) / 2.0f;
     }
 
     IEnumerator StartMonsterActsControl()
