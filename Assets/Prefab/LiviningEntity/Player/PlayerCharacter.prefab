@@ -129,8 +129,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1614322153317460329}
   m_LocalRotation: {x: 0, y: 0, z: 1, w: 0}
-  m_LocalPosition: {x: -2, y: 0.6, z: 0}
-  m_LocalScale: {x: 0.3, y: 0.3, z: 1}
+  m_LocalPosition: {x: -5.6, y: 0.5, z: 0}
+  m_LocalScale: {x: 0.9, y: 0.3, z: 1}
   m_Children: []
   m_Father: {fileID: 8670489907842929376}
   m_RootOrder: 0
@@ -2458,7 +2458,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 1595593363
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_TargetDisplay: 0
 --- !u!114 &3232138570834670450
 MonoBehaviour:
@@ -2540,7 +2540,7 @@ MonoBehaviour:
   color_Buff: {r: 0, g: 1, b: 0, a: 1}
   color_Debuff: {r: 0.7058824, g: 0, b: 1, a: 1}
   color_ActionName: {r: 1, g: 1, b: 1, a: 1}
-  color_RestoreHealth: {r: 0, g: 0, b: 0, a: 0}
+  color_RestoreHealth: {r: 0, g: 1, b: 0.5882353, a: 0}
   livTarget: {fileID: 3232138570298613571}
   abcondTarget: {fileID: 3232138570298613568}
 --- !u!1 &3232138571042010818

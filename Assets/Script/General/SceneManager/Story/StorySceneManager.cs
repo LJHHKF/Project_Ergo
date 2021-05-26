@@ -7,7 +7,12 @@ using System.Text;
 public class StorySceneManager : MonoBehaviour
 {
     [Header("Object Registration")]
+    [SerializeField] private GameObject textBox;
     [SerializeField] private Text t_body;
+    [SerializeField] private GameObject diedObjects;
+    [SerializeField] private Text t_body_died;
+    [SerializeField] private SettingWindowM settingWindowManager;
+    [SerializeField] private Transform max_y_pos;
 
     [Header("Text Setting_common")]
     [SerializeField] private float textUpSecond = 0.1f;
@@ -20,6 +25,7 @@ public class StorySceneManager : MonoBehaviour
     private int cnt_text = 0;
     private float cnt_time = 0;
     private bool isPointerIn = false;
+    private bool isSetWinOpen = false;
 
     [Header("Text Setting_Special")]
     [SerializeField] [TextArea] private string txt_Tuto;
@@ -32,6 +38,7 @@ public class StorySceneManager : MonoBehaviour
     [SerializeField] [TextArea] private string txt_ChapterEnd_1;
 
     [Header("Text Setting_Plain")]
+    [SerializeField] [TextArea] private string txt_Died;
     [SerializeField] [TextArea] private string txt_Battle_Perfect;
     [SerializeField] [TextArea] private string txt_Battle_Welldone;
     [SerializeField] [TextArea] private string txt_Battle_HardWin;
@@ -44,166 +51,192 @@ public class StorySceneManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        fullText.Clear();
-        curText.Clear();
-        tempText.Clear();
-        tempText_end.Clear();
-        if(StoryTurningManager.instance.isTutorial)
+        isSetWinOpen = false;
+        settingWindowManager.enable += () => isSetWinOpen = true;
+        settingWindowManager.disable += () => isSetWinOpen = false;
+
+        if (StoryTurningManager.instance.isDied)
         {
-            fullText.Append(txt_Tuto);
-        }
-        else if(StoryTurningManager.instance.isShopStage)
-        {
-            if (StoryTurningManager.instance.isShop_Bought)
-                fullText.Append(txt_Shop_Bought);
-            else
-                fullText.Append(txt_Shop_Eyeshoping);
-            StoryTurningManager.instance.SetShopStage(false);
-        }
-        else if(StoryTurningManager.instance.isRestStage)
-        {
-            if (StoryTurningManager.instance.isRest_Rest)
-                fullText.Append(txt_Rest_rest);
-            else if (StoryTurningManager.instance.isRest_CDelete)
-                fullText.Append(txt_Rest_deleteCard);
-            StoryTurningManager.instance.SetRestStage(false);
-        }
-        else if(StoryTurningManager.instance.isEliteStage)
-        {
-            switch(StoryTurningManager.instance.index_Elite)
-            {
-                case 0:
-                    fullText.Append(txt_Aries_elite);
-                    break;
-                case 1:
-                    fullText.Append(txt_Creta_elite);
-                    break;
-                case 2:
-                    fullText.Append(txt_JunkGoblin_elite);
-                    break;
-            }
-            StoryTurningManager.instance.SetEliteStage(false);
-            fullText.AppendLine();
-            AppendBattleText();
-        }
-        else if(StoryTurningManager.instance.isBossStage)
-        {
-            switch(StoryTurningManager.instance.index_Boss)
-            {
-                case 0:
-                    fullText.Append(txt_Aries_boss);
-                    break;
-                case 1:
-                    fullText.Append(txt_Creta_boss);
-                    break;
-                case 2:
-                    fullText.Append(txt_JunkGoblin_boss);
-                    break;
-            }
-            StoryTurningManager.instance.SetBossStage(false);
-            fullText.AppendLine();
-            AppendBattleText();
-        }
-        else if(StoryTurningManager.instance.isChapterEnd_1)
-        {
-            fullText.Append(txt_ChapterEnd_1);
+            textBox.SetActive(false);
+            diedObjects.SetActive(true);
+            isTextEnded = true;
+            t_body_died.text = txt_Died;
         }
         else
         {
-            AppendBattleText();
+            textBox.SetActive(true);
+            diedObjects.SetActive(false);
+            isTextEnded = false;
+            fullText.Clear();
+            curText.Clear();
+            tempText.Clear();
+            tempText_end.Clear();
+            if (StoryTurningManager.instance.isTutorial)
+            {
+                fullText.Append(txt_Tuto);
+            }
+            else if (StoryTurningManager.instance.isShopStage)
+            {
+                if (StoryTurningManager.instance.isShop_Bought)
+                    fullText.Append(txt_Shop_Bought);
+                else
+                    fullText.Append(txt_Shop_Eyeshoping);
+                StoryTurningManager.instance.SetShopStage(false);
+            }
+            else if (StoryTurningManager.instance.isRestStage)
+            {
+                if (StoryTurningManager.instance.isRest_Rest)
+                    fullText.Append(txt_Rest_rest);
+                else if (StoryTurningManager.instance.isRest_CDelete)
+                    fullText.Append(txt_Rest_deleteCard);
+                StoryTurningManager.instance.SetRestStage(false);
+            }
+            else if (StoryTurningManager.instance.isEliteStage)
+            {
+                switch (StoryTurningManager.instance.index_Elite)
+                {
+                    case 0:
+                        fullText.Append(txt_Aries_elite);
+                        break;
+                    case 1:
+                        fullText.Append(txt_Creta_elite);
+                        break;
+                    case 2:
+                        fullText.Append(txt_JunkGoblin_elite);
+                        break;
+                }
+                StoryTurningManager.instance.SetEliteStage(false);
+                fullText.AppendLine();
+                AppendBattleText();
+            }
+            else if (StoryTurningManager.instance.isBossStage)
+            {
+                switch (StoryTurningManager.instance.index_Boss)
+                {
+                    case 0:
+                        fullText.Append(txt_Aries_boss);
+                        break;
+                    case 1:
+                        fullText.Append(txt_Creta_boss);
+                        break;
+                    case 2:
+                        fullText.Append(txt_JunkGoblin_boss);
+                        break;
+                }
+                StoryTurningManager.instance.SetBossStage(false);
+                fullText.AppendLine();
+                AppendBattleText();
+            }
+            else if (StoryTurningManager.instance.isChapterEnd_1)
+            {
+                fullText.Append(txt_ChapterEnd_1);
+            }
+            else
+            {
+                AppendBattleText();
+            }
         }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!isTextEnded)
+        if (!isSetWinOpen)
         {
-            if (Input.GetMouseButtonDown(0))
+            if (!isTextEnded)
             {
-                t_body.text = fullText.ToString();
-                isTextEnded = true;
-            }
-            else if (cnt_text < fullText.Length)
-            {
-                cnt_time += Time.deltaTime;
-                if (cnt_time / textUpSecond >= 1)
+                if (Input.GetMouseButtonDown(0))
                 {
-                    tempText.Append(fullText.ToString(cnt_text++, 1));
-                    if (tempText.ToString(0, 1) == "<")
+                    if (Input.mousePosition.y < max_y_pos.position.y)
                     {
-                        if (tempText.ToString(tempText.Length - 1, 1) == ">")
+                        t_body.text = fullText.ToString();
+                        isTextEnded = true;
+                    }
+                }
+                else if (cnt_text < fullText.Length)
+                {
+                    cnt_time += Time.deltaTime;
+                    if (cnt_time / textUpSecond >= 1)
+                    {
+                        tempText.Append(fullText.ToString(cnt_text++, 1));
+                        if (tempText.ToString(0, 1) == "<")
                         {
-                            if (cnt_TextEffectStart > 0)
+                            if (tempText.ToString(tempText.Length - 1, 1) == ">")
                             {
-                                cnt_TextEffectStart -= 1;
-                                tempText.Clear();
-                            }
-                            else
-                            {
-                                if (tempText.Length > 5)
+                                if (cnt_TextEffectStart > 0)
                                 {
-                                    if (tempText.ToString(1, 5) == "color")
-                                        tempText_end.Append("</color>");
+                                    cnt_TextEffectStart -= 1;
+                                    tempText.Clear();
+                                }
+                                else
+                                {
+                                    if (tempText.Length > 5)
+                                    {
+                                        if (tempText.ToString(1, 5) == "color")
+                                            tempText_end.Append("</color>");
+                                        else
+                                        {
+                                            tempText_end.Append(tempText.ToString());
+                                            tempText_end.Insert(1, "/");
+                                        }
+                                    }
                                     else
                                     {
                                         tempText_end.Append(tempText.ToString());
                                         tempText_end.Insert(1, "/");
                                     }
+                                    cnt_TextEffectStart += 1;
+                                    curText.Append(tempText.ToString());
+                                    curText.Append(tempText_end.ToString());
+                                    tempText.Clear();
+                                    tempText_end.Clear();
+                                    t_body.text = curText.ToString();
+                                    cnt_time = 0;
                                 }
-                                else
-                                {
-                                    tempText_end.Append(tempText.ToString());
-                                    tempText_end.Insert(1, "/");
-                                }
-                                cnt_TextEffectStart += 1;
-                                curText.Append(tempText.ToString());
-                                curText.Append(tempText_end.ToString());
+                            }
+                        }
+                        else
+                        {
+                            if (cnt_TextEffectStart > 0)
+                            {
+                                curText.Insert(cnt_text - 1, tempText.ToString());
                                 tempText.Clear();
-                                tempText_end.Clear();
+                                t_body.text = curText.ToString();
+                                cnt_time = 0;
+                            }
+                            else
+                            {
+                                curText.Append(tempText.ToString());
+                                tempText.Clear();
                                 t_body.text = curText.ToString();
                                 cnt_time = 0;
                             }
                         }
                     }
-                    else
-                    {
-                        if (cnt_TextEffectStart > 0)
-                        {
-                            curText.Insert(cnt_text-1, tempText.ToString());
-                            tempText.Clear();
-                            t_body.text = curText.ToString();
-                            cnt_time = 0;
-                        }
-                        else
-                        {
-                            curText.Append(tempText.ToString());
-                            tempText.Clear();
-                            t_body.text = curText.ToString();
-                            cnt_time = 0;
-                        }
-                    }
+                }
+                else
+                {
+                    isTextEnded = true;
                 }
             }
             else
             {
-                isTextEnded = true;
-            }
-        }
-        else
-        {
-            if (!isPointerIn)
-            {
-                if (Input.GetMouseButtonDown(0))
+                if (!isPointerIn)
                 {
-                    SoundEfManager.instance.SetSoundEffect(mySoundEffect.SoundEf.storyEnd);
-                    if (StoryTurningManager.instance.isTutorial)
+                    if (Input.GetMouseButtonDown(0))
                     {
-                        StoryTurningManager.instance.isTutorial = false;
-                        LoadManager.instance.LoadFirst_Init();
+                        if (Input.mousePosition.y < max_y_pos.position.y)
+                        {
+                            SoundEfManager.instance.SetSoundEffect(mySoundEffect.SoundEf.storyEnd);
+                            if (StoryTurningManager.instance.isTutorial)
+                            {
+                                StoryTurningManager.instance.isTutorial = false;
+                                LoadManager.instance.LoadFirst_Init();
+                            }
+                            else
+                                LoadManager.instance.LoadNextStage();
+                        }
                     }
-                    else
-                        LoadManager.instance.LoadNextStage();
                 }
             }
         }

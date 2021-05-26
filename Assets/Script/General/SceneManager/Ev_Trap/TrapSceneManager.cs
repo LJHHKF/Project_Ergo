@@ -29,6 +29,8 @@ public class TrapSceneManager : MonoBehaviour
     [SerializeField] private Text nameField;
     [SerializeField] private Text desciptionField;
     [SerializeField] private SpriteRenderer bg;
+    [SerializeField] private SettingWindowM settingWindowManager;
+    [SerializeField] private Transform max_y_pos;
     //private Image bg;
 
     // 0: 화살, 1: 낙석, 2: 독늪, 3: 저주
@@ -46,10 +48,15 @@ public class TrapSceneManager : MonoBehaviour
     private bool isTextEnded = false;
     private int cnt_text = 0;
     private float cnt_time = 0;
+    private bool isSetWinOpen = false;
 
     // Start is called before the first frame update
     void Start()
     {
+        isSetWinOpen = false;
+        settingWindowManager.enable += () => isSetWinOpen = true;
+        settingWindowManager.disable += () => isSetWinOpen = false;
+
         //bg = bg_object.GetComponent<Image>();
         fullText.Clear();
         curText.Clear();
@@ -96,101 +103,110 @@ public class TrapSceneManager : MonoBehaviour
 
     private void Update()
     {
-        if (!isTextEnded)
+        if (!isSetWinOpen)
         {
-            if (Input.GetMouseButtonDown(0))
+            if (!isTextEnded)
             {
-                desciptionField.text = fullText.ToString();
-                isTextEnded = true;
-            }
-            else if (cnt_text < fullText.Length)
-            {
-                cnt_time += Time.deltaTime;
-                if (cnt_time / textUpSecond >= 1)
+                if (Input.GetMouseButtonDown(0))
                 {
-                    tempText.Append(fullText.ToString(cnt_text++, 1));
-                    if (tempText.ToString(0, 1) == "<")
+                    if (Input.mousePosition.y < max_y_pos.position.y)
                     {
-                        if (tempText.ToString(tempText.Length - 1, 1) == ">")
+                        desciptionField.text = fullText.ToString();
+                        isTextEnded = true;
+                    }
+                }
+                else if (cnt_text < fullText.Length)
+                {
+                    cnt_time += Time.deltaTime;
+                    if (cnt_time / textUpSecond >= 1)
+                    {
+                        tempText.Append(fullText.ToString(cnt_text++, 1));
+                        if (tempText.ToString(0, 1) == "<")
                         {
-                            if (cnt_TextEffectStart > 0)
+                            if (tempText.ToString(tempText.Length - 1, 1) == ">")
                             {
-                                cnt_TextEffectStart -= 1;
-                                tempText.Clear();
-                            }
-                            else
-                            {
-                                if (tempText.Length > 5)
+                                if (cnt_TextEffectStart > 0)
                                 {
-                                    if (tempText.ToString(1, 5) == "color")
-                                        tempText_end.Append("</color>");
+                                    cnt_TextEffectStart -= 1;
+                                    tempText.Clear();
+                                }
+                                else
+                                {
+                                    if (tempText.Length > 5)
+                                    {
+                                        if (tempText.ToString(1, 5) == "color")
+                                            tempText_end.Append("</color>");
+                                        else
+                                        {
+                                            tempText_end.Append(tempText.ToString());
+                                            tempText_end.Insert(1, "/");
+                                        }
+                                    }
                                     else
                                     {
                                         tempText_end.Append(tempText.ToString());
                                         tempText_end.Insert(1, "/");
                                     }
+                                    cnt_TextEffectStart += 1;
+                                    curText.Append(tempText.ToString());
+                                    curText.Append(tempText_end.ToString());
+                                    tempText.Clear();
+                                    tempText_end.Clear();
+                                    desciptionField.text = curText.ToString();
+                                    cnt_time = 0;
                                 }
-                                else
-                                {
-                                    tempText_end.Append(tempText.ToString());
-                                    tempText_end.Insert(1, "/");
-                                }
-                                cnt_TextEffectStart += 1;
-                                curText.Append(tempText.ToString());
-                                curText.Append(tempText_end.ToString());
+                            }
+                        }
+                        else
+                        {
+                            if (cnt_TextEffectStart > 0)
+                            {
+                                curText.Insert(cnt_text - 1, tempText.ToString());
                                 tempText.Clear();
-                                tempText_end.Clear();
+                                desciptionField.text = curText.ToString();
+                                cnt_time = 0;
+                            }
+                            else
+                            {
+                                curText.Append(tempText.ToString());
+                                tempText.Clear();
                                 desciptionField.text = curText.ToString();
                                 cnt_time = 0;
                             }
                         }
                     }
-                    else
-                    {
-                        if (cnt_TextEffectStart > 0)
-                        {
-                            curText.Insert(cnt_text - 1, tempText.ToString());
-                            tempText.Clear();
-                            desciptionField.text = curText.ToString();
-                            cnt_time = 0;
-                        }
-                        else
-                        {
-                            curText.Append(tempText.ToString());
-                            tempText.Clear();
-                            desciptionField.text = curText.ToString();
-                            cnt_time = 0;
-                        }
-                    }
+                }
+                else
+                {
+                    isTextEnded = true;
                 }
             }
             else
             {
-                isTextEnded = true;
-            }
-        }
-        else
-        {
-            if (Input.GetMouseButtonDown(0))
-            {
-                if (traps[trap_index].hadAddAbcond)
+                if (Input.GetMouseButtonDown(0))
                 {
-                    for (int i = 0; i < traps_abcond.Length; i++)
+                    if (Input.mousePosition.y < max_y_pos.position.y)
                     {
-                        if (traps_abcond[i].match_index == trap_index)
+                        if (traps[trap_index].hadAddAbcond)
                         {
-                            CStatManager.instance.SetInheriteAbCond(traps_abcond[i].abcond_ID, traps_abcond[i].damage);
-                            break;
+                            for (int i = 0; i < traps_abcond.Length; i++)
+                            {
+                                if (traps_abcond[i].match_index == trap_index)
+                                {
+                                    CStatManager.instance.SetInheriteAbCond(traps_abcond[i].abcond_ID, traps_abcond[i].damage);
+                                    break;
+                                }
+                            }
                         }
+                        CStatManager.instance.HealthPointUpdate(CStatManager.instance.health - traps[trap_index].damage);
+
+                        string key = $"SaveID({GameMaster.instance.GetSaveID()}).LastTrap";
+                        PlayerPrefs.DeleteKey(key.ToString());
+
+                        if (CStatManager.instance.health > 0)
+                            LoadManager.instance.LoadNextStage();
                     }
                 }
-                CStatManager.instance.HealthPointUpdate(CStatManager.instance.health - traps[trap_index].damage);
-
-                string key = $"SaveID({GameMaster.instance.GetSaveID()}).LastTrap";
-                PlayerPrefs.DeleteKey(key.ToString());
-
-                if (CStatManager.instance.health > 0)
-                    LoadManager.instance.LoadNextStage();
             }
         }
     }

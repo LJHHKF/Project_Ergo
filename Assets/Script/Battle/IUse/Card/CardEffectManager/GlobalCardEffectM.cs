@@ -16,6 +16,7 @@ public class GlobalCardEffectM : MonoBehaviour
         if (!ManaStormEffect.activeSelf)
         {
             ManaStormEffect.SetActive(true);
+            ManaStormEffect.transform.position = new Vector2(EnemiesManager.instance.GetMonterListMiddle_x(), ManaStormEffect.transform.position.y);
             StartCoroutine(DelayedUnActive(ManaStormEffect));
         }
     }

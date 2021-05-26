@@ -40,7 +40,7 @@ public class LoadManager : MonoBehaviour
         switch (nextStageTypeIndex)
         {
             case -1:
-                LoadingSceneManager.LoadScene("GameOver");
+                ReturnLobby_private();
                 GameMaster.instance.OnGameOver();
                 break;
             case 0:
@@ -133,10 +133,10 @@ public class LoadManager : MonoBehaviour
     public void LoadGameOver()
     {
         ChkAndOnStageEndEvent();
-
-        GameMaster.instance.OnGameOver();
-
-        StartCoroutine(DelayedLoadScene("GameOver", 2.0f));
+        //GameMaster.instance.OnGameOver();
+        //StartCoroutine(DelayedLoadScene("GameOver", 2.0f));
+        nextStageTypeIndex = -1;
+        LoadStoryScene();
     }
 
     public void ReturnLobby()

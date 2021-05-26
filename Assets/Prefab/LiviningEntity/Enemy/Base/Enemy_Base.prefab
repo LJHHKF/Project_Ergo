@@ -382,7 +382,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 1595593363
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_TargetDisplay: 0
 --- !u!114 &6213228333948493124
 MonoBehaviour:
@@ -467,7 +467,7 @@ MonoBehaviour:
   color_Buff: {r: 0, g: 1, b: 0, a: 1}
   color_Debuff: {r: 0.7058824, g: 0, b: 1, a: 1}
   color_ActionName: {r: 1, g: 1, b: 1, a: 1}
-  color_RestoreHealth: {r: 0, g: 0, b: 0, a: 0}
+  color_RestoreHealth: {r: 0, g: 1, b: 0.5882353, a: 0}
   livTarget: {fileID: 4451541378279184922}
   abcondTarget: {fileID: 3804837206480057224}
 --- !u!1 &1088331542640742632
