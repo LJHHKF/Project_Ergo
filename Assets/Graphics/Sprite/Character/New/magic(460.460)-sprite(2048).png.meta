@@ -1,25 +1,37 @@
 fileFormatVersion: 2
-guid: 2af4fe4b4d7e550449e55cc726d92457
+guid: 6a0c40948c311d44daad2631b380967f
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -5479732266318900428
-    second: Minota_attack1(540.360)_0
+      213: 1831129109082084906
+    second: magic(460.460)-sprite(2048)_0
   - first:
-      213: 3091888278545512576
-    second: Minota_attack1(540.360)_1
+      213: 6980763764339505172
+    second: magic(460.460)-sprite(2048)_1
   - first:
-      213: -5483732676697734190
-    second: Minota_attack1(540.360)_2
+      213: 8813236835786385500
+    second: magic(460.460)-sprite(2048)_2
   - first:
-      213: -5801016925731099173
-    second: Minota_attack1(540.360)_3
+      213: 8872006378502856047
+    second: magic(460.460)-sprite(2048)_3
   - first:
-      213: 5063429737469912267
-    second: Minota_attack1(540.360)_4
+      213: 6888209262176034619
+    second: magic(460.460)-sprite(2048)_4
   - first:
-      213: -1933326523656203607
-    second: Minota_attack1(540.360)_5
+      213: 3170395124671992884
+    second: magic(460.460)-sprite(2048)_5
+  - first:
+      213: 6260826339052694692
+    second: magic(460.460)-sprite(2048)_6
+  - first:
+      213: -3367458130798240322
+    second: magic(460.460)-sprite(2048)_7
+  - first:
+      213: -1866308020194725265
+    second: magic(460.460)-sprite(2048)_8
+  - first:
+      213: 1756378419455122200
+    second: magic(460.460)-sprite(2048)_9
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -66,7 +78,7 @@ TextureImporter:
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spriteGenerateFallbackPhysicsShape: 0
+  spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
   alphaIsTransparency: 1
   spriteTessellationDetail: -1
@@ -133,13 +145,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Minota_attack1(540.360)_0
+      name: magic(460.460)-sprite(2048)_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 1688
-        width: 540
-        height: 360
+        y: 1588
+        width: 460
+        height: 460
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -147,20 +159,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 433d0d1698414f3b0800000000000000
-      internalID: -5479732266318900428
+      spriteID: a2617b4193a796910800000000000000
+      internalID: 1831129109082084906
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Minota_attack1(540.360)_1
+      name: magic(460.460)-sprite(2048)_1
       rect:
         serializedVersion: 2
-        x: 540
-        y: 1688
-        width: 540
-        height: 360
+        x: 460
+        y: 1588
+        width: 460
+        height: 460
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -168,20 +180,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 08836eff10898ea20800000000000000
-      internalID: 3091888278545512576
+      spriteID: 418ff5278a7a0e060800000000000000
+      internalID: 6980763764339505172
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Minota_attack1(540.360)_2
+      name: magic(460.460)-sprite(2048)_2
       rect:
         serializedVersion: 2
-        x: 1080
-        y: 1688
-        width: 540
-        height: 360
+        x: 920
+        y: 1588
+        width: 460
+        height: 460
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -189,20 +201,41 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2d3ca324f2ed5e3b0800000000000000
-      internalID: -5483732676697734190
+      spriteID: c586f662538ee4a70800000000000000
+      internalID: 8813236835786385500
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Minota_attack1(540.360)_3
+      name: magic(460.460)-sprite(2048)_3
+      rect:
+        serializedVersion: 2
+        x: 1380
+        y: 1588
+        width: 460
+        height: 460
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f6d99ab9bc2bf1b70800000000000000
+      internalID: 8872006378502856047
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: magic(460.460)-sprite(2048)_4
       rect:
         serializedVersion: 2
         x: 0
-        y: 1328
-        width: 540
-        height: 360
+        y: 1128
+        width: 460
+        height: 460
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -210,20 +243,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bdde4c557d5ae7fa0800000000000000
-      internalID: -5801016925731099173
+      spriteID: b3fde8224d5d79f50800000000000000
+      internalID: 6888209262176034619
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Minota_attack1(540.360)_4
+      name: magic(460.460)-sprite(2048)_5
       rect:
         serializedVersion: 2
-        x: 540
-        y: 1328
-        width: 540
-        height: 360
+        x: 460
+        y: 1128
+        width: 460
+        height: 460
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -231,20 +264,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bc42b0fd48ae44640800000000000000
-      internalID: 5063429737469912267
+      spriteID: 43454b381918ffb20800000000000000
+      internalID: 3170395124671992884
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Minota_attack1(540.360)_5
+      name: magic(460.460)-sprite(2048)_6
       rect:
         serializedVersion: 2
-        x: 1080
-        y: 1328
-        width: 540
-        height: 360
+        x: 920
+        y: 1128
+        width: 460
+        height: 460
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -252,8 +285,71 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9a291aa15c17b25e0800000000000000
-      internalID: -1933326523656203607
+      spriteID: 4ac25a3526ce2e650800000000000000
+      internalID: 6260826339052694692
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: magic(460.460)-sprite(2048)_7
+      rect:
+        serializedVersion: 2
+        x: 1380
+        y: 1128
+        width: 460
+        height: 460
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ebd15cdeba26441d0800000000000000
+      internalID: -3367458130798240322
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: magic(460.460)-sprite(2048)_8
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 668
+        width: 460
+        height: 460
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f62b4d66eba8916e0800000000000000
+      internalID: -1866308020194725265
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: magic(460.460)-sprite(2048)_9
+      rect:
+        serializedVersion: 2
+        x: 460
+        y: 668
+        width: 460
+        height: 460
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 81bd8c6edd8ef5810800000000000000
+      internalID: 1756378419455122200
       vertices: []
       indices: 
       edges: []

@@ -72,7 +72,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcd749cf9ba9cc4489b4eb9f12c6a4ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  actName: "\uC2A4\uD2B8\uB808\uC774\uD2B8"
+  actName: "\uB0B4\uB824\uCC0D\uAE30"
   actID: 4
   acts:
   - type: 0

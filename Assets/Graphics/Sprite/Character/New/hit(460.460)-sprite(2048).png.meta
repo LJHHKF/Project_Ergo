@@ -1,34 +1,22 @@
 fileFormatVersion: 2
-guid: fca75e6b2d4f38d41b54039f713e02a6
+guid: c108335a62bc4164ab614a7e7fa88226
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -7333875568214007036
-    second: Minota_attack2(540.360)_0
+      213: 7049396001104588679
+    second: hit(460.460)-sprite(2048)_0
   - first:
-      213: 8499446103338146506
-    second: Minota_attack2(540.360)_1
+      213: -7215612380483788542
+    second: hit(460.460)-sprite(2048)_1
   - first:
-      213: 1437725234464123994
-    second: Minota_attack2(540.360)_2
+      213: -5061889806921533814
+    second: hit(460.460)-sprite(2048)_2
   - first:
-      213: 5968606481498648737
-    second: Minota_attack2(540.360)_3
+      213: 1611306661461053701
+    second: hit(460.460)-sprite(2048)_3
   - first:
-      213: -1750014604023074719
-    second: Minota_attack2(540.360)_4
-  - first:
-      213: 8471418949329104211
-    second: Minota_attack2(540.360)_5
-  - first:
-      213: -8772781768829492151
-    second: Minota_attack2(540.360)_6
-  - first:
-      213: 1778561937992143580
-    second: Minota_attack2(540.360)_7
-  - first:
-      213: -234611076449114187
-    second: Minota_attack2(540.360)_8
+      213: -5688003254452598182
+    second: hit(460.460)-sprite(2048)_4
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -75,7 +63,7 @@ TextureImporter:
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spriteGenerateFallbackPhysicsShape: 0
+  spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
   alphaIsTransparency: 1
   spriteTessellationDetail: -1
@@ -142,13 +130,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Minota_attack2(540.360)_0
+      name: hit(460.460)-sprite(2048)_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 1688
-        width: 540
-        height: 360
+        y: 1588
+        width: 460
+        height: 460
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -156,20 +144,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 40320b9f607d83a90800000000000000
-      internalID: -7333875568214007036
+      spriteID: 78fe5ee405c74d160800000000000000
+      internalID: 7049396001104588679
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Minota_attack2(540.360)_1
+      name: hit(460.460)-sprite(2048)_1
       rect:
         serializedVersion: 2
-        x: 540
-        y: 1688
-        width: 540
-        height: 360
+        x: 460
+        y: 1588
+        width: 460
+        height: 460
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -177,20 +165,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: aca5c01f23914f570800000000000000
-      internalID: 8499446103338146506
+      spriteID: 2016a5815cefcdb90800000000000000
+      internalID: -7215612380483788542
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Minota_attack2(540.360)_2
+      name: hit(460.460)-sprite(2048)_2
       rect:
         serializedVersion: 2
-        x: 1080
-        y: 1688
-        width: 540
-        height: 360
+        x: 920
+        y: 1588
+        width: 460
+        height: 460
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -198,20 +186,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a5c69dcbb73d3f310800000000000000
-      internalID: 1437725234464123994
+      spriteID: a8675462a0e80c9b0800000000000000
+      internalID: -5061889806921533814
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Minota_attack2(540.360)_3
+      name: hit(460.460)-sprite(2048)_3
       rect:
         serializedVersion: 2
-        x: 0
-        y: 1328
-        width: 540
-        height: 360
+        x: 1380
+        y: 1588
+        width: 460
+        height: 460
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -219,62 +207,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1a032ddc8ffb4d250800000000000000
-      internalID: 5968606481498648737
+      spriteID: 5015b9c1fd28c5610800000000000000
+      internalID: 1611306661461053701
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Minota_attack2(540.360)_4
-      rect:
-        serializedVersion: 2
-        x: 540
-        y: 1328
-        width: 540
-        height: 360
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 16075775df2b6b7e0800000000000000
-      internalID: -1750014604023074719
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Minota_attack2(540.360)_5
-      rect:
-        serializedVersion: 2
-        x: 1080
-        y: 1328
-        width: 540
-        height: 360
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 35d2642a6a6809570800000000000000
-      internalID: 8471418949329104211
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Minota_attack2(540.360)_6
+      name: hit(460.460)-sprite(2048)_4
       rect:
         serializedVersion: 2
         x: 0
-        y: 968
-        width: 540
-        height: 360
+        y: 1128
+        width: 460
+        height: 460
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -282,50 +228,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 94425e02671d04680800000000000000
-      internalID: -8772781768829492151
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Minota_attack2(540.360)_7
-      rect:
-        serializedVersion: 2
-        x: 540
-        y: 968
-        width: 540
-        height: 360
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: cd25d0dc8a8bea810800000000000000
-      internalID: 1778561937992143580
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Minota_attack2(540.360)_8
-      rect:
-        serializedVersion: 2
-        x: 1080
-        y: 968
-        width: 540
-        height: 360
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 5b7e0ef087e7ebcf0800000000000000
-      internalID: -234611076449114187
+      spriteID: a5a46192d272011b0800000000000000
+      internalID: -5688003254452598182
       vertices: []
       indices: 
       edges: []

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcd749cf9ba9cc4489b4eb9f12c6a4ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  actName: "\uAC00\uB4DC \uC5C5"
+  actName: "\uC6C5\uD06C\uB9AC\uAE30"
   actID: 2
   acts:
   - type: 0
@@ -38,7 +38,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcd749cf9ba9cc4489b4eb9f12c6a4ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  actName: "\uC2A4\uD2B8\uB808\uC774\uD2B8"
+  actName: "\uBAB8\uD1B5\uBC15\uCE58\uAE30"
   actID: 1
   acts:
   - type: 0
