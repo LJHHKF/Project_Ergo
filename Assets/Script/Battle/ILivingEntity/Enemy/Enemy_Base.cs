@@ -75,8 +75,8 @@ public class Enemy_Base : LivingEntity
         TurnManager.instance.turnEnd += Event_TurnEnd;
         TurnManager.instance.firstTurn += Event_FirstTurn;
 
+        onDeath += () => StartCoroutine(DelayedDieEffect(0.9f));
         onDeath += () => StartCoroutine(DelayedDestroy(1.0f));
-        onDeath += () => Instantiate(dieEffect_prefab, gameObject.transform.position, Quaternion.identity);
     }
 
     protected override void ReleseTurnAct()
@@ -207,6 +207,13 @@ public class Enemy_Base : LivingEntity
     {
         SoundEfManager.instance.SetSoundEffect(SoundEf.monsterDead);
         base.Die();
+    }
+
+    protected IEnumerator DelayedDieEffect(float time)
+    {
+        yield return new WaitForSeconds(time);
+        Instantiate(dieEffect_prefab, gameObject.transform.position, Quaternion.identity);
+        yield break;
     }
 
     public void OnHit_HitAndRun()
