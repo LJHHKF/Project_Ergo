@@ -20,6 +20,6 @@ public class CEM_HalfSwording : ICardEffectM
 
     public override void OnEffect()
     {
-        target.OnHit_HitAndRun();
+        target.OnHit_HalfSwording();
     }
 }

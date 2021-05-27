@@ -34,8 +34,8 @@ MonoBehaviour:
   fix_Solid: 1
   fix_Inteligent: 1
   maxSpGauge: 3
-  Hit_HitAndRun: {fileID: 2967162633533198909}
-  Hit_HalfSwording: {fileID: 3318610344325227645}
+  effectManager_monster: {fileID: 0}
+  dieEffect_prefab: {fileID: 0}
   anotherSpecialAct: {fileID: -7161367296500807184}
 --- !u!114 &-7161367296500807184
 MonoBehaviour:
@@ -51,6 +51,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actName: "\uBE44\uC5F4\uD55C \uACF5\uACA9"
   actID: 30
+  effect: 0
   acts:
   - type: 1
     affactType: 0
@@ -96,6 +97,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actName: "\uCC22\uACE0 \uBB3C\uC5B4\uB72F\uAE30"
   actID: 26
+  effect: 2
   acts:
   - type: 0
     affactType: 0
@@ -147,6 +149,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actName: "\uC871\uC7A5\uC758 \uC678\uCE68"
   actID: 0
+  effect: 0
   acts:
   - type: 1
     affactType: 5
@@ -177,6 +180,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actName: "\uB9F9\uB3C5 \uD560\uD034\uAE30"
   actID: 27
+  effect: 2
   acts:
   - type: 0
     affactType: 0
@@ -222,6 +226,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actName: "\uC6C0\uCE20\uB9AC\uAE30"
   actID: 28
+  effect: 0
   acts:
   - type: 2
     affactType: 1
@@ -360,15 +365,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1324159d320faa4bb0ba400517d86a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &2967162633533198909 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8567958247877970565, guid: cdda7a158c36ffa46ab94414845dfceb,
-    type: 3}
-  m_PrefabInstance: {fileID: 6902604327364991160}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &3318610344325227645 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8197932956637674693, guid: cdda7a158c36ffa46ab94414845dfceb,
-    type: 3}
-  m_PrefabInstance: {fileID: 6902604327364991160}
-  m_PrefabAsset: {fileID: 0}

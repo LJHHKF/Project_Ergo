@@ -3546,6 +3546,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ManaStormEffect: {fileID: 1100328960}
+  ManaBombEffect_prefab: {fileID: 4083128807800741371, guid: 20dcf6fc8a5f2fd478477f5ac5bba54a,
+    type: 3}
+  manabomb_y: 1
 --- !u!4 &707644497
 Transform:
   m_ObjectHideFlags: 0
