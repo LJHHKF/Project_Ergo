@@ -36,11 +36,4 @@ public class EA_GuardCAbcond : EnemyAct_Base
             }
         }
     }
-
-    IEnumerator delayedAffect(Action _action)
-    {
-        yield return new WaitForSeconds(affectDelay);
-        _action.Invoke();
-        yield break;
-    }
 }

@@ -29,10 +29,19 @@ public class LivingEntity : MonoBehaviour, IDamageable
     public event Action onDeath;
     public event Action<int> onHPDamage;
 
+    protected Queue<Action> eventQueue = new Queue<Action>();
+    protected float delayTime = 0.0f;
+
     [Header("Ref Setting")]
     [SerializeField] protected UnitUI myUI;
     [SerializeField] protected AbCondition myAbCond;
     [SerializeField] protected Animator myAnimator;
+
+    [Header("Common Effect Setting")]
+    [SerializeField] protected Transform effectT_body;
+    [SerializeField] protected GameObject healEffect_prefab;
+
+    protected List<GameObject> list_HealEffect = new List<GameObject>();
 
     protected virtual void OnEnable()
     {
@@ -47,6 +56,14 @@ public class LivingEntity : MonoBehaviour, IDamageable
     protected virtual void OnDestroy()
     {
         ReleseTurnAct();
+    }
+
+    protected virtual void Update()
+    {
+        if (delayTime > 0.0f)
+            delayTime -= Time.deltaTime;
+        else if (eventQueue.Count > 0)
+            eventQueue.Dequeue().Invoke();
     }
 
     protected virtual void ReleseTurnAct()
@@ -269,5 +286,38 @@ public class LivingEntity : MonoBehaviour, IDamageable
         yield return new WaitForSeconds(1.0f);
         go.SetActive(false);
         yield break;
+    }
+
+    public void OnHealEffect()
+    {
+        if (list_HealEffect.Count == 0)
+            Create();
+        else
+        {
+            for (int i = 0; i < list_HealEffect.Count; i++)
+            {
+                int _i = i;
+                if (!list_HealEffect[_i].activeSelf)
+                {
+                    Active(list_HealEffect[_i]);
+                    return;
+                }
+            }
+            Create();
+        }
+
+        void Create()
+        {
+            GameObject temp = Instantiate(healEffect_prefab, effectT_body);
+            list_HealEffect.Add(temp);
+            Active(temp);
+        }
+
+        void Active(GameObject _t)
+        {
+            _t.SetActive(true);
+            _t.transform.localPosition = Vector3.zero;
+            StartCoroutine(DeleyedUnActive(_t));
+        }
     }
 }

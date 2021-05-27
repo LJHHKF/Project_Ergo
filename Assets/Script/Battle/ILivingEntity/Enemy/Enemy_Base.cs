@@ -38,9 +38,9 @@ public class Enemy_Base : LivingEntity
     [SerializeField] protected int fix_Solid = 1;
     [SerializeField] protected int fix_Inteligent = 1;
     [SerializeField] protected int maxSpGauge = 3;
-    [Header("Card Effect Setting")]
-    [SerializeField] protected GameObject Hit_HitAndRun;
-    [SerializeField] protected GameObject Hit_HalfSwording;
+    [Header("Effect Setting")]
+    [SerializeField] protected MonsterEffectManager effectManager_monster;
+    [SerializeField] protected GameObject dieEffect_prefab;
     protected int curSpGauge = 0;
     protected int r_maxSpGauge;
 
@@ -76,9 +76,7 @@ public class Enemy_Base : LivingEntity
         TurnManager.instance.firstTurn += Event_FirstTurn;
 
         onDeath += () => StartCoroutine(DelayedDestroy(1.0f));
-
-        Hit_HitAndRun.SetActive(false);
-        Hit_HalfSwording.SetActive(false);
+        onDeath += () => Instantiate(dieEffect_prefab, gameObject.transform.position, Quaternion.identity);
     }
 
     protected override void ReleseTurnAct()
@@ -108,11 +106,6 @@ public class Enemy_Base : LivingEntity
         FlucStatReset();
         CalculateStat();
         ActSetting();
-    }
-
-    protected virtual void Update()
-    {
-        
     }
 
     public override bool OnDamage(int damage)
@@ -218,19 +211,26 @@ public class Enemy_Base : LivingEntity
 
     public void OnHit_HitAndRun()
     {
-        if (!Hit_HitAndRun.activeSelf)
-        {
-            Hit_HitAndRun.SetActive(true);
-            StartCoroutine(DeleyedUnActive(Hit_HitAndRun));
-        }
+        effectManager_monster.OnHit_HitAndRun();
     }
 
     public void OnHit_HalfSwording()
     {
-        if (!Hit_HalfSwording.activeSelf)
-        {
-            Hit_HalfSwording.SetActive(true);
-            StartCoroutine(DeleyedUnActive(Hit_HalfSwording));
-        }
+        effectManager_monster.OnHit_HalfSwording();
+    }
+
+    public void OnHit_PoisonShot()
+    {
+        effectManager_monster.OnHit_PoisonShot();
+    }
+
+    public void OnHit_BlowShot()
+    {
+        effectManager_monster.OnHit_BlowShot();
+    }
+
+    public void OnBulkUpEffect()
+    {
+        effectManager_monster.OnBulkUpEffect();
     }
 }
