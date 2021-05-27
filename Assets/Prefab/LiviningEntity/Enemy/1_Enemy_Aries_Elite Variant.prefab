@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actName: "\uAC00\uB4DC \uC5C5"
   actID: 6
+  effect: 0
   acts:
   - type: 2
     affactType: 1
@@ -26,6 +27,41 @@ MonoBehaviour:
   actAnimTrigger: Guard
   affectDelay: 1
   actExplain: "[\uB0B4\uAD6C]*1 \uB9CC\uD07C\uC758 \uBC29\uC5B4\uB3C4\uB97C \uD68D\uB4DD\uD55C\uB2E4."
+--- !u!114 &2962277697890065369
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1316377401732371494}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcd749cf9ba9cc4489b4eb9f12c6a4ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  actName: "\uBC8C\uD06C\uC5C5"
+  actID: 6
+  effect: 3
+  acts:
+  - type: 1
+    affactType: 1
+    powerRate: 1
+    abcondID: 0
+    fixedPower: 0
+    isDelayedAbCond: 0
+  - type: 1
+    affactType: 2
+    powerRate: 5
+    abcondID: 0
+    fixedPower: 2
+    isDelayedAbCond: 0
+  typeVariationNum: 2
+  actSprite: {fileID: 21300000, guid: 38535e1ea1a134f43b0047e16ed8979b, type: 3}
+  actAnimTrigger: Special
+  affectDelay: 1
+  actExplain: "[\uD2B9\uACF5]*1 \uB9CC\uD07C\uC758 \uBC29\uC5B4\uB3C4\uB97C \uD68D\uB4DD\uD55C
+    \uD6C4 \uB2E4\uC74C\uD134 \uC790\uC2E0\uC5D0\uAC8C [\uD30C\uC6CC\uC5C5]\uC744
+    2\uD68C \uC911\uCCA9\uC2DC\uD0A8\uB2E4. "
 --- !u!114 &7440338111338506640
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -40,6 +76,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actName: "\uB0B4\uB824\uCC0D\uAE30"
   actID: 4
+  effect: 1
   acts:
   - type: 0
     affactType: 0
@@ -100,7 +137,7 @@ PrefabInstance:
         type: 3}
       propertyPath: specialAct
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 2962277697890065369}
     - target: {fileID: 4451541378279184922, guid: cdda7a158c36ffa46ab94414845dfceb,
         type: 3}
       propertyPath: dieEffect_prefab
@@ -135,7 +172,7 @@ PrefabInstance:
     - target: {fileID: 4451541378279184922, guid: cdda7a158c36ffa46ab94414845dfceb,
         type: 3}
       propertyPath: normalActs.Array.data[1].weight
-      value: 0
+      value: 35
       objectReference: {fileID: 0}
     - target: {fileID: 5568184874541642076, guid: cdda7a158c36ffa46ab94414845dfceb,
         type: 3}

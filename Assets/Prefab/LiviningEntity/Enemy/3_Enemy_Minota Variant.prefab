@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actName: "\uC2A4\uB9E4\uC26C"
   actID: 12
+  effect: 1
   acts:
   - type: 0
     affactType: 0
