@@ -14,7 +14,7 @@ public class CardUI_restV : MonoBehaviour
     private int m_index;
     private float delay = 0;
     protected SettingWindowM m_settingWindowM;
-    private bool isAble = false;
+    private bool isAble = true;
     // Start is called before the first frame update
     void Awake()
     {
@@ -23,6 +23,7 @@ public class CardUI_restV : MonoBehaviour
         m_settingWindowM = GameObject.FindGameObjectWithTag("SettingButton").GetComponent<SettingBTN>().GetSettingWindowManager();
         m_settingWindowM.enable += () => isAble = false;
         m_settingWindowM.disable += () => isAble = true;
+        isAble = true;
     }
 
     private void OnEnable()

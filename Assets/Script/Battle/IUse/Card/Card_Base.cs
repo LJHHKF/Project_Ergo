@@ -148,7 +148,6 @@ public class Card_Base : MonoBehaviour, ICard
         }
         else
         {
-            BringUpCard(true);
             return this;
         }
     }
@@ -255,27 +254,27 @@ public class Card_Base : MonoBehaviour, ICard
         ev_setTarget?.Invoke(target);
     }
 
-    public void BringUpCard(bool isSelect)
-    {
-        int s_order;
-        if (isSelect)
-            s_order = renderPriority + 5;
-        else
-            s_order = renderPriority - 1;
+    //버그가 잦기도 하고, 이미 카드 확대를 따로 하므로, 카드 손패 내에서 이미지 정렬을 흐트릴 필요가 없음.
+    //public void BringUpCard(bool isSelect)
+    //{
+    //    int s_order;
+    //    if (isSelect)
+    //        s_order = renderPriority + 5;
+    //    else
+    //        s_order = renderPriority - 1;
 
-        MyImgSorting(s_order);
-        textCanvas.sortingOrder = s_order;
+    //    MyImgSorting(s_order);
+    //    textCanvas.sortingOrder = s_order;
 
-        if (!isSelect)
-        {
-            m_Collider.enabled = true;
-            if (ready)
-            {
-                OffCardAlphaAndReady();
-            }
-            
-        }
-    }
+    //    if (!isSelect)
+    //    {
+    //        m_Collider.enabled = true;
+    //        if (ready)
+    //        {
+    //            OffCardAlphaAndReady();
+    //        }
+    //    }
+    //}
 
     public virtual GameObject GetTarget()
     {

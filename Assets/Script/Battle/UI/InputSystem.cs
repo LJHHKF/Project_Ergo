@@ -90,8 +90,11 @@ public class InputSystem : MonoBehaviour
     {
         myMainCam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         line = GameObject.FindGameObjectWithTag("Line");
-        m_line = line.GetComponent<LineDrawer>();
-        line.SetActive(false);
+        if (line != null)
+        {
+            m_line = line.GetComponent<LineDrawer>();
+            line.SetActive(false);
+        }
     }
 
     private void OnDestroy()
@@ -197,7 +200,7 @@ public class InputSystem : MonoBehaviour
                                 }
                             }
                             m_BaUIManager.OffEnlargeCard();
-                            selectedCard.BringUpCard(false);
+                            //selectedCard.BringUpCard(false);
                             selectedCard = null;
                             break;
                         case 1:
