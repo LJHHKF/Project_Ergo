@@ -1421,6 +1421,9 @@ MonoBehaviour:
   ManaBlastEffect: {fileID: 1614322153317460329}
   Hit_ClawingEffect_prefab: {fileID: 7986478437700069286, guid: 447c374df058e4f4cb60145ae16d77eb,
     type: 3}
+  Hit_hitEffect_prefab: {fileID: 2449851325922259541, guid: a6b333df7ba90f148934b72e5539f6e2,
+    type: 3}
+  hitEffectlocalPos: {x: 1, y: 0.7}
 --- !u!114 &3232138570298613568
 MonoBehaviour:
   m_ObjectHideFlags: 0

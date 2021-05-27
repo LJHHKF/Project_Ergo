@@ -55,7 +55,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actName: "\uBE44\uC5F4\uD55C \uACF5\uACA9"
   actID: 30
-  effect: 0
+  effect: 1
   acts:
   - type: 1
     affactType: 0

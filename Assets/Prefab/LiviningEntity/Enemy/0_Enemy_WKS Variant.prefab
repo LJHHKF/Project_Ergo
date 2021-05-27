@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actName: "\uC6C5\uD06C\uB9AC\uAE30"
   actID: 2
+  effect: 0
   acts:
   - type: 0
     affactType: 1
@@ -40,6 +41,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actName: "\uBAB8\uD1B5\uBC15\uCE58\uAE30"
   actID: 1
+  effect: 1
   acts:
   - type: 0
     affactType: 0

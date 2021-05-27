@@ -12,15 +12,9 @@ public class ItemBTN : MonoBehaviour
 
     private bool isSet = false;
     
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        ImageSetting();
-    }
-
     private void OnEnable()
     {
+        ImageSetting();
         ItemSlot.instance.ev_listChange += ImageSetting; // Enable, Disable 관리가 안전. Disable 상태에서 Destroy 안 불린다고 함.
     }
 

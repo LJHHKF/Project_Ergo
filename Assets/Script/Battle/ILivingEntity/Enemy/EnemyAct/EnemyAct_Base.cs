@@ -27,8 +27,9 @@ namespace EnemyActType
     public enum EffectType
     {
         None,
-        BulkUp,
-        Clawing
+        Hit,
+        Clawing,
+        BulkUp
     }
 }
 
@@ -167,14 +168,19 @@ public class EnemyAct_Base : MonoBehaviour
         if(effect == EffectType.None)
         {
         }
+        else if (effect == EffectType.Hit)
+        {
+            target.OnHit_hitEffect();
+        }
+        else if (effect == EffectType.Clawing)
+        {
+            target.OnHitClawingEffect();
+        }
         else if(effect == EffectType.BulkUp)
         {
             m_Enemy.OnBulkUpEffect();
         }
-        else if(effect == EffectType.Clawing)
-        {
-            target.OnHitClawingEffect();
-        }
+
     }
 
     protected IEnumerator delayedAffect(Action _action)
