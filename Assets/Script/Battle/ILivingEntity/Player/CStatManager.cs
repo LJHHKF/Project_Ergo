@@ -200,8 +200,9 @@ public class CStatManager : MonoBehaviour
         health = value;
         if(health <= 0)
         {
-            LoadManager.instance.LoadGameOver();
             BGMManager.instance.EffectBGM_dead();
+            StoryTurningManager.instance.isDied = true;
+            LoadManager.instance.LoadGameOver();
         }
     }
 

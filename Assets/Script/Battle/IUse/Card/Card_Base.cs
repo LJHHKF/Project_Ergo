@@ -56,8 +56,9 @@ public class Card_Base : MonoBehaviour, ICard
     protected BSCManager m_cardM;
     protected CostManager m_costM;
     protected Character m_charM;
+    protected SettingWindowM m_settingWindowM;
+    protected bool isOnCardSound = false;
 
-    //public delegate void UseHandler(int dicevalue);
     public event Action<int> use;
     public event Action sub_use;
     public event Action<GameObject> ev_setTarget;
@@ -102,12 +103,13 @@ public class Card_Base : MonoBehaviour, ICard
     private void Event_BattleStageStart()
     {
         ChkAndFindBSCardManager();
-
         CalcStatRevision();
-
-
         ChkAndFindBattleUIManger();
         ChkAndFindCostManager();
+
+        m_settingWindowM = GameObject.FindGameObjectWithTag("SettingButton").GetComponent<SettingBTN>().GetSettingWindowManager();
+        m_settingWindowM.enable += () => m_Collider.enabled = false;
+        m_settingWindowM.disable += () => m_Collider.enabled = true;
     }
 
     private void CalcStatRevision()
@@ -146,7 +148,6 @@ public class Card_Base : MonoBehaviour, ICard
         }
         else
         {
-            BringUpCard(true);
             return this;
         }
     }
@@ -209,6 +210,8 @@ public class Card_Base : MonoBehaviour, ICard
             return;
         }
 
+        isOnCardSound = false;
+
         m_costM.cost -= cost;
         use?.Invoke(diceValue); 
         sub_use?.Invoke();
@@ -251,27 +254,27 @@ public class Card_Base : MonoBehaviour, ICard
         ev_setTarget?.Invoke(target);
     }
 
-    public void BringUpCard(bool isSelect)
-    {
-        int s_order;
-        if (isSelect)
-            s_order = renderPriority + 5;
-        else
-            s_order = renderPriority - 1;
+    //버그가 잦기도 하고, 이미 카드 확대를 따로 하므로, 카드 손패 내에서 이미지 정렬을 흐트릴 필요가 없음.
+    //public void BringUpCard(bool isSelect)
+    //{
+    //    int s_order;
+    //    if (isSelect)
+    //        s_order = renderPriority + 5;
+    //    else
+    //        s_order = renderPriority - 1;
 
-        MyImgSorting(s_order);
-        textCanvas.sortingOrder = s_order;
+    //    MyImgSorting(s_order);
+    //    textCanvas.sortingOrder = s_order;
 
-        if (!isSelect)
-        {
-            m_Collider.enabled = true;
-            if (ready)
-            {
-                OffCardAlphaAndReady();
-            }
-            
-        }
-    }
+    //    if (!isSelect)
+    //    {
+    //        m_Collider.enabled = true;
+    //        if (ready)
+    //        {
+    //            OffCardAlphaAndReady();
+    //        }
+    //    }
+    //}
 
     public virtual GameObject GetTarget()
     {
@@ -459,15 +462,20 @@ public class Card_Base : MonoBehaviour, ICard
     {
         effectM?.OnEffect();
 
-        if (cardID == 2)
-            SoundEfManager.instance.SetSoundEffect(mySoundEffect.SoundEf.card_OverKill);
-        else if (cardID == 4)
-            SoundEfManager.instance.SetSoundEffect(mySoundEffect.SoundEf.card_ManaStorm);
-        else if (type == CardType.Sword)
-            SoundEfManager.instance.SetSoundEffect(mySoundEffect.SoundEf.card_magic_attack);
-        else if (type == CardType.Magic_attack)
-            SoundEfManager.instance.SetSoundEffect(mySoundEffect.SoundEf.card_magic_attack);
-        else if (type == CardType.Magic_other)
-            SoundEfManager.instance.SetSoundEffect(mySoundEffect.SoundEf.card_magic_other);
+        if (!isOnCardSound)
+        {
+            isOnCardSound = true;
+
+            if (cardID == 2)
+                SoundEfManager.instance.SetSoundEffect(mySoundEffect.SoundEf.card_OverKill);
+            else if (cardID == 4)
+                SoundEfManager.instance.SetSoundEffect(mySoundEffect.SoundEf.card_ManaStorm);
+            else if (type == CardType.Sword)
+                SoundEfManager.instance.SetSoundEffect(mySoundEffect.SoundEf.card_magic_attack);
+            else if (type == CardType.Magic_attack)
+                SoundEfManager.instance.SetSoundEffect(mySoundEffect.SoundEf.card_magic_attack);
+            else if (type == CardType.Magic_other)
+                SoundEfManager.instance.SetSoundEffect(mySoundEffect.SoundEf.card_magic_other);
+        }
     }
 }

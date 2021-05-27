@@ -23,6 +23,7 @@ TagManager:
   - ItemDelete
   - GlobalCardEffect
   - ItemSlot
+  - SettingButton
   layers:
   - Default
   - TransparentFX

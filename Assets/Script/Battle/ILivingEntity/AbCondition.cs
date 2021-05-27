@@ -160,8 +160,6 @@ public class AbCondition : MonoBehaviour
         int _id = list_conditions[listIndex].ID;
         int _power = list_conditions[listIndex].onePower * list_conditions[listIndex].piledNum;
 
-        list_conditions[listIndex].DecreseP(1);
-
         if (list_conditions[listIndex].piledNum != 0)
         {
             if (_id <= 4)
@@ -169,8 +167,10 @@ public class AbCondition : MonoBehaviour
             else
                 myUI.AddPopUpText_Buff(AbCondInfoManager.instance.GetAbCond_Name(_id), list_conditions[listIndex].piledNum);
         }
-        
-        switch(_id)
+
+        list_conditions[listIndex].DecreseP(1);
+
+        switch (_id)
         {
             case 0: // 중독
                 if (m_target.health - _power < 2)
@@ -181,17 +181,17 @@ public class AbCondition : MonoBehaviour
                 break;
             case 1: // 쇠약(1), 파워업(5)
             SetStr:
-                m_target.fluc_strength = +_power;
+                m_target.fluc_strength += _power;
                 m_target.CalculateStat();
                 break;
             case 2: // 골절(2), 단단함(6)
             SetSolid:
-                m_target.fluc_solid = +_power;
+                m_target.fluc_solid += _power;
                 m_target.CalculateStat();
                 break;
             case 3: // 고갈(3), 충만(7)
             SetInt:
-                m_target.fluc_intel = +_power;
+                m_target.fluc_intel += _power;
                 m_target.CalculateStat();
                 break;
             case 4: // 피로(4), 각성(8)

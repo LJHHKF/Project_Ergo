@@ -16,7 +16,7 @@ public interface ICard : IUse
 
     //bool GetReady();
 
-    void BringUpCard(bool isSelected);
+    //void BringUpCard(bool isSelected);
 
     void DoTransparency();
 

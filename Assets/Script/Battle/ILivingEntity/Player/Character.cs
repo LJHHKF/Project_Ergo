@@ -12,8 +12,22 @@ public class Character : LivingEntity
 
     [Header("Card Effect Setting")]
     [SerializeField] private GameObject OverClockEffect;
+    [SerializeField] private GameObject ChargeEffect;
     [SerializeField] private GameObject ShieldEffect;
+    [SerializeField] private GameObject GuardCardEffect;
     [SerializeField] private GameObject ManaBlastEffect;
+
+    [Header("Other Effect Setting")]
+    //[SerializeField] private Transform effectT_body;
+    [SerializeField] private GameObject Hit_ClawingEffect_prefab;
+    [SerializeField] private GameObject Hit_hitEffect_prefab;
+
+    [Header("Effect value Setting")]
+    [SerializeField] private Vector2 hitEffectlocalPos = new Vector2(1f, 0.7f);
+
+    protected List<GameObject> list_Hit_ClawingEffect = new List<GameObject>();
+    protected List<GameObject> list_Hit_hitEffect = new List<GameObject>();
+
     //private int _i_maxCost;
     private CostManager m_costM;
 
@@ -40,7 +54,9 @@ public class Character : LivingEntity
         StoryTurningManager.instance.battleDamage = 0;
 
         OverClockEffect.SetActive(false);
+        ChargeEffect.SetActive(false);
         ShieldEffect.SetActive(false);
+        GuardCardEffect.SetActive(false);
         ManaBlastEffect.SetActive(false);
     }
 
@@ -153,6 +169,89 @@ public class Character : LivingEntity
         {
             ManaBlastEffect.SetActive(true);
             StartCoroutine(DeleyedUnActive(ManaBlastEffect));
+        }
+    }
+
+    public void OnChargeEffect()
+    {
+        if(!ChargeEffect.activeSelf)
+        {
+            ChargeEffect.SetActive(false);
+            StartCoroutine(DeleyedUnActive(ChargeEffect));
+        }
+    }
+
+    public void OnGuardCardEffect()
+    {
+        if(!GuardCardEffect.activeSelf)
+        {
+            GuardCardEffect.SetActive(false);
+            StartCoroutine(DeleyedUnActive(GuardCardEffect));
+        }
+    }
+
+    public void OnHitClawingEffect()
+    {
+        if (list_Hit_ClawingEffect.Count == 0)
+            Create();
+        else
+        {
+            for(int i = 0; i < list_Hit_ClawingEffect.Count; i++)
+            {
+                int _i = i;
+                if(!list_Hit_ClawingEffect[_i].activeSelf)
+                {
+                    Active(list_Hit_ClawingEffect[_i]);
+                    return;
+                }
+            }
+            Create();
+        }
+
+        void Create()
+        {
+            GameObject temp = Instantiate(Hit_ClawingEffect_prefab, effectT_body);
+            list_Hit_ClawingEffect.Add(temp);
+            Active(temp);
+        }
+
+        void Active(GameObject _t)
+        {
+            _t.SetActive(true);
+            StartCoroutine(DeleyedUnActive(_t));
+        }
+    }
+
+    public void OnHit_hitEffect()
+    {
+        if (list_Hit_hitEffect.Count == 0)
+            Create();
+        else
+        {
+            for(int i = 0; i < list_Hit_hitEffect.Count; i++)
+            {
+                int _i = i;
+                if(!list_Hit_hitEffect[_i].activeSelf)
+                {
+                    Active(list_Hit_hitEffect[_i]);
+                    return;
+                }
+            }
+            Create();
+        }
+
+        void Create()
+        {
+            GameObject temp = Instantiate(Hit_hitEffect_prefab, effectT_body);
+            list_Hit_hitEffect.Add(temp);
+            Active(temp);
+        }
+
+        void Active(GameObject _t)
+        {
+            _t.SetActive(true);
+            _t.transform.localPosition = hitEffectlocalPos;
+            StartCoroutine(DeleyedUnActive(_t));
         }
     }
 }

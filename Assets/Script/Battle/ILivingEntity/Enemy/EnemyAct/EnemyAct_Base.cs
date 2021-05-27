@@ -23,6 +23,14 @@ namespace EnemyActType
         CondAbcond_Info,
         Summon
     }
+
+    public enum EffectType
+    {
+        None,
+        Hit,
+        Clawing,
+        BulkUp
+    }
 }
 
 public class EnemyAct_Base : MonoBehaviour
@@ -42,6 +50,7 @@ public class EnemyAct_Base : MonoBehaviour
     protected Enemy_Base m_Enemy;
     [SerializeField] protected string actName;
     [SerializeField] protected int actID;
+    [SerializeField] protected EffectType effect;
     [SerializeField] protected ActSet[] acts;
     [SerializeField] protected int typeVariationNum = 1;
     [SerializeField] protected Sprite actSprite;
@@ -52,8 +61,8 @@ public class EnemyAct_Base : MonoBehaviour
     //[SerializeField] private int abCondID = -1;
     //[SerializeField] private bool isRelatedAbCond = false;
     //[SerializeField] private bool isAllTargeted = false;
-
     protected Character target;
+
 
     protected virtual void Start()
     {
@@ -154,10 +163,31 @@ public class EnemyAct_Base : MonoBehaviour
     //    _isAll = isAllTargeted;
     //}
 
-    IEnumerator delayedAffect(Action _action)
+    protected void OnActEffect()
+    {
+        if(effect == EffectType.None)
+        {
+        }
+        else if (effect == EffectType.Hit)
+        {
+            target.OnHit_hitEffect();
+        }
+        else if (effect == EffectType.Clawing)
+        {
+            target.OnHitClawingEffect();
+        }
+        else if(effect == EffectType.BulkUp)
+        {
+            m_Enemy.OnBulkUpEffect();
+        }
+
+    }
+
+    protected IEnumerator delayedAffect(Action _action)
     {
         yield return new WaitForSeconds(affectDelay);
         _action.Invoke();
+        OnActEffect();
         yield break;
     }
 }

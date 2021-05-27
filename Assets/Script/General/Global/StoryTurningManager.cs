@@ -28,6 +28,8 @@ public class StoryTurningManager : MonoBehaviour
     public bool isRest_CDelete { get; set; }
     public bool isChapterEnd_1 { get; set; }
 
+    public bool isDied { get; set; }
+
 
     private void Awake()
     {
@@ -47,6 +49,7 @@ public class StoryTurningManager : MonoBehaviour
         isBossStage = false;
         index_Boss = -1;
         isChapterEnd_1 = false;
+        isDied = false;
     }
     public void SetShopStage(bool _value)
     {

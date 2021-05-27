@@ -3,17 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System;
 
-public class SettingWindowM : MonoBehaviour
+public class SettingWindowM : IAbleEvent
 {
     [SerializeField] private Slider volumeSlider;
     [SerializeField] private GameObject warningWindow;
+
     // Start is called before the first frame update
     void Start()
     {
         volumeSlider.value = SoundManager.instance.masterVolume;
         warningWindow.SetActive(false);
     }
+
+    //OnEnable이나 OnDisable 추가 시, override 타입으로 해줘야 하고, base는 꼭 실행시킬 것. [IAbleEvent]
 
     public void SliderChange()
     {

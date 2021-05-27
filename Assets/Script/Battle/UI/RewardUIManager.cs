@@ -34,7 +34,7 @@ public class RewardUIManager : MonoBehaviour
         m_onDisable += () => CardPack.instance.TempHadCntUpDown(m_card.GetID(), false);
 
         StringBuilder m_sb = new StringBuilder();
-        m_sb.Append("소울 보상(가구현)\n");
+        m_sb.Append("소울 보상\n");
         soulReward = EnemiesManager.instance.stageSoul;
         m_sb.Append(soulReward.ToString());
         soulText.text = m_sb.ToString();
