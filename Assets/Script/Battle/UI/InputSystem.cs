@@ -58,6 +58,8 @@ public class InputSystem : MonoBehaviour
     private float item_delete_top;
     private float item_delete_down;
 
+    private bool isStarted = false;
+
     private void Awake()
     {
         if (instance != this)
@@ -90,6 +92,7 @@ public class InputSystem : MonoBehaviour
     {
         myMainCam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         line = GameObject.FindGameObjectWithTag("Line");
+        isStarted = false;
         if (line != null)
         {
             m_line = line.GetComponent<LineDrawer>();
@@ -107,130 +110,86 @@ public class InputSystem : MonoBehaviour
     {
         if (SceneName == "Battle")
         {
-            if (Input.GetMouseButtonDown(0))
+            if (ChkStarted())
             {
-                SetMousePosition();
-
-                RaycastHit2D hit = Physics2D.Raycast(mousePosition, transform.forward, maxDistance);
-
-                //List<RaycastResult> results = new List<RaycastResult>();
-                //m_GRay.Raycast(m_ped, results);
-
-                //if (results.Count != 0)
-                if (hit)
-                {
-                    if (hit.collider.tag == "Card")
-                    {
-                        if (diceSManager.GetIsReadyToThrow())
-                        {
-                            selectedCard = (Card_Base)hit.transform.GetComponent<ICard>().Selected();
-                            if (selectedCard != null)
-                            {
-                                useTypeNum = 0;
-                                isSelected = true;
-                                m_BaUIManager.OnEnlargeCard(selectedCard);
-                                line.SetActive(true);
-                            }
-                        }
-                    }
-                }
-            }
-            if (Input.GetMouseButton(0))
-            {
-                if (isSelected)
+                if (Input.GetMouseButtonDown(0))
                 {
                     SetMousePosition();
 
-                    if (useTypeNum == 0)
-                    {
-                        if (!selectedCard.GetIsNonTarget())
-                        {
-                            Target_Use_Hold_Method();
-                        }
-                        else
-                        {
-                            isInEnlargeArea = selectedCard.Dragged(mousePosition2D, m_line);
-                        }
+                    RaycastHit2D hit = Physics2D.Raycast(mousePosition, transform.forward, maxDistance);
 
-                        if (!isInEnlargeArea)
-                            m_BaUIManager.OffEnlargeCard();
-                        else
-                            m_BaUIManager.OnEnlargeCard(selectedCard);
-                    }
-                    else if (useTypeNum == 1)
+                    //List<RaycastResult> results = new List<RaycastResult>();
+                    //m_GRay.Raycast(m_ped, results);
+
+                    //if (results.Count != 0)
+                    if (hit)
                     {
-                        if (!selectedItem.GetIsNonTarget())
+                        if (hit.collider.tag == "Card")
                         {
-                            Target_Use_Hold_Method();
-                        }
-                        else
-                        {
-                            isInEnlargeArea = selectedItem.Dragged(mousePosition2D, m_line);
+                            if (diceSManager.GetIsReadyToThrow())
+                            {
+                                selectedCard = (Card_Base)hit.transform.GetComponent<ICard>().Selected();
+                                if (selectedCard != null)
+                                {
+                                    useTypeNum = 0;
+                                    isSelected = true;
+                                    m_BaUIManager.OnEnlargeCard(selectedCard);
+                                    line.SetActive(true);
+                                }
+                            }
                         }
                     }
                 }
-            }
-            if (Input.GetMouseButtonUp(0))
-            {
-                if (isSelected)
+                if (Input.GetMouseButton(0))
                 {
-                    switch (useTypeNum)
+                    if (isSelected)
                     {
-                        case 0:
-                            if (selectedCard.GetIsNonTarget())
+                        SetMousePosition();
+
+                        if (useTypeNum == 0)
+                        {
+                            if (!selectedCard.GetIsNonTarget())
                             {
-                                if (selectedCard.GetReady())
-                                {
-                                    selectedCard.SetTarget(null);
-                                    diceSManager.activatedCard = selectedCard;
-                                }
+                                Target_Use_Hold_Method();
                             }
                             else
                             {
-                                SetMousePosition();
+                                isInEnlargeArea = selectedCard.Dragged(mousePosition2D, m_line);
+                            }
 
-                                RaycastHit2D hit = Physics2D.Raycast(mousePosition, transform.forward, maxDistance);
-                                if (hit)
+                            if (!isInEnlargeArea)
+                                m_BaUIManager.OffEnlargeCard();
+                            else
+                                m_BaUIManager.OnEnlargeCard(selectedCard);
+                        }
+                        else if (useTypeNum == 1)
+                        {
+                            if (!selectedItem.GetIsNonTarget())
+                            {
+                                Target_Use_Hold_Method();
+                            }
+                            else
+                            {
+                                isInEnlargeArea = selectedItem.Dragged(mousePosition2D, m_line);
+                            }
+                        }
+                    }
+                }
+                if (Input.GetMouseButtonUp(0))
+                {
+                    if (isSelected)
+                    {
+                        switch (useTypeNum)
+                        {
+                            case 0:
+                                if (selectedCard.GetIsNonTarget())
                                 {
-                                    if (hit.collider.CompareTag("Enemy"))
+                                    if (selectedCard.GetReady())
                                     {
-                                        selectedCard.SetTarget(hit.transform.gameObject);
+                                        selectedCard.SetTarget(null);
                                         diceSManager.activatedCard = selectedCard;
                                     }
                                 }
-                            }
-                            m_BaUIManager.OffEnlargeCard();
-                            //selectedCard.BringUpCard(false);
-                            selectedCard = null;
-                            break;
-                        case 1:
-                            if (selectedItem.GetIsNonTarget())
-                            {
-                                if (selectedItem.GetReady())
-                                {
-                                    selectedItem.SetTarget(null);
-                                    //selectedItem.Use(0); // Card도, Item도, SetTarget 안에 Use가 있음.
-                                }
-                                else
-                                {
-                                    Vector3 mousePos_cam = Input.mousePosition;
-                                    if(mousePos_cam.x >= item_delete_left
-                                        && mousePos_cam.x <= item_delete_right
-                                        && mousePos_cam.y >= item_delete_down
-                                        && mousePos_cam.y <= item_delete_top)
-                                        ItemSlot.instance.DeleteItem(selectedItem.GetSlotIndex());
-                                    else
-                                        selectedItem.UnSetSelected();
-                                }
-                            }
-                            else
-                            {
-                                Vector3 mousePos_cam = Input.mousePosition;
-                                if (mousePos_cam.x >= item_delete_left
-                                    && mousePos_cam.x <= item_delete_right
-                                    && mousePos_cam.y >= item_delete_down
-                                    && mousePos_cam.y <= item_delete_top)
-                                    ItemSlot.instance.DeleteItem(selectedItem.GetSlotIndex());
                                 else
                                 {
                                     SetMousePosition();
@@ -240,25 +199,72 @@ public class InputSystem : MonoBehaviour
                                     {
                                         if (hit.collider.CompareTag("Enemy"))
                                         {
-                                            selectedItem.SetTarget(hit.transform.gameObject);
+                                            selectedCard.SetTarget(hit.transform.gameObject);
+                                            diceSManager.activatedCard = selectedCard;
+                                        }
+                                    }
+                                }
+                                m_BaUIManager.OffEnlargeCard();
+                                //selectedCard.BringUpCard(false);
+                                selectedCard = null;
+                                break;
+                            case 1:
+                                if (selectedItem.GetIsNonTarget())
+                                {
+                                    if (selectedItem.GetReady())
+                                    {
+                                        selectedItem.SetTarget(null);
+                                        //selectedItem.Use(0); // Card도, Item도, SetTarget 안에 Use가 있음.
+                                    }
+                                    else
+                                    {
+                                        Vector3 mousePos_cam = Input.mousePosition;
+                                        if (mousePos_cam.x >= item_delete_left
+                                            && mousePos_cam.x <= item_delete_right
+                                            && mousePos_cam.y >= item_delete_down
+                                            && mousePos_cam.y <= item_delete_top)
+                                            ItemSlot.instance.DeleteItem(selectedItem.GetSlotIndex());
+                                        else
+                                            selectedItem.UnSetSelected();
+                                    }
+                                }
+                                else
+                                {
+                                    Vector3 mousePos_cam = Input.mousePosition;
+                                    if (mousePos_cam.x >= item_delete_left
+                                        && mousePos_cam.x <= item_delete_right
+                                        && mousePos_cam.y >= item_delete_down
+                                        && mousePos_cam.y <= item_delete_top)
+                                        ItemSlot.instance.DeleteItem(selectedItem.GetSlotIndex());
+                                    else
+                                    {
+                                        SetMousePosition();
+
+                                        RaycastHit2D hit = Physics2D.Raycast(mousePosition, transform.forward, maxDistance);
+                                        if (hit)
+                                        {
+                                            if (hit.collider.CompareTag("Enemy"))
+                                            {
+                                                selectedItem.SetTarget(hit.transform.gameObject);
+                                            }
+                                            else
+                                                selectedItem.UnSetSelected();
                                         }
                                         else
                                             selectedItem.UnSetSelected();
                                     }
-                                    else
-                                        selectedItem.UnSetSelected();
                                 }
-                            }
-                            selectedItem = null;
-                            break;
-                    }
-                    isSelected = false;
-                    useTypeNum = -1;
-                    line.SetActive(false);
+                                selectedItem = null;
+                                break;
+                        }
+                        isSelected = false;
+                        useTypeNum = -1;
+                        line.SetActive(false);
 
-                    isTempTargeted = false;
-                    targetedPos = Vector2.zero;
-                    targetColSize = Vector2.zero;
+                        isTempTargeted = false;
+                        targetedPos = Vector2.zero;
+                        targetColSize = Vector2.zero;
+                    }
                 }
             }
         }
@@ -395,5 +401,21 @@ public class InputSystem : MonoBehaviour
         item_delete_right = right;
         item_delete_top = top;
         item_delete_down = down;
+    }
+
+    private bool ChkStarted()
+    {
+        if(isStarted)
+            return true;
+        else
+        {
+            if (StoryTurningManager.instance.isTutorial)
+                return false;
+            else
+            {
+                isStarted = true;
+                return true;
+            }
+        }
     }
 }

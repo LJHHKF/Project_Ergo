@@ -12,7 +12,10 @@ public class ImageRayCastTargetOff : MonoBehaviour
     void Start()
     {
         myImage = GetComponent<Image>();
-        target.enable += () => myImage.raycastTarget = false;
-        target.disable += () => myImage.raycastTarget = true;
+        if (myImage != null)
+        {
+            target.enable += () => myImage.raycastTarget = false;
+            target.disable += () => myImage.raycastTarget = true;
+        }
     }
 }

@@ -1,5 +1,17 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &1861553799610908532
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 148970730282238508}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b99b717389f3b646ab5d78ca98e6837, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &6456535894684589990
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18,6 +30,7 @@ MonoBehaviour:
   isSecondDmgFormula: 1
   isUseFixRate: 0
   fixPRate: 0.5
+  affectDelay: 2
 --- !u!1001 &1154581787943562982
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -147,6 +160,11 @@ PrefabInstance:
       propertyPath: cardID
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1437206776610783508, guid: 13514753735d515478a2178e20010343,
+        type: 3}
+      propertyPath: effectM
+      value: 
+      objectReference: {fileID: 1861553799610908532}
     - target: {fileID: 1437206776610783508, guid: 13514753735d515478a2178e20010343,
         type: 3}
       propertyPath: cardName

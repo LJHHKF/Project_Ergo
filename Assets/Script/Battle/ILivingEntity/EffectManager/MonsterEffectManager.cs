@@ -7,6 +7,7 @@ public class MonsterEffectManager : MonoBehaviour
     [Header("Card Hit Effect Setting")]
     [SerializeField] protected GameObject Hit_HitAndRun;
     [SerializeField] protected GameObject Hit_HalfSwording;
+    [SerializeField] protected GameObject Hit_Sword;
     [SerializeField] protected GameObject Hit_PoisonShot;
     [SerializeField] protected GameObject Hit_BlowShot;
     [SerializeField] protected GameObject BulkUpEffect;
@@ -64,6 +65,15 @@ public class MonsterEffectManager : MonoBehaviour
         {
             BulkUpEffect.SetActive(true);
             StartCoroutine(DeleyedUnActive(BulkUpEffect));
+        }
+    }
+
+    public void OnHit_Sword()
+    {
+        if(!Hit_Sword.activeSelf)
+        {
+            Hit_Sword.SetActive(true);
+            StartCoroutine(DeleyedUnActive(Hit_Sword));
         }
     }
 

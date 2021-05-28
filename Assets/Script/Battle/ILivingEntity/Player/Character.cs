@@ -176,7 +176,7 @@ public class Character : LivingEntity
     {
         if(!ChargeEffect.activeSelf)
         {
-            ChargeEffect.SetActive(false);
+            ChargeEffect.SetActive(true);
             StartCoroutine(DeleyedUnActive(ChargeEffect));
         }
     }
@@ -185,7 +185,7 @@ public class Character : LivingEntity
     {
         if(!GuardCardEffect.activeSelf)
         {
-            GuardCardEffect.SetActive(false);
+            GuardCardEffect.SetActive(true);
             StartCoroutine(DeleyedUnActive(GuardCardEffect));
         }
     }
