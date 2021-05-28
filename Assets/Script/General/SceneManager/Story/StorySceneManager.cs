@@ -230,7 +230,7 @@ public class StorySceneManager : MonoBehaviour
                             SoundEfManager.instance.SetSoundEffect(mySoundEffect.SoundEf.storyEnd);
                             if (StoryTurningManager.instance.isTutorial)
                             {
-                                StoryTurningManager.instance.isTutorial = false;
+                                //StoryTurningManager.instance.isTutorial = false; // 전투씬에서 듀토리얼 이미지를 띄워주므로, 거기서 false로 바꾸도록 수정함.
                                 LoadManager.instance.LoadFirst_Init();
                             }
                             else

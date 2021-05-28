@@ -240,4 +240,9 @@ public class Enemy_Base : LivingEntity
     {
         effectManager_monster.OnBulkUpEffect();
     }
+
+    public void OnHit_Sword()
+    {
+        effectManager_monster.OnHit_Sword();
+    }
 }

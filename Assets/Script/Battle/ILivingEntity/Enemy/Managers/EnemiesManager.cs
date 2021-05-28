@@ -196,7 +196,7 @@ public class EnemiesManager : MonoBehaviour
         }
         if (monsters.Count == 0)
         {
-            TurnManager.instance.OnBattleEnd();
+            StartCoroutine(DelayedExecute());
             PlayerPrefs.DeleteKey(key);
             for(int i = 0; i < initCnt; i++)
             {
@@ -205,6 +205,13 @@ public class EnemiesManager : MonoBehaviour
                 m_sb.Append($"{key}.{_i}");
                 PlayerPrefs.DeleteKey(m_sb.ToString());
             }
+        }
+
+        IEnumerator DelayedExecute()
+        {
+            yield return new WaitForSeconds(2.0f);
+            TurnManager.instance.OnBattleEnd();
+            yield break;
         }
     }
 
