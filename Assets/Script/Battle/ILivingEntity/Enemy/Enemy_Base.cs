@@ -220,8 +220,14 @@ public class Enemy_Base : LivingEntity
     {
         if (_name.Length >= 1)
             myAnimator.SetTrigger(_name);
+        
+        string prefix;
 
-        string prefix = $"M{monsterID}_";
+        //4,5 및 7,8 등 세트인 것 있으므로, 그런 것들 애니 추가시엔 추가 작업 필요
+        if (monsterID == 2)
+            prefix = "M1_";
+        else
+            prefix = $"M{monsterID}_";
         for (int i = 0; i < myAnimator.runtimeAnimatorController.animationClips.Length; i++)
         {
             int _i = i;
