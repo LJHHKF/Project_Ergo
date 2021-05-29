@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Text;
+using Card;
 
 public class Card_UI : MonoBehaviour
 {
@@ -16,10 +17,12 @@ public class Card_UI : MonoBehaviour
     private Sprite cardImage;
     private Sprite cardOuterImage;
     private string cardText;
+    private CardTextType cardType;
 
     [SerializeField] private TextMeshProUGUI text_cost;
     [SerializeField] private TextMeshProUGUI text_plain;
     [SerializeField] private TextMeshProUGUI text_name;
+    [SerializeField] private TextMeshProUGUI text_typeName;
     [SerializeField] private Image image_card;
     [SerializeField] private Image image_cardOuter;
 
@@ -41,7 +44,7 @@ public class Card_UI : MonoBehaviour
 
     private void InitSetting_Shop()
     {
-        target_Card.CopyUIInfo(out cardID,out cardName ,out cost, out fixP, out flucPRate, out cardImage, out cardOuterImage, out cardText);
+        target_Card.CopyUIInfo(out cardID,out cardName ,out cost, out fixP, out flucPRate, out cardImage, out cardOuterImage, out cardText, out cardType);
         text_cost.text = cost.ToString();
         text_name.text = cardName;
         image_card.sprite = cardImage;
@@ -51,17 +54,43 @@ public class Card_UI : MonoBehaviour
         sb.Replace("()", $"({fixP} + 스탯보정치)");
         sb.Replace("(변동치)", flucPRate.ToString());
         text_plain.text = sb.ToString();
+
+        switch(cardType)
+        {
+            case CardTextType.Attack:
+                text_typeName.text = "공격";
+                break;
+            case CardTextType.Guard:
+                text_typeName.text = "방어";
+                break;
+            case CardTextType.Magic:
+                text_typeName.text = "마법";
+                break;
+        }
     }
 
     private void InitSetting_inGame()
     {
-        target_Card.CopyUIInfo(out cardID, out cardName, out cost, out fixP, out flucPRate, out cardImage, out cardOuterImage, out cardText);
+        target_Card.CopyUIInfo(out cardID, out cardName, out cost, out fixP, out flucPRate, out cardImage, out cardOuterImage, out cardText, out cardType);
         text_cost.text = cost.ToString();
         text_name.text = cardName;
         image_card.sprite = cardImage;
         image_cardOuter.sprite = cardOuterImage;
 
         text_plain.text = target_Card.GetCurPlainText();
+
+        switch (cardType)
+        {
+            case CardTextType.Attack:
+                text_typeName.text = "공격";
+                break;
+            case CardTextType.Guard:
+                text_typeName.text = "방어";
+                break;
+            case CardTextType.Magic:
+                text_typeName.text = "마법";
+                break;
+        }
     }
 
     public void AddToDeckTargetedCard()

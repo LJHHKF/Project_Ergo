@@ -25,7 +25,7 @@ public class CUF_Repeat : MonoBehaviour
         }
         else
         {
-            myCard.sub_use += () => StartCoroutine(DelayedUse(maxNum));
+            myCard.sub_use += SubUse;
         }
     }
 
@@ -48,9 +48,14 @@ public class CUF_Repeat : MonoBehaviour
         StartCoroutine(DelayedUse(dmg));
     }
 
+    private void SubUse()
+    {
+        StartCoroutine(DelayedUse(maxNum));
+    }
+
     IEnumerator DelayedUse(int maxNum)
     {
-        int cnt = 1;
+        int cnt = 0;
         while(cnt < maxNum)
         {
             yield return new WaitForSeconds(timeInterval);

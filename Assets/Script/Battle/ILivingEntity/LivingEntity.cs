@@ -275,15 +275,9 @@ public class LivingEntity : MonoBehaviour, IDamageable
         myUI.HpUpdate();
     }
 
-    public void SetAnimTrigger(string _name)
-    {
-        if (_name.Length > 1)
-            myAnimator.SetTrigger(_name);
-    }
-
     protected IEnumerator DeleyedUnActive(GameObject go)
     {
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(go.GetComponent<Animator>().runtimeAnimatorController.animationClips[0].length);
         go.SetActive(false);
         yield break;
     }

@@ -216,6 +216,23 @@ public class Enemy_Base : LivingEntity
         yield break;
     }
 
+    public float SetAnimTrigger(string _name)
+    {
+        if (_name.Length >= 1)
+            myAnimator.SetTrigger(_name);
+
+        string prefix = $"M{monsterID}_";
+        for (int i = 0; i < myAnimator.runtimeAnimatorController.animationClips.Length; i++)
+        {
+            int _i = i;
+            string m_name = prefix + _name;
+            if (myAnimator.runtimeAnimatorController.animationClips[_i].name == m_name)
+                return myAnimator.runtimeAnimatorController.animationClips[_i].length;
+        }
+        return 1.0f;
+    }
+
+
     public void OnHit_HitAndRun()
     {
         effectManager_monster.OnHit_HitAndRun();

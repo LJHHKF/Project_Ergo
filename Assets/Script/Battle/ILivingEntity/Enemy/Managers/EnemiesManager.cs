@@ -275,6 +275,15 @@ public class EnemiesManager : MonoBehaviour
         }
     }
 
+    public void AllDamaged(int dmg)
+    {
+        for(int i = 0; i < monsters.Count; i++)
+        {
+            int _i = i;
+            monsters[_i].GetComponent<LivingEntity>().OnDamage(dmg);
+        }
+    }
+
     public bool SearchHadMonster(int _id)
     {
         for (int i = 0; i < monsters.Count; i++)
@@ -334,9 +343,8 @@ public class EnemiesManager : MonoBehaviour
         for(int i = 0; i < monsters.Count; i++)
         {
             int _i = i;
-            Enemy_Base temp = monsters[_i].GetComponent<Enemy_Base>();
             yield return new WaitForSeconds(time_interval);
-            temp.Act();
+            monsters[_i].GetComponent<Enemy_Base>().Act();
         }
         yield return new WaitForSeconds(time_interval);
         TurnManager.instance.OnTurnEnd();

@@ -84,7 +84,7 @@ PrefabInstance:
     - target: {fileID: 1302848795940883632, guid: 13514753735d515478a2178e20010343,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -4.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1302848795940883633, guid: 13514753735d515478a2178e20010343,
         type: 3}
@@ -196,6 +196,11 @@ PrefabInstance:
       propertyPath: cardText
       value: "\uBAA8\uB4E0 \uC801\uC5D0\uAC8C [()] + [\uC8FC\uC0AC\uC704 \uAC12]\uB9CC\uD07C\uC758
         \uD53C\uD574\uB97C 2\uBC88 \uC785\uD78C\uB2E4."
+      objectReference: {fileID: 0}
+    - target: {fileID: 1437206776610783508, guid: 13514753735d515478a2178e20010343,
+        type: 3}
+      propertyPath: type_text
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1437206776610783508, guid: 13514753735d515478a2178e20010343,
         type: 3}

@@ -1424,7 +1424,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   myUI: {fileID: 4630918161695353017}
   myAbCond: {fileID: 3804837206480057224}
-  myAnimator: {fileID: 0}
+  myAnimator: {fileID: 7365612931804551002}
   effectT_body: {fileID: 8006412029601729374}
   healEffect_prefab: {fileID: 1381774279838387266, guid: 5882b52f0d9946649b3893b596122000,
     type: 3}
