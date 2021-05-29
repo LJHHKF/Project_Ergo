@@ -15,6 +15,13 @@ namespace Card
         Magic_attack,
         Magic_other
     }
+
+    public enum CardTextType
+    {
+        Attack,
+        Guard,
+        Magic
+    }
 }
 
 public class Card_Base : MonoBehaviour, ICard
@@ -29,6 +36,7 @@ public class Card_Base : MonoBehaviour, ICard
     [SerializeField] protected bool isFixGuard = false;
     [SerializeField] protected ICardEffectM effectM;
     [SerializeField] protected CardType type;
+    [SerializeField] protected CardTextType type_text;
     [TextArea]
     [SerializeField] protected string cardText;
     protected int r_fixP = 0;
@@ -52,6 +60,7 @@ public class Card_Base : MonoBehaviour, ICard
     protected TextMeshProUGUI text_cost;
     protected TextMeshProUGUI text_plain;
     protected TextMeshProUGUI text_name;
+    protected TextMeshProUGUI text_typeName;
     protected TextMeshProUGUI[] array_text;
     protected BSCManager m_cardM;
     protected CostManager m_costM;
@@ -62,6 +71,7 @@ public class Card_Base : MonoBehaviour, ICard
     public event Action<int> use;
     public event Action sub_use;
     public event Action<GameObject> ev_setTarget;
+    public event Action<float> ev_setDelay;
     //protected int d_Value;
 
     public Vector2 m_Position
@@ -82,6 +92,7 @@ public class Card_Base : MonoBehaviour, ICard
         text_cost = textCanvas.transform.Find("CostText").GetComponent<TextMeshProUGUI>();
         text_plain = textCanvas.gameObject.transform.Find("CardText").GetComponent<TextMeshProUGUI>();
         text_name = textCanvas.gameObject.transform.Find("CardName").GetComponent<TextMeshProUGUI>();
+        text_typeName = textCanvas.gameObject.transform.Find("TypeText").GetComponent<TextMeshProUGUI>();
         array_text = textCanvas.gameObject.GetComponents<TextMeshProUGUI>();
 
         m_Collider = gameObject.GetComponent<BoxCollider2D>();
@@ -96,6 +107,19 @@ public class Card_Base : MonoBehaviour, ICard
         text_plain.text = sb.ToString();
         text_name.text = cardName;
         ready = false;
+
+        switch(type_text)
+        {
+            case CardTextType.Attack:
+                text_typeName.text = "공격";
+                break;
+            case CardTextType.Guard:
+                text_typeName.text = "방어";
+                break;
+            case CardTextType.Magic:
+                text_typeName.text = "마법";
+                break;
+        }
 
         GameMaster.instance.battleStageStart += Event_BattleStageStart;
     }
@@ -217,7 +241,7 @@ public class Card_Base : MonoBehaviour, ICard
         sub_use?.Invoke();
 
         ChkAndFindCharcter();
-        m_charM.OnCardUseAnimation(type);
+        ev_setDelay?.Invoke(m_charM.OnCardUseAnimation(type));
         m_charM.AddActionPopUp(cardName);
 
         ChkAndFindBSCardManager();
@@ -394,6 +418,7 @@ public class Card_Base : MonoBehaviour, ICard
         text_cost.color = new Color(text_cost.color.r, text_cost.color.g, text_cost.color.b, 0);
         text_plain.color = new Color(text_plain.color.r, text_plain.color.g, text_plain.color.b, 0);
         text_name.color = new Color(text_name.color.r, text_name.color.g, text_name.color.b, 0);
+        text_typeName.color = new Color(text_typeName.color.r, text_typeName.color.g, text_typeName.color.b, 0);
 
         m_Collider.enabled = false;
     }
@@ -405,6 +430,7 @@ public class Card_Base : MonoBehaviour, ICard
         text_cost.color = new Color(text_cost.color.r, text_cost.color.g, text_cost.color.b, 1.0f);
         text_plain.color = new Color(text_plain.color.r, text_plain.color.g, text_plain.color.b, 1.0f);
         text_name.color = new Color(text_name.color.r, text_name.color.g, text_name.color.b, 1.0f);
+        text_typeName.color = new Color(text_typeName.color.r, text_typeName.color.g, text_typeName.color.b, 1.0f);
 
         m_Collider.enabled = true;
     }
@@ -417,7 +443,7 @@ public class Card_Base : MonoBehaviour, ICard
     //private Sprite cardImage;
     //private string cardText;
 
-    public void CopyUIInfo(out int _cardID,out string _name ,out int _cost, out int _fixP, out float _flucPRate, out Sprite _cardImage, out Sprite _cardOuterImage ,out string _cardText)
+    public void CopyUIInfo(out int _cardID,out string _name ,out int _cost, out int _fixP, out float _flucPRate, out Sprite _cardImage, out Sprite _cardOuterImage ,out string _cardText, out CardTextType _cardType)
     {
         _cardID = cardID;
         _name = cardName;
@@ -425,6 +451,7 @@ public class Card_Base : MonoBehaviour, ICard
         _fixP = fixP;
         _flucPRate = flucPRate;
         _cardText = cardText;
+        _cardType = type_text;
         _cardOuterImage = gameObject.GetComponent<SpriteRenderer>().sprite;
         _cardImage = gameObject.transform.Find("CardImage").GetComponent<SpriteRenderer>().sprite;
     }

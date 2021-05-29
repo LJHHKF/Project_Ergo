@@ -155,7 +155,7 @@ public class StageManager : MonoBehaviour
                 int fullWeight = chapter1Weight[m_curStage + 1].battleWeight + chapter1Weight[m_curStage + 1].evWeight; //
                 int rand = UnityEngine.Random.Range(0, fullWeight - 1);
 
-                if (rand < chapter1Weight[m_curStage].battleWeight)
+                if (rand < chapter1Weight[m_curStage + 1].battleWeight)
                     nextStageTypeIndex = 0;
                 else
                 {

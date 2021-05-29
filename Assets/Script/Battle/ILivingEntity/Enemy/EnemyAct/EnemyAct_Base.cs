@@ -31,6 +31,15 @@ namespace EnemyActType
         Clawing,
         BulkUp
     }
+
+    public enum AnimType
+    {
+        None,
+        Hit,
+        Attack1,
+        Special,
+        Guard,
+    }
 }
 
 public class EnemyAct_Base : MonoBehaviour
@@ -54,7 +63,7 @@ public class EnemyAct_Base : MonoBehaviour
     [SerializeField] protected ActSet[] acts;
     [SerializeField] protected int typeVariationNum = 1;
     [SerializeField] protected Sprite actSprite;
-    [SerializeField] protected string actAnimTrigger;
+    [SerializeField] protected AnimType actAnimTrigger;
     [SerializeField] protected float affectDelay = 1.0f;
     [TextArea] public string actExplain;
     protected int[] r_power;
@@ -94,7 +103,7 @@ public class EnemyAct_Base : MonoBehaviour
                 StartCoroutine(delayedAffect(()=>SummonAct()));
             }
         }
-        m_Enemy.SetAnimTrigger(actAnimTrigger);
+        affectDelay = m_Enemy.SetAnimTrigger(actAnimTrigger.ToString());
     }
 
     protected virtual void SummonAct()
@@ -180,7 +189,6 @@ public class EnemyAct_Base : MonoBehaviour
         {
             m_Enemy.OnBulkUpEffect();
         }
-
     }
 
     protected IEnumerator delayedAffect(Action _action)

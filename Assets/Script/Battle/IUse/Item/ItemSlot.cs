@@ -19,6 +19,7 @@ public class ItemSlot : MonoBehaviour
 
     [SerializeField] private int slot_max = 4;
     private float use_min_X = 100;
+    private float screenSize_x;
 
     private List<GameObject> item_list = new List<GameObject>();
     private GameObject rewardItem = null;
@@ -37,6 +38,8 @@ public class ItemSlot : MonoBehaviour
     void Start()
     {
         item_list.Capacity = slot_max;
+        RectTransform temp = GameObject.FindGameObjectWithTag("UIManager").GetComponent<RectTransform>();
+        screenSize_x = temp.sizeDelta.x * temp.localScale.x;
     }
 
     private void OnEnable()
@@ -44,8 +47,8 @@ public class ItemSlot : MonoBehaviour
         GameMaster.instance.initSaveData_Start += GameStart_Init;
         GameMaster.instance.startGame_Start += GameStart;
         GameMaster.instance.gameOver += ClearList;
-        GameMaster.instance.battleStageStart += SaveList;
-        GameMaster.instance.stageEnd += SaveList;
+        GameMaster.instance.battleStageStart += BattleStageStart;
+        GameMaster.instance.stageEnd += StageEnd;
     }
 
     private void OnDisable()
@@ -53,8 +56,8 @@ public class ItemSlot : MonoBehaviour
         GameMaster.instance.initSaveData_Start -= GameStart_Init;
         GameMaster.instance.startGame_Start -= GameStart;
         GameMaster.instance.gameOver -= ClearList;
-        GameMaster.instance.battleStageStart -= SaveList;
-        GameMaster.instance.stageEnd -= SaveList;
+        GameMaster.instance.battleStageStart -= BattleStageStart;
+        GameMaster.instance.stageEnd -= StageEnd;
     }
 
     private void GameStart()
@@ -96,6 +99,18 @@ public class ItemSlot : MonoBehaviour
 
             PlayerPrefs.SetInt(m_sb.ToString(), -1);
         }
+    }
+
+    private void BattleStageStart()
+    {
+        SaveList();
+        use_min_X = screenSize_x * 0.13f;
+    }
+
+    private void StageEnd()
+    {
+        SaveList();
+        use_min_X = screenSize_x;
     }
 
     private void ClearList()
@@ -171,9 +186,12 @@ public class ItemSlot : MonoBehaviour
         return item_list[_index].GetComponent<IItem>().GetItemImg();
     }
 
-    public float GetUseMinX()
+    public bool CheckUseMinX(float _x)
     {
-        return use_min_X;
+        if (_x > use_min_X)
+            return true;
+        else
+            return false;
     }
 
     public void DeleteItem(int _index)

@@ -20,6 +20,8 @@ public class CUF_RandomAbCond : CUF_AbCondition
     protected override void Start()
     {
         base.Start();
+        if (!isUseRepeat)
+            myCard.use += Use;
     }
 
     public override void Use(int diceValue)
@@ -55,10 +57,20 @@ public class CUF_RandomAbCond : CUF_AbCondition
 
         int rand = UnityEngine.Random.Range(min_AbID, max_AbID);
 
+        //if (isUseRepeat)
+        //{
+        //    if (isImidiateAbActive)
+        //        StartCoroutine(RepeatAffect(() => ab_target.AddImdiateAbCondition(rand, dmg), repeatNum, repeatDelay));
+        //    else
+        //        StartCoroutine(RepeatAffect(() => ab_target.AddDelayedCondition(rand, dmg), repeatNum, repeatDelay));
+        //}
+        //else
+        //{
         if (isImidiateAbActive)
             StartCoroutine(delayedAffect(() => ab_target.AddImdiateAbCondition(rand, dmg)));
         else
             StartCoroutine(delayedAffect(() => ab_target.AddDelayedCondition(rand, dmg)));
+        //}
         
     }
 

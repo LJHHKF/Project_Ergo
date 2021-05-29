@@ -12,7 +12,8 @@ public class TrapSceneManager : MonoBehaviour
     {
         public string name;
         public int damage;
-        [TextArea]public string description;
+        [TextArea] public string description;
+        [TextArea] public string description2;
         public Sprite sprite;
         public int weight;
         public bool hadAddAbcond;
@@ -26,7 +27,7 @@ public class TrapSceneManager : MonoBehaviour
         public int damage;
     }
     [Header("Object Registration")]
-    [SerializeField] private Text nameField;
+    //[SerializeField] private Text nameField;
     [SerializeField] private Text desciptionField;
     [SerializeField] private SpriteRenderer bg;
     [SerializeField] private SettingWindowM settingWindowManager;
@@ -78,8 +79,10 @@ public class TrapSceneManager : MonoBehaviour
                 full_weight += traps[i].weight;
                 if (rand >= full_weight - traps[i].weight && rand < full_weight)
                 {
-                    nameField.text = traps[i].name;
-                    fullText.Append(traps[i].description);
+                    //nameField.text = traps[i].name;
+                    fullText.AppendLine(traps[i].description);
+                    if(traps[i].description2.Length != 0)
+                        fullText.AppendLine(traps[i].description2);
                     bg.sprite = traps[i].sprite;
                     trap_index = i;
                     PlayerPrefs.SetInt(key, i);
@@ -94,10 +97,16 @@ public class TrapSceneManager : MonoBehaviour
         else
         {
             trap_index = PlayerPrefs.GetInt(key);
-            nameField.text = traps[trap_index].name;
-            fullText.Append(traps[trap_index].description);
+            //nameField.text = traps[trap_index].name;
+            fullText.AppendLine(traps[trap_index].description);
+            if(traps[trap_index].description2.Length != 0)
+                fullText.AppendLine(traps[trap_index].description2);
+            bg.sprite = traps[trap_index].sprite;
+            if (trap_index == 0)
+                BGMManager.instance.EFfectBGM_trap(0);
+            else if (trap_index == 1)
+                BGMManager.instance.EFfectBGM_trap(1);
         }
-
         GameMaster.instance.OnStageStart();
     }
 
