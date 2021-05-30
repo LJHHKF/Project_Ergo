@@ -12,19 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcd749cf9ba9cc4489b4eb9f12c6a4ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  actName: "\uAC00\uB4DC \uC5C5"
+  actName: "\uC6C5\uD06C\uB9AC\uAE30"
   actID: 2
+  effect: 0
   acts:
   - type: 0
     affactType: 1
     powerRate: 1
-    repeatNum: 1
     abcondID: 0
     fixedPower: 0
     isDelayedAbCond: 0
   typeVariationNum: 1
-  actSprite: {fileID: 0}
-  actAnimTrigger: 
+  actSprite: {fileID: 21300000, guid: 8eec89ff13716714a880ea005fb83efc, type: 3}
+  actAnimTrigger: 4
+  affectDelay: 1
   actExplain: "[\uB0B4\uAD6C]*1 \uB9CC\uD07C\uC758 \uBC29\uC5B4\uB3C4\uB97C \uD68D\uB4DD\uD55C\uB2E4."
 --- !u!114 &4481523573367778654
 MonoBehaviour:
@@ -38,56 +39,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcd749cf9ba9cc4489b4eb9f12c6a4ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  actName: "\uC2A4\uD2B8\uB808\uC774\uD2B8"
+  actName: "\uBAB8\uD1B5\uBC15\uCE58\uAE30"
   actID: 1
+  effect: 1
   acts:
   - type: 0
     affactType: 0
     powerRate: 1
-    repeatNum: 1
     abcondID: 0
     fixedPower: 0
     isDelayedAbCond: 0
   typeVariationNum: 1
-  actSprite: {fileID: 0}
-  actAnimTrigger: Attack1
+  actSprite: {fileID: 21300000, guid: 4b8d94d3ebbfb8042814debc2dbf1bc7, type: 3}
+  actAnimTrigger: 2
+  affectDelay: 1
   actExplain: "\uB9C8\uB974\uC2A4\uC5D0\uAC8C [\uD798]*1 \uB9CC\uD07C\uC758 \uD53C\uD574\uB97C
     \uC785\uD78C\uB2E4."
---- !u!114 &4555253031288903762
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8235354379927405375}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bcd749cf9ba9cc4489b4eb9f12c6a4ee, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  actName: "\uD6C5 \uC564 \uAC00\uB4DC"
-  actID: 3
-  acts:
-  - type: 1
-    affactType: 0
-    powerRate: 1
-    repeatNum: 1
-    abcondID: 0
-    fixedPower: 0
-    isDelayedAbCond: 0
-  - type: 1
-    affactType: 1
-    powerRate: 0.5
-    repeatNum: 1
-    abcondID: 0
-    fixedPower: 0
-    isDelayedAbCond: 0
-  typeVariationNum: 1
-  actSprite: {fileID: 0}
-  actAnimTrigger: Attack1
-  actExplain: "\uB9C8\uB974\uC2A4\uC5D0\uAC8C [\uD2B9\uACF5]*1 \uB9CC\uD07C\uC758
-    \uD53C\uD574\uB97C \uC785\uD78C \uD6C4 [\uD2B9\uACF5]*0.5 \uB9CC\uD07C\uC758
-    \uBC29\uC5B4\uB3C4\uB97C \uD68D\uB4DD\uD55C\uB2E4."
 --- !u!1001 &7626092384427656595
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -113,8 +80,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4451541378279184922, guid: cdda7a158c36ffa46ab94414845dfceb,
         type: 3}
+      propertyPath: dropSoul
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4451541378279184922, guid: cdda7a158c36ffa46ab94414845dfceb,
+        type: 3}
       propertyPath: monsterID
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4451541378279184922, guid: cdda7a158c36ffa46ab94414845dfceb,
+        type: 3}
+      propertyPath: soundType
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 4451541378279184922, guid: cdda7a158c36ffa46ab94414845dfceb,
+        type: 3}
+      propertyPath: hadHitAnim
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4451541378279184922, guid: cdda7a158c36ffa46ab94414845dfceb,
         type: 3}
@@ -125,7 +107,7 @@ PrefabInstance:
         type: 3}
       propertyPath: specialAct
       value: 
-      objectReference: {fileID: 4555253031288903762}
+      objectReference: {fileID: 0}
     - target: {fileID: 4451541378279184922, guid: cdda7a158c36ffa46ab94414845dfceb,
         type: 3}
       propertyPath: normalActs.Array.size

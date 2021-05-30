@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Text;
 using UnityEngine.UI;
+using System;
 
 public class RewardUIManager : MonoBehaviour
 {
     [SerializeField] private int itemOnPer_int = 30; // max 100
     [SerializeField] private Card_UI cardUIManager;
+    private int card_ID;
 
     [SerializeField] private GameObject[] btns;
     [SerializeField] private Image soulImage;
@@ -17,7 +19,7 @@ public class RewardUIManager : MonoBehaviour
     private bool[] isSelected;
     private int soulReward;
 
-    //private event Action m_onDisable;
+    private event Action m_onDisable;
 
     private void Awake()
     {
@@ -29,45 +31,69 @@ public class RewardUIManager : MonoBehaviour
         CardPack.instance.ResetCanList();
         Card_Base m_card = CardPack.instance.GetRandomCard_isntConfirm().GetComponent<Card_Base>();
         cardUIManager.SetTargetCard(m_card, true);
-        //m_onDisable += () => CardPack.instance.TempHadCntUpDown(m_card.GetCardID(), false);
+        m_onDisable += () => CardPack.instance.TempHadCntUpDown(m_card.GetID(), false);
 
         StringBuilder m_sb = new StringBuilder();
-        m_sb.Append("소울 보상(가구현)\n");
-        soulReward = EnemiesManager.instance.GetInitCnt() * 100;
+        m_sb.Append("소울 보상\n");
+        soulReward = EnemiesManager.instance.stageSoul;
         m_sb.Append(soulReward.ToString());
         soulText.text = m_sb.ToString();
 
+        BGMManager.instance.EffectBGM_BatlleWin();
+
         for (int i = 0; i < isSelected.Length; i++)
         {
-            isSelected[i] = false;
+            int _i = i;
+            isSelected[_i] = true;
         }
 
         int rand = UnityEngine.Random.Range(0, 99);
         if (rand < itemOnPer_int)
-            btns[2].SetActive(true);
+        {
+            if (ItemSlot.instance.GetCanAdd())
+            {
+                btns[2].SetActive(true);
+                IItem temp = ItemSlot.instance.SetRewardItem_ready();
+                itemImage.sprite = temp.GetItemImg();
+                itemText.text = temp.GetItemText();
+            }
+            else
+            {
+                btns[2].SetActive(false);
+                isSelected[2] = false;
+            }
+        }
         else
         {
             btns[2].SetActive(false);
+            isSelected[2] = false;
         }
     }
 
-    //private void OnDisable()
-    //{
-    //        m_onDisable?.Invoke();
-    //}
+    private void OnDisable()
+    {
+        m_onDisable?.Invoke();
+    }
 
     public void BtnConfirm()
     {
-        if(isSelected[0])
-            cardUIManager.AddToDeckTargetedCard();
+        SoundEfManager.instance.SetSoundEffect(mySoundEffect.SoundEf.ui_touch);
+        if (isSelected[0])
+            cardUIManager.AddToCardPackTargetedCard();
         if (isSelected[1])
             PlayerMoneyManager.instance.AcquiredSoul(soulReward);
+
+        if (isSelected[2])
+            ItemSlot.instance.SetRewardItem_confirm();
+        else
+            ItemSlot.instance.UnSetRewardItem();
 
         StartCoroutine(DeleayedNextStage());
     }
 
     private void BtnSelectClick(int index)
     {
+        SoundEfManager.instance.SetSoundEffect(mySoundEffect.SoundEf.ui_touch);
         // 0: card, 1 : sout, 2: item
         if (!isSelected[index])
         {
@@ -125,7 +151,8 @@ public class RewardUIManager : MonoBehaviour
     IEnumerator DeleayedNextStage()
     {
         yield return new WaitForSeconds(1.0f);
-        LoadManager.instance.LoadNextStage();
+        GameMaster.instance.OnBattleStageEnd();
+        LoadManager.instance.LoadStoryScene();
         yield break;
     }
 }

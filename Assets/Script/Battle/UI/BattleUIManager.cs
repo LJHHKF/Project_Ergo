@@ -15,6 +15,7 @@ public class BattleUIManager : MonoBehaviour
     [SerializeField] private GameObject cardsListWindow;
     [SerializeField] private CardListManager cardListM;
     [SerializeField] private GameObject statusDetailArea;
+    [SerializeField] private GameObject tutorial;
 
     public bool isDiceOn
     {
@@ -32,13 +33,17 @@ public class BattleUIManager : MonoBehaviour
         card_enlarge.SetActive(false);
         cardsListWindow.SetActive(false);
         statusDetailArea.SetActive(false);
+        tutorial.SetActive(false);
         isDiceOn = false;
         TurnManager.instance.firstTurn += Event_FirstTurn;
         TurnManager.instance.turnStart += Event_TurnStart;
         TurnManager.instance.playerTurnEnd += Event_PlayerTurnEnd;
         TurnManager.instance.battleEnd += Event_BattleEnd;
 
-        GameMaster.instance.OnBattleStageStart();
+        if (StoryTurningManager.instance.isTutorial)
+            tutorial.SetActive(true);
+        else
+            GameMaster.instance.OnBattleStageStart();
     }
 
     private void OnDestroy()
@@ -49,22 +54,22 @@ public class BattleUIManager : MonoBehaviour
         TurnManager.instance.battleEnd -= Event_BattleEnd;
     }
 
-    private void Event_FirstTurn(object _o, EventArgs _e)
+    private void Event_FirstTurn()
     {
         btn_TurnEnd.SetActive(true);
     }
 
-    private void Event_TurnStart(object _o, EventArgs _e)
+    private void Event_TurnStart()
     {
         btn_TurnEnd.SetActive(true);
     }
 
-    private void Event_PlayerTurnEnd(object _o, EventArgs _e)
+    private void Event_PlayerTurnEnd()
     {
         btn_TurnEnd.SetActive(false);
     }
 
-    private void Event_BattleEnd(object _o, EventArgs _e)
+    private void Event_BattleEnd()
     {
         btn_TurnEnd.SetActive(false);
         panel_reward.SetActive(true);
@@ -130,11 +135,19 @@ public class BattleUIManager : MonoBehaviour
 
     public void BtnTurnEnd()
     {
+        SoundEfManager.instance.SetSoundEffect(mySoundEffect.SoundEf.ui_touch);
         TurnManager.instance.OnPlayerTurnEnd();
     }
 
     public GameObject GetStatusDetailArea()
     {
         return statusDetailArea;
+    }
+
+    public void TutorialEnd()
+    {
+        tutorial.SetActive(false);
+        StoryTurningManager.instance.isTutorial = false;
+        GameMaster.instance.OnBattleStageStart();
     }
 }

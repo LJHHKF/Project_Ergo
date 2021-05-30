@@ -87,7 +87,7 @@ public class CostManager : MonoBehaviour
     //    ResetCost();
     //}
 
-    private void Event_TurnStart(object _o, EventArgs _e)
+    private void Event_TurnStart()
     {
         ResetCost();
     }

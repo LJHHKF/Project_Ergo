@@ -66,7 +66,7 @@ public class StageManager : MonoBehaviour
         GameMaster.instance.gameOver -= Event_GameOver;
     }
 
-    private void Event_InitGameData(object _sender, EventArgs _e)
+    private void Event_InitGameData()
     {
         m_curChapter = 1;
         m_curStage = 0;
@@ -85,7 +85,7 @@ public class StageManager : MonoBehaviour
         LoadManager.instance.LoadFirst_Init_ToSetting();
     }
 
-    private void Event_GameStart(object _sender, EventArgs _e)
+    private void Event_GameStart()
     {
         key.Clear();
         key.Append($"SaveID({GameMaster.instance.GetSaveID()}).CurrentStage");
@@ -100,7 +100,7 @@ public class StageManager : MonoBehaviour
         LoadManager.instance.LoadFirst(curStageTypeIndex);
     }
 
-    private void Event_GameStop(object _sender, EventArgs _e)
+    private void Event_GameStop()
     {
         key.Clear();
         key.Append($"SaveID({GameMaster.instance.GetSaveID()}).CurrentStage");
@@ -114,7 +114,7 @@ public class StageManager : MonoBehaviour
         PlayerPrefs.SetInt(key.ToString(), curStageTypeIndex);
     }
 
-    private void Event_GameOver(object _sender, EventArgs _e)
+    private void Event_GameOver()
     {
         key.Clear();
         key.Append($"SaveID({GameMaster.instance.GetSaveID()}).CurrentStage");
@@ -150,12 +150,12 @@ public class StageManager : MonoBehaviour
         nextStageTypeIndex = -1;
         if(m_curChapter == 1)
         {
-            if (m_curStage < chapter1Weight.Length-1)
+            if (m_curStage < chapter1Weight.Length -1) // 15까지 계산이 끝나고나면, 16부터는 게임 오버이므로 계산 필요 없음.
             {
-                int fullWeight = chapter1Weight[m_curStage+1].battleWeight + chapter1Weight[m_curStage+1].evWeight; //
+                int fullWeight = chapter1Weight[m_curStage + 1].battleWeight + chapter1Weight[m_curStage + 1].evWeight; //
                 int rand = UnityEngine.Random.Range(0, fullWeight - 1);
 
-                if (rand < chapter1Weight[m_curStage].battleWeight)
+                if (rand < chapter1Weight[m_curStage + 1].battleWeight)
                     nextStageTypeIndex = 0;
                 else
                 {
@@ -176,7 +176,10 @@ public class StageManager : MonoBehaviour
                 }
             }
             else
+            {
                 nextStageTypeIndex = -1;
+                StoryTurningManager.instance.isChapterEnd_1 = true;
+            }
         }
 
         LoadManager.instance.SetNextStageTypeIndex(nextStageTypeIndex);
@@ -185,5 +188,10 @@ public class StageManager : MonoBehaviour
     public void SetCurrentStageTypeIndex(int _input)
     {
         curStageTypeIndex = _input;
+    }
+
+    public int GetCurrentStageTypeIndex()
+    {
+        return curStageTypeIndex;
     }
 }

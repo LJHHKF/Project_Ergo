@@ -187,8 +187,6 @@ public class DiceSystemManager : MonoBehaviour
             }
         }
 
-        Debug.Log("결과: " + resValue);
-
         activatedCard.Use(resValue);
         activatedCard = null;
         m_CardM.UndoHandsTaransparency();

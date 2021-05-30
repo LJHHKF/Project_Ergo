@@ -6,9 +6,15 @@ public class ActiveBTN : MonoBehaviour
 {
     [SerializeField] private GameObject activeTarget;
 
+    private void Start()
+    {
+        activeTarget.SetActive(false);
+    }
+
     public void ActiveBTNClick()
     {
-        if(activeTarget.activeSelf)
+        SoundEfManager.instance.SetSoundEffect(mySoundEffect.SoundEf.ui_touch);
+        if (activeTarget.activeSelf)
         {
             activeTarget.SetActive(false);
         }

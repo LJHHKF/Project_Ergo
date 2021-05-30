@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using myBGM;
 
 public class LoadManager : MonoBehaviour
 {
@@ -39,28 +40,32 @@ public class LoadManager : MonoBehaviour
         switch (nextStageTypeIndex)
         {
             case -1:
-                LoadingSceneManager.LoadScene("GameOver");
+                ReturnLobby_private();
                 GameMaster.instance.OnGameOver();
                 break;
             case 0:
                 m_instance.isBattleReady = true;
                 StageManager.instance.IncreaseCurrentStageNum();
                 LoadingSceneManager.LoadScene("Battle");
+                BGMManager.instance.BGMChange(BGMList.battle);
                 break;
             case 1:
                 StageManager.instance.IncreaseCurrentStageNum();
                 LoadingSceneManager.LoadScene("Ev_Shop");
+                BGMManager.instance.BGMChange(BGMList.shop);
                 break;
             case 2:
                 StageManager.instance.IncreaseCurrentStageNum();
                 LoadingSceneManager.LoadScene("Ev_Rest");
+                BGMManager.instance.BGMChange(BGMList.rest);
                 break;
             case 3:
                 StageManager.instance.IncreaseCurrentStageNum();
                 LoadingSceneManager.LoadScene("Ev_Trap");
+                BGMManager.instance.BGMChange(BGMList.battle);
                 break;
         }
-
+        GameMaster.instance.isInit = false;
         StageManager.instance.SetCurrentStageTypeIndex(nextStageTypeIndex);
         StageManager.instance.SetNextStage();
     }
@@ -73,26 +78,41 @@ public class LoadManager : MonoBehaviour
                 m_instance.isBattleReady = true;
                 StageManager.instance.SetCurrentStageTypeIndex(0);
                 LoadingSceneManager.LoadScene("Battle");
+                BGMManager.instance.BGMChange(BGMList.battle);
                 break;
             case 1:
                 LoadingSceneManager.LoadScene("Ev_Shop");
                 StageManager.instance.SetCurrentStageTypeIndex(1);
+                BGMManager.instance.BGMChange(BGMList.shop);
                 break;
             case 2:
                 LoadingSceneManager.LoadScene("Ev_Rest");
                 StageManager.instance.SetCurrentStageTypeIndex(2);
+                BGMManager.instance.BGMChange(BGMList.rest);
                 break;
             case 3:
                 LoadingSceneManager.LoadScene("Ev_Trap");
                 StageManager.instance.SetCurrentStageTypeIndex(3);
+                BGMManager.instance.BGMChange(BGMList.battle);
                 break;
         }
         StageManager.instance.SetNextStage();
     }
 
+    public void ChangeNextStage(int _index)
+    {
+        nextStageTypeIndex = _index;
+    }
+
+    public void ChangeNextStage_InitStart()
+    {
+        LoadFirst(nextStageTypeIndex);
+    }
+
     public void LoadFirst_Init_ToSetting()
     {
-        LoadingSceneManager.LoadScene("StatusSetting");
+        LoadingSceneManager.LoadScene("AutoStatusScene");
+        BGMManager.instance.BGMChange(BGMList.story);
     }
 
     public void LoadFirst_Init()
@@ -100,16 +120,23 @@ public class LoadManager : MonoBehaviour
         m_instance.isBattleReady = true;
         StageManager.instance.SetCurrentStageTypeIndex(0);
         LoadingSceneManager.LoadScene("Battle");
+        BGMManager.instance.BGMChange(BGMList.battle);
         StageManager.instance.SetNextStage();
+    }
+
+    public void LoadStoryScene()
+    {
+        LoadingSceneManager.LoadScene("StoryScene");
+        BGMManager.instance.BGMChange(BGMList.story);
     }
 
     public void LoadGameOver()
     {
         ChkAndOnStageEndEvent();
-
-        GameMaster.instance.OnGameOver();
-
-        StartCoroutine(DelayedLoadScene("GameOver", 2.0f));
+        //GameMaster.instance.OnGameOver();
+        //StartCoroutine(DelayedLoadScene("GameOver", 2.0f));
+        nextStageTypeIndex = -1;
+        LoadStoryScene();
     }
 
     public void ReturnLobby()
@@ -117,7 +144,18 @@ public class LoadManager : MonoBehaviour
         ChkAndOnStageEndEvent();
 
         GameMaster.instance.OnGameStop();
+        ReturnLobby_private();
+    }
+
+    public void ReturnLobby_GameOver()
+    {
+        ReturnLobby_private();
+    }
+
+    private void ReturnLobby_private()
+    {
         LoadingSceneManager.LoadScene("Entrance");
+        BGMManager.instance.BGMChange(BGMList.entrance);
     }
 
     private void ChkAndOnStageEndEvent()
@@ -145,7 +183,7 @@ public class LoadManager : MonoBehaviour
     IEnumerator OnDelayedTurnStart()
     {
         yield return new WaitForSeconds(0.5f);
-        TurnManager.OnFirstTurn();
+        TurnManager.instance.OnFirstTurn();
         yield break;
     }
 

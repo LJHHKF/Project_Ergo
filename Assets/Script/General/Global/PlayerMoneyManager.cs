@@ -48,10 +48,10 @@ public class PlayerMoneyManager : MonoBehaviour
         GameMaster.instance.gameOver -= Ev_GameOver;
     }
 
-    private void Ev_StartGame_Start(object _o, EventArgs _e)
+    private void Ev_StartGame_Start()
     {
-        //saveID = GameMaster.instance.GetSaveID();
-        //key = $"SaveID({saveID}).Soul";
+        saveID = GameMaster.instance.GetSaveID();
+        key = $"SaveID({saveID}).Soul";
         if (!PlayerPrefs.HasKey(key))
         {
             soul = 0;
@@ -61,24 +61,24 @@ public class PlayerMoneyManager : MonoBehaviour
             soul = PlayerPrefs.GetInt(key);
     }
 
-    private void Ev_InitGame_Start(object _o, EventArgs _e)
+    private void Ev_InitGame_Start()
     {
         soul = 0;
         SoulSave();
     }
 
-    private void Ev_GameStop(object _o, EventArgs _e)
+    private void Ev_GameStop()
     {
         if (soul >= 0)
             SoulSave();
     }
 
-    private void Ev_GameOver(object _o, EventArgs _e)
+    private void Ev_GameOver()
     {
         PlayerPrefs.DeleteKey(key);
     }
 
-    private void Ev_StageEnd(object _o, EventArgs _e)
+    private void Ev_StageEnd()
     {
         SoulSave();
     }
@@ -115,6 +115,9 @@ public class PlayerMoneyManager : MonoBehaviour
 
     private void OnSoulChanged()
     {
-        soulChanged?.Invoke();
+        if (soulChanged != null)
+        {
+             soulChanged.Invoke();
+        }
     }
 }

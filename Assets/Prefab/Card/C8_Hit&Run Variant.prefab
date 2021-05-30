@@ -1,5 +1,17 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-3865529697426457946
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7930505921670291970}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2785eb3826afad74b90e853f9d34b45d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1373999264002013414
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18,6 +30,7 @@ MonoBehaviour:
   isSecondDmgFormula: 0
   isUseFixRate: 0
   fixPRate: 0.5
+  affectDelay: 2
 --- !u!114 &2483195720203541455
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -36,6 +49,7 @@ MonoBehaviour:
   isSecondDmgFormula: 0
   isUseFixRate: 0
   fixPRate: 0.5
+  affectDelay: 2
 --- !u!1001 &8942590911786749640
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -67,7 +81,7 @@ PrefabInstance:
     - target: {fileID: 1302848795940883632, guid: 13514753735d515478a2178e20010343,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -4.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1302848795940883633, guid: 13514753735d515478a2178e20010343,
         type: 3}
@@ -165,6 +179,11 @@ PrefabInstance:
       propertyPath: cardID
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 1437206776610783508, guid: 13514753735d515478a2178e20010343,
+        type: 3}
+      propertyPath: effectM
+      value: 
+      objectReference: {fileID: -3865529697426457946}
     - target: {fileID: 1437206776610783508, guid: 13514753735d515478a2178e20010343,
         type: 3}
       propertyPath: cardName

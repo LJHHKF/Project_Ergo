@@ -19,6 +19,11 @@ TagManager:
   - InfoM
   - DiceBox_Bottom
   - GameMaster
+  - Dice
+  - ItemDelete
+  - GlobalCardEffect
+  - ItemSlot
+  - SettingButton
   layers:
   - Default
   - TransparentFX

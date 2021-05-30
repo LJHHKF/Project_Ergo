@@ -18,11 +18,24 @@ MonoBehaviour:
   isSecondDmgFormula: 1
   isUseFixRate: 0
   fixPRate: 0.5
+  affectDelay: 2
   ab_ID: 5
   isImidiateAbActive: 1
   isOnlyUseSecondFixP: 0
   isSelfTarget: 1
   sec_fixP: 1
+--- !u!114 &6426504265551080500
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6805854033947937113}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c89727e75b53f440b318ad4128d9251, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &5505622217075320211
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -54,7 +67,7 @@ PrefabInstance:
     - target: {fileID: 1302848795940883632, guid: 13514753735d515478a2178e20010343,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -4.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1302848795940883633, guid: 13514753735d515478a2178e20010343,
         type: 3}
@@ -139,13 +152,18 @@ PrefabInstance:
     - target: {fileID: 1437206776610783508, guid: 13514753735d515478a2178e20010343,
         type: 3}
       propertyPath: type
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1437206776610783508, guid: 13514753735d515478a2178e20010343,
         type: 3}
       propertyPath: cardID
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 1437206776610783508, guid: 13514753735d515478a2178e20010343,
+        type: 3}
+      propertyPath: effectM
+      value: 
+      objectReference: {fileID: 6426504265551080500}
     - target: {fileID: 1437206776610783508, guid: 13514753735d515478a2178e20010343,
         type: 3}
       propertyPath: cardName
@@ -161,6 +179,11 @@ PrefabInstance:
         type: 3}
       propertyPath: flucPRate
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1437206776610783508, guid: 13514753735d515478a2178e20010343,
+        type: 3}
+      propertyPath: type_text
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1437206776610783508, guid: 13514753735d515478a2178e20010343,
         type: 3}
