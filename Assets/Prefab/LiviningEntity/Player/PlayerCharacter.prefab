@@ -2542,7 +2542,7 @@ MonoBehaviour:
   popUpText_Prefab: {fileID: 5960358604202126975, guid: 1b710bc6decfba04596b5c0eccf2be4c,
     type: 3}
   upSpeed: 2
-  endTime: 0.8
+  endTime: 1
   interval_pop: 0.5
   color_Damage: {r: 1, g: 0, b: 0, a: 1}
   color_GuardedDamage: {r: 0.47058824, g: 0.47058824, b: 1, a: 1}
