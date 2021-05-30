@@ -50,9 +50,9 @@ public class CUF_MultiRTargetAttack : CUF_Base
         else if (!isAllAttak)
         {
             int targetNum = maxTarget;
-            if (targetNum > EnemiesManager.instance.GetMaxMonsCnt())
+            if (targetNum > EnemiesManager.instance.GetCurMonsCnt())
             {
-                targetNum = EnemiesManager.instance.GetMaxMonsCnt();
+                targetNum = EnemiesManager.instance.GetCurMonsCnt();
             }
 
             if (isTargetOverlapped)
