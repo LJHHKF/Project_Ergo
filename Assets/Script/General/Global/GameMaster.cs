@@ -50,6 +50,8 @@ public class GameMaster : MonoBehaviour
 
         isInit = false;
 
+        Screen.SetResolution(1280, 720, true);
+
         if (isReset)
             PlayerPrefs.DeleteAll();
     }

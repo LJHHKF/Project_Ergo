@@ -11,10 +11,19 @@ public class SettingBTN : MonoBehaviour
         settingWindow.SetActive(false);
     }
 
+    public void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+            BTN_Setting();
+    }
+
     public void BTN_Setting()
     {
-        SoundEfManager.instance.SetSoundEffect(mySoundEffect.SoundEf.ui_touch);
-        settingWindow.SetActive(true);
+        if (!settingWindow.activeSelf)
+        {
+            SoundEfManager.instance.SetSoundEffect(mySoundEffect.SoundEf.ui_touch);
+            settingWindow.SetActive(true);
+        }
     }
 
     public SettingWindowM GetSettingWindowManager()

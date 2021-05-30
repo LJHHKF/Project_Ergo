@@ -28,6 +28,7 @@ public class LivingEntity : MonoBehaviour, IDamageable
     public bool dead { get; protected set; }
     public event Action onDeath;
     public event Action<int> onHPDamage;
+    public event Action onHpChange;
 
     protected Queue<Action> eventQueue = new Queue<Action>();
     protected float delayTime = 0.0f;
@@ -51,6 +52,9 @@ public class LivingEntity : MonoBehaviour, IDamageable
     protected virtual void Start()
     {
         //TurnManager.instance.firstTurn += Event_FirstTurn;
+
+        onHPDamage += (int value) => myUI.AddPopUpText_Damage(value);
+        onHpChange += () => myUI.HpUpdate();
     }
 
     protected virtual void OnDestroy()
@@ -114,11 +118,10 @@ public class LivingEntity : MonoBehaviour, IDamageable
         if (damage > 0)
         {
             health -= damage;
-            myUI.AddPopUpText_Damage(damage);
-            myUI.HpUpdate();
 
             isDamaged = true;
             onHPDamage?.Invoke(damage);
+            onHpChange?.Invoke();
         }
         else
             isDamaged = false;
@@ -134,9 +137,8 @@ public class LivingEntity : MonoBehaviour, IDamageable
     public virtual void OnPenDamage(int damage)
     {
         health -= damage;
-        myUI.AddPopUpText_Damage(damage);
-        myUI.HpUpdate();
         onHPDamage?.Invoke(damage);
+        onHpChange?.Invoke();
 
         if (health <= 0 && !dead)
         {
@@ -168,11 +170,13 @@ public class LivingEntity : MonoBehaviour, IDamageable
                 return;
             health += restoreValue;
             myUI.AddPopUpText_RestoreHealth(restoreValue);
+            onHpChange?.Invoke();
         }
         else
         {
             health += restoreValue;
             myUI.AddPopUpText_RestoreHealth(restoreValue);
+            onHpChange?.Invoke();
         }
     }
 
@@ -272,7 +276,7 @@ public class LivingEntity : MonoBehaviour, IDamageable
     protected virtual void ResetHP()
     {
         health = GetFullHealth();
-        myUI.HpUpdate();
+        onHpChange?.Invoke();
     }
 
     protected IEnumerator DeleyedUnActive(GameObject go)
