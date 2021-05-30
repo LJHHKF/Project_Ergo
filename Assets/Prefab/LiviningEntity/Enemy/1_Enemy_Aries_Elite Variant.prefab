@@ -103,10 +103,30 @@ PrefabInstance:
       value: 
       objectReference: {fileID: -2510397786758807884, guid: 831594cff4d8e0840927bc9d07ea6edb,
         type: 3}
+    - target: {fileID: 1847150227407012533, guid: cdda7a158c36ffa46ab94414845dfceb,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1989616535422404268, guid: cdda7a158c36ffa46ab94414845dfceb,
         type: 3}
       propertyPath: m_Name
       value: 1_Enemy_Aries_Elite Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 2131398665721651631, guid: cdda7a158c36ffa46ab94414845dfceb,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2491747315805076452, guid: cdda7a158c36ffa46ab94414845dfceb,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3113883153106551030, guid: cdda7a158c36ffa46ab94414845dfceb,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 4451541378279184922, guid: cdda7a158c36ffa46ab94414845dfceb,
         type: 3}
@@ -202,12 +222,12 @@ PrefabInstance:
     - target: {fileID: 5568184874541642076, guid: cdda7a158c36ffa46ab94414845dfceb,
         type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.x
-      value: 5.1
+      value: 6.375
       objectReference: {fileID: 0}
     - target: {fileID: 5568184874541642076, guid: cdda7a158c36ffa46ab94414845dfceb,
         type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.y
-      value: 3.4
+      value: 4.25
       objectReference: {fileID: 0}
     - target: {fileID: 5923842503137677575, guid: cdda7a158c36ffa46ab94414845dfceb,
         type: 3}
@@ -222,7 +242,7 @@ PrefabInstance:
     - target: {fileID: 5923842503137677575, guid: cdda7a158c36ffa46ab94414845dfceb,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5923842503137677575, guid: cdda7a158c36ffa46ab94414845dfceb,
         type: 3}
@@ -263,6 +283,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6338213793486874047, guid: cdda7a158c36ffa46ab94414845dfceb,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6902001763227232665, guid: cdda7a158c36ffa46ab94414845dfceb,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 7365612931804551002, guid: cdda7a158c36ffa46ab94414845dfceb,
         type: 3}
