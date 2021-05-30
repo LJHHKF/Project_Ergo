@@ -24,7 +24,7 @@ MonoBehaviour:
     isDelayedAbCond: 0
   typeVariationNum: 1
   actSprite: {fileID: 21300000, guid: 8eec89ff13716714a880ea005fb83efc, type: 3}
-  actAnimTrigger: Guard
+  actAnimTrigger: 4
   affectDelay: 1
   actExplain: "[\uB0B4\uAD6C]*1 \uB9CC\uD07C\uC758 \uBC29\uC5B4\uB3C4\uB97C \uD68D\uB4DD\uD55C\uB2E4."
 --- !u!114 &2962277697890065369
@@ -57,7 +57,7 @@ MonoBehaviour:
     isDelayedAbCond: 0
   typeVariationNum: 2
   actSprite: {fileID: 21300000, guid: 38535e1ea1a134f43b0047e16ed8979b, type: 3}
-  actAnimTrigger: Special
+  actAnimTrigger: 3
   affectDelay: 1
   actExplain: "[\uD2B9\uACF5]*1 \uB9CC\uD07C\uC758 \uBC29\uC5B4\uB3C4\uB97C \uD68D\uB4DD\uD55C
     \uD6C4 \uB2E4\uC74C\uD134 \uC790\uC2E0\uC5D0\uAC8C [\uD30C\uC6CC\uC5C5]\uC744
@@ -86,7 +86,7 @@ MonoBehaviour:
     isDelayedAbCond: 0
   typeVariationNum: 1
   actSprite: {fileID: 21300000, guid: 4b8d94d3ebbfb8042814debc2dbf1bc7, type: 3}
-  actAnimTrigger: Attack
+  actAnimTrigger: 2
   affectDelay: 1
   actExplain: "\uB9C8\uB974\uC2A4\uC5D0\uAC8C [\uD798]*1 \uB9CC\uD07C\uC758 \uD53C\uD574\uB97C
     \uC785\uD78C\uB2E4."
@@ -138,6 +138,11 @@ PrefabInstance:
       propertyPath: maxSpGauge
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 4451541378279184922, guid: cdda7a158c36ffa46ab94414845dfceb,
+        type: 3}
+      propertyPath: myAnimator
+      value: 
+      objectReference: {fileID: 8065900860451800528}
     - target: {fileID: 4451541378279184922, guid: cdda7a158c36ffa46ab94414845dfceb,
         type: 3}
       propertyPath: specialAct
@@ -279,6 +284,12 @@ PrefabInstance:
 --- !u!1 &1316377401732371494 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1989616535422404268, guid: cdda7a158c36ffa46ab94414845dfceb,
+    type: 3}
+  m_PrefabInstance: {fileID: 709387272163988106}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &8065900860451800528 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 7365612931804551002, guid: cdda7a158c36ffa46ab94414845dfceb,
     type: 3}
   m_PrefabInstance: {fileID: 709387272163988106}
   m_PrefabAsset: {fileID: 0}

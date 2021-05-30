@@ -9,7 +9,8 @@ public class CUF_Guard : CUF_Base
     protected override void Start()
     {
         base.Start();
-        myCard.use += this.Use;
+        if(!isUseRepeat)
+            myCard.use += this.Use;
     }
 
     public override void Use(int diceValue)
@@ -33,6 +34,9 @@ public class CUF_Guard : CUF_Base
         else
             gv = fixP + Mathf.RoundToInt(diceValue * flucPRate);
 
+        //if (isUseRepeat)
+        //    StartCoroutine(RepeatAffect(() => liv_target.AddGuardPoint(gv), repeatNum, repeatDelay));
+        //else
         StartCoroutine(delayedAffect(() => liv_target.AddGuardPoint(gv)));
     }
     public override void ReUse()

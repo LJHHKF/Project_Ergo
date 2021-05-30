@@ -192,7 +192,7 @@ GameObject:
   - component: {fileID: 250638626}
   m_Layer: 5
   m_Name: Canvas
-  m_TagString: Untagged
+  m_TagString: UIManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2265,12 +2265,8 @@ MonoBehaviour:
     - m_index: 6
       weight: 20
   - monsters:
-    - m_index: 1
+    - m_index: 2
       weight: 40
-    - m_index: 4
-      weight: 30
-    - m_index: 7
-      weight: 30
   - monsters:
     - m_index: 0
       weight: 20
@@ -2301,10 +2297,6 @@ MonoBehaviour:
       weight: 20
   - monsters:
     - m_index: 1
-      weight: 30
-    - m_index: 4
-      weight: 40
-    - m_index: 7
       weight: 30
   - monsters:
     - m_index: 0
@@ -2337,10 +2329,6 @@ MonoBehaviour:
   - monsters:
     - m_index: 2
       weight: 30
-    - m_index: 5
-      weight: 30
-    - m_index: 8
-      weight: 40
 --- !u!850595691 &1788368398
 LightingSettings:
   m_ObjectHideFlags: 0

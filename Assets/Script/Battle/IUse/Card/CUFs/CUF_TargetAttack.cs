@@ -11,7 +11,8 @@ public class CUF_TargetAttack : CUF_Base
     protected override void Start()
     {
         base.Start();
-        myCard.use += this.Use;
+        if(!isUseRepeat)
+            myCard.use += this.Use;
     }
 
     public override void Use(int diceValue)
@@ -35,6 +36,9 @@ public class CUF_TargetAttack : CUF_Base
         else
             dmg = fixP + Mathf.RoundToInt(diceValue * flucPRate);
 
+        //if (isUseRepeat)
+        //    StartCoroutine(RepeatAffect(() => liv_target.OnDamage(dmg), repeatNum, repeatDelay));
+        //else
         StartCoroutine(delayedAffect(() => liv_target.OnDamage(dmg)));
     }
 

@@ -88,7 +88,7 @@ public class DiceManager : MonoBehaviour
             vv /= collision.contacts.Length;
             vv = transform.position - vv;
 
-            m_rb.AddForce(vv * 2f);
+            m_rb.AddForce(vv * 30f);
         }
     }
 

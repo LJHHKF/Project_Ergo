@@ -26,15 +26,9 @@ public abstract class Item_Base : MonoBehaviour, IItem
 
     protected GameObject target;
     protected int slotIndex = 0;
-    protected float min_x = 0;
     protected bool ready = false;
     protected bool selected = false;
     protected Transform btn_transform;
-
-    protected virtual void Start()
-    {
-        min_x = ItemSlot.instance.GetUseMinX();
-    }
 
     public virtual void Use(int _dummy)
     {
@@ -104,7 +98,7 @@ public abstract class Item_Base : MonoBehaviour, IItem
         liner.SetLine_Canvas(btn_transform, mousePos);
 
         Vector2 mouseP = Camera.main.WorldToScreenPoint(mousePos);
-        if(mouseP.x > min_x)
+        if(ItemSlot.instance.CheckUseMinX(mouseP.x))
         {
             ready = true;
             return false;

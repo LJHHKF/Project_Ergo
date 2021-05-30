@@ -50,6 +50,8 @@ public class GameMaster : MonoBehaviour
 
         isInit = false;
 
+        Screen.SetResolution(1280, 720, true);
+
         if (isReset)
             PlayerPrefs.DeleteAll();
     }
@@ -86,6 +88,7 @@ public class GameMaster : MonoBehaviour
         isDoGameStop = false;
         if (_isNew)
         {
+            isInit = true;
             key = $"SaveID({saveID})";
             PlayerPrefs.SetInt(key, 1);
             initSaveData_Awake?.Invoke();

@@ -17,7 +17,8 @@ public class CUF_AbCondition : CUF_Base
     {
         base.Start();
 
-        myCard.use += this.Use;
+        if(!isUseRepeat)
+            myCard.use += this.Use;
     }
 
     public override void Use(int diceValue)
@@ -51,12 +52,17 @@ public class CUF_AbCondition : CUF_Base
         else
             dmg = fixP + Mathf.RoundToInt(diceValue * flucPRate);
 
+        //if (isUseRepeat)
+        //{
+        //    if (isImidiateAbActive)
+        //        StartCoroutine(RepeatAffect(() => ab_target.AddImdiateAbCondition(ab_ID, dmg), repeatNum, repeatDelay));
+        //    else
+        //        StartCoroutine(RepeatAffect(() => ab_target.AddDelayedCondition(ab_ID, dmg), repeatNum, repeatDelay));
+        //}
         if (isImidiateAbActive)
             StartCoroutine(delayedAffect(() => ab_target.AddImdiateAbCondition(ab_ID, dmg)));
         else
             StartCoroutine(delayedAffect(() => ab_target.AddDelayedCondition(ab_ID, dmg)));
-
-        
     }
 
     public override void ReUse()

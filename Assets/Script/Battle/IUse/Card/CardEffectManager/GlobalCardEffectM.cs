@@ -64,8 +64,8 @@ public class GlobalCardEffectM : MonoBehaviour
 
     IEnumerator DelayedUnActive(GameObject go)
     {
-        yield return new WaitForSeconds(1.0f);
-        ManaStormEffect.SetActive(false);
+        yield return new WaitForSeconds(go.GetComponent<Animator>().runtimeAnimatorController.animationClips[0].length);
+        go.SetActive(false);
         yield break;
     }
 }

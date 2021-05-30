@@ -46,6 +46,8 @@ public class UnitUI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        GetComponent<Canvas>().worldCamera = Camera.main;
+
         guard_txt = guard_img_obj.transform.Find("GuardText").GetComponent<TextMeshProUGUI>();
 
         //if(icon_EnemyActInfo != null)

@@ -196,7 +196,7 @@ public class EnemiesManager : MonoBehaviour
         }
         if (monsters.Count == 0)
         {
-            TurnManager.instance.OnBattleEnd();
+            StartCoroutine(DelayedExecute());
             PlayerPrefs.DeleteKey(key);
             for(int i = 0; i < initCnt; i++)
             {
@@ -205,6 +205,13 @@ public class EnemiesManager : MonoBehaviour
                 m_sb.Append($"{key}.{_i}");
                 PlayerPrefs.DeleteKey(m_sb.ToString());
             }
+        }
+
+        IEnumerator DelayedExecute()
+        {
+            yield return new WaitForSeconds(2.0f);
+            TurnManager.instance.OnBattleEnd();
+            yield break;
         }
     }
 
@@ -268,6 +275,15 @@ public class EnemiesManager : MonoBehaviour
         }
     }
 
+    public void AllDamaged(int dmg)
+    {
+        for(int i = 0; i < monsters.Count; i++)
+        {
+            int _i = i;
+            monsters[_i].GetComponent<LivingEntity>().OnDamage(dmg);
+        }
+    }
+
     public bool SearchHadMonster(int _id)
     {
         for (int i = 0; i < monsters.Count; i++)
@@ -327,9 +343,8 @@ public class EnemiesManager : MonoBehaviour
         for(int i = 0; i < monsters.Count; i++)
         {
             int _i = i;
-            Enemy_Base temp = monsters[_i].GetComponent<Enemy_Base>();
             yield return new WaitForSeconds(time_interval);
-            temp.Act();
+            monsters[_i].GetComponent<Enemy_Base>().Act();
         }
         yield return new WaitForSeconds(time_interval);
         TurnManager.instance.OnTurnEnd();

@@ -104,9 +104,33 @@ public class Character : LivingEntity
             m_costM = GameObject.FindGameObjectWithTag("CostManager").GetComponent<CostManager>();
     }
 
-    public void OnCardUseAnimation(CardType _type)
+    public float OnCardUseAnimation(CardType _type)
     {
         StartCoroutine(DelayAttackAnim(_type));
+        string prefix = "Maruse_";
+        switch (_type)
+        {
+            case CardType.Sword:
+                for(int i = 0; i < myAnimator.runtimeAnimatorController.animationClips.Length; i++)
+                {
+                    int _i = i;
+                    string m_name = prefix + "Attack_Sword";
+                    if (myAnimator.runtimeAnimatorController.animationClips[_i].name == m_name)
+                        return myAnimator.runtimeAnimatorController.animationClips[_i].length;
+                }
+                break;
+            case CardType.Magic_attack:
+            case CardType.Magic_other:
+                for (int i = 0; i < myAnimator.runtimeAnimatorController.animationClips.Length; i++)
+                {
+                    int _i = i;
+                    string m_name = prefix + "Attack_Magic";
+                    if (myAnimator.runtimeAnimatorController.animationClips[_i].name == m_name)
+                        return myAnimator.runtimeAnimatorController.animationClips[_i].length;
+                }
+                break;
+        }
+        return 1.0f;
     }
 
     IEnumerator DelayAttackAnim(CardType _type)
@@ -176,7 +200,7 @@ public class Character : LivingEntity
     {
         if(!ChargeEffect.activeSelf)
         {
-            ChargeEffect.SetActive(false);
+            ChargeEffect.SetActive(true);
             StartCoroutine(DeleyedUnActive(ChargeEffect));
         }
     }
@@ -185,7 +209,7 @@ public class Character : LivingEntity
     {
         if(!GuardCardEffect.activeSelf)
         {
-            GuardCardEffect.SetActive(false);
+            GuardCardEffect.SetActive(true);
             StartCoroutine(DeleyedUnActive(GuardCardEffect));
         }
     }

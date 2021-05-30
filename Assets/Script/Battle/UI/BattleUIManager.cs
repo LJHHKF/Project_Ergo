@@ -15,6 +15,7 @@ public class BattleUIManager : MonoBehaviour
     [SerializeField] private GameObject cardsListWindow;
     [SerializeField] private CardListManager cardListM;
     [SerializeField] private GameObject statusDetailArea;
+    [SerializeField] private GameObject tutorial;
 
     public bool isDiceOn
     {
@@ -32,13 +33,17 @@ public class BattleUIManager : MonoBehaviour
         card_enlarge.SetActive(false);
         cardsListWindow.SetActive(false);
         statusDetailArea.SetActive(false);
+        tutorial.SetActive(false);
         isDiceOn = false;
         TurnManager.instance.firstTurn += Event_FirstTurn;
         TurnManager.instance.turnStart += Event_TurnStart;
         TurnManager.instance.playerTurnEnd += Event_PlayerTurnEnd;
         TurnManager.instance.battleEnd += Event_BattleEnd;
 
-        GameMaster.instance.OnBattleStageStart();
+        if (StoryTurningManager.instance.isTutorial)
+            tutorial.SetActive(true);
+        else
+            GameMaster.instance.OnBattleStageStart();
     }
 
     private void OnDestroy()
@@ -137,5 +142,12 @@ public class BattleUIManager : MonoBehaviour
     public GameObject GetStatusDetailArea()
     {
         return statusDetailArea;
+    }
+
+    public void TutorialEnd()
+    {
+        tutorial.SetActive(false);
+        StoryTurningManager.instance.isTutorial = false;
+        GameMaster.instance.OnBattleStageStart();
     }
 }

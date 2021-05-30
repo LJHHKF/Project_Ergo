@@ -7,8 +7,8 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Character_Attack_Sword
-  m_Speed: 1
+  m_Name: Attack_Sword
+  m_Speed: 0.5
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 2863661437448419881}
@@ -174,8 +174,8 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Character_Attack_Magic
-  m_Speed: 1
+  m_Name: Attack_Magic
+  m_Speed: 0.5
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 7124796109357215859}
@@ -223,8 +223,8 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Character_Hit
-  m_Speed: 1
+  m_Name: Hit
+  m_Speed: 0.5
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 976910660651274454}
