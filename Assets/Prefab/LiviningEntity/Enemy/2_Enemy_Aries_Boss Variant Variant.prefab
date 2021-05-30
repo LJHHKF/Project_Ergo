@@ -24,8 +24,28 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3755776394983639184, guid: c245a0f1c5dbcb541ac823e4e1f0f263,
         type: 3}
+      propertyPath: fix_Solid
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 3755776394983639184, guid: c245a0f1c5dbcb541ac823e4e1f0f263,
+        type: 3}
       propertyPath: monsterID
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3755776394983639184, guid: c245a0f1c5dbcb541ac823e4e1f0f263,
+        type: 3}
+      propertyPath: _fullHealth
+      value: 80
+      objectReference: {fileID: 0}
+    - target: {fileID: 3755776394983639184, guid: c245a0f1c5dbcb541ac823e4e1f0f263,
+        type: 3}
+      propertyPath: fix_Strength
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 3755776394983639184, guid: c245a0f1c5dbcb541ac823e4e1f0f263,
+        type: 3}
+      propertyPath: fix_Inteligent
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 6624100889674466189, guid: c245a0f1c5dbcb541ac823e4e1f0f263,
         type: 3}

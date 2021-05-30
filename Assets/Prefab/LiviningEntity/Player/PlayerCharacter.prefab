@@ -129,8 +129,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1614322153317460329}
   m_LocalRotation: {x: 0, y: 0, z: 1, w: 0}
-  m_LocalPosition: {x: -5.6, y: 0.5, z: 0}
-  m_LocalScale: {x: 0.9, y: 0.3, z: 1}
+  m_LocalPosition: {x: -6, y: 0.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8670489907842929376}
   m_RootOrder: 0
@@ -2541,8 +2541,8 @@ MonoBehaviour:
   - {fileID: 3232138570731496219}
   popUpText_Prefab: {fileID: 5960358604202126975, guid: 1b710bc6decfba04596b5c0eccf2be4c,
     type: 3}
-  upSpeed: 1
-  endTime: 3
+  upSpeed: 2
+  endTime: 0.8
   interval_pop: 0.5
   color_Damage: {r: 1, g: 0, b: 0, a: 1}
   color_GuardedDamage: {r: 0.47058824, g: 0.47058824, b: 1, a: 1}
