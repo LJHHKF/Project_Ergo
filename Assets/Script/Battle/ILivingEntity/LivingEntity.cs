@@ -52,9 +52,6 @@ public class LivingEntity : MonoBehaviour, IDamageable
     protected virtual void Start()
     {
         //TurnManager.instance.firstTurn += Event_FirstTurn;
-
-        onHPDamage += (int value) => myUI.AddPopUpText_Damage(value);
-        onHpChange += () => myUI.HpUpdate();
     }
 
     protected virtual void OnDestroy()
@@ -120,6 +117,8 @@ public class LivingEntity : MonoBehaviour, IDamageable
             health -= damage;
 
             isDamaged = true;
+            myUI.AddPopUpText_Damage(damage);
+            myUI.HpUpdate();
             onHPDamage?.Invoke(damage);
             onHpChange?.Invoke();
         }
@@ -137,6 +136,8 @@ public class LivingEntity : MonoBehaviour, IDamageable
     public virtual void OnPenDamage(int damage)
     {
         health -= damage;
+        myUI.AddPopUpText_Damage(damage);
+        myUI.HpUpdate();
         onHPDamage?.Invoke(damage);
         onHpChange?.Invoke();
 
@@ -170,12 +171,14 @@ public class LivingEntity : MonoBehaviour, IDamageable
                 return;
             health += restoreValue;
             myUI.AddPopUpText_RestoreHealth(restoreValue);
+            myUI.HpUpdate();
             onHpChange?.Invoke();
         }
         else
         {
             health += restoreValue;
             myUI.AddPopUpText_RestoreHealth(restoreValue);
+            myUI.HpUpdate();
             onHpChange?.Invoke();
         }
     }
@@ -276,6 +279,7 @@ public class LivingEntity : MonoBehaviour, IDamageable
     protected virtual void ResetHP()
     {
         health = GetFullHealth();
+        myUI.HpUpdate();
         onHpChange?.Invoke();
     }
 

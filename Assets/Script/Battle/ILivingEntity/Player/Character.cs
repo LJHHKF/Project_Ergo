@@ -34,6 +34,8 @@ public class Character : LivingEntity
     // Start is called before the first frame update
     protected override void Start()
     {
+        base.Start();
+
         fullHealth = CStatManager.instance.fullHealth_pure;
         health = CStatManager.instance.health;
         fix_endu = CStatManager.instance.endurance;

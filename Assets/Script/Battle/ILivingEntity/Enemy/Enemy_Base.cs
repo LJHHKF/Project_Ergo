@@ -63,6 +63,8 @@ public class Enemy_Base : LivingEntity
 
     protected override void Start()
     {
+        base.Start();
+
         fix_endu = fix_Endurance;
         fix_stren = fix_Strength;
         fix_sol = fix_Solid;
