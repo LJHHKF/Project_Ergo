@@ -25,7 +25,7 @@ public class EnemiesManager : MonoBehaviour
     private int monsterMaxCnt = 3;
     private float deleteTime;
 
-    private List<GameObject> monsters = new List<GameObject>();
+    //private List<GameObject> monsters = new List<GameObject>();
     private int initCnt;
     private string key;
     private StringBuilder m_sb = new StringBuilder(30);
@@ -35,13 +35,12 @@ public class EnemiesManager : MonoBehaviour
     private List<int> list_emptyIndex = new List<int>();
 
     public int stageSoul { get; private set; }
-
     private float m_list_min_x = 2000;
     private float m_list_max_x = -2000;
 
     private void Awake()
     {
-        monsters.Capacity = monsterMaxCnt;
+        //monsters.Capacity = monsterMaxCnt;
         array_monsters = new GameObject[monsterMaxCnt];
         list_emptyIndex.Capacity = monsterMaxCnt;
         if (instance != this)
@@ -147,7 +146,7 @@ public class EnemiesManager : MonoBehaviour
                 }
             }
 
-            PlayerPrefs.SetInt(key, monsters.Count);
+            PlayerPrefs.SetInt(key, cur_cnt);
         }
         else
         {
@@ -173,7 +172,7 @@ public class EnemiesManager : MonoBehaviour
                 array_monsters[cur_cnt++] = mon;
             }
         }
-        initCnt = monsters.Count;
+        initCnt = cur_cnt;
         TurnManager.instance.playerTurnEnd += Event_PlayerTurnEnd;
         GameMaster.instance.gameStop += Event_GameStop;
     }
@@ -310,7 +309,7 @@ public class EnemiesManager : MonoBehaviour
                 if (array_monsters[rand] != null)
                     isHad = true;
             }
-            o_list.Add(monsters[rand]);
+            o_list.Add(array_monsters[rand]);
         }
     }
 
@@ -345,7 +344,7 @@ public class EnemiesManager : MonoBehaviour
 
     public bool SearchHadMonster(int _id)
     {
-        for (int i = 0; i < monsters.Count; i++)
+        for (int i = 0; i < array_monsters.Length; i++)
         {
             int _i = i;
             //Enemy_Base temp = monsters[_i].GetComponent<Enemy_Base>();
