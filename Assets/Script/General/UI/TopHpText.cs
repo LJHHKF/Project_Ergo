@@ -21,7 +21,7 @@ public class TopHpText : MonoBehaviour
         if (SceneManager.GetActiveScene().name == "Battle")
         {
             m_char = GameObject.FindGameObjectWithTag("Player").GetComponent<Character>();
-            m_char.onHPDamage += UpdateText;
+            m_char.onHpChange += UpdateText;
             TurnManager.instance.firstTurn += firstTurnEvent;
             isEventAdded = true;
         }
@@ -43,10 +43,10 @@ public class TopHpText : MonoBehaviour
 
     private void firstTurnEvent()
     {
-        UpdateText(0);
+        UpdateText();
     }
 
-    private void UpdateText(int _dummy)
+    private void UpdateText()
     {
         cur = m_char.health;
         max = m_char.GetFullHealth();
