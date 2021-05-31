@@ -366,18 +366,21 @@ public class EnemiesManager : MonoBehaviour
             GameObject mon = Instantiate(BattleStageManager.instance.GetMonster(_id), gameObject.transform);
             mon.name = "Enemy_" + mon.name + "_s_" + _i.ToString("00");
             Enemy_Base temp = mon.GetComponent<Enemy_Base>();
-            temp.monsterFieldIndex = _i;
             stageSoul += temp.DropSoul;
             temp.onDeath += () => RemoveAtMonstersList(mon);
-            
+
             //monsters.Add(mon);
-            if(list_emptyIndex.Count > 0)
+            if (list_emptyIndex.Count > 0)
             {
                 array_monsters[list_emptyIndex[0]] = mon;
+                temp.monsterFieldIndex = list_emptyIndex[0];
                 list_emptyIndex.RemoveAt(0);
             }
             else
+            {
+                temp.monsterFieldIndex = cur_cnt;
                 array_monsters[cur_cnt++] = mon;
+            }
         }
         ReSortMonsters();
     }
