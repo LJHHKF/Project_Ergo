@@ -55,10 +55,9 @@ public class DiceManager : MonoBehaviour
             else if (transform.eulerAngles != t_rot.eulerAngles)
             {
                 transform.rotation = Quaternion.Slerp(transform.rotation, t_rot, Time.deltaTime * 10);
-            }
-            else
-            {
-                isRotEnd = true;
+
+                if (Mathf.Abs((transform.eulerAngles - t_rot.eulerAngles).sqrMagnitude) < 4.0f)
+                    isRotEnd = true;
             }
         }
 
@@ -66,7 +65,7 @@ public class DiceManager : MonoBehaviour
         {
             if (!isRollEnd)
             {
-                if (m_rb.velocity.magnitude == 0 || Time.time > bottomTime + chkTimeInterval + 2.0f)
+                if (m_rb.velocity.magnitude == 0 || Time.time > bottomTime + chkTimeInterval)
                 {
                     m_DsystemManager.SumRollEnd();
                     isRollEnd = true;
