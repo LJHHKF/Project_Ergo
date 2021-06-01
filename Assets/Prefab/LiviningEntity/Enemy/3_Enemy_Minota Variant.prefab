@@ -93,6 +93,21 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4451541378279184922, guid: cdda7a158c36ffa46ab94414845dfceb,
         type: 3}
+      propertyPath: _fullHealth
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 4451541378279184922, guid: cdda7a158c36ffa46ab94414845dfceb,
+        type: 3}
+      propertyPath: fix_Strength
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4451541378279184922, guid: cdda7a158c36ffa46ab94414845dfceb,
+        type: 3}
+      propertyPath: fix_Inteligent
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 4451541378279184922, guid: cdda7a158c36ffa46ab94414845dfceb,
+        type: 3}
       propertyPath: normalActs.Array.size
       value: 1
       objectReference: {fileID: 0}

@@ -11,6 +11,6 @@ public class WallRepulsive : MonoBehaviour
     {
         Rigidbody t_rb = collision.gameObject.GetComponent<Rigidbody>();
 
-        t_rb.AddForce(new Vector3(x_power, 0, z_power));
+        t_rb.AddForce(new Vector3(x_power, 0, z_power), ForceMode.Impulse);
     }
 }

@@ -25,19 +25,24 @@ public class EnemiesManager : MonoBehaviour
     private int monsterMaxCnt = 3;
     private float deleteTime;
 
-    private List<GameObject> monsters = new List<GameObject>();
+    //private List<GameObject> monsters = new List<GameObject>();
     private int initCnt;
     private string key;
     private StringBuilder m_sb = new StringBuilder(30);
 
-    public int stageSoul { get; private set; }
+    private GameObject[] array_monsters;
+    private int cur_cnt = 0;
+    private List<int> list_emptyIndex = new List<int>();
 
+    public int stageSoul { get; private set; }
     private float m_list_min_x = 2000;
     private float m_list_max_x = -2000;
 
     private void Awake()
     {
-        monsters.Capacity = monsterMaxCnt;
+        //monsters.Capacity = monsterMaxCnt;
+        array_monsters = new GameObject[monsterMaxCnt];
+        list_emptyIndex.Capacity = monsterMaxCnt;
         if (instance != this)
         {
             Destroy(gameObject);
@@ -64,7 +69,9 @@ public class EnemiesManager : MonoBehaviour
                 temp.monsterFieldIndex = 0;
                 stageSoul += temp.DropSoul;
                 temp.onDeath += () => RemoveAtMonstersList(mon);
-                monsters.Add(mon);
+
+                //monsters.Add(mon);
+                array_monsters[cur_cnt++] = mon;
 
                 m_sb.Clear();
                 m_sb.Append($"{key}.0");
@@ -129,7 +136,9 @@ public class EnemiesManager : MonoBehaviour
                     temp.monsterFieldIndex = _i;
                     stageSoul += temp.DropSoul;
                     temp.onDeath += () => RemoveAtMonstersList(mon);
-                    monsters.Add(mon);
+
+                    //monsters.Add(mon);
+                    array_monsters[cur_cnt++] = mon;
 
                     m_sb.Clear();
                     m_sb.Append($"{key}.{_i}");
@@ -137,7 +146,7 @@ public class EnemiesManager : MonoBehaviour
                 }
             }
 
-            PlayerPrefs.SetInt(key, monsters.Count);
+            PlayerPrefs.SetInt(key, cur_cnt);
         }
         else
         {
@@ -158,10 +167,12 @@ public class EnemiesManager : MonoBehaviour
                 temp.monsterFieldIndex = _i;
                 stageSoul += temp.DropSoul;
                 temp.onDeath += () => RemoveAtMonstersList(mon);
-                monsters.Add(mon);
+
+                //monsters.Add(mon);
+                array_monsters[cur_cnt++] = mon;
             }
         }
-        initCnt = monsters.Count;
+        initCnt = cur_cnt;
         TurnManager.instance.playerTurnEnd += Event_PlayerTurnEnd;
         GameMaster.instance.gameStop += Event_GameStop;
     }
@@ -186,19 +197,21 @@ public class EnemiesManager : MonoBehaviour
     void RemoveAtMonstersList(GameObject who)
     {
         deleteTime = Time.time;
-        for(int i = 0; i < monsters.Count; i++)
+        for (int i = 0; i < monsterMaxCnt; i++)
         {
             int _i = i;
-            if (ReferenceEquals(monsters[_i], who))
+            if (ReferenceEquals(array_monsters[_i], who))
             {
-                monsters.RemoveAt(_i);
+                array_monsters[_i] = null;
+                list_emptyIndex.Add(_i);
+                cur_cnt--;
             }
         }
-        if (monsters.Count == 0)
+        if (cur_cnt == 0)
         {
             StartCoroutine(DelayedExecute());
             PlayerPrefs.DeleteKey(key);
-            for(int i = 0; i < initCnt; i++)
+            for (int i = 0; i < initCnt; i++)
             {
                 int _i = i;
                 m_sb.Clear();
@@ -213,11 +226,29 @@ public class EnemiesManager : MonoBehaviour
             TurnManager.instance.OnBattleEnd();
             yield break;
         }
+
+
+        //deleteTime = Time.time;
+        //for(int i = 0; i < monsters.Count; i++)
+        //{
+        //    int _i = i;
+        //    if (ReferenceEquals(monsters[_i], who))
+        //    {
+        //        monsters.RemoveAt(_i);
+        //    }
+        //}
+        //if (monsters.Count == 0)
     }
 
-    public int GetMaxMonsCnt()
+    public int GetCurMonsCnt()
     {
-        return monsters.Count;
+        return cur_cnt;
+        //return monsters.Count;
+    }
+
+    public int GetArrayLength()
+    {
+        return array_monsters.Length;
     }
 
     public int GetInitCnt()
@@ -235,7 +266,14 @@ public class EnemiesManager : MonoBehaviour
             isSuccess = false;
             while(!isSuccess)
             {
-                rands[_i] = UnityEngine.Random.Range(0, monsters.Count);
+                //rands[_i] = UnityEngine.Random.Range(0, monsters.Count);
+                bool ishad = false;
+                while (!ishad)
+                {
+                    rands[_i] = UnityEngine.Random.Range(0, array_monsters.Length);
+                    if (array_monsters[rands[_i]] != null)
+                        ishad = true;
+                }
                 bool isS2 = true;
                 for(int j = 0; j < i+1; j++)
                 {
@@ -253,45 +291,69 @@ public class EnemiesManager : MonoBehaviour
                     isSuccess = true;
                 }
             }
-            o_list.Add(monsters[rands[_i]]);
+            //o_list.Add(monsters[rands[_i]]);
+            o_list.Add(array_monsters[_i]);
         }
     }
 
     public void AddMultiRTarget_Overlaped(ref List<GameObject> o_list, int max)
     {
-        for(int i = 0; i < max; i++)
+        int rand = -1;
+        bool isHad = false;
+        for (int i = 0; i < max; i++)
         {
-            int rand = UnityEngine.Random.Range(0, monsters.Count);
-            o_list.Add(monsters[rand]);
+            //int rand = UnityEngine.Random.Range(0, monsters.Count);
+            while (!isHad)
+            {
+                rand = UnityEngine.Random.Range(0, array_monsters.Length);
+                if (array_monsters[rand] != null)
+                    isHad = true;
+            }
+            o_list.Add(array_monsters[rand]);
         }
     }
 
     public void AddAllTargeted(ref List<GameObject> o_list)
     {
-        for (int i = 0; i < monsters.Count; i++)
+        //for (int i = 0; i < monsters.Count; i++)
+        for(int i = 0; i < array_monsters.Length; i++)
         {
             int _i = i;
-            o_list.Add(monsters[_i]);
+            //o_list.Add(monsters[_i]);
+            o_list.Add(array_monsters[_i]);
         }
     }
 
     public void AllDamaged(int dmg)
     {
-        for(int i = 0; i < monsters.Count; i++)
+        for(int i = 0; i < monsterMaxCnt; i++)
         {
             int _i = i;
-            monsters[_i].GetComponent<LivingEntity>().OnDamage(dmg);
+            if(array_monsters[_i] != null)
+            {
+                array_monsters[_i]?.GetComponent<LivingEntity>().OnDamage(dmg);
+            }
         }
+
+        //for(int i = 0; i < monsters.Count; i++)
+        //{
+        //    int _i = i;
+        //    monsters[_i].GetComponent<LivingEntity>().OnDamage(dmg);
+        //}
     }
 
     public bool SearchHadMonster(int _id)
     {
-        for (int i = 0; i < monsters.Count; i++)
+        for (int i = 0; i < array_monsters.Length; i++)
         {
             int _i = i;
-            Enemy_Base temp = monsters[_i].GetComponent<Enemy_Base>();
-            if (temp.m_ID == _id)
-                return true;
+            //Enemy_Base temp = monsters[_i].GetComponent<Enemy_Base>();
+            if (array_monsters[_i] != null)
+            {
+                Enemy_Base temp = array_monsters[_i].GetComponent<Enemy_Base>();
+                if (temp.m_ID == _id)
+                    return true;
+            }
         }
         return false;
     }
@@ -304,27 +366,48 @@ public class EnemiesManager : MonoBehaviour
             GameObject mon = Instantiate(BattleStageManager.instance.GetMonster(_id), gameObject.transform);
             mon.name = "Enemy_" + mon.name + "_s_" + _i.ToString("00");
             Enemy_Base temp = mon.GetComponent<Enemy_Base>();
-            temp.monsterFieldIndex = _i;
             stageSoul += temp.DropSoul;
             temp.onDeath += () => RemoveAtMonstersList(mon);
-            monsters.Add(mon);
+
+            //monsters.Add(mon);
+            if (list_emptyIndex.Count > 0)
+            {
+                array_monsters[list_emptyIndex[0]] = mon;
+                temp.monsterFieldIndex = list_emptyIndex[0];
+                list_emptyIndex.RemoveAt(0);
+            }
+            else
+            {
+                temp.monsterFieldIndex = cur_cnt;
+                array_monsters[cur_cnt++] = mon;
+            }
         }
         ReSortMonsters();
     }
 
     private void ReSortMonsters()
     {
-        int j = monsters.Count - 1;
+        //int j = monsters.Count - 1;
+        int j = cur_cnt - 1;
         m_list_min_x = 2000;
         m_list_max_x = -2000;
-        for (int i = 0; i < monsters.Count; i--)
+        //for (int i = 0; i < monsters.Count; i++)
+        for(int i = 0; i < array_monsters.Length; i++)
         {
             int _i = i;
-            monsters[_i].transform.position = new Vector2(minX + (x_interval * j--), y_Init);
-            if (m_list_min_x > monsters[_i].transform.position.x)
-                m_list_min_x = monsters[_i].transform.position.x;
-            if (m_list_max_x < monsters[_i].transform.position.x)
-                m_list_max_x = monsters[_i].transform.position.x;
+            if(array_monsters[_i] != null)
+            {
+                array_monsters[_i].transform.position = new Vector2(minX + (x_interval * j--), y_Init);
+                if (m_list_min_x > array_monsters[_i].transform.position.x)
+                    m_list_min_x = array_monsters[_i].transform.position.x;
+                if (m_list_max_x < array_monsters[_i].transform.position.x)
+                    m_list_max_x = array_monsters[_i].transform.position.x;
+            }
+            //monsters[_i].transform.position = new Vector2(minX + (x_interval * j--), y_Init);
+            //if (m_list_min_x > monsters[_i].transform.position.x)
+            //    m_list_min_x = monsters[_i].transform.position.x;
+            //if (m_list_max_x < monsters[_i].transform.position.x)
+            //    m_list_max_x = monsters[_i].transform.position.x;
         }
     }
 
@@ -340,12 +423,21 @@ public class EnemiesManager : MonoBehaviour
         {
             yield return new WaitForSeconds(2.0f);
         }
-        for(int i = 0; i < monsters.Count; i++)
+        for(int i = 0; i < array_monsters.Length; i++)
         {
             int _i = i;
-            yield return new WaitForSeconds(time_interval);
-            monsters[_i].GetComponent<Enemy_Base>().Act();
+            if (array_monsters[_i] != null)
+            {
+                yield return new WaitForSeconds(time_interval);
+                array_monsters[_i].GetComponent<Enemy_Base>().Act();
+            }
         }
+        //for(int i = 0; i < monsters.Count; i++)
+        //{
+        //    int _i = i;
+        //    yield return new WaitForSeconds(time_interval);
+        //    monsters[_i].GetComponent<Enemy_Base>().Act();
+        //}
         yield return new WaitForSeconds(time_interval);
         TurnManager.instance.OnTurnEnd();
         yield break;

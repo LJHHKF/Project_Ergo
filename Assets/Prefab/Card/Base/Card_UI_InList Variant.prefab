@@ -10,12 +10,27 @@ PrefabInstance:
     - target: {fileID: 715711608834430513, guid: 7aa7499ca1858334182c032329108daf,
         type: 3}
       propertyPath: m_fontSize
-      value: 60.1
+      value: 50.45
       objectReference: {fileID: 0}
     - target: {fileID: 715711608834430513, guid: 7aa7499ca1858334182c032329108daf,
         type: 3}
       propertyPath: m_fontSizeBase
       value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 1397630118835284612, guid: 7aa7499ca1858334182c032329108daf,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: -25.595
+      objectReference: {fileID: 0}
+    - target: {fileID: 1397630118835284612, guid: 7aa7499ca1858334182c032329108daf,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 2493357003585412068, guid: 7aa7499ca1858334182c032329108daf,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 3275227364995626302, guid: 7aa7499ca1858334182c032329108daf,
         type: 3}
@@ -190,7 +205,7 @@ PrefabInstance:
     - target: {fileID: 7583440336934029607, guid: 7aa7499ca1858334182c032329108daf,
         type: 3}
       propertyPath: m_fontSize
-      value: 87
+      value: 24.55
       objectReference: {fileID: 0}
     - target: {fileID: 7583440336934029607, guid: 7aa7499ca1858334182c032329108daf,
         type: 3}
@@ -216,6 +231,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_fontSize
       value: 85.65
+      objectReference: {fileID: 0}
+    - target: {fileID: 8176303213756140099, guid: 7aa7499ca1858334182c032329108daf,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 28.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 8176303213756140099, guid: 7aa7499ca1858334182c032329108daf,
+        type: 3}
+      propertyPath: m_margin.y
+      value: 20.57373
       objectReference: {fileID: 0}
     - target: {fileID: 8927916407425587486, guid: 7aa7499ca1858334182c032329108daf,
         type: 3}
