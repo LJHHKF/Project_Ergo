@@ -8,7 +8,6 @@ public class DiceManager : MonoBehaviour
     private bool isRollEnd = false;
     private Rigidbody m_rb;
     private DiceSystemManager m_DsystemManager;
-    private float activeTime = 0f;
     private int resNum = 0;
     private Sprite resImg;
 
@@ -17,6 +16,7 @@ public class DiceManager : MonoBehaviour
     private float rollMinPowerRate = 0;
     private Quaternion t_rot;
     private bool isSetTargetRot = false;
+    private bool isRotEnd = false;
     private float bottomTime = 0f;
     [SerializeField] private float chkTimeInterval = 1.0f;
 
@@ -26,7 +26,7 @@ public class DiceManager : MonoBehaviour
         isGetRes = false;
         isBottom = false;
         isSetTargetRot = false;
-        activeTime = Time.time;
+        isRotEnd = false;
         bottomTime = 0;
     }
 
@@ -56,13 +56,17 @@ public class DiceManager : MonoBehaviour
             {
                 transform.rotation = Quaternion.Slerp(transform.rotation, t_rot, Time.deltaTime * 10);
             }
+            else
+            {
+                isRotEnd = true;
+            }
         }
 
-        if (isSetTargetRot)
+        if (isRotEnd)
         {
-            if ((bottomTime + chkTimeInterval + 1.5f >= Time.time) && !isRollEnd)
+            if (!isRollEnd)
             {
-                if (m_rb.velocity.magnitude == 0 || Time.time > bottomTime + chkTimeInterval + 2.5f)
+                if (m_rb.velocity.magnitude == 0 || Time.time > bottomTime + chkTimeInterval + 2.0f)
                 {
                     m_DsystemManager.SumRollEnd();
                     isRollEnd = true;
