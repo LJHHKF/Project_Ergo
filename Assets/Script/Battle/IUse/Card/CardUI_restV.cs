@@ -13,7 +13,7 @@ public class CardUI_restV : MonoBehaviour
     private bool isSelect = false;
     private int m_index;
     private float delay = 0;
-    protected SettingWindowM m_settingWindowM;
+    private SettingWindowM m_settingWindowM;
     private bool isAble = true;
     // Start is called before the first frame update
     void Awake()
@@ -73,7 +73,7 @@ public class CardUI_restV : MonoBehaviour
         m_index = _index;
     }
 
-    public void BTNClicked()
+    private void BTNClicked()
     {
         if (!isSelect)
         {

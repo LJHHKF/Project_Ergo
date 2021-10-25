@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ItemDeleteBTN : MonoBehaviour
 {
-    private bool isSelected = false;
+    //private bool isSelected = false;
 
     [SerializeField] private Transform t_left;
     [SerializeField] private Transform t_right;
@@ -14,13 +14,13 @@ public class ItemDeleteBTN : MonoBehaviour
 
     private void Start()
     {
-        isSelected = false;
+        //isSelected = false;
 
         InputSystem.instance.SetDeleteBTNPos(t_left.position.x, t_right.position.x, t_top.position.y, t_down.position.y);
     }
 
-    public bool GetSelected()
-    {
-        return isSelected;
-    }
+    //public bool GetSelected()
+    //{
+    //    return isSelected;
+    //}
 }

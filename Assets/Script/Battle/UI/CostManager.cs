@@ -45,8 +45,8 @@ public class CostManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        TurnManager.instance.firstTurn += Event_TurnStart;
-        TurnManager.instance.turnStart += Event_TurnStart;
+        TurnManager.instance.firstTurn += ResetCost;
+        TurnManager.instance.turnStart += ResetCost;
 
         for (int i = 0; i < etherImgs.Length; i++)
             etherImgs[i].SetActive(false);
@@ -78,19 +78,14 @@ public class CostManager : MonoBehaviour
 
     private void OnDestroy()
     {
-        TurnManager.instance.firstTurn -= Event_TurnStart;
-        TurnManager.instance.turnStart -= Event_TurnStart;
+        TurnManager.instance.firstTurn -= ResetCost;
+        TurnManager.instance.turnStart -= ResetCost;
     }
 
     //private void Event_FirstTurn(object _o, EventArgs _e)
     //{
     //    ResetCost();
     //}
-
-    private void Event_TurnStart()
-    {
-        ResetCost();
-    }
 
     private void ResetCost()
     {

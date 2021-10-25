@@ -13,7 +13,7 @@ public class TrapSceneManager : MonoBehaviour
         public string name;
         public int damage;
         [TextArea] public string description;
-        [TextArea] public string description2;
+        //[TextArea] public string description2;
         public Sprite sprite;
         public int weight;
         public bool hadAddAbcond;
@@ -28,7 +28,7 @@ public class TrapSceneManager : MonoBehaviour
     }
     [Header("Object Registration")]
     //[SerializeField] private Text nameField;
-    [SerializeField] private Text desciptionField;
+    [SerializeField] private Text descriptionField;
     [SerializeField] private SpriteRenderer bg;
     [SerializeField] private SettingWindowM settingWindowManager;
     [SerializeField] private Transform max_y_pos;
@@ -81,8 +81,8 @@ public class TrapSceneManager : MonoBehaviour
                 {
                     //nameField.text = traps[i].name;
                     fullText.AppendLine(traps[i].description);
-                    if(traps[i].description2.Length != 0)
-                        fullText.AppendLine(traps[i].description2);
+                    //if(traps[i].description2.Length != 0)
+                    //    fullText.AppendLine(traps[i].description2);
                     bg.sprite = traps[i].sprite;
                     trap_index = i;
                     PlayerPrefs.SetInt(key, i);
@@ -99,8 +99,8 @@ public class TrapSceneManager : MonoBehaviour
             trap_index = PlayerPrefs.GetInt(key);
             //nameField.text = traps[trap_index].name;
             fullText.AppendLine(traps[trap_index].description);
-            if(traps[trap_index].description2.Length != 0)
-                fullText.AppendLine(traps[trap_index].description2);
+            //if(traps[trap_index].description2.Length != 0)
+            //    fullText.AppendLine(traps[trap_index].description2);
             bg.sprite = traps[trap_index].sprite;
             if (trap_index == 0)
                 BGMManager.instance.EFfectBGM_trap(0);
@@ -120,7 +120,7 @@ public class TrapSceneManager : MonoBehaviour
                 {
                     if (Input.mousePosition.y < max_y_pos.position.y)
                     {
-                        desciptionField.text = fullText.ToString();
+                        descriptionField.text = fullText.ToString();
                         isTextEnded = true;
                     }
                 }
@@ -161,7 +161,7 @@ public class TrapSceneManager : MonoBehaviour
                                     curText.Append(tempText_end.ToString());
                                     tempText.Clear();
                                     tempText_end.Clear();
-                                    desciptionField.text = curText.ToString();
+                                    descriptionField.text = curText.ToString();
                                     cnt_time = 0;
                                 }
                             }
@@ -172,14 +172,14 @@ public class TrapSceneManager : MonoBehaviour
                             {
                                 curText.Insert(cnt_text - 1, tempText.ToString());
                                 tempText.Clear();
-                                desciptionField.text = curText.ToString();
+                                descriptionField.text = curText.ToString();
                                 cnt_time = 0;
                             }
                             else
                             {
                                 curText.Append(tempText.ToString());
                                 tempText.Clear();
-                                desciptionField.text = curText.ToString();
+                                descriptionField.text = curText.ToString();
                                 cnt_time = 0;
                             }
                         }

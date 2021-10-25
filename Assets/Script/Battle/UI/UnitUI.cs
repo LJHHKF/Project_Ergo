@@ -131,6 +131,11 @@ public class UnitUI : MonoBehaviour
                     icons_condition[i].color = new Color(255 / 255, 255 / 255, 255 / 255, 255 / 255);
                 }
             }
+            for(int _i = rs; _i < icons_condition.Length; _i++)
+            {
+                int i = _i;
+                icons_condition[i].gameObject.SetActive(false);
+            }
         }
     }
 
@@ -190,29 +195,22 @@ public class UnitUI : MonoBehaviour
         _piled = nums_piled[_index];
     }
 
-    private void AddPopUpList(GameObject _add)
+    private void InitPopUp(GameObject _add)
     {
-        if(cnt_popUpActive > 0)
+        if (cnt_popUpActive > 0)
         {
-            for(int i = 0; i < list_pop.Count; i++)
+            for (int i = 0; i < list_pop.Count; i++)
             {
                 int _i = i;
-                if(list_pop[_i].activeSelf)
+                if (list_pop[_i].activeSelf)
                 {
-                    Vector3 interval = new Vector3(0, interval_pop, 0);
-                    list_pop[_i].transform.position += interval;
+                    list_pop[_i].transform.position += new Vector3(0, interval_pop, 0);
                 }
             }
-            _add.transform.localPosition = Vector3.zero;
-            StartCoroutine(PopUpMove(_add));
-            cnt_popUpActive += 1;
         }
-        else
-        {
-            _add.gameObject.transform.localPosition = Vector3.zero;
-            StartCoroutine(PopUpMove(_add));
-            cnt_popUpActive += 1;
-        }
+        _add.transform.localPosition = Vector3.zero;
+        StartCoroutine(PopUpMove(_add));
+        cnt_popUpActive += 1;
     }
 
     private TextMeshProUGUI CreatePopUpText()
@@ -261,15 +259,18 @@ public class UnitUI : MonoBehaviour
         TextMeshProUGUI _t = CreatePopUpText();
         _t.text = _dmg.ToString();
         _t.color = color_Damage;
-        AddPopUpList(_t.gameObject);
+        InitPopUp(_t.gameObject);
     }
 
     public void AddPopUpText_GuardedDamage(int _dmg)
     {
-        TextMeshProUGUI _t = CreatePopUpText();
-        _t.text = _dmg.ToString();
-        _t.color = color_GuardedDamage;
-        AddPopUpList(_t.gameObject);
+        if (_dmg > 0)
+        {
+            TextMeshProUGUI _t = CreatePopUpText();
+            _t.text = _dmg.ToString();
+            _t.color = color_GuardedDamage;
+            InitPopUp(_t.gameObject);
+        }
     }
     
     public void AddPopUpText_GetGuardPoint(int _value)
@@ -277,7 +278,7 @@ public class UnitUI : MonoBehaviour
         TextMeshProUGUI _t = CreatePopUpText();
         _t.text = _value.ToString();
         _t.color = color_GetGuardPoint;
-        AddPopUpList(_t.gameObject);
+        InitPopUp(_t.gameObject);
     }
 
     public void AddPopUpText_Buff(string _name, int _piled)
@@ -285,7 +286,7 @@ public class UnitUI : MonoBehaviour
         TextMeshProUGUI _t = CreatePopUpText();
         _t.text = $"{_name} X {_piled}";
         _t.color = color_Buff;
-        AddPopUpList(_t.gameObject);
+        InitPopUp(_t.gameObject);
     }
 
     public void AddPopUpText_Debuff(string _name, int _piled)
@@ -293,7 +294,7 @@ public class UnitUI : MonoBehaviour
         TextMeshProUGUI _t = CreatePopUpText();
         _t.text = $"{_name} X {_piled}";
         _t.color = color_Debuff;
-        AddPopUpList(_t.gameObject);
+        InitPopUp(_t.gameObject);
     }
 
     public void AddPopUpText_ActionName(string _name)
@@ -301,7 +302,7 @@ public class UnitUI : MonoBehaviour
         TextMeshProUGUI _t = CreatePopUpText();
         _t.text = _name;
         _t.color = color_ActionName;
-        AddPopUpList(_t.gameObject);
+        InitPopUp(_t.gameObject);
     }
 
     public void AddPopUpText_RestoreHealth(int _value)
@@ -309,7 +310,7 @@ public class UnitUI : MonoBehaviour
         TextMeshProUGUI _t = CreatePopUpText();
         _t.text = _value.ToString();
         _t.color = color_RestoreHealth;
-        AddPopUpList(_t.gameObject);
+        InitPopUp(_t.gameObject);
     }
 
     public void GuardGainAnim()

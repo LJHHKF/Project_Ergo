@@ -8,7 +8,7 @@ public class ItemBTN : MonoBehaviour
     [SerializeField] private int index = 0;
     [SerializeField] private Image img;
     [SerializeField] private Sprite img_null;
-    [SerializeField] private ItemDeleteBTN deleteBTN;
+    //[SerializeField] private ItemDeleteBTN deleteBTN;
 
     private bool isSet = false;
     

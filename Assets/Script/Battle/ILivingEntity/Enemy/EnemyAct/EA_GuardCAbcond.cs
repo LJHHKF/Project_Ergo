@@ -25,7 +25,7 @@ public class EA_GuardCAbcond : EnemyAct_Base
         for(int i = 0; i < acts.Length; i++)
         {
             int _i = i;
-            if(acts[_i].affactType == AffectType.Attack)
+            if(acts[_i].affectType == AffectType.Attack)
             {
                 if(target.OnDamage(r_power[_i]))
                     if(ifHPDamaged.isSet)
@@ -33,6 +33,18 @@ public class EA_GuardCAbcond : EnemyAct_Base
                 else
                     if(ifGuarded.isSet)
                         StartCoroutine(delayedAffect(()=>target.OnAddAbCond(ifGuarded.abcondID, ifGuarded.abcondPower, ifGuarded.isDelayedAbCond)));
+            }
+            else if (acts[_i].affectType == AffectType.Guard)
+            {
+                StartCoroutine(delayedAffect(() => m_Enemy.AddGuardPoint(r_power[_i])));
+            }
+            else if (acts[_i].affectType == AffectType.Abcond)
+            {
+                StartCoroutine(delayedAffect(() => target.OnAddAbCond(acts[_i].abcondID, acts[_i].fixedPower, acts[_i].isDelayedAbCond)));
+            }
+            else if (acts[_i].affectType == AffectType.Summon)
+            {
+                StartCoroutine(delayedAffect(() => SummonAct()));
             }
         }
     }

@@ -53,7 +53,7 @@ public class Card_Base : MonoBehaviour, ICard
     protected GameObject target;
     protected DiceSystemManager diceManager;
     protected BattleUIManager battleUIManager;
-    protected bool isThrowed = false;
+    //protected bool isThrowed = false;
     protected SpriteRenderer[] m_sprRs = new SpriteRenderer[2];
     protected BoxCollider2D m_Collider;
     protected Canvas textCanvas;
@@ -73,18 +73,6 @@ public class Card_Base : MonoBehaviour, ICard
     public event Action<GameObject> ev_setTarget;
     public event Action<float> ev_setDelay;
     //protected int d_Value;
-
-    public Vector2 m_Position
-    {
-        get
-        {
-            return m_Position;
-        }
-        protected set
-        {
-            m_Position = gameObject.transform.position;
-        }
-    }
 
     protected virtual void Awake()
     {
@@ -124,7 +112,7 @@ public class Card_Base : MonoBehaviour, ICard
         GameMaster.instance.battleStageStart += Event_BattleStageStart;
     }
 
-    private void Event_BattleStageStart()
+    protected void Event_BattleStageStart()
     {
         ChkAndFindBSCardManager();
         CalcStatRevision();
@@ -136,7 +124,7 @@ public class Card_Base : MonoBehaviour, ICard
         m_settingWindowM.disable += () => m_Collider.enabled = true;
     }
 
-    private void CalcStatRevision()
+    protected void CalcStatRevision()
     {
         ChkAndFindCharcter();
         if (isFixGuard)
@@ -250,10 +238,10 @@ public class Card_Base : MonoBehaviour, ICard
         DoTransparency();
     }
 
-    protected void DrawLine()
-    {
-        //화살표선 긋기용 함수
-    }
+    //protected void DrawLine()
+    //{
+    //    //화살표선 긋기용 함수
+    //}
 
     public virtual void SetTarget(GameObject input)
     {
@@ -382,7 +370,7 @@ public class Card_Base : MonoBehaviour, ICard
         text_plain.text = sb.ToString();
     }
 
-    private void MyImgSorting(int _value)
+    protected void MyImgSorting(int _value)
     {
         textCanvas.sortingOrder = _value;
         m_sprRs[0].sortingOrder = _value;
@@ -434,14 +422,6 @@ public class Card_Base : MonoBehaviour, ICard
 
         m_Collider.enabled = true;
     }
-
-    //private int cardID = 0;
-    //private int cost = 1;
-    //private int fixP = 1;
-    //private int r_fixP = 0;
-    //private float flucPRate = 1.0f;
-    //private Sprite cardImage;
-    //private string cardText;
 
     public void CopyUIInfo(out int _cardID,out string _name ,out int _cost, out int _fixP, out float _flucPRate, out Sprite _cardImage, out Sprite _cardOuterImage ,out string _cardText, out CardTextType _cardType)
     {

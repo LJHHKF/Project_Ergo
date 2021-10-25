@@ -181,7 +181,8 @@ public class EnemiesManager : MonoBehaviour
     {
         TurnManager.instance.playerTurnEnd -= Event_PlayerTurnEnd;
         GameMaster.instance.gameStop -= Event_GameStop;
-        m_instance = null;
+        if(m_instance == this)
+            m_instance = null;
     }
 
     private void Event_PlayerTurnEnd()
@@ -378,8 +379,11 @@ public class EnemiesManager : MonoBehaviour
             }
             else
             {
-                temp.monsterFieldIndex = cur_cnt;
-                array_monsters[cur_cnt++] = mon;
+                if (cur_cnt < monsterMaxCnt)
+                {
+                    temp.monsterFieldIndex = cur_cnt;
+                    array_monsters[cur_cnt++] = mon;
+                }
             }
         }
         ReSortMonsters();
@@ -411,7 +415,7 @@ public class EnemiesManager : MonoBehaviour
         }
     }
 
-    public float GetMonterListMiddle_x()
+    public float GetMonsterListMiddle_x()
     {
         return (m_list_max_x - m_list_min_x) / 2.0f;
     }

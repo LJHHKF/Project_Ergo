@@ -307,7 +307,7 @@ PrefabInstance:
     - target: {fileID: 3556708071288198484, guid: cf6f2b24e8e53c0428e9c4347becbe8f,
         type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3556708071288198484, guid: cf6f2b24e8e53c0428e9c4347becbe8f,
         type: 3}
@@ -459,7 +459,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94c25ef0ef674b44e999ff37eb2abc6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  desciptionField: {fileID: 69430576}
+  descriptionField: {fileID: 69430576}
   bg: {fileID: 229105491}
   settingWindowManager: {fileID: 557253647}
   max_y_pos: {fileID: 2023722967}
@@ -476,7 +476,6 @@ MonoBehaviour:
       \uAE5C\uC9DD\uD560 \uC0C8 \uAF42\uD78C \uD654\uC0B4\uC740 \uB2E4\uD589\uD788
       \uAE09\uC18C\uB97C \uD53C\uD574\uAC14\uC73C\uB098 \uC808\uB300 \uC88B\uC740
       \uC0C1\uD669\uC740 \uC544\uB2C8\uB2E4.\r\n\r<color=red>HP 20 \uAC10\uC18C</color>"
-    description2: 
     sprite: {fileID: 21300000, guid: 72c38a41f0c19c54aad72fd1972be85d, type: 3}
     weight: 30
     hadAddAbcond: 0
@@ -493,7 +492,6 @@ MonoBehaviour:
       \uAC00\uB824 \uC0B4\uC558\uC73C\uB098 \uC5B4\uB518\uAC00 \uD55C \uACF3\uC774
       \uBD80\uB7EC\uC9C4 \uB4EF\uD558\uB2E4.\r\n\r<color=red>HP 5 \uAC10\uC18C, 2\uD134
       \uAC04 \uACE8\uC808</color>"
-    description2: 
     sprite: {fileID: 21300000, guid: e6bff04e11860b84297d352bb2dadae4, type: 3}
     weight: 30
     hadAddAbcond: 1

@@ -32,6 +32,12 @@ public class ItemInfoManager : MonoBehaviour
             Destroy(gameObject);
     }
 
+    private void OnDestroy()
+    {
+        if (m_instance == this)
+            m_instance = null;
+    }
+
     public GameObject GetItem(int _index)
     {
         return items[_index].prefab;

@@ -12,12 +12,6 @@ public class TitleSceneManager : MonoBehaviour
         StartCoroutine(DelayedNextScene());
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     IEnumerator DelayedNextScene()
     {
         yield return new WaitForSeconds(delayTime);

@@ -6,11 +6,11 @@ using UnityEngine.UI;
 public class DiceSystemManager : MonoBehaviour
 {
     [Header("Dice Setting")]
-    [SerializeField] private GameObject[] normalDice; //2개 설정하면 됨.
-    [SerializeField] private GameObject[] sixDice;
+    [SerializeField] private GameObject normalDice; //2개 설정하면 됨.
+    [SerializeField] private GameObject sixDice;
     [SerializeField] private int cnt_dice = 2;
-    private List<GameObject> normal_listPool;
-    private List<GameObject> six_listPool;
+    private List<GameObject> normal_listPool = new List<GameObject>();
+    private List<GameObject> six_listPool = new List<GameObject>();
     private bool isOnSixDice = false;
     [SerializeField] private GameObject diceChecker;
     [SerializeField] private BattleUIManager battleUIManager;
@@ -36,16 +36,14 @@ public class DiceSystemManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        normal_listPool = new List<GameObject>();
-        six_listPool = new List<GameObject>();
         for (int i = 0; i < cnt_dice; i++)
         {
-            GameObject dice = Instantiate(normalDice[i], gameObject.transform);
+            GameObject dice = Instantiate(normalDice, gameObject.transform);
             dice.name = "NormalDice_" + (i + 1).ToString("0");
             dice.SetActive(false);
             normal_listPool.Add(dice);
 
-            GameObject sixdice = Instantiate(sixDice[i], gameObject.transform);
+            GameObject sixdice = Instantiate(sixDice, gameObject.transform);
             sixdice.name = "SixDice_" + (i + 1).ToString("0");
             sixdice.SetActive(false);
             six_listPool.Add(sixdice);
@@ -56,20 +54,20 @@ public class DiceSystemManager : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        //if (Input.GetMouseButtonDown(0) && isReadyToThrow)
-        //{
-        //    ActiveDice();
-        //}
-    }
+    //void Update()
+    //{
+    //    //if (Input.GetMouseButtonDown(0) && isReadyToThrow)
+    //    //{
+    //    //    ActiveDice();
+    //    //}
+    //}
 
     public bool GetIsReadyToThrow()
     {
         return isReadyToThrow;
     }
 
-    public void ActiveDice(out bool isSucess)
+    public void ActiveDice(out bool isSuccess)
     {
         battleUIManager.OffDiceSystem();
         if (isReadyToThrow && activatedCard != null)
@@ -116,11 +114,11 @@ public class DiceSystemManager : MonoBehaviour
                 }
 
             }
-            isSucess = true;
+            isSuccess = true;
         }
         else
         {
-            isSucess = false;
+            isSuccess = false;
         }
     }
 
@@ -128,7 +126,7 @@ public class DiceSystemManager : MonoBehaviour
     {
         cnt_RollEnded += 1;
 
-        if(cnt_RollEnded == 2)
+        if(cnt_RollEnded >= cnt_dice)
         {
             cnt_RollEnded = 0;
             diceChecker.SetActive(true);
@@ -169,9 +167,6 @@ public class DiceSystemManager : MonoBehaviour
             for (int i = 0; i < six_listPool.Count; i++)
             {
                 six_listPool[i].GetComponent<DiceManager>().SetResValue();
-            }
-            for (int i = 0; i < six_listPool.Count; i++)
-            {
                 six_listPool[i].SetActive(false);
             }
         }
@@ -180,16 +175,13 @@ public class DiceSystemManager : MonoBehaviour
             for (int i = 0; i < normal_listPool.Count; i++)
             {
                 normal_listPool[i].GetComponent<DiceManager>().SetResValue();
-            }
-            for (int i = 0; i < normal_listPool.Count; i++)
-            {
                 normal_listPool[i].SetActive(false);
             }
         }
 
         activatedCard.Use(resValue);
         activatedCard = null;
-        m_CardM.UndoHandsTaransparency();
+        m_CardM.UndoHandsTransparency();
 
         imgIndex = 0;
         battleUIManager.OnDiceRes();

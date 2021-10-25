@@ -29,9 +29,10 @@ public class LoadManager : MonoBehaviour
         }
     }
 
-    private void Start()
+    private void OnDestroy()
     {
-
+        if (m_instance == this)
+            m_instance = null;
     }
 
     public void LoadNextStage()
@@ -147,10 +148,10 @@ public class LoadManager : MonoBehaviour
         ReturnLobby_private();
     }
 
-    public void ReturnLobby_GameOver()
-    {
-        ReturnLobby_private();
-    }
+    //public void ReturnLobby_GameOver()
+    //{
+    //    ReturnLobby_private();
+    //}
 
     private void ReturnLobby_private()
     {
@@ -175,11 +176,6 @@ public class LoadManager : MonoBehaviour
         }
     }
 
-    public void SetNextStageTypeIndex(int _index)
-    {
-        nextStageTypeIndex = _index;
-    }
-
     IEnumerator OnDelayedTurnStart()
     {
         yield return new WaitForSeconds(0.5f);
@@ -187,10 +183,10 @@ public class LoadManager : MonoBehaviour
         yield break;
     }
 
-    IEnumerator DelayedLoadScene(string _sceneName, float _time)
-    {
-        yield return new WaitForSeconds(_time);
-        LoadingSceneManager.LoadScene(_sceneName);
-        yield break;
-    }
+    //IEnumerator DelayedLoadScene(string _sceneName, float _time)
+    //{
+    //    yield return new WaitForSeconds(_time);
+    //    LoadingSceneManager.LoadScene(_sceneName);
+    //    yield break;
+    //}
 }

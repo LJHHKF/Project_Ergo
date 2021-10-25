@@ -66,7 +66,8 @@ public class CStatManager : MonoBehaviour
 
     private void OnDestroy()
     {
-        m_instance = null;
+        if(m_instance == this)
+            m_instance = null;
         GameMaster.instance.initSaveData_Awake -= Event_InitSaveDataAwake;
         GameMaster.instance.startGame_Awake -= Event_StartGameAwake;
         GameMaster.instance.stageEnd -= Event_StageEnd;

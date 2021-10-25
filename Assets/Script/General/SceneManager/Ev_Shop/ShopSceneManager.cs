@@ -51,14 +51,14 @@ public class ShopSceneManager : MonoBehaviour
         StoryTurningManager.instance.isShop_Bought = true;
     }
 
-    public void SetCardTarget(out Card_Base _target, out int _price, out int _index)
+    public void SetCardTarget(out Card_Base _target, out int _price/*, out int _index*/)
     {
         int fullWeight = 0;
         int rand;
         GameObject tempObject = null;
         Card_Base temp1 = null;
         int temp2 = 0;
-        int temp_index = 1;
+        //int temp_index = 1;
 
         cards_canList.Clear();
 
@@ -93,25 +93,25 @@ public class ShopSceneManager : MonoBehaviour
             }
         }
 
-        for(int i = 0; i < cards.Length; i++)
-        {
-            int _i = i;
-            if(ReferenceEquals(cards[_i], temp1))
-            {
-                temp_index = _i;
-                break;
-            }
-        }
+        //for(int i = 0; i < cards.Length; i++)
+        //{
+        //    int _i = i;
+        //    if(ReferenceEquals(cards[_i], temp1))
+        //    {
+        //        temp_index = _i;
+        //        break;
+        //    }
+        //}
 
         _target = temp1;
         _price = temp2;
-        _index = temp_index;
+        //_index = temp_index;
     }
 
-    public GameObject GetCardTarget_ToIndex(int index)
-    {
-        return cards[index].prefab;
-    }
+    //public GameObject GetCardTarget_ToIndex(int index)
+    //{
+    //    return cards[index].prefab;
+    //}
 
     public void SetItemTarget(out IItem _target, out int _price)
     {

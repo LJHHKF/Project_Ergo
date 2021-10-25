@@ -17,14 +17,14 @@ public class EA_GuardCAddAct : EnemyAct_Base
         for (int i = 0; i < acts.Length; i++)
         {
             int _i = i;
-            if (acts[_i].affactType == AffectType.Attack)
+            if (acts[_i].affectType == AffectType.Attack)
             {
                 if (target.OnDamage(r_power[_i]))
                     if (isSet_ifHPDamaged)
                     {
                         int _power = 0;
 
-                        if (ifHPDamaged.affactType == AffectType.Abcond)
+                        if (ifHPDamaged.affectType == AffectType.Abcond)
                         {
                             _power = ifHPDamaged.fixedPower;
                         }
@@ -44,15 +44,15 @@ public class EA_GuardCAddAct : EnemyAct_Base
                             }
                         }
 
-                        if (ifHPDamaged.affactType == AffectType.Attack)
+                        if (ifHPDamaged.affectType == AffectType.Attack)
                         {
                             StartCoroutine(delayedAffect(()=>target.OnDamage(_power)));
                         }
-                        else if (ifHPDamaged.affactType == AffectType.Guard)
+                        else if (ifHPDamaged.affectType == AffectType.Guard)
                         {
                             StartCoroutine(delayedAffect(()=>m_Enemy.AddGuardPoint(_power)));
                         }
-                        else if (ifHPDamaged.affactType == AffectType.Abcond)
+                        else if (ifHPDamaged.affectType == AffectType.Abcond)
                         {
                             StartCoroutine(delayedAffect(()=>target.OnAddAbCond(ifHPDamaged.abcondID, ifHPDamaged.fixedPower, ifHPDamaged.isDelayedAbCond)));
                         }
@@ -62,7 +62,7 @@ public class EA_GuardCAddAct : EnemyAct_Base
                     {
                         int _power = 0;
 
-                        if (ifGuarded.affactType == AffectType.Abcond)
+                        if (ifGuarded.affectType == AffectType.Abcond)
                         {
                             _power = ifGuarded.fixedPower;
                         }
@@ -82,19 +82,27 @@ public class EA_GuardCAddAct : EnemyAct_Base
                             }
                         }
 
-                        if (ifGuarded.affactType == AffectType.Attack)
+                        if (ifGuarded.affectType == AffectType.Attack)
                         {
                             StartCoroutine(delayedAffect(()=>target.OnDamage(_power)));
                         }
-                        else if (ifGuarded.affactType == AffectType.Guard)
+                        else if (ifGuarded.affectType == AffectType.Guard)
                         {
                             StartCoroutine(delayedAffect(()=>m_Enemy.AddGuardPoint(_power)));
                         }
-                        else if (ifGuarded.affactType == AffectType.Abcond)
+                        else if (ifGuarded.affectType == AffectType.Abcond)
                         {
                             StartCoroutine(delayedAffect(()=>target.OnAddAbCond(ifHPDamaged.abcondID, ifHPDamaged.fixedPower, ifHPDamaged.isDelayedAbCond)));
                         }
                     }
+            }
+            else if (acts[_i].affectType == AffectType.Guard)
+            {
+                StartCoroutine(delayedAffect(() => m_Enemy.AddGuardPoint(r_power[_i])));
+            }
+            else if (acts[_i].affectType == AffectType.Abcond)
+            {
+                StartCoroutine(delayedAffect(() => target.OnAddAbCond(acts[_i].abcondID, acts[_i].fixedPower, acts[_i].isDelayedAbCond)));
             }
         }
     }

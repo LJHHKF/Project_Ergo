@@ -29,8 +29,7 @@ public class InputSystem : MonoBehaviour
             {
                 mousePosition = Input.mousePosition;
             }
-         Vector2 temp = mousePosition;
-         return temp;
+            return mousePosition;
         }
     }
     private Vector3 mousePosition;
@@ -90,7 +89,8 @@ public class InputSystem : MonoBehaviour
 
     private void Event_StageStart()
     {
-        myMainCam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
+        myMainCam = Camera.main;
+            //GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         line = GameObject.FindGameObjectWithTag("Line");
         isStarted = false;
         if (line != null)
@@ -102,7 +102,10 @@ public class InputSystem : MonoBehaviour
 
     private void OnDestroy()
     {
+        if (m_instance == this)
+            m_instance = null;
         GameMaster.instance.battleStageStart -= Event_BattleStageStart;
+        GameMaster.instance.stageStart -= Event_StageStart;
     }
 
     // Update is called once per frame

@@ -40,7 +40,8 @@ public class AbCondInfoManager : MonoBehaviour
 
     private void OnDestroy()
     {
-        m_instance = null;
+        if(m_instance == this)
+            m_instance = null;
     }
 
     public Sprite GetAbCond_Img(int id)

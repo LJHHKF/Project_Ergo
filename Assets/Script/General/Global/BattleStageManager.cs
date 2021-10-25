@@ -32,6 +32,18 @@ public class BattleStageManager : MonoBehaviour
     [Header("Chapter1 Setting")]
     [SerializeField] private StageSetting[] c1_stages;
 
+    private void Awake()
+    {
+        if (instance != this)
+            Destroy(gameObject);
+    }
+
+    private void OnDestroy()
+    {
+        if (m_instance == this)
+            m_instance = null;
+    }
+
     public GameObject GetMonster()
     {
         int curStage = StageManager.instance.curStage - 1;

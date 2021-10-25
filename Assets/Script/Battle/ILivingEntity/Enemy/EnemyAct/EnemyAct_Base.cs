@@ -48,7 +48,7 @@ public class EnemyAct_Base : MonoBehaviour
     public struct ActSet
     {
         public ActType type;
-        public AffectType affactType;
+        public AffectType affectType;
         public float powerRate;
         public int abcondID;
         public int fixedPower;
@@ -83,27 +83,27 @@ public class EnemyAct_Base : MonoBehaviour
 
     public virtual void Act()
     {
+        affectDelay = m_Enemy.SetAnimTrigger(actAnimTrigger.ToString());
         for (int i = 0; i < acts.Length; i++)
         {
             int _i = i;
-            if (acts[_i].affactType == AffectType.Attack)
+            if (acts[_i].affectType == AffectType.Attack)
             {
                 StartCoroutine(delayedAffect(()=>target.OnDamage(r_power[_i])));
             }
-            else if (acts[_i].affactType == AffectType.Guard)
+            else if (acts[_i].affectType == AffectType.Guard)
             {
                 StartCoroutine(delayedAffect(()=>m_Enemy.AddGuardPoint(r_power[_i])));
             }
-            else if (acts[_i].affactType == AffectType.Abcond)
+            else if (acts[_i].affectType == AffectType.Abcond)
             {
                 StartCoroutine(delayedAffect(()=>target.OnAddAbCond(acts[_i].abcondID, acts[_i].fixedPower, acts[_i].isDelayedAbCond)));
             }
-            else if (acts[_i].affactType == AffectType.Summon)
+            else if (acts[_i].affectType == AffectType.Summon)
             {
                 StartCoroutine(delayedAffect(()=>SummonAct()));
             }
         }
-        affectDelay = m_Enemy.SetAnimTrigger(actAnimTrigger.ToString());
     }
 
     protected virtual void SummonAct()
@@ -123,9 +123,9 @@ public class EnemyAct_Base : MonoBehaviour
         int[] _out2 = new int[acts.Length];
         for (int i = 0; i < acts.Length; i++)
         {
-            _out[i] = acts[i].affactType;
+            _out[i] = acts[i].affectType;
 
-            if (acts[i].affactType == AffectType.Abcond || acts[i].affactType == AffectType.CondAbcond_Info || acts[i].affactType == AffectType.Summon)
+            if (acts[i].affectType == AffectType.Abcond || acts[i].affectType == AffectType.CondAbcond_Info || acts[i].affectType == AffectType.Summon)
             {
                 r_power[i] = acts[i].fixedPower;
             }

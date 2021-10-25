@@ -36,47 +36,48 @@ public class DeckManager : MonoBehaviour
         //GameMaster.instance.startGame_Start += Event_StartGame;
         //GameMaster.instance.gameStop += Event_GameStop;
         ResetDeck();
-        TurnManager.instance.firstTurn += Event_FirstTurn;
-        TurnManager.instance.turnStart += Event_TurnStart;
+        TurnManager.instance.firstTurn += PullingInDeck_DrawSet;
+        TurnManager.instance.turnStart += PullingInDeck_DrawSet;
     }
 
     private void OnDestroy()
     {
-        m_instance = null;
+        if(m_instance == this)
+            m_instance = null;
         //GameMaster.instance.initSaveData_Start -= Event_InitSaveDataStart;
         //GameMaster.instance.startGame_Start -= Event_StartGame;
         //GameMaster.instance.gameStop -= Event_GameStop;
-        TurnManager.instance.firstTurn -= Event_FirstTurn;
-        TurnManager.instance.turnStart -= Event_TurnStart;
+        TurnManager.instance.firstTurn -= PullingInDeck_DrawSet;
+        TurnManager.instance.turnStart -= PullingInDeck_DrawSet;
         
     }
 
-    private void Event_FirstTurn()
-    {
-        PullingInDeck_DrawSet();
-    }
+    //private void Event_FirstTurn()
+    //{
+    //    PullingInDeck_DrawSet();
+    //}
 
-    private void Event_TurnStart()
-    {
-        PullingInDeck_DrawSet();
-    }
+    //private void Event_TurnStart()
+    //{
+    //    PullingInDeck_DrawSet();
+    //}
 
-    private void Event_InitSaveDataStart()
-    {
-        ResetDeck();
-    }
+    //private void Event_InitSaveDataStart()
+    //{
+    //    ResetDeck();
+    //}
 
-    private void Event_StartGame()
-    {
-        ResetDeck();
-    }
+    //private void Event_StartGame()
+    //{
+    //    ResetDeck();
+    //}
 
-    private void Event_GameStop()
-    {
-        list_deck.Clear();
-    }
+    //private void Event_GameStop()
+    //{
+    //    list_deck.Clear();
+    //}
 
-    public void ResetDeck()
+    private void ResetDeck()
     {
         CardPack.instance.InstantiateCards(gameObject.transform, ref list_deck);
     }
@@ -138,23 +139,11 @@ public class DeckManager : MonoBehaviour
         }
     }
 
-    public void AddToDeck_Single(GameObject added, ref List<GameObject> prev_list, int prev_index)
-    {
-        AddToDeck_NonList(added);
-        prev_list.RemoveAt(prev_index);
-    }
-
-    public void AddToDeck_NonList(GameObject added)
-    {
-        ICard temp = added.GetComponent<ICard>();
-        if (temp != null)
-        {
-            added.transform.SetParent(gameObject.transform);
-            added.SetActive(false);
-            list_deck.Add(added);
-
-        }
-    }
+    //public void AddToDeck_Single(GameObject added, ref List<GameObject> prev_list, int prev_index)
+    //{
+    //    MoveToDeck_Single(added);
+    //    prev_list.RemoveAt(prev_index);
+    //}
 
     private void ChkAndFindBSCManager()
     {
@@ -178,8 +167,10 @@ public class DeckManager : MonoBehaviour
         if (list_deck.Count > 10)
         {
             SoundEfManager.instance.SetSoundEffect(mySoundEffect.SoundEf.discard_card);
-            CardPack.instance.DeleteCard_hadData(list_deck[_index].GetComponent<ICard>().GetID());
+            GameObject temp = list_deck[_index];
+            CardPack.instance.DeleteCard_hadData(temp.GetComponent<ICard>().GetID());
             list_deck.RemoveAt(_index);
+            Destroy(temp);
             return true;
         }
         else
@@ -196,8 +187,10 @@ public class DeckManager : MonoBehaviour
                 if (list_deck[_i].GetComponent<Card_Base>().GetID() == _id)
                 {
                     SoundEfManager.instance.SetSoundEffect(mySoundEffect.SoundEf.discard_card);
-                    CardPack.instance.DeleteCard_hadData(list_deck[_i].GetComponent<ICard>().GetID());
+                    GameObject temp = list_deck[_i];
+                    CardPack.instance.DeleteCard_hadData(temp.GetComponent<ICard>().GetID());
                     list_deck.RemoveAt(_i);
+                    Destroy(temp);
                     return true;
                 }
             }

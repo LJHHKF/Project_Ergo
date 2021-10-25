@@ -57,7 +57,7 @@ public class CUF_MultiRTargetAttack : CUF_Base
 
             if (isTargetOverlapped)
             {
-                EnemiesManager.instance.AddMultiRTarget_Overlaped(ref target_list, targetNum);
+                EnemiesManager.instance.AddMultiRTarget_Overlaped(ref target_list, maxTarget);
             }
             else
             {
@@ -67,7 +67,7 @@ public class CUF_MultiRTargetAttack : CUF_Base
             for (int i = 0; i < target_list.Count; i++)
             {
                 int _i = i;
-                StartCoroutine(delayedAffect(() => target_list[_i].GetComponent<LivingEntity>().OnDamage(dmg)));
+                StartCoroutine(delayedAffect(() => target_list[_i]?.GetComponent<LivingEntity>().OnDamage(dmg)));
             }
         }
     }

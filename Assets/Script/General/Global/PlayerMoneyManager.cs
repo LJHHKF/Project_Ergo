@@ -29,6 +29,12 @@ public class PlayerMoneyManager : MonoBehaviour
         soul = -1;
     }
 
+    private void OnDestroy()
+    {
+        if (m_instance == this)
+            m_instance = null;
+    }
+
     // Start is called before the first frame update
     void OnEnable()
     {

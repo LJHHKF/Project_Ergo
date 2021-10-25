@@ -32,10 +32,8 @@ public class Character : LivingEntity
     private CostManager m_costM;
 
     // Start is called before the first frame update
-    protected override void Start()
+    protected virtual void Start()
     {
-        base.Start();
-
         fullHealth = CStatManager.instance.fullHealth_pure;
         health = CStatManager.instance.health;
         fix_endu = CStatManager.instance.endurance;

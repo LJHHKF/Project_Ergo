@@ -25,7 +25,7 @@ public class DiceUIManager : MonoBehaviour
     private bool reversed = false;
     private float minCP;
     
-    private bool isThrowed;
+    //private bool isThrowed;
 
     private void OnEnable()
     {
@@ -87,6 +87,7 @@ public class DiceUIManager : MonoBehaviour
                 m_DiceManager.OnSixDice();
             }
         }
+        bool isThrowed;
         m_DiceManager.ActiveDice(out isThrowed);
         if(!isThrowed)
         {

@@ -336,7 +336,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c26aaedc9375cf14aad34543329db688, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_cardPack: {fileID: 256237951}
   c_initInfos:
   - cardID: 0
     cardHadValue: 3

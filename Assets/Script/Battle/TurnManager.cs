@@ -26,7 +26,6 @@ public class TurnManager: MonoBehaviour
     private bool isBattleEnded = false;
 
     private bool isFirstActived = false;
-    private float start_time = 0;
 
     private void Awake()
     {
@@ -36,8 +35,6 @@ public class TurnManager: MonoBehaviour
         }
 
         GameMaster.instance.battleStageEnd += Event_BattleStageEnd;
-
-        start_time = Time.time;
     }
 
     private void Event_BattleStageEnd()
@@ -58,7 +55,8 @@ public class TurnManager: MonoBehaviour
 
     private void OnDestroy()
     {
-        m_instance = null;
+        if (m_instance == this)
+            m_instance = null;
         GameMaster.instance.battleStageEnd -= Event_BattleStageEnd;
     }
 

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DiceCheack : MonoBehaviour
+public class DiceCheck : MonoBehaviour
 {
     [SerializeField] private DiceManager p_diceManager;
     [SerializeField] private int m_number;

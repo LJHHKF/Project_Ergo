@@ -2777,12 +2777,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0d94aba6b041b74da0b4e1bb37802b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  normalDice:
-  - {fileID: 2172805662474634856, guid: 6fceb95db038d0e4a8fcf9c4b6a801e9, type: 3}
-  - {fileID: 2172805662474634856, guid: 6fceb95db038d0e4a8fcf9c4b6a801e9, type: 3}
-  sixDice:
-  - {fileID: 3584592168042313358, guid: 94b5949434cf367449de6c2948ad98f3, type: 3}
-  - {fileID: 3584592168042313358, guid: 94b5949434cf367449de6c2948ad98f3, type: 3}
+  normalDice: {fileID: 2172805662474634856, guid: 6fceb95db038d0e4a8fcf9c4b6a801e9,
+    type: 3}
+  sixDice: {fileID: 3584592168042313358, guid: 94b5949434cf367449de6c2948ad98f3, type: 3}
   cnt_dice: 2
   diceChecker: {fileID: 2012209356}
   battleUIManager: {fileID: 2097164265}

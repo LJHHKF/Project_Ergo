@@ -99,7 +99,7 @@ public class Card_UI : MonoBehaviour
         List<GameObject> tempList = new List<GameObject>();
         CardPack.instance.AddCard_Object(cardID, m_deck.transform, ref tempList);
         if (tempList.Count > 0)
-            DeckManager.instance.AddToDeck_NonList(tempList[0]);
+            DeckManager.instance.MoveToDeck_Single(tempList[0]);
     }
 
     public void AddToCardPackTargetedCard()

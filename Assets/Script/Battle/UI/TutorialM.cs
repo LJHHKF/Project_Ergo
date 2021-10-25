@@ -9,14 +9,12 @@ public class TutorialM : MonoBehaviour
     [SerializeField] private Sprite[] tutorialImgs;
     private Image m_Image;
     private int index;
-    private int max;
     // Start is called before the first frame update
     void Start()
     {
         m_Image = GetComponent<Image>();
         m_Image.sprite = tutorialImgs[0];
         index = 1;
-        max = tutorialImgs.Length;
     }
 
     // Update is called once per frame
@@ -24,7 +22,7 @@ public class TutorialM : MonoBehaviour
     {
         if(Input.GetMouseButtonDown(0))
         {
-            if (index < max)
+            if (index < tutorialImgs.Length)
                 m_Image.sprite = tutorialImgs[index++];
             else
                 uiManager.TutorialEnd();

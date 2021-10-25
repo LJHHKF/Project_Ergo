@@ -34,6 +34,12 @@ public class ItemSlot : MonoBehaviour
             Destroy(gameObject);
     }
 
+    private void OnDestroy()
+    {
+        if (m_instance == this)
+            m_instance = null;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -93,7 +99,7 @@ public class ItemSlot : MonoBehaviour
         {
             int _i = i;
             if (_i == 0)
-                m_sb.Append(0);
+                m_sb.Append(_i);
             else
                 m_sb.Replace($"ItemSlot.{_i - 1}", $"ItemSlot.{_i}");
 
@@ -123,7 +129,7 @@ public class ItemSlot : MonoBehaviour
         {
             int _i = i;
             if (_i == 0)
-                m_sb.Append(0);
+                m_sb.Append(_i);
             else
                 m_sb.Replace($"ItemSlot.{_i - 1}", $"ItemSlot.{_i}");
 
@@ -140,7 +146,7 @@ public class ItemSlot : MonoBehaviour
         {
             int _i = i;
             if (_i == 0)
-                m_sb.Append(0);
+                m_sb.Append(_i);
             else
                 m_sb.Replace($"ItemSlot.{_i - 1}", $"ItemSlot.{_i}");
 
@@ -218,11 +224,5 @@ public class ItemSlot : MonoBehaviour
     {
         rewardItem.GetComponent<IItem>().SetSlotIndex(item_list.Count);
         item_list.Add(rewardItem);
-    }
-
-
-    public void SetUseMinX(float value)
-    {
-        use_min_X = value;
     }
 }

@@ -24,7 +24,7 @@ public class GlobalCardEffectM : MonoBehaviour
         if (!ManaStormEffect.activeSelf)
         {
             ManaStormEffect.SetActive(true);
-            ManaStormEffect.transform.position = new Vector2(EnemiesManager.instance.GetMonterListMiddle_x(), ManaStormEffect.transform.position.y);
+            ManaStormEffect.transform.position = new Vector2(EnemiesManager.instance.GetMonsterListMiddle_x(), ManaStormEffect.transform.position.y);
             StartCoroutine(DelayedUnActive(ManaStormEffect));
         }
     }
@@ -57,7 +57,7 @@ public class GlobalCardEffectM : MonoBehaviour
         void Active(GameObject _t)
         {
             _t.SetActive(true);
-            _t.transform.position = new Vector2(EnemiesManager.instance.GetMonterListMiddle_x(), manabomb_y);
+            _t.transform.position = new Vector2(EnemiesManager.instance.GetMonsterListMiddle_x(), manabomb_y);
             StartCoroutine(DelayedUnActive(_t));
         }
     }

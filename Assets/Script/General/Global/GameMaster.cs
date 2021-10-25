@@ -44,6 +44,12 @@ public class GameMaster : MonoBehaviour
         }
     }
 
+    protected void OnDestroy()
+    {
+        if (m_instance == this)
+            m_instance = null;
+    }
+
     private void Start()
     {
         gameOver += Event_GameOver;
@@ -101,7 +107,7 @@ public class GameMaster : MonoBehaviour
         }
     }
 
-    public bool OnInitSaveData()
+    private bool OnInitSaveData()
     {
         key = $"SaveID({saveID})";
         if (!PlayerPrefs.HasKey(key) || PlayerPrefs.GetInt(key) == 0)
@@ -122,7 +128,6 @@ public class GameMaster : MonoBehaviour
     public void OnGameOver()
     {
         isInit = false;
-        Debug.LogWarning("게임오버가 되었습니다.");
         m_instance.StartCoroutine(DelayedGameOver());
     }
 
@@ -158,7 +163,7 @@ public class GameMaster : MonoBehaviour
     {
         if (!isBattleEndChk)
         {
-            isBattleEndChk = false;
+            isBattleEndChk = true;
             battleStageEnd?.Invoke();
             OnStageEnd();
         }

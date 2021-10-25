@@ -7,11 +7,7 @@ public class TouchEffectManager : MonoBehaviour
     [SerializeField] private GameObject touch_Prefab;
     private List<GameObject> t_list = new List<GameObject>();
     private int cnt_unactive = 0;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+
 
     // Update is called once per frame
     void Update()

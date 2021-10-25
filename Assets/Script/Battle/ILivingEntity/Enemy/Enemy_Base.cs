@@ -61,9 +61,8 @@ public class Enemy_Base : LivingEntity
 
     public int DropSoul { get { return dropSoul; } }
 
-    protected override void Start()
+    protected virtual void Start()
     {
-        base.Start();
 
         fix_endu = fix_Endurance;
         fix_stren = fix_Strength;

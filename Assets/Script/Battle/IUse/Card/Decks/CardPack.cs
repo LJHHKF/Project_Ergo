@@ -49,6 +49,12 @@ public class CardPack : MonoBehaviour
         TempHadCntReset();
     }
 
+    private void OnDestroy()
+    {
+        if (m_instance == this)
+            m_instance = null;
+    }
+
     private void OnEnable()
     {
         GameMaster.instance.gameOver += CardPackClear;

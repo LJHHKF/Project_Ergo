@@ -16,7 +16,7 @@ public class CUF_Repeat : MonoBehaviour
     private int dv = 0;
 
     // Start is called before the first frame update
-    public void Start()
+    private void Start()
     {
         if (isUseFixP || isUseFlucP)
         {
@@ -53,10 +53,10 @@ public class CUF_Repeat : MonoBehaviour
         StartCoroutine(DelayedUse(maxNum));
     }
 
-    IEnumerator DelayedUse(int maxNum)
+    IEnumerator DelayedUse(int _maxNum)
     {
         int cnt = 0;
-        while(cnt < maxNum)
+        while(cnt < _maxNum)
         {
             yield return new WaitForSeconds(timeInterval);
             repeatTarget.ReUse();

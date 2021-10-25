@@ -10,7 +10,7 @@ public class BSCManager : MonoBehaviour
     [SerializeField] private int hand_max = 10;
     [SerializeField] private Transform t_grave;
 
-    public int cntHand { get; private set; }
+    public int cntHand { get { return list_hand.Count; }}
 
     private List<GameObject> list_hand = new List<GameObject>();
     private List<GameObject> list_grave = new List<GameObject>();
@@ -23,42 +23,42 @@ public class BSCManager : MonoBehaviour
         list_grave.Capacity = (CardPack.instance.GetCardsLength() * 3) + 1;
         DeckManager.instance.SetBSCManager(this);
 
-        TurnManager.instance.battleEnd += Event_BattleEnd;
-        TurnManager.instance.playerTurnEnd += Event_PlayerTurnEnd;
+        TurnManager.instance.battleEnd += CleanUpCards;
+        TurnManager.instance.playerTurnEnd += ClearHandToGrave;
 
-        GameMaster.instance.gameStop += Event_GameStop;
+        GameMaster.instance.gameStop += CleanUpCards;
     }
 
     private void OnDestroy()
     {
-        TurnManager.instance.battleEnd -= Event_BattleEnd;
-        TurnManager.instance.playerTurnEnd -= Event_PlayerTurnEnd;
+        TurnManager.instance.battleEnd -= CleanUpCards;
+        TurnManager.instance.playerTurnEnd -= ClearHandToGrave;
 
-        GameMaster.instance.gameStop -= Event_GameStop;
+        GameMaster.instance.gameStop -= CleanUpCards;
     }
 
-    private void Event_BattleEnd()
-    {
-        CleanUpCards();
-    }
+    //private void Event_BattleEnd()
+    //{
+    //    CleanUpCards();
+    //}
 
-    private void Event_PlayerTurnEnd()
-    {
-        ClearHandToGrave();
-        //UndoHandsTaransparency();
-        //SortingHand(0);
-    }
+    //private void Event_PlayerTurnEnd()
+    //{
+    //    ClearHandToGrave();
+    //    //UndoHandsTaransparency();
+    //    //SortingHand(0);
+    //}
 
-    private void Event_GameStop()
-    {
-        CleanUpCards();
-    }
+    //private void Event_GameStop()
+    //{
+    //    CleanUpCards();
+    //}
 
-    public void AddToHand(GameObject added, ref List<GameObject> prev_list, int prev_index)
-    {
-        AddToHand(added);
-        prev_list.RemoveAt(prev_index);
-    }
+    //public void AddToHand(GameObject added, ref List<GameObject> prev_list, int prev_index)
+    //{
+    //    AddToHand(added);
+    //    prev_list.RemoveAt(prev_index);
+    //}
 
     public void AddToHand(GameObject added)
     {
@@ -69,15 +69,14 @@ public class BSCManager : MonoBehaviour
             {
                 added.transform.SetParent(t_hand);
                 list_hand.Add(added);
-                cntHand = list_hand.Count;
                 temp.SetRenderPriority(cntHand);
 
                 added.SetActive(true);
 
-                if (TurnManager.instance.GetIsFirstActivated())
-                {
-                    SortingHand(0);
-                }
+                //if (TurnManager.instance.GetIsFirstActivated())
+                //{
+                //    SortingHand(0);
+                //}
             }
             else
             {
@@ -90,7 +89,7 @@ public class BSCManager : MonoBehaviour
     {
         for(int i = 0; i < list_hand.Count; i++)
         {
-            list_hand[i].GetComponent<ICard>().SortingCard(renderPriority, list_hand.Count);
+            list_hand[i].GetComponent<ICard>().SortingCard(renderPriority, cntHand);
         }
     }
 
@@ -114,6 +113,7 @@ public class BSCManager : MonoBehaviour
         list_grave.Add(moved);
         SortingHand(moved.GetComponent<ICard>().GetRenderPriority());
         moved.GetComponent<ICard>().DoTransparency();
+        //moved.SetActive(false);
     }
 
     public void MoveToGrave_Direct(GameObject moved)
@@ -121,13 +121,14 @@ public class BSCManager : MonoBehaviour
         moved.transform.SetParent(t_grave);
         list_grave.Add(moved);
         moved.GetComponent<ICard>().DoTransparency();
+        //moved.SetActive(false);
     }
 
-    public void MoveToGrave_Dircet(GameObject moved, ref List<GameObject> prev_list, int prev_index)
-    {
-        MoveToGrave_Direct(moved);
-        prev_list.RemoveAt(prev_index);
-    }
+    //public void MoveToGrave_Dircet(GameObject moved, ref List<GameObject> prev_list, int prev_index)
+    //{
+    //    MoveToGrave_Direct(moved);
+    //    prev_list.RemoveAt(prev_index);
+    //}
 
     public void PullingInGrave() //Pulling at card in graveyard
     {
@@ -150,6 +151,7 @@ public class BSCManager : MonoBehaviour
             moved.transform.SetParent(t_grave);
             list_grave.Add(moved);
             moved.GetComponent<ICard>().DoTransparency();
+            //moved.SetActive(false);
         }
         list_hand.Clear();
     }
@@ -162,7 +164,7 @@ public class BSCManager : MonoBehaviour
         }
     }
 
-    public void UndoHandsTaransparency()
+    public void UndoHandsTransparency()
     {
         for(int i = 0; i < list_hand.Count; i++)
         {

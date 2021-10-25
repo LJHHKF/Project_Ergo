@@ -9,7 +9,7 @@ public class AbCondition : MonoBehaviour
     private class AbCond
     {
         public int ID;
-        public Sprite Icon;
+        //public Sprite Icon;
         public int piledNum;
         public int onePower;
 
@@ -289,7 +289,6 @@ public class AbCondition : MonoBehaviour
                 return c_sum;
             }
         }
-        else
-            return 0;
+        return 0;
     }
 }

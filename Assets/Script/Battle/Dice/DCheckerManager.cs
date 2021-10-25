@@ -7,7 +7,7 @@ public class DCheckerManager : MonoBehaviour
     [SerializeField] private float bottomValue = -2.5f;
     //[SerializeField] private float startYValue = 2.5f;
     [SerializeField] private float moveSpeed;
-    [SerializeField] private DiceSystemManager m_DsysetmManager;
+    //[SerializeField] private DiceSystemManager m_DsysetmManager;
     [SerializeField] private Transform t_dBox_Top;
 
     private void OnEnable()
@@ -19,7 +19,7 @@ public class DCheckerManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (gameObject.transform.position.z <= bottomValue)
+        if (gameObject.transform.position.y <= bottomValue)
         {
             gameObject.transform.Translate(0, moveSpeed * Time.deltaTime, 0);
         }

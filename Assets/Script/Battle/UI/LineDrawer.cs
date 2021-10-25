@@ -33,14 +33,10 @@ public class LineDrawer : MonoBehaviour
         }
         //Debug.Log("V" + m_vector);
         Vector2 middlePoint = m_start + (m_vector / 2);
-
-
-        float magnitude = m_vector.magnitude;
         
-
         m_rect.position = middlePoint;
         m_rect.rotation = Quaternion.Euler(new Vector3(0, 0, rotateValue));
-        m_rect.localScale = new Vector2(1, magnitude);
+        m_rect.localScale = new Vector2(1, m_vector.magnitude);
     }
 
     public void SetLine_Canvas(Transform start, Vector2 end)
@@ -63,12 +59,8 @@ public class LineDrawer : MonoBehaviour
         //Debug.Log("V" + m_vector);
         Vector2 middlePoint = m_start + (m_vector / 2);
 
-
-        float magnitude = m_vector.magnitude;
-
-
         m_rect.position = middlePoint;
         m_rect.rotation = Quaternion.Euler(new Vector3(0, 0, rotateValue));
-        m_rect.localScale = new Vector2(1, magnitude);
+        m_rect.localScale = new Vector2(1, m_vector.magnitude);
     }
 }

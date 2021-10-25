@@ -60,6 +60,9 @@ public class StageManager : MonoBehaviour
 
     private void OnDestroy()
     {
+        if (m_instance == this)
+            m_instance = null;
+
         GameMaster.instance.initSaveData_Awake -= Event_InitGameData;
         GameMaster.instance.startGame_Awake -= Event_GameStart;
         GameMaster.instance.gameStop -= Event_GameStop;
@@ -182,7 +185,7 @@ public class StageManager : MonoBehaviour
             }
         }
 
-        LoadManager.instance.SetNextStageTypeIndex(nextStageTypeIndex);
+        LoadManager.instance.ChangeNextStage(nextStageTypeIndex);
     }
 
     public void SetCurrentStageTypeIndex(int _input)

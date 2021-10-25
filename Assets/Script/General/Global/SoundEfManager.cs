@@ -92,6 +92,12 @@ public class SoundEfManager : MonoBehaviour
             Destroy(gameObject);
     }
 
+    private void OnDestroy()
+    {
+        if (m_instance == this)
+            m_instance = null;
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -207,7 +213,10 @@ public class SoundEfManager : MonoBehaviour
                     }
                 }
                 if (!isSucess)
+                {
                     Create();
+                    delayTime += t_go.queudDelay;
+                }
             }
         }
 

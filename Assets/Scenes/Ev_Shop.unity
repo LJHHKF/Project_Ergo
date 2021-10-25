@@ -5002,11 +5002,11 @@ MonoBehaviour:
       type: 3}
     price: 40
     weight: 10
-  - prefab: {fileID: 7930505921670291970, guid: d4571d0f945758a44b0d116b29f34078,
+  - prefab: {fileID: 8038127370235962230, guid: 62e10e62cc206974ea6ee870d1c067d4,
       type: 3}
     price: 45
     weight: 10
-  - prefab: {fileID: 8038127370235962230, guid: 62e10e62cc206974ea6ee870d1c067d4,
+  - prefab: {fileID: 7930505921670291970, guid: d4571d0f945758a44b0d116b29f34078,
       type: 3}
     price: 45
     weight: 10
@@ -10624,7 +10624,6 @@ GameObject:
   - component: {fileID: 1915315794}
   - component: {fileID: 1915315793}
   - component: {fileID: 1915315797}
-  - component: {fileID: 1915315796}
   m_Layer: 5
   m_Name: ExitButton
   m_TagString: Untagged
@@ -10746,19 +10745,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1915315791}
   m_CullTransparentMesh: 0
---- !u!114 &1915315796
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1915315791}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 21c1147f1e068934d8f6e05ea1198f44, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  target: {fileID: 0}
 --- !u!114 &1915315797
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -62,6 +62,12 @@ public class BGMManager : MonoBehaviour
             Destroy(gameObject);
     }
 
+    private void OnDestroy()
+    {
+        if (m_instance == this)
+            m_instance = null;
+    }
+
     // Start is called before the first frame update
     void Start()
     {

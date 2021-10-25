@@ -13,37 +13,36 @@ public class InitCardSetting : MonoBehaviour
     }
 
     [Header("Card Init Set Value")]
-    [SerializeField] private CardPack m_cardPack;
     [SerializeField] private CardInitInfo[] c_initInfos;
 
 
     private void Start()
     {
-        GameMaster.instance.initSaveData_Awake += Event_InitSaveDataAwake;
+        GameMaster.instance.initSaveData_Awake += OnInitCardsSetting;
         GameMaster.instance.startGame_Awake += Event_StartGameAwake;
     }
 
     private void OnDestroy()
     {
-        GameMaster.instance.initSaveData_Awake -= Event_InitSaveDataAwake;
+        GameMaster.instance.initSaveData_Awake -= OnInitCardsSetting;
         GameMaster.instance.startGame_Awake -= Event_StartGameAwake;
     }
 
-    private void Event_InitSaveDataAwake()
-    {
-        OnInitCardsSetting();
-    }
+    //private void Event_InitSaveDataAwake()
+    //{
+    //    OnInitCardsSetting();
+    //}
 
     private void Event_StartGameAwake()
     {
-        m_cardPack.SetSaveID(GameMaster.instance.GetSaveID());
-        m_cardPack.CardPack_Start();
+        CardPack.instance.SetSaveID(GameMaster.instance.GetSaveID());
+        CardPack.instance.CardPack_Start();
     }
 
     public void OnInitCardsSetting()
     {
-        m_cardPack.SetSaveID(GameMaster.instance.GetSaveID());
-        m_cardPack.CardPack_Init();
+        CardPack.instance.SetSaveID(GameMaster.instance.GetSaveID());
+        CardPack.instance.CardPack_Init();
         for (int i = 0; i < c_initInfos.Length; i++)
         {
             int _i = i;

@@ -54,6 +54,9 @@ public class SoundManager : MonoBehaviour
 
     private void OnDestroy()
     {
+        if (m_instance == this)
+            m_instance = null;
+
         PlayerPrefs.SetFloat(key, masterVolume);
     }
 }

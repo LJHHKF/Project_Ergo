@@ -9,10 +9,11 @@ public class E_JunkGoblin : Enemy_Base
 
     protected override void ActSetting()
     {
-        if (curSpGauge >= maxSpGauge && EnemiesManager.instance.SearchHadMonster(6))
+        if (curSpGauge >= r_maxSpGauge && EnemiesManager.instance.SearchHadMonster(6))
         {
             readyAct = anotherSpecialAct;
             curSpGauge = 0;
+            GetReadyActInfo();
         }
         else
         {

@@ -40,6 +40,12 @@ public class StoryTurningManager : MonoBehaviour
         ResetTriggers();
     }
 
+    private void OnDestroy()
+    {
+        if (m_instance == this)
+            m_instance = null;
+    }
+
     public void ResetTriggers()
     {
         isTutorial = false;
